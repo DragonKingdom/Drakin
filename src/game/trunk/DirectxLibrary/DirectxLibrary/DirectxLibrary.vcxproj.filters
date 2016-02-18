@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ソース ファイル\3DVertex">
+      <UniqueIdentifier>{ddbbb595-5960-4aae-9fdf-77db3446a888}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\anim3DModel">
+      <UniqueIdentifier>{5af735d9-9b18-4c4d-8138-aede60c7426a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\animation">
+      <UniqueIdentifier>{b53a68f7-73b6-4e49-a40d-f9cf9d509a92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\animVertex">
+      <UniqueIdentifier>{09398ae5-6cfc-4f8e-90d9-247ac208cf77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\BillBoard">
+      <UniqueIdentifier>{a4b560c9-3f0e-473c-bef0-1bd09efcd8a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\camera">
+      <UniqueIdentifier>{3707d57a-9ec7-4b50-9160-2e42636478e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\DirectxLibrary">
+      <UniqueIdentifier>{591a2862-0ace-4c24-b254-b71f77a1c4cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Font">
+      <UniqueIdentifier>{939dffe9-2977-4e82-bc9a-ae1e83bb0d15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\graphicsDevice">
+      <UniqueIdentifier>{f010c9d3-424d-44bb-8083-0ca763b6c9e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Input">
+      <UniqueIdentifier>{33210eaa-ad40-4e5b-a88a-ce9fb9cb8a96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Model">
+      <UniqueIdentifier>{c0b64beb-47e4-46ca-8bff-c6ae748738bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\stdafx">
+      <UniqueIdentifier>{a5f80f80-7118-46dd-99b2-ba965fa43c0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\vertex">
+      <UniqueIdentifier>{39d31ace-a0bc-4772-8886-5ca8bd467c08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\texture">
+      <UniqueIdentifier>{725a70cd-11cb-4943-b467-b222a9e84cf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\XAudio">
+      <UniqueIdentifier>{1b830f8d-e0a6-4a31-92e1-9a4916df8929}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\3DModel">
+      <UniqueIdentifier>{da9c2cd9-f5af-42e6-802a-a50e6735ac80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\define">
+      <UniqueIdentifier>{d8e8ecea-75a3-4e40-b40b-18fbd71e79c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\targetver">
+      <UniqueIdentifier>{b18c299d-c3f1-4321-8616-b33a8266d32b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="3DVertex.cpp">
+      <Filter>ソース ファイル\3DVertex</Filter>
+    </ClCompile>
+    <ClCompile Include="anim3DModel.cpp">
+      <Filter>ソース ファイル\anim3DModel</Filter>
+    </ClCompile>
+    <ClCompile Include="animation.cpp">
+      <Filter>ソース ファイル\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="animVertex.cpp">
+      <Filter>ソース ファイル\animVertex</Filter>
+    </ClCompile>
+    <ClCompile Include="BillBoard.cpp">
+      <Filter>ソース ファイル\BillBoard</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>ソース ファイル\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectxLibrary.cpp">
+      <Filter>ソース ファイル\DirectxLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="Font.cpp">
+      <Filter>ソース ファイル\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="graphicsDevice.cpp">
+      <Filter>ソース ファイル\graphicsDevice</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>ソース ファイル\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Input_Gamepad.cpp">
+      <Filter>ソース ファイル\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Input_Keyboard.cpp">
+      <Filter>ソース ファイル\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Input_Mouse.cpp">
+      <Filter>ソース ファイル\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>ソース ファイル\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>ソース ファイル\stdafx</Filter>
+    </ClCompile>
+    <ClCompile Include="texture.cpp">
+      <Filter>ソース ファイル\texture</Filter>
+    </ClCompile>
+    <ClCompile Include="vertex.cpp">
+      <Filter>ソース ファイル\vertex</Filter>
+    </ClCompile>
+    <ClCompile Include="XAudio.cpp">
+      <Filter>ソース ファイル\XAudio</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="3DModel.h">
+      <Filter>ソース ファイル\3DModel</Filter>
+    </ClInclude>
+    <ClInclude Include="3DVertex.h">
+      <Filter>ソース ファイル\3DVertex</Filter>
+    </ClInclude>
+    <ClInclude Include="anim3DModel.h">
+      <Filter>ソース ファイル\anim3DModel</Filter>
+    </ClInclude>
+    <ClInclude Include="animation.h">
+      <Filter>ソース ファイル\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="animVertex.h">
+      <Filter>ソース ファイル\animVertex</Filter>
+    </ClInclude>
+    <ClInclude Include="BillBoard.h">
+      <Filter>ソース ファイル\BillBoard</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>ソース ファイル\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="define.h">
+      <Filter>ソース ファイル\define</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectxLibrary.h">
+      <Filter>ソース ファイル\DirectxLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="Font.h">
+      <Filter>ソース ファイル\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="graphicsDevice.h">
+      <Filter>ソース ファイル\graphicsDevice</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>ソース ファイル\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>ソース ファイル\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="texture.h">
+      <Filter>ソース ファイル\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="vertex.h">
+      <Filter>ソース ファイル\vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="XAudio.h">
+      <Filter>ソース ファイル\XAudio</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>ソース ファイル\stdafx</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>ソース ファイル\targetver</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
