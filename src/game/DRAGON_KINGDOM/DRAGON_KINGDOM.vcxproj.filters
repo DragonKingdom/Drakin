@@ -53,24 +53,6 @@
     <Filter Include="main\SceneManager\Scene\GameScene\Time">
       <UniqueIdentifier>{fef61349-18e1-489f-95b4-875902c24d49}</UniqueIdentifier>
     </Filter>
-    <Filter Include="main\SceneManager\Scene\GameScene\HumanMoveAIManager">
-      <UniqueIdentifier>{6810fda5-d5d1-46ba-8063-9aec176da475}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="main\SceneManager\Scene\GameScene\HumanMoveAIManager\HumanMoveAI">
-      <UniqueIdentifier>{e0f4a86a-3066-44dc-aa11-fa6c166a6f4f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="main\SceneManager\Scene\GameScene\CrossingManager">
-      <UniqueIdentifier>{dfbd968c-91a4-4312-8d78-68e0516d7efc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="main\SceneManager\Scene\GameScene\CrossingManager\Crossing">
-      <UniqueIdentifier>{c5f9cdda-a1c3-4d1f-a3a7-a9fbb9a1c6e0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="main\SceneManager\Scene\GameScene\BuildAreaManager">
-      <UniqueIdentifier>{6aa57f09-6ff7-40e4-b7c5-d18041be7324}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="main\SceneManager\Scene\GameScene\BuildAreaManager\BuildArea">
-      <UniqueIdentifier>{b0a19809-16db-46de-823a-c6226c1dd140}</UniqueIdentifier>
-    </Filter>
     <Filter Include="stdafx">
       <UniqueIdentifier>{e593d55b-3fce-4257-809a-bee7b6a00463}</UniqueIdentifier>
     </Filter>
@@ -88,12 +70,6 @@
     </Filter>
     <Filter Include="main\TextureManager">
       <UniqueIdentifier>{a6c6c40c-ad6c-4bf3-80cf-c9f280105574}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="main\SceneManager\Scene\GameScene\RoadManager">
-      <UniqueIdentifier>{7760a343-354a-4bd2-b2c2-9b6a6d885fda}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="main\SceneManager\Scene\GameScene\RoadManager\Road">
-      <UniqueIdentifier>{0a2ffad5-6450-4bd6-85d6-c3c8a1b20b3a}</UniqueIdentifier>
     </Filter>
     <Filter Include="main\SceneManager\SceneFactory">
       <UniqueIdentifier>{d36ef0ff-2fc2-46c4-b6cf-1d0f234aabd4}</UniqueIdentifier>
@@ -202,30 +178,6 @@
     <ClCompile Include="Timer.cpp">
       <Filter>main\SceneManager\Scene\GameScene\Time</Filter>
     </ClCompile>
-    <ClCompile Include="HumanMoveAIManager.cpp">
-      <Filter>main\SceneManager\Scene\GameScene\HumanMoveAIManager</Filter>
-    </ClCompile>
-    <ClCompile Include="HumanMoveAI.cpp">
-      <Filter>main\SceneManager\Scene\GameScene\HumanMoveAIManager\HumanMoveAI</Filter>
-    </ClCompile>
-    <ClCompile Include="Road.cpp">
-      <Filter>main\SceneManager\Scene\GameScene\RoadManager\Road</Filter>
-    </ClCompile>
-    <ClCompile Include="RoadManager.cpp">
-      <Filter>main\SceneManager\Scene\GameScene\RoadManager</Filter>
-    </ClCompile>
-    <ClCompile Include="CrossingManager.cpp">
-      <Filter>main\SceneManager\Scene\GameScene\CrossingManager</Filter>
-    </ClCompile>
-    <ClCompile Include="Crossing.cpp">
-      <Filter>main\SceneManager\Scene\GameScene\CrossingManager\Crossing</Filter>
-    </ClCompile>
-    <ClCompile Include="BuildArea.cpp">
-      <Filter>main\SceneManager\Scene\GameScene\BuildAreaManager\BuildArea</Filter>
-    </ClCompile>
-    <ClCompile Include="BuildAreaManager.cpp">
-      <Filter>main\SceneManager\Scene\GameScene\BuildAreaManager</Filter>
-    </ClCompile>
     <ClCompile Include="Menuicon.cpp">
       <Filter>main\SceneManager\Scene\GameScene\UI\Menuicon</Filter>
     </ClCompile>
@@ -327,30 +279,6 @@
     <ClInclude Include="Timer.h">
       <Filter>main\SceneManager\Scene\GameScene\Time</Filter>
     </ClInclude>
-    <ClInclude Include="HumanMoveAIManager.h">
-      <Filter>main\SceneManager\Scene\GameScene\HumanMoveAIManager</Filter>
-    </ClInclude>
-    <ClInclude Include="HumanMoveAI.h">
-      <Filter>main\SceneManager\Scene\GameScene\HumanMoveAIManager\HumanMoveAI</Filter>
-    </ClInclude>
-    <ClInclude Include="Road.h">
-      <Filter>main\SceneManager\Scene\GameScene\RoadManager\Road</Filter>
-    </ClInclude>
-    <ClInclude Include="RoadManager.h">
-      <Filter>main\SceneManager\Scene\GameScene\RoadManager</Filter>
-    </ClInclude>
-    <ClInclude Include="CrossingManager.h">
-      <Filter>main\SceneManager\Scene\GameScene\CrossingManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Crossing.h">
-      <Filter>main\SceneManager\Scene\GameScene\CrossingManager\Crossing</Filter>
-    </ClInclude>
-    <ClInclude Include="BuildArea.h">
-      <Filter>main\SceneManager\Scene\GameScene\BuildAreaManager\BuildArea</Filter>
-    </ClInclude>
-    <ClInclude Include="BuildAreaManager.h">
-      <Filter>main\SceneManager\Scene\GameScene\BuildAreaManager</Filter>
-    </ClInclude>
     <ClInclude Include="Menuicon.h">
       <Filter>main\SceneManager\Scene\GameScene\UI\Menuicon</Filter>
     </ClInclude>
@@ -372,5 +300,8 @@
     <ClInclude Include="TimerWindow.h">
       <Filter>main\SceneManager\Scene\GameScene\UI\Window\TimerWindow</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

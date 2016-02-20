@@ -76,7 +76,8 @@ GAME_STATE UI::OnClick()
 
 	GAME_STATE state = STATE_NONE;
 	// クリックされたらアイコンとの位置を比較。アイコンがクリックされていたらウインドウを生成する
-	if( m_pWindow == NULL ){
+	if( m_pWindow == NULL )
+	{
 		switch( m_pMenuicon->OnClick() )
 		{
 		case OPTION:

@@ -87,20 +87,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BuildArea.cpp" />
-    <ClCompile Include="BuildAreaManager.cpp" />
     <ClCompile Include="BuildWindow.cpp" />
     <ClCompile Include="Button2D.cpp" />
     <ClCompile Include="CameraController.cpp" />
     <ClCompile Include="ClickPosConverter.cpp" />
     <ClCompile Include="Collision.cpp" />
-    <ClCompile Include="Crossing.cpp" />
-    <ClCompile Include="CrossingManager.cpp" />
     <ClCompile Include="FadeInOut.cpp" />
     <ClCompile Include="GameData.cpp" />
     <ClCompile Include="GameScene.cpp" />
-    <ClCompile Include="HumanMoveAIManager.cpp" />
-    <ClCompile Include="HumanMoveAI.cpp" />
     <ClCompile Include="KingdomWindow.cpp" />
     <ClCompile Include="LogoScene.cpp" />
     <ClCompile Include="main.cpp" />
@@ -108,8 +102,6 @@
     <ClCompile Include="Menuicon.cpp" />
     <ClCompile Include="MenuWindow.cpp" />
     <ClCompile Include="OptionWindow.cpp" />
-    <ClCompile Include="Road.cpp" />
-    <ClCompile Include="RoadManager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneFactory.cpp" />
     <ClCompile Include="SceneManager.cpp" />
@@ -132,21 +124,15 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BuildArea.h" />
-    <ClInclude Include="BuildAreaManager.h" />
     <ClInclude Include="BuildWindow.h" />
     <ClInclude Include="Button2D.h" />
     <ClInclude Include="CameraController.h" />
     <ClInclude Include="ClickPosConverter.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="CommonDeclaration.h" />
-    <ClInclude Include="Crossing.h" />
-    <ClInclude Include="CrossingManager.h" />
     <ClInclude Include="FadeInOut.h" />
     <ClInclude Include="GameData.h" />
     <ClInclude Include="GameScene.h" />
-    <ClInclude Include="HumanMoveAI.h" />
-    <ClInclude Include="HumanMoveAIManager.h" />
     <ClInclude Include="KingdomWindow.h" />
     <ClInclude Include="LogoScene.h" />
     <ClInclude Include="Macro.h" />
@@ -154,8 +140,6 @@
     <ClInclude Include="Menuicon.h" />
     <ClInclude Include="MenuWindow.h" />
     <ClInclude Include="OptionWindow.h" />
-    <ClInclude Include="Road.h" />
-    <ClInclude Include="RoadManager.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneFactory.h" />
     <ClInclude Include="SceneManager.h" />
@@ -173,6 +157,9 @@
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="Window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

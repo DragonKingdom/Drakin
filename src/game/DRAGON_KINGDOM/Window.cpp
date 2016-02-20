@@ -86,7 +86,7 @@ void Window::Control()
 		{
 			m_state = STATE_DESTROY;
 		}
-	};
+	}
 }
 
 void Window::Draw()
@@ -151,13 +151,13 @@ void Window::Draw()
 	D3DXVECTOR2 size = D3DXVECTOR2(16,16);
 	for(int i = 0; i < m_windowSize.x - PARTS_SIZE.x * 2;)
 	{
-			// Œ„ŠÔ‚Ì•”•ª‚ªpartsSize‚æ‚è¬‚³‚¢Žž
-			if( m_windowSize.x - PARTS_SIZE.x * 2 - i <= size.x )
-			{
-				// —]‚è‚ð‹‚ß‚é
-				size.x = m_windowSize.x - PARTS_SIZE.x * 2 - i;
-			}
-		for(int j = 0; j < m_windowSize.y - PARTS_SIZE.y * 2;)
+		// Œ„ŠÔ‚Ì•”•ª‚ªpartsSize‚æ‚è¬‚³‚¢Žž
+		if (m_windowSize.x - PARTS_SIZE.x * 2 - i <= size.x)
+		{
+			// —]‚è‚ð‹‚ß‚é
+			size.x = m_windowSize.x - PARTS_SIZE.x * 2 - i;
+		}
+		for (int j = 0; j < m_windowSize.y - PARTS_SIZE.y * 2;)
 		{
 			// Œ„ŠÔ‚Ì•”•ª‚ªpartsSize‚æ‚è¬‚³‚¢Žž
 			if( m_windowSize.y - PARTS_SIZE.y * 2 - j <= size.y )

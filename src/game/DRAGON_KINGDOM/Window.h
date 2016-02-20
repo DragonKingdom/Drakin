@@ -24,11 +24,11 @@ public:
 	/// テクスチャの種類
 	enum TEXTURE_TYPE
 	{
-		LEFT_TOP, ///< ウインドウ左上部分
-		RIGHT_TOP, ///< ウインドウ右上部分
-		LEFT_BOTTOM, ///< ウインドウ左下部分
-		RIGHT_BOTTOM, ///< ウインドウ右下部分
-		CENTER, ///< ウインドウ中央部分
+		LEFT_TOP,		///< ウインドウ左上部分
+		RIGHT_TOP,		///< ウインドウ右上部分
+		LEFT_BOTTOM,	///< ウインドウ左下部分
+		RIGHT_BOTTOM,	///< ウインドウ右下部分
+		CENTER,			///< ウインドウ中央部分
 		TYPE_MAX,
 	};
 

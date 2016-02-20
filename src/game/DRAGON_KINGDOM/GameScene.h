@@ -7,13 +7,9 @@
 #define GAMESCENE_H
 
 #include "Scene.h"
-#include "RoadManager.h"
-#include "CrossingManager.h"
-#include "HumanMoveAIManager.h"
 #include "Map.h"
 #include "CameraController.h"
 #include "ClickPosConverter.h"
-#include "BuildAreaManager.h"
 #include "Timer.h"
 #include "UI.h"
 #include "Map.h"
@@ -42,19 +38,11 @@ private:
 	UI* m_pUI;
 	/// マップクラスオブジェクト
 	Map* m_pMap;
-	/// 建築エリア管理クラスオブジェクト
-	BuildAreaManager* m_pBuildAreaManager;
 
 	Texture m_Texture;
 
 	/// ゲーム状態
 	GAME_STATE m_state;
-
-	RoadManager* m_pRoadManager;
-
-	CrossingManager* m_pCrossingManager;
-
-	HumanMoveAIManager* m_pHumanMoveAI;
 
 	ClickPosConverter* m_pClickPosConverter;
 
