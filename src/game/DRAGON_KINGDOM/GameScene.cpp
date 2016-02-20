@@ -40,10 +40,6 @@ GameScene::~GameScene()
 	delete m_pHumanMoveAI;
 	delete m_pBuildAreaManager;
 	delete m_pClickPosConverter;
-	
-	// テクスチャの開放
-	/// @todo Sceneのデストラクタで解放してくれるのにこの処理って必要なん？
-	TextureManager::getInstance().Release();
 }
 
 SceneID GameScene::Control()

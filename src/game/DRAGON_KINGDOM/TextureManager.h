@@ -8,6 +8,11 @@
 class TextureManager
 {
 public:
+	/// Logoシーンで使用するテクスチャのID
+	enum LOGO_SCENE_TEX
+	{
+		TEAM_LOGO
+	};
 	/// Titleシーンで使用するテクスチャのID
 	enum TITLE_SCENE_TEX
 	{
@@ -30,7 +35,8 @@ private:
 
 	std::vector<Texture> m_texList;	///< 読み込まれているテクスチャ情報
 public:
-	static TextureManager& getInstance() {
+	static TextureManager& getInstance() 
+	{
 		static TextureManager instance;
 		return instance;
 	}

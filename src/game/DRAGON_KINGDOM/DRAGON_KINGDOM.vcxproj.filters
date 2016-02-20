@@ -1,0 +1,376 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="main">
+      <UniqueIdentifier>{3065fa88-e938-4106-80e0-f9843113a946}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager">
+      <UniqueIdentifier>{c9f00a2a-b5fa-481d-a979-755d1a3c752f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene">
+      <UniqueIdentifier>{36ea09a5-1e3f-4d1a-980c-7eae12a3c1eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\LogoScene">
+      <UniqueIdentifier>{490c0a8a-957f-4308-91a3-148c3b9d8887}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\LogoScene\TeamLogo">
+      <UniqueIdentifier>{9a2cb99d-2fdf-4520-a5c3-d2cd0967a2a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene">
+      <UniqueIdentifier>{7a40e6de-92b5-4ff8-8d22-387bcf50d9cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\UI">
+      <UniqueIdentifier>{790b7e67-dd10-47c7-95a9-c139ff3c3c60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\Collision">
+      <UniqueIdentifier>{377b7e6e-99f2-4778-b98e-43c4365e67a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\Map">
+      <UniqueIdentifier>{d5a18779-5aab-4dfb-ab59-6b5169c6c811}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\TitleScene">
+      <UniqueIdentifier>{603e1b98-9b7f-4350-9071-514d86862938}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\TitleScene\TitleBackGround">
+      <UniqueIdentifier>{a22005e2-504e-40df-bba8-645b3c6dbf83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\TitleScene\TitleLogo">
+      <UniqueIdentifier>{81430811-cbdc-42b8-9c7f-5a326edf964c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\TitleScene\TitleMenu">
+      <UniqueIdentifier>{6937acf3-5287-46d3-a8a7-f4347cbbc367}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\TitleScene\TitleMenuButton">
+      <UniqueIdentifier>{6d3caa6e-98e7-4bc0-97d5-c322d952e824}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\TitleScene\TitlePushToStart">
+      <UniqueIdentifier>{79514959-3e8d-4384-8d48-8bf4f9a81526}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\Time">
+      <UniqueIdentifier>{fef61349-18e1-489f-95b4-875902c24d49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\HumanMoveAIManager">
+      <UniqueIdentifier>{6810fda5-d5d1-46ba-8063-9aec176da475}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\HumanMoveAIManager\HumanMoveAI">
+      <UniqueIdentifier>{e0f4a86a-3066-44dc-aa11-fa6c166a6f4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\CrossingManager">
+      <UniqueIdentifier>{dfbd968c-91a4-4312-8d78-68e0516d7efc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\CrossingManager\Crossing">
+      <UniqueIdentifier>{c5f9cdda-a1c3-4d1f-a3a7-a9fbb9a1c6e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\BuildAreaManager">
+      <UniqueIdentifier>{6aa57f09-6ff7-40e4-b7c5-d18041be7324}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\BuildAreaManager\BuildArea">
+      <UniqueIdentifier>{b0a19809-16db-46de-823a-c6226c1dd140}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="stdafx">
+      <UniqueIdentifier>{e593d55b-3fce-4257-809a-bee7b6a00463}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\ClickPosConverter">
+      <UniqueIdentifier>{76141b8f-021f-4ebe-af40-282e51024dda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\FadeInOut">
+      <UniqueIdentifier>{27c745ac-fc4b-433d-9137-3d1d1b57dc66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\GameData">
+      <UniqueIdentifier>{305390d1-2fe4-46d3-b233-7919f2a67836}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\Button2D">
+      <UniqueIdentifier>{c72e5f09-d3a4-4470-909b-3d2464848cef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\TextureManager">
+      <UniqueIdentifier>{a6c6c40c-ad6c-4bf3-80cf-c9f280105574}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\RoadManager">
+      <UniqueIdentifier>{7760a343-354a-4bd2-b2c2-9b6a6d885fda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\RoadManager\Road">
+      <UniqueIdentifier>{0a2ffad5-6450-4bd6-85d6-c3c8a1b20b3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\SceneFactory">
+      <UniqueIdentifier>{d36ef0ff-2fc2-46c4-b6cf-1d0f234aabd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\CameraController">
+      <UniqueIdentifier>{e9fca83c-9807-4224-a211-9539a20eccc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\UI\Menuicon">
+      <UniqueIdentifier>{878ea71f-09da-4971-a54f-7cab55d4998a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\UI\TaskBar">
+      <UniqueIdentifier>{9e94f02b-f975-420a-b6fd-bf2a8c31be5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\UI\Window">
+      <UniqueIdentifier>{2f1b41f1-1749-4d7c-822b-86a3246fe5e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\UI\Window\BuildWindow">
+      <UniqueIdentifier>{cab2730a-7b4f-4ce5-82be-48f1c4eaeea9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\UI\Window\KingdomWindow">
+      <UniqueIdentifier>{2928a859-0445-4645-80d0-1d2174542a7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\UI\Window\MenuWindow">
+      <UniqueIdentifier>{142d5afd-c16d-44e2-b442-d07d5a0bcb16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\UI\Window\OptionWindow">
+      <UniqueIdentifier>{27ba279c-1b03-4c0e-bd7a-b04fed20d49a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\UI\Window\TimerWindow">
+      <UniqueIdentifier>{92a9bc57-f633-42ee-97f9-1d52fea461f8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Scene.cpp">
+      <Filter>main\SceneManager\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\UI\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>main\SceneManager\Scene\GameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraController.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\CameraController</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>main\SceneManager\Scene\TitleScene</Filter>
+    </ClCompile>
+    <ClCompile Include="LogoScene.cpp">
+      <Filter>main\SceneManager\Scene\LogoScene</Filter>
+    </ClCompile>
+    <ClCompile Include="TeamLogo.cpp">
+      <Filter>main\SceneManager\Scene\LogoScene\TeamLogo</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleBackground.cpp">
+      <Filter>main\SceneManager\Scene\TitleScene\TitleBackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleLogo.cpp">
+      <Filter>main\SceneManager\Scene\TitleScene\TitleLogo</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleMenu.cpp">
+      <Filter>main\SceneManager\Scene\TitleScene\TitleMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleMenuButton.cpp">
+      <Filter>main\SceneManager\Scene\TitleScene\TitleMenuButton</Filter>
+    </ClCompile>
+    <ClCompile Include="TitlePushToStart.cpp">
+      <Filter>main\SceneManager\Scene\TitleScene\TitlePushToStart</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneFactory.cpp">
+      <Filter>main\SceneManager\SceneFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>main\SceneManager</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="ClickPosConverter.cpp">
+      <Filter>main\ClickPosConverter</Filter>
+    </ClCompile>
+    <ClCompile Include="Button2D.cpp">
+      <Filter>main\Button2D</Filter>
+    </ClCompile>
+    <ClCompile Include="FadeInOut.cpp">
+      <Filter>main\FadeInOut</Filter>
+    </ClCompile>
+    <ClCompile Include="GameData.cpp">
+      <Filter>main\GameData</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>stdafx</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>main\TextureManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="HumanMoveAIManager.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\HumanMoveAIManager</Filter>
+    </ClCompile>
+    <ClCompile Include="HumanMoveAI.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\HumanMoveAIManager\HumanMoveAI</Filter>
+    </ClCompile>
+    <ClCompile Include="Road.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\RoadManager\Road</Filter>
+    </ClCompile>
+    <ClCompile Include="RoadManager.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\RoadManager</Filter>
+    </ClCompile>
+    <ClCompile Include="CrossingManager.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\CrossingManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Crossing.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\CrossingManager\Crossing</Filter>
+    </ClCompile>
+    <ClCompile Include="BuildArea.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\BuildAreaManager\BuildArea</Filter>
+    </ClCompile>
+    <ClCompile Include="BuildAreaManager.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\BuildAreaManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Menuicon.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\UI\Menuicon</Filter>
+    </ClCompile>
+    <ClCompile Include="TaskBar.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\UI\TaskBar</Filter>
+    </ClCompile>
+    <ClCompile Include="BuildWindow.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\UI\Window\BuildWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="KingdomWindow.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\UI\Window\KingdomWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuWindow.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\UI\Window\MenuWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="OptionWindow.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\UI\Window\OptionWindow</Filter>
+    </ClCompile>
+    <ClCompile Include="TimerWindow.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\UI\Window\TimerWindow</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Scene.h">
+      <Filter>main\SceneManager\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>main\SceneManager\Scene\GameScene\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>main\SceneManager\Scene\GameScene\UI\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>main\SceneManager\Scene\GameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraController.h">
+      <Filter>main\SceneManager\Scene\GameScene\CameraController</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>main\SceneManager\Scene\GameScene\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>main\SceneManager\Scene\GameScene\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleScene.h">
+      <Filter>main\SceneManager\Scene\TitleScene</Filter>
+    </ClInclude>
+    <ClInclude Include="LogoScene.h">
+      <Filter>main\SceneManager\Scene\LogoScene</Filter>
+    </ClInclude>
+    <ClInclude Include="TeamLogo.h">
+      <Filter>main\SceneManager\Scene\LogoScene\TeamLogo</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleBackground.h">
+      <Filter>main\SceneManager\Scene\TitleScene\TitleBackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleLogo.h">
+      <Filter>main\SceneManager\Scene\TitleScene\TitleLogo</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleMenu.h">
+      <Filter>main\SceneManager\Scene\TitleScene\TitleMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleMenuButton.h">
+      <Filter>main\SceneManager\Scene\TitleScene\TitleMenuButton</Filter>
+    </ClInclude>
+    <ClInclude Include="TitlePushToStart.h">
+      <Filter>main\SceneManager\Scene\TitleScene\TitlePushToStart</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneFactory.h">
+      <Filter>main\SceneManager\SceneFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>main\SceneManager</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonDeclaration.h">
+      <Filter>main</Filter>
+    </ClInclude>
+    <ClInclude Include="Macro.h">
+      <Filter>main</Filter>
+    </ClInclude>
+    <ClInclude Include="ClickPosConverter.h">
+      <Filter>main\ClickPosConverter</Filter>
+    </ClInclude>
+    <ClInclude Include="Button2D.h">
+      <Filter>main\Button2D</Filter>
+    </ClInclude>
+    <ClInclude Include="FadeInOut.h">
+      <Filter>main\FadeInOut</Filter>
+    </ClInclude>
+    <ClInclude Include="GameData.h">
+      <Filter>main\GameData</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>stdafx</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>main\TextureManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>main\SceneManager\Scene\GameScene\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="HumanMoveAIManager.h">
+      <Filter>main\SceneManager\Scene\GameScene\HumanMoveAIManager</Filter>
+    </ClInclude>
+    <ClInclude Include="HumanMoveAI.h">
+      <Filter>main\SceneManager\Scene\GameScene\HumanMoveAIManager\HumanMoveAI</Filter>
+    </ClInclude>
+    <ClInclude Include="Road.h">
+      <Filter>main\SceneManager\Scene\GameScene\RoadManager\Road</Filter>
+    </ClInclude>
+    <ClInclude Include="RoadManager.h">
+      <Filter>main\SceneManager\Scene\GameScene\RoadManager</Filter>
+    </ClInclude>
+    <ClInclude Include="CrossingManager.h">
+      <Filter>main\SceneManager\Scene\GameScene\CrossingManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Crossing.h">
+      <Filter>main\SceneManager\Scene\GameScene\CrossingManager\Crossing</Filter>
+    </ClInclude>
+    <ClInclude Include="BuildArea.h">
+      <Filter>main\SceneManager\Scene\GameScene\BuildAreaManager\BuildArea</Filter>
+    </ClInclude>
+    <ClInclude Include="BuildAreaManager.h">
+      <Filter>main\SceneManager\Scene\GameScene\BuildAreaManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Menuicon.h">
+      <Filter>main\SceneManager\Scene\GameScene\UI\Menuicon</Filter>
+    </ClInclude>
+    <ClInclude Include="TaskBar.h">
+      <Filter>main\SceneManager\Scene\GameScene\UI\TaskBar</Filter>
+    </ClInclude>
+    <ClInclude Include="BuildWindow.h">
+      <Filter>main\SceneManager\Scene\GameScene\UI\Window\BuildWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="KingdomWindow.h">
+      <Filter>main\SceneManager\Scene\GameScene\UI\Window\KingdomWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuWindow.h">
+      <Filter>main\SceneManager\Scene\GameScene\UI\Window\MenuWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="OptionWindow.h">
+      <Filter>main\SceneManager\Scene\GameScene\UI\Window\OptionWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="TimerWindow.h">
+      <Filter>main\SceneManager\Scene\GameScene\UI\Window\TimerWindow</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

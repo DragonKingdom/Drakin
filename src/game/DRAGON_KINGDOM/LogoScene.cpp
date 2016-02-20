@@ -23,12 +23,12 @@ SceneID LogoScene::Control()
 
 	SceneID nextScene = SceneID::SCENE_LOGO;
 
+	nextScene = m_teamLogo.Control();
 
-
-	return SceneID::SCENE_GAME;
-//	return SceneID::SCENE_LOGO;
+	return nextScene;
 }
 
 void LogoScene::Draw()
 {
+	m_teamLogo.Draw();
 }

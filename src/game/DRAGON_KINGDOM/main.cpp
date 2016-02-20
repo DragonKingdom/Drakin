@@ -38,7 +38,7 @@ int WINAPI WinMain( HINSTANCE hInst,HINSTANCE hPrevInst,LPSTR szStr,INT iCmdShow
     wndclass.hIconSm		= LoadIcon (NULL, IDI_APPLICATION) ;
 
     RegisterClassEx (&wndclass) ;
-
+	/// @todo +30ってなに
     hWnd = CreateWindow (szAppName,szAppName,WS_OVERLAPPEDWINDOW | WS_VISIBLE,  
 		0, 0, 1280, 720 + 30, NULL, NULL, hInst, NULL);
     ShowWindow (hWnd,SW_SHOW) ;
@@ -46,20 +46,6 @@ int WINAPI WinMain( HINSTANCE hInst,HINSTANCE hPrevInst,LPSTR szStr,INT iCmdShow
 
 	SetWindowText(hWnd,_T("DragonKingdom"));
 	
-	/// @todo 現時点ではカーソルの制限をコメントアウトする
-	// ウィンドウのクライアント領域を取得する
-    //RECT rc;
-    //GetClientRect(hWnd, &rc);
-    //// クライアント領域を画面座標に変換する
-    //POINT pt = { rc.left, rc.top };
-    //POINT pt2 = { rc.right, rc.bottom };
-    //ClientToScreen(hWnd, &pt);
-    //ClientToScreen(hWnd, &pt2);
-    //SetRect(&rc, pt.x, pt.y, pt2.x, pt2.y);
-    //// カーソルの動作範囲を制限する
-    //ClipCursor(&rc);
-
-
 	// ダイレクト３Dの初期化関数を呼ぶ
 	g_pGraphicsDevice = &GraphicsDevice::getInstance();
 	g_pGraphicsDevice->InitD3D(hWnd,true);
@@ -106,18 +92,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd,UINT message,WPARAM wparam,LPARAM lparam)
 			{
 			case WA_ACTIVE:
 			case WA_CLICKACTIVE:
-				/// @todo 現時点ではカーソルの制限はコメントアウトする
-				//// ウィンドウのクライアント領域を取得する
-				//RECT rc;
-				//GetClientRect(hwnd, &rc);
-				//// クライアント領域を画面座標に変換する
-				//POINT pt = { rc.left, rc.top };
-				//POINT pt2 = { rc.right, rc.bottom };
-				//ClientToScreen(hwnd, &pt);
-				//ClientToScreen(hwnd, &pt2);
-				//SetRect(&rc, pt.x, pt.y, pt2.x, pt2.y);
-				//// カーソルの動作範囲を制限する
-				//ClipCursor(&rc);
+			
 				break;
 			}
     }

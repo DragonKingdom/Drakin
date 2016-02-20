@@ -6,7 +6,7 @@
 SceneManager::SceneManager(HWND hWnd) :
 	m_pScene( NULL ),
 	m_step( STEP_CREATE ),
-	m_nextSceneID( SceneID::SCENE_TITLE ),
+	m_nextSceneID( SceneID::SCENE_LOGO ),
 	m_hWnd(hWnd),
 	m_graphics(&GraphicsDevice::getInstance())
 {
