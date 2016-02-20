@@ -27,7 +27,6 @@ namespace
 		TEXT("Resource\\image\\telop.png"),
 		TEXT("Resource\\image\\window.png"),
 		TEXT("Resource\\image\\UI.png"),
-		TEXT("Resource\\image\\i.png"),
 		NULL,
 	};
 	const wchar_t* FILES_RESULT[] =
