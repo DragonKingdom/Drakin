@@ -36,7 +36,7 @@ int WINAPI WinMain( HINSTANCE hInst,HINSTANCE hPrevInst,LPSTR szStr,INT iCmdShow
     wndclass.lpszMenuName	= NULL ;
     wndclass.lpszClassName	= szAppName ;
     wndclass.hIconSm		= LoadIcon (NULL, IDI_APPLICATION) ;
-
+	
     RegisterClassEx (&wndclass) ;
 	/// @todo +30‚Á‚Ä‚È‚É
     hWnd = CreateWindow (szAppName,szAppName,WS_OVERLAPPEDWINDOW | WS_VISIBLE,  

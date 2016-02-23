@@ -44,11 +44,13 @@ void CameraController::Control(D3DXVECTOR2 _cursorPos)
 		 // クリック地点を保存
 		if( m_startPos.x == 0 )
 		{
-			m_startPos  = Scene::m_mousePos;
+			m_startPos = Scene::m_mousePos;
 		}
-		// ドラッグ地点を更新
-		m_dragVal.x +=  (Scene::m_mousePos.x - m_startPos.x) * 0.3f;
-		m_dragVal.y +=  (Scene::m_mousePos.y - m_startPos.y) * 0.3f;
+		//// ドラッグ地点を更新
+		//m_dragVal.x +=  (Scene::m_mousePos.x - m_startPos.x) * 0.3f;
+		//m_dragVal.y +=  (Scene::m_mousePos.y - m_startPos.y) * 0.3f;
+		m_dragVal.x += (Scene::m_mousePos.x - m_startPos.x) * 0.3f;
+		m_dragVal.y -= (Scene::m_mousePos.y - m_startPos.y) * 0.3f;
 		m_startPos = Scene::m_mousePos;
 
 		if( fabs(m_dragVal.x) >= 360)
