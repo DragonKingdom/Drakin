@@ -14,10 +14,10 @@ namespace
 	const int kFadeInTime = 2;
 
 	/// フェードアウトにかける時間(秒)
-	const int kFadeOutTime = 2;
+	const int kFadeOutTime = 1;
 
 	/// 統合ファイル内のテクスチャの座標a
-	const Vertex::FRECT kTexCoord(0.0f, 0.0f, 640.0f, 400.0f);
+	const Vertex::FRECT kTexCoord(0.0f, 0.0f, 1076.0f, 350.0f);
 }
 
 TeamLogo::TeamLogo():
