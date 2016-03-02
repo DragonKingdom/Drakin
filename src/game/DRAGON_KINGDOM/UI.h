@@ -34,10 +34,10 @@ public:
 private:
 
 	TaskBar* m_pTaskBar;
-
 	Menuicon* m_pMenuicon;
-
 	Window* m_pWindow;
+	bool   m_pauseflg;
+
 public:
 	UI();
 	~UI();
@@ -46,5 +46,6 @@ public:
 	void Control();
 
 	GAME_STATE OnClick();
+	bool CheckPause(){ return m_pauseflg; }
 };
 #endif

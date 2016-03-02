@@ -8,7 +8,8 @@ SceneManager::SceneManager(HWND hWnd) :
 	m_step( STEP_CREATE ),
 	m_nextSceneID( SceneID::SCENE_LOGO ),
 	m_hWnd(hWnd),
-	m_graphics(&GraphicsDevice::getInstance())
+	m_graphics(&GraphicsDevice::getInstance()),
+	m_End(false)
 {
 	m_pInput = new Input();
 	m_pInput->Create(hWnd);
@@ -25,10 +26,11 @@ SceneManager::~SceneManager()
 		delete m_pScene;
 		m_pScene = nullptr;
 	}
-
 	delete m_pInput;
 }
-
+/**
+* ゲーム全体の 制御 
+*/
 void SceneManager::Control()
 {
 	SceneID currentSceneID;
@@ -37,6 +39,11 @@ void SceneManager::Control()
 	if( m_pScene == NULL ) 
 	{
 		currentSceneID = m_nextSceneID;
+		if (currentSceneID == FIN)
+		{
+			m_End = true;
+			return;
+		}
 	}
 	else
 	{
@@ -80,10 +87,16 @@ void SceneManager::Render()
 	{
 		return;
 	}
-	m_pScene->Draw();
+	if (!m_pScene == NULL){
+		m_pScene->Draw();
+	}
 }
-
-void SceneManager::Run()
+/**
+* ゲーム全体の描画 制御 //2/19 戻り値を変更
+* @return true
+* @return false
+*/
+bool SceneManager::Run()
 {
 	// キー状態の更新
 	m_pInput->InputUpdate();
@@ -95,4 +108,5 @@ void SceneManager::Run()
 	Render();
 
 	m_graphics->EndScene();
+	return m_End;
 }

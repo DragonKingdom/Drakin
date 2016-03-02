@@ -37,10 +37,13 @@ TitleMenu::TitleMenu()
 
 	m_buttons.push_back(new TitleMenuButton(kTexMenuStartCoord, center));
 	center.y += space;
+
 	m_buttons.push_back(new TitleMenuButton(kTexMenuContinueCoord, center));
 	center.y += space;
+
 	m_buttons.push_back(new TitleMenuButton(kTexMenuOptionCoord, center));
 	center.y += space;
+
 	m_buttons.push_back(new TitleMenuButton(kTexMenuExitCoord, center));
 }
 
@@ -52,6 +55,7 @@ TitleMenu::~TitleMenu()
 	}
 }
 
+
 SceneID TitleMenu::Control()
 {
 	if(!m_visible) 
@@ -62,13 +66,26 @@ SceneID TitleMenu::Control()
 	SceneID nextScene = SceneID::SCENE_TITLE;
 	for(int i = 0; i < TitleMenuButton::kButtonMax; ++i) 
 	{
-		nextScene = m_buttons[i]->Control();
+
+		if (m_buttons[i]->Control()){
+			switch(i){
+			case 0:
+				nextScene = SceneID::SCENE_GAME;
+				break;
+			case 1:
+				break;
+			case 2:
+				break;
+			case 3:
+				nextScene = SceneID::FIN;
+				break;
+			}
+		};
 		if(nextScene != SceneID::SCENE_TITLE)
 		{
 			break;
 		}
 	}
-
 	return nextScene;
 }
 
@@ -78,7 +95,6 @@ void TitleMenu::Draw()
 	{
 		return;
 	}
-
 	// メニューの各ボタンを描画
 	for(int i = 0; i < TitleMenuButton::kButtonMax; ++i) 
 	{

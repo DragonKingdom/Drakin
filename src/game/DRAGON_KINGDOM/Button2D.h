@@ -33,6 +33,8 @@ public:
 	Button2D(RefPoint _refPoint, D3DXVECTOR2 _position);
 	virtual ~Button2D();
 
+	Vertex::FRECT GetRect(){ return m_rect; }  //‚Q/‚Q‚U’Ç‰Á
+
 protected:
 	bool IsMouseOver();
 	bool IsLeftClicked();

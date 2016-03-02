@@ -6,6 +6,7 @@ const D3DXVECTOR2 Window::PARTS_SIZE = D3DXVECTOR2(135,135);
 
 const Vertex::FRECT Window::UV[Window::TYPE_MAX] = 
 {
+	//Window.png
 	Vertex::FRECT(0,0,135,135),
 	Vertex::FRECT(135,0,270,135),
 	Vertex::FRECT(0,135,135,270),
@@ -18,7 +19,7 @@ Window::Window(	D3DXVECTOR2 _windowSize , D3DXVECTOR2 _position , D3DXVECTOR2 _t
 	m_position(_position),
 	m_targetPos(_targetPos),
 	m_time(LEAVE_LIMIT_TIME),
-	m_move(0,0) , 
+	m_move(0,0), 
 	m_initPos(_position)
 {	
 	m_texture = TextureManager::getInstance().Get(TextureManager::GAME_SCENE_TEX::WINDOW);
@@ -31,7 +32,6 @@ Window::Window(	D3DXVECTOR2 _windowSize , D3DXVECTOR2 _position , D3DXVECTOR2 _t
 	{
 		m_windowSize.y = PARTS_SIZE.y * 2;
 	}
-
 	// 移動量を決める
 	if( m_position.x == m_targetPos.x && m_position.y == m_targetPos.y )
 	{
@@ -62,7 +62,6 @@ Window::Window(	D3DXVECTOR2 _windowSize , D3DXVECTOR2 _position , D3DXVECTOR2 _t
 
 Window::~Window()
 {
-
 }
 
 void Window::Control()
@@ -70,7 +69,6 @@ void Window::Control()
 	switch(m_state)
 	{
 	case STATE_WAIT:
-
 		break;
 	case STATE_MOVE:
 		m_position += m_move;
@@ -86,7 +84,7 @@ void Window::Control()
 		{
 			m_state = STATE_DESTROY;
 		}
-	}
+	};
 }
 
 void Window::Draw()
@@ -127,8 +125,7 @@ void Window::Draw()
 							   Vertex::FRECT(UV[LEFT_BOTTOM].right,UV[LEFT_BOTTOM].top,UV[LEFT_BOTTOM].right + partsSize,UV[LEFT_BOTTOM].bottom));
 		i += partsSize;
 	}
-	// 隙間を埋めるサイズ
-	partsSize = 16;
+	
 	// ウインドウの左右のパーツの隙間を埋める( サイズ - 左右のパーツ分for文をまわす)
 	for(int i = 0; i < m_windowSize.y - PARTS_SIZE.y * 2; )
 	{
@@ -151,13 +148,13 @@ void Window::Draw()
 	D3DXVECTOR2 size = D3DXVECTOR2(16,16);
 	for(int i = 0; i < m_windowSize.x - PARTS_SIZE.x * 2;)
 	{
-		// 隙間の部分がpartsSizeより小さい時
-		if (m_windowSize.x - PARTS_SIZE.x * 2 - i <= size.x)
-		{
-			// 余りを求める
-			size.x = m_windowSize.x - PARTS_SIZE.x * 2 - i;
-		}
-		for (int j = 0; j < m_windowSize.y - PARTS_SIZE.y * 2;)
+			// 隙間の部分がpartsSizeより小さい時
+			if( m_windowSize.x - PARTS_SIZE.x * 2 - i <= size.x )
+			{
+				// 余りを求める
+				size.x = m_windowSize.x - PARTS_SIZE.x * 2 - i;
+			}
+		for(int j = 0; j < m_windowSize.y - PARTS_SIZE.y * 2;)
 		{
 			// 隙間の部分がpartsSizeより小さい時
 			if( m_windowSize.y - PARTS_SIZE.y * 2 - j <= size.y )

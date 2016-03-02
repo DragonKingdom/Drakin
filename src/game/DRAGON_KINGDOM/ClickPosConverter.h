@@ -1,3 +1,9 @@
+/**
+* @file   ClickPosConverter.h
+* @brief  
+*
+* @author 
+*/
 #ifndef CLICKPOSCONVERTER_H
 #define CLICKPOSCONVERTER_H
 

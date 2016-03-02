@@ -54,6 +54,9 @@ public:
 	~TaskBar();
 
 	void Control();
+	/**
+	*  ‰æ–Ê‰º•”•F‚Ìƒo[‚Ì•`‰æ
+	*/
 	void Draw();
 
 	

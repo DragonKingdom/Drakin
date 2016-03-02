@@ -31,6 +31,8 @@ Scene* SceneFactory::CreateScene(SceneID _sceneID)
 		break;
 	case SCENE_ENDING:
 		break;
+	case FIN:
+		break;
 	default:
 		break;
 	}

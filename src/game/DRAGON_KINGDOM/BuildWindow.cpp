@@ -3,9 +3,11 @@
 #include "Scene.h"
 #include "TextureManager.h"
 
+
 const Vertex::FRECT BuildWindow::UV[BuildWindow::TYPE_MAX] = 
-{
-	Vertex::FRECT(0,64,64,128),
+{ 
+	//数値は統合ファイル内での座標
+	Vertex::FRECT(0,64,64,128), 
 	Vertex::FRECT(64,64,128,128),
 };
 
@@ -22,7 +24,6 @@ BuildWindow::BuildWindow() :
 
 BuildWindow::~BuildWindow()
 {
-
 }
 
 void BuildWindow::Control()
@@ -43,7 +44,7 @@ void BuildWindow::Control()
 											   ICON_POS.x + (i * UV[HOUSE].right + i * 10.f) + UV[HOUSE].right, 
 											   ICON_POS.y + UV[HOUSE].bottom);
 			
-			if( collisiton.PointToSquare(Scene::m_mousePos,rect))
+			if(collisiton.PointToSquare(Scene::m_mousePos,rect))
 			{
 				// カーソルが上にあればIDを保存
 				m_selectID = i;

@@ -33,6 +33,7 @@ enum SceneID
 	SCENE_GAME,
 	SCENE_RESULT,
 	SCENE_ENDING,
+	FIN
 };
 
 enum GAME_STATE

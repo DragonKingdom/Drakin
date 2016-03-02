@@ -11,6 +11,8 @@
 #include "Button2D.h"
 #include "FadeInOut.h"
 
+class Collision;
+
 /// タイトルメニューのボタンクラス
 class TitleMenuButton : public Button2D
 {
@@ -27,7 +29,7 @@ public:
 	TitleMenuButton(const Vertex::FRECT& _coord, const D3DXVECTOR2& _center);
 	virtual ~TitleMenuButton();
 
-	SceneID Control();
+	bool Control();
 	void Draw();
 
 protected:
@@ -38,6 +40,7 @@ private:
 	Texture m_texture;
 	const Vertex::FRECT& m_coord;
 	float m_scale;
+	Collision* m_pCol;
 
 	// 隠蔽
 	TitleMenuButton();

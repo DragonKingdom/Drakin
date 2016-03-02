@@ -7,20 +7,21 @@
 #define GAMESCENE_H
 
 #include "Scene.h"
+
 #include "Map.h"
 #include "CameraController.h"
 #include "ClickPosConverter.h"
 #include "Timer.h"
 #include "UI.h"
 #include "Map.h"
-#include <Camera.h>
-#include <Input.h>
-#include <vertex.h>
-#include <texture.h>
-#include <Model.h>
+#include "Camera.h"
+#include "Input.h"
+#include "vertex.h"
+#include "texture.h"
+#include "Model.h"
 #include "XAudio.h"
 
-#include <Font.h>
+#include "Font.h"
 
 /**
  * ゲームシーンを管理するクラス
@@ -28,34 +29,39 @@
 class GameScene : public Scene
 {
 public:
-	Font* m_pFont;
+	Font m_pFont;
 private:
 	/// カメラアングルの制御クラス
-	CameraController* m_pCameraController;
+	CameraController m_CameraController;
+	ClickPosConverter m_ClickPosConverter;
+	/// 建築エリア管理クラスオブジェクト
+
+	
+
 	/// タイマークラスオブジェクト
 	Timer& m_timer;
 	/// UIクラスオブジェクト
-	UI* m_pUI;
+	UI m_UI;
 	/// マップクラスオブジェクト
-	Map* m_pMap;
+	Map m_Map;
+	
 
 	Texture m_Texture;
 
 	/// ゲーム状態
 	GAME_STATE m_state;
 
-	ClickPosConverter* m_pClickPosConverter;
 
-	XAudio* m_pXAudio;
+	XAudio m_XAudio;
 
 public:
 
 	GameScene();
 	~GameScene();
 
-	SceneID Control();
+	virtual SceneID Control();
 
-	void Draw();
+	virtual void Draw();
 private:
 
 };

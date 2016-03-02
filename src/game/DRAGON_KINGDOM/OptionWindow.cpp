@@ -2,10 +2,10 @@
 #include "OptionWindow.h"
 
 OptionWindow::OptionWindow() : 
-	Window(D3DXVECTOR2(500,500),
+	Window(D3DXVECTOR2(800,500),
 		   D3DXVECTOR2(CLIENT_WIDTH / 2 ,CLIENT_HEIGHT / 2 ),
 		   D3DXVECTOR2(CLIENT_WIDTH  / 2 ,CLIENT_HEIGHT  / 2)), 
-	m_pTimer(&Timer::getInstance())
+	       m_pTimer(&Timer::getInstance())
 {
 	m_initPos = m_targetPos =  m_position -= m_windowSize / 2;
 	m_pTimer->StopTime();
@@ -29,6 +29,7 @@ void OptionWindow::Control()
 	//	m_time = LEAVE_LIMIT_TIME;
 	//}
 	Window::Control();
+
 }
 
 void OptionWindow::Draw()

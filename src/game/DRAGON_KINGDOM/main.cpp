@@ -7,9 +7,7 @@
 
 #include "SceneManager.h"
 
-
 LRESULT CALLBACK WindowProc(HWND hwnd,UINT message,WPARAM wparam,LPARAM lparam);
-
 GraphicsDevice* g_pGraphicsDevice = NULL;
 
 //ÉÅÉCÉìä÷êî
@@ -36,9 +34,9 @@ int WINAPI WinMain( HINSTANCE hInst,HINSTANCE hPrevInst,LPSTR szStr,INT iCmdShow
     wndclass.lpszMenuName	= NULL ;
     wndclass.lpszClassName	= szAppName ;
     wndclass.hIconSm		= LoadIcon (NULL, IDI_APPLICATION) ;
-	
+
     RegisterClassEx (&wndclass) ;
-	/// @todo +30Ç¡ÇƒÇ»Ç…
+
     hWnd = CreateWindow (szAppName,szAppName,WS_OVERLAPPEDWINDOW | WS_VISIBLE,  
 		0, 0, 1280, 720 + 30, NULL, NULL, hInst, NULL);
     ShowWindow (hWnd,SW_SHOW) ;
@@ -63,9 +61,10 @@ int WINAPI WinMain( HINSTANCE hInst,HINSTANCE hPrevInst,LPSTR szStr,INT iCmdShow
          }
          else
 		 {
-			sceneManager.Run();
+			 if (sceneManager.Run()){
+				 return 0;
+			 };
 		 }       
-
 	 }
      return (INT)msg.wParam ;
 }

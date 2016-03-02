@@ -1,5 +1,6 @@
 /**
  * @file  Timer.cpp
+ * @brief ゲーム内時間を管理するクラス
  * @author danjo
  */
 #ifndef _TIMER_H
@@ -8,9 +9,6 @@
 #include <Windows.h>
 #include "GameData.h"
 
-/**
- * ゲーム内時間を管理するクラス
- */
 class Timer
 {
 public:
@@ -29,9 +27,7 @@ private:
 	float m_gameSpeed; 
 public:
 	~Timer();
-	/**
-	 *プレイ時間を進行
-	 */
+	
 	void AdvanceTime();
 
 	/**
@@ -42,12 +38,7 @@ public:
 	 * プレイ時間を進める
 	 */
 	void StartTime();
-	/**
-     * 秒、分、時間、年の上限をチェックする関数
-	 * @param[in] _current 比べる位
-	 * @param[in] _next 増加させる位
-	 * @param[in] _max 比較する最大数
-     */
+	
 	void AdvanceDate(int* _current,int* _next,int _max);
 	/**
      * インスタンスの取得
@@ -58,7 +49,7 @@ public:
 		return timer;
 	};
 private:
-	Timer() : m_gameData(GameData::getInstance()) , m_time(timeGetTime()) , m_gameSpeed(INIT_GAME_SPEED){} 
+	Timer();
 	Timer(const Timer &other) : m_gameData(GameData::getInstance()) , m_time(timeGetTime()) , m_gameSpeed(1.0f){}
 	Timer &operator = (const Timer &other){}
 };

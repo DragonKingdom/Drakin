@@ -46,7 +46,6 @@ bool Button2D::IsMouseOver()
 			return true;
 		}
 	}
-
 	return false;
 }
 
@@ -54,10 +53,10 @@ bool Button2D::IsLeftClicked()
 {
 	if(!(Scene::m_mousePushState & Scene::M_LEFT_PUSH)) 
 	{
-		// そもそも右クリックされていなければ即return
+		// そもそも左クリックされていなければ即return
 		return false;
 	}
 
-	// 右クリックされていれば、マウスカーソル位置がボタン上かチェック
+	// 左クリックされていれば、マウスカーソル位置がボタン上かチェック
 	return IsMouseOver();
 }

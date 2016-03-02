@@ -9,6 +9,7 @@
 #define TITLEMENU_H
 
 class TitleMenuButton;
+class Collision;
 
 /// タイトル画面のメニュークラス
 class TitleMenu
@@ -28,6 +29,7 @@ private:
 	std::vector<TitleMenuButton*> m_buttons;
 
 	DISALLOW_COPY_AND_ASSIGN(TitleMenu);
+
 };
 
 #endif // TITLEMENU_H

@@ -8,14 +8,12 @@ TimerWindow::TimerWindow() :
 	Window(D3DXVECTOR2(CLIENT_WIDTH-520,100),
 	       D3DXVECTOR2(0,CLIENT_HEIGHT - 110),
 		   D3DXVECTOR2(0,CLIENT_HEIGHT - 110)), 
-	m_pGameData(&GameData::getInstance())
+	       m_pGameData(&GameData::getInstance())
 {
-
 }
 
 TimerWindow::~TimerWindow()
 {
-
 }
 
 void TimerWindow::Control()

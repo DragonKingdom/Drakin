@@ -11,7 +11,6 @@
 #include <vertex.h>
 #include "Collision.h"
 
-
 class Window
 {
 public:
@@ -24,11 +23,11 @@ public:
 	/// テクスチャの種類
 	enum TEXTURE_TYPE
 	{
-		LEFT_TOP,		///< ウインドウ左上部分
-		RIGHT_TOP,		///< ウインドウ右上部分
-		LEFT_BOTTOM,	///< ウインドウ左下部分
-		RIGHT_BOTTOM,	///< ウインドウ右下部分
-		CENTER,			///< ウインドウ中央部分
+		LEFT_TOP,      ///< ウインドウ左上部分
+		RIGHT_TOP,     ///< ウインドウ右上部分
+		LEFT_BOTTOM,   ///< ウインドウ左下部分
+		RIGHT_BOTTOM,  ///< ウインドウ右下部分
+		CENTER,        ///< ウインドウ中央部分
 		TYPE_MAX,
 	};
 
@@ -49,13 +48,12 @@ public:
 		DIR_DIAGONAL,	///< 斜め方向
 		DIR_NONE,		/// 移動しないウインドウ
 	};
-
 	static const Vertex::FRECT UV[TYPE_MAX];
 private:
-	Texture m_texture;
+	Texture     m_texture;
 protected:
 	/// ウインドウを描画する時間
-	int m_time;
+	int         m_time;
 	/// ウインドウの移動速度
 	D3DXVECTOR2 m_move;
 	/// ウインドウの初期位置(LEAVE用)
@@ -71,34 +69,41 @@ protected:
 	/// ウインドウの状態
 	STATE		m_state;
 
-	Vertex m_vertex;
-
-	Collision m_collision;
+	Vertex      m_vertex;
+	Collision   m_collision;
 public:
 
 	Window(D3DXVECTOR2 _windowSize,D3DXVECTOR2 _position,D3DXVECTOR2 _targetPos);
 	virtual ~Window() = 0;
-
+	/**
+	* ビルドウィンドウの制御
+	*/
 	virtual void Control();
+	/**
+	* ウィンドウの描画
+	*/
 	virtual void Draw();
+	/**
+	* 
+	*/
 	virtual GAME_STATE OnClick(){ return STATE_NONE; }
 	/**
-	 * 現在の状態を返す
-	 * @return 状態
+	 * ビルドウィンドウの現在の状態を返す
+	 * @return  m_state
 	 */
 	STATE GetState(){ return m_state; }
 	/**
-	 * ウインドウの状態をセットする
+	 * ビルドウインドウの状態()をセットする
 	 * @param _state 状態
 	 */
 	void SetState(STATE _state){ m_state = _state; }
 private:
 	/**
-	 * 移動先へ到達しているか調べる
+	 * ビルドウィンドウが移動先へ到達しているか調べる
 	 * @param _position  現在地
 	 * @param _targetPos 移動先
-	 * @retval true 移動先へ到達した
-	 * @retval false 到達していない
+	 * @retval true      移動先へ到達した
+	 * @retval false     到達していない
 	 */
 	bool CheckTargetPos(D3DXVECTOR2 _position,D3DXVECTOR2 _targetPos);
 

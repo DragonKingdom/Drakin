@@ -12,7 +12,6 @@ KingdomWindow::KingdomWindow() :
 
 KingdomWindow::~KingdomWindow()
 {
-
 }
 
 void KingdomWindow::Control()

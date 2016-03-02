@@ -30,17 +30,24 @@ private:
 	
 	/// シーンクラスobj
 	Scene*			m_pScene;
+
 	/// インプットクラスobj
 	Input*			m_pInput;
+
 	/// グラフィックスクラスobj
 	GraphicsDevice*	m_graphics;
+
 	/// ウィンドウハンドル
 	HWND			m_hWnd;
+
 	/// ステップ変数
 	Step			m_step;
+
 	/// 次のシーンIDを保存しておく入れ物
 	SceneID			m_nextSceneID;
 
+	//ゲーム終了フラグ //2/19 追加
+	bool m_End;
 public:
 	/**
 	 * コンストラクタ
@@ -55,8 +62,7 @@ public:
 
 	void Render();
 
-	void Run();
-
+    bool Run();
 	//void SetGraphics(GraphicsDevice _graphics) {
 	//	m_graphics = _graphics;
 	//	m_pScene->SetDevice( m_graphics.GetDevice() );

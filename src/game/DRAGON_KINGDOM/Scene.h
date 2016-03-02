@@ -72,11 +72,12 @@ protected:
 	/// インプットクラスオブジェクト
 	static Input* m_pInput;
 	/// 現在のシーンのID
-	SceneID			m_sceneID;
-
+	SceneID		  m_sceneID;
 public:
 	explicit Scene(SceneID _sceneID);
 	virtual ~Scene();
+
+	typedef Scene::MOUSE_KEYKIND MOUSE_KEYKIND; //2/29日追加
 
 	/// 入力管理クラスの登録
 	/**

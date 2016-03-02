@@ -101,12 +101,6 @@
     <Filter Include="main\SceneManager\Scene\GameScene\UI\Window\TimerWindow">
       <UniqueIdentifier>{92a9bc57-f633-42ee-97f9-1d52fea461f8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="main\SceneManager\Scene\Mouse">
-      <UniqueIdentifier>{7f58511f-77ec-43de-abb9-9e03a49f9ea6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="main\SceneManager\Scene\Key">
-      <UniqueIdentifier>{a873ae17-e07c-428a-aea0-27929610e766}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scene.cpp">
@@ -204,12 +198,6 @@
     </ClCompile>
     <ClCompile Include="TimerWindow.cpp">
       <Filter>main\SceneManager\Scene\GameScene\UI\Window\TimerWindow</Filter>
-    </ClCompile>
-    <ClCompile Include="Mouse.cpp">
-      <Filter>main\SceneManager\Scene\Mouse</Filter>
-    </ClCompile>
-    <ClCompile Include="Key.cpp">
-      <Filter>main\SceneManager\Scene\Key</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -311,12 +299,6 @@
     </ClInclude>
     <ClInclude Include="TimerWindow.h">
       <Filter>main\SceneManager\Scene\GameScene\UI\Window\TimerWindow</Filter>
-    </ClInclude>
-    <ClInclude Include="Mouse.h">
-      <Filter>main\SceneManager\Scene\Mouse</Filter>
-    </ClInclude>
-    <ClInclude Include="Key.h">
-      <Filter>main\SceneManager\Scene\Key</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

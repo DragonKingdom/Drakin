@@ -8,6 +8,8 @@
 #include "TitleMenuButton.h"
 #include "TextureManager.h"
 #include "Scene.h"
+#include "Collision.h"   //2/26 追加
+
 
 //----------------------------------------------------------------------
 namespace
@@ -17,7 +19,6 @@ const int kFadeInTime = 1;
 }
 //----------------------------------------------------------------------
 
-
 TitleMenuButton::TitleMenuButton(const Vertex::FRECT& _coord, const D3DXVECTOR2& _center)
 	: Button2D(RefPoint::kCenter, _center),
 	  m_fadeIn(0x00),
@@ -26,7 +27,7 @@ TitleMenuButton::TitleMenuButton(const Vertex::FRECT& _coord, const D3DXVECTOR2&
 	  m_scale(1.0f)
 {
 	m_texture = TextureManager::getInstance().Get(TextureManager::TITLE_SCENE_TEX::MENU);
-
+	m_pCol = new Collision();
 	// ボタンの矩形の各座標を設定する
 	float width = m_coord.right - m_coord.left;;
 	float height = m_coord.bottom - m_coord.top;
@@ -35,9 +36,10 @@ TitleMenuButton::TitleMenuButton(const Vertex::FRECT& _coord, const D3DXVECTOR2&
 
 TitleMenuButton::~TitleMenuButton()
 {
+	delete m_pCol;
 }
 
-SceneID TitleMenuButton::Control()
+bool TitleMenuButton::Control()
 {
 	// マウスオーバーしたときだけちょっと大きくする
 	if(IsMouseOver()) 
@@ -48,15 +50,19 @@ SceneID TitleMenuButton::Control()
 	{
 		m_scale = 1.0f;
 	}
-
 	SceneID nextScene = SCENE_TITLE;
-	/// @todo とりあえず、どのボタンをクリックしてもゲームシーンに遷移させる
-	if(IsLeftClicked()) 
-	{
-		nextScene = SceneID::SCENE_GAME;
-	}
 
-	return nextScene;
+	/// @todo とりあえず、どのボタンをクリックしてもゲームシーンに遷移させる
+    //  ↑矩形別でシーン遷移します
+	if (IsLeftClicked()){
+		D3DXVECTOR2 pos;
+		pos = Scene::m_mousePos;
+
+		if (m_pCol->PointToSquare(pos, GetRect())){
+			return true;
+		}
+	}	
+	return false;
 }
 
 void TitleMenuButton::Draw()
