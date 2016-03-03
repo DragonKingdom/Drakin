@@ -26,12 +26,6 @@
     <Filter Include="main\SceneManager\Scene\GameScene\UI">
       <UniqueIdentifier>{790b7e67-dd10-47c7-95a9-c139ff3c3c60}</UniqueIdentifier>
     </Filter>
-    <Filter Include="main\SceneManager\Scene\GameScene\Collision">
-      <UniqueIdentifier>{377b7e6e-99f2-4778-b98e-43c4365e67a4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="main\SceneManager\Scene\GameScene\Map">
-      <UniqueIdentifier>{d5a18779-5aab-4dfb-ab59-6b5169c6c811}</UniqueIdentifier>
-    </Filter>
     <Filter Include="main\SceneManager\Scene\TitleScene">
       <UniqueIdentifier>{603e1b98-9b7f-4350-9071-514d86862938}</UniqueIdentifier>
     </Filter>
@@ -50,9 +44,6 @@
     <Filter Include="main\SceneManager\Scene\TitleScene\TitlePushToStart">
       <UniqueIdentifier>{79514959-3e8d-4384-8d48-8bf4f9a81526}</UniqueIdentifier>
     </Filter>
-    <Filter Include="main\SceneManager\Scene\GameScene\Time">
-      <UniqueIdentifier>{fef61349-18e1-489f-95b4-875902c24d49}</UniqueIdentifier>
-    </Filter>
     <Filter Include="stdafx">
       <UniqueIdentifier>{e593d55b-3fce-4257-809a-bee7b6a00463}</UniqueIdentifier>
     </Filter>
@@ -61,9 +52,6 @@
     </Filter>
     <Filter Include="main\FadeInOut">
       <UniqueIdentifier>{27c745ac-fc4b-433d-9137-3d1d1b57dc66}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="main\GameData">
-      <UniqueIdentifier>{305390d1-2fe4-46d3-b233-7919f2a67836}</UniqueIdentifier>
     </Filter>
     <Filter Include="main\Button2D">
       <UniqueIdentifier>{c72e5f09-d3a4-4470-909b-3d2464848cef}</UniqueIdentifier>
@@ -101,6 +89,24 @@
     <Filter Include="main\SceneManager\Scene\GameScene\UI\Window\TimerWindow">
       <UniqueIdentifier>{92a9bc57-f633-42ee-97f9-1d52fea461f8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\Collision">
+      <UniqueIdentifier>{377b7e6e-99f2-4778-b98e-43c4365e67a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\GameData">
+      <UniqueIdentifier>{305390d1-2fe4-46d3-b233-7919f2a67836}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager">
+      <UniqueIdentifier>{855747e3-da27-4fca-8cdf-b84e458e7ed0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\Map">
+      <UniqueIdentifier>{d5a18779-5aab-4dfb-ab59-6b5169c6c811}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\StateManager">
+      <UniqueIdentifier>{0e7abe16-02af-4af2-82df-abe3282619c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\Timer">
+      <UniqueIdentifier>{fef61349-18e1-489f-95b4-875902c24d49}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scene.cpp">
@@ -119,10 +125,10 @@
       <Filter>main\SceneManager\Scene\GameScene\CameraController</Filter>
     </ClCompile>
     <ClCompile Include="Collision.cpp">
-      <Filter>main\SceneManager\Scene\GameScene\Collision</Filter>
+      <Filter>main\Collision</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp">
-      <Filter>main\SceneManager\Scene\GameScene\Map</Filter>
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\Map</Filter>
     </ClCompile>
     <ClCompile Include="TitleScene.cpp">
       <Filter>main\SceneManager\Scene\TitleScene</Filter>
@@ -167,7 +173,7 @@
       <Filter>main\FadeInOut</Filter>
     </ClCompile>
     <ClCompile Include="GameData.cpp">
-      <Filter>main\GameData</Filter>
+      <Filter>main\SceneManager\Scene\GameScene\GameData</Filter>
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>stdafx</Filter>
@@ -176,7 +182,7 @@
       <Filter>main\TextureManager</Filter>
     </ClCompile>
     <ClCompile Include="Timer.cpp">
-      <Filter>main\SceneManager\Scene\GameScene\Time</Filter>
+      <Filter>main\SceneManager\Scene\GameScene\Timer</Filter>
     </ClCompile>
     <ClCompile Include="Menuicon.cpp">
       <Filter>main\SceneManager\Scene\GameScene\UI\Menuicon</Filter>
@@ -199,6 +205,12 @@
     <ClCompile Include="TimerWindow.cpp">
       <Filter>main\SceneManager\Scene\GameScene\UI\Window\TimerWindow</Filter>
     </ClCompile>
+    <ClCompile Include="ObjectManager.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager</Filter>
+    </ClCompile>
+    <ClCompile Include="StateManager.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\StateManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -217,10 +229,10 @@
       <Filter>main\SceneManager\Scene\GameScene\CameraController</Filter>
     </ClInclude>
     <ClInclude Include="Collision.h">
-      <Filter>main\SceneManager\Scene\GameScene\Collision</Filter>
+      <Filter>main\Collision</Filter>
     </ClInclude>
     <ClInclude Include="Map.h">
-      <Filter>main\SceneManager\Scene\GameScene\Map</Filter>
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\Map</Filter>
     </ClInclude>
     <ClInclude Include="TitleScene.h">
       <Filter>main\SceneManager\Scene\TitleScene</Filter>
@@ -268,7 +280,7 @@
       <Filter>main\FadeInOut</Filter>
     </ClInclude>
     <ClInclude Include="GameData.h">
-      <Filter>main\GameData</Filter>
+      <Filter>main\SceneManager\Scene\GameScene\GameData</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h">
       <Filter>stdafx</Filter>
@@ -277,7 +289,7 @@
       <Filter>main\TextureManager</Filter>
     </ClInclude>
     <ClInclude Include="Timer.h">
-      <Filter>main\SceneManager\Scene\GameScene\Time</Filter>
+      <Filter>main\SceneManager\Scene\GameScene\Timer</Filter>
     </ClInclude>
     <ClInclude Include="Menuicon.h">
       <Filter>main\SceneManager\Scene\GameScene\UI\Menuicon</Filter>
@@ -299,6 +311,12 @@
     </ClInclude>
     <ClInclude Include="TimerWindow.h">
       <Filter>main\SceneManager\Scene\GameScene\UI\Window\TimerWindow</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectManager.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager</Filter>
+    </ClInclude>
+    <ClInclude Include="StateManager.h">
+      <Filter>main\SceneManager\Scene\GameScene\StateManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

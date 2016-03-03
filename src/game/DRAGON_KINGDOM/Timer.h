@@ -28,6 +28,14 @@ private:
 public:
 	~Timer();
 	
+	/**
+	 * Timer‚Ì§ŒäŠÖ”
+	 */
+	void Control();
+
+	/**
+	 * ŠÔ‚ÌXVŠÖ”
+	 */
 	void AdvanceTime();
 
 	/**

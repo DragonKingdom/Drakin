@@ -1,5 +1,4 @@
 #include "Timer.h"
-#pragma comment(lib,"winmm.lib")
 
 // 月毎の日数
 const int Timer::DATE_NUM[Timer::MONTH_NUM] = 
@@ -31,6 +30,24 @@ Timer::~Timer()
 {
 
 }
+
+/**
+ * Timerクラスの制御関数(まだ未実装)
+ * 
+ */
+void Timer::Control()
+{
+	if (true)/*現在のGameSceneの状態がNORMALだったら*/
+	{
+		if (false)/*一つ前のGameSceneの状態がPAUSEだったら*/
+		{
+			StartTime();
+		}
+
+		AdvanceTime();
+	}
+}
+
 /**
 * @fn
 * @brief ゲーム内時間の計測
@@ -40,19 +57,20 @@ void Timer::AdvanceTime()
 	DWORD endTime = timeGetTime();
 	// プレイ時間を更新
 	m_gameData.m_time.second = (int)(((endTime - m_time) / 1000 ) * m_gameSpeed);
-	if( m_gameData.m_time.second >= 60){
+	if( m_gameData.m_time.second >= 60)
+	{
 		// 計測開始時間をリセット
 		m_time = timeGetTime();
 		// 秒の計算
-		AdvanceDate(&m_gameData.m_time.second,&m_gameData.m_time.minute,60);
+		AdvanceDate(&m_gameData.m_time.second, &m_gameData.m_time.minute, 60);
 		// 分の計算
-		AdvanceDate(&m_gameData.m_time.minute,&m_gameData.m_time.hour,60);
+		AdvanceDate(&m_gameData.m_time.minute, &m_gameData.m_time.hour, 60);
 		// 時間の計算
-		AdvanceDate(&m_gameData.m_time.hour,&m_gameData.m_time.date,24);
+		AdvanceDate(&m_gameData.m_time.hour, &m_gameData.m_time.date, 24);
 		// 日の計算
-		AdvanceDate(&m_gameData.m_time.date,&m_gameData.m_time.month,DATE_NUM[m_gameData.m_time.month]);
+		AdvanceDate(&m_gameData.m_time.date, &m_gameData.m_time.month, DATE_NUM[m_gameData.m_time.month]);
 		// 年の計算
-		AdvanceDate(&m_gameData.m_time.month,&m_gameData.m_time.year,MONTH_NUM);
+		AdvanceDate(&m_gameData.m_time.month, &m_gameData.m_time.year, MONTH_NUM);
 	}
 }
 /**
@@ -61,6 +79,7 @@ void Timer::AdvanceTime()
 */
 void Timer::StopTime()
 {
+	// ゲーム内の時間を0にする
 	m_gameSpeed = 0;
 }
 /**
@@ -70,6 +89,9 @@ void Timer::StopTime()
 void Timer::StartTime()
 {
 	m_gameSpeed = INIT_GAME_SPEED;
+	
+	// 計測開始時間をリセットする
+	m_time = timeGetTime();
 }
 /**
 * @fn
