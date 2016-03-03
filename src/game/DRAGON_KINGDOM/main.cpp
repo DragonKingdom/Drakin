@@ -7,6 +7,8 @@
 
 #include "SceneManager.h"
 
+#define GAME_FPS (1000/60)
+
 LRESULT CALLBACK WindowProc(HWND hwnd,UINT message,WPARAM wparam,LPARAM lparam);
 GraphicsDevice* g_pGraphicsDevice = NULL;
 
@@ -50,6 +52,12 @@ int WINAPI WinMain( HINSTANCE hInst,HINSTANCE hPrevInst,LPSTR szStr,INT iCmdShow
 	// シーンマネージャー生成
 	SceneManager sceneManager(hWnd);
 
+	DWORD NowTime = timeGetTime();
+	DWORD OldTime = timeGetTime();
+
+	/// @todo フレーム制御ってこれでいいよな…
+
+
 	// メッセージループ
     ZeroMemory( &msg, sizeof(msg) );
     while( msg.message!=WM_QUIT )
@@ -59,12 +67,18 @@ int WINAPI WinMain( HINSTANCE hInst,HINSTANCE hPrevInst,LPSTR szStr,INT iCmdShow
 			 TranslateMessage( &msg );
              DispatchMessage( &msg );
          }
-         else
+		 else
 		 {
-			 if (sceneManager.Run()){
-				 return 0;
+			 NowTime = timeGetTime();
+			 if (NowTime - OldTime >= GAME_FPS)
+			 {
+				 if (sceneManager.Run())
+				 {
+					 return 0;
+				 }
+				 OldTime = timeGetTime();
 			 }
-		 }       
+		 }
 	 }
      return (INT)msg.wParam ;
 }
