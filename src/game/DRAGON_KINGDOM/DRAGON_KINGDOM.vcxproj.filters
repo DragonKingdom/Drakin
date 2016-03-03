@@ -267,9 +267,6 @@
     <ClInclude Include="CommonDeclaration.h">
       <Filter>main</Filter>
     </ClInclude>
-    <ClInclude Include="Macro.h">
-      <Filter>main</Filter>
-    </ClInclude>
     <ClInclude Include="ClickPosConverter.h">
       <Filter>main\ClickPosConverter</Filter>
     </ClInclude>

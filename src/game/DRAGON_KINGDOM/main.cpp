@@ -63,7 +63,7 @@ int WINAPI WinMain( HINSTANCE hInst,HINSTANCE hPrevInst,LPSTR szStr,INT iCmdShow
 		 {
 			 if (sceneManager.Run()){
 				 return 0;
-			 };
+			 }
 		 }       
 	 }
      return (INT)msg.wParam ;

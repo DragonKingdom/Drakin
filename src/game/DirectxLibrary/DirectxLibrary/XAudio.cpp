@@ -316,7 +316,7 @@ bool XAudio::GetSoundPlayingFlag( int _number )
 }
 void XAudio::SoundFadeControl()
 {
-	for( int i = 0 ; i < g_Buffer.size( ) ; i++ )
+	for(unsigned int i = 0 ; i < g_Buffer.size( ) ; i++ )
 	{
 		if( fadeflag[i] == true  )
 		{

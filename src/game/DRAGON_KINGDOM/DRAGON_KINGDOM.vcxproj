@@ -137,7 +137,6 @@
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="KingdomWindow.h" />
     <ClInclude Include="LogoScene.h" />
-    <ClInclude Include="Macro.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Menuicon.h" />
     <ClInclude Include="MenuWindow.h" />
