@@ -9,6 +9,11 @@ GameData::GameData()
 	m_time.date = 1;
 }
 
+GameData::~GameData()
+{
+
+}
+
 void GameData::Load(int _dataID)
 {
 	// •¶š—ñ¶¬

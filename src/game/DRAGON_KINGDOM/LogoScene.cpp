@@ -25,6 +25,12 @@ SceneID LogoScene::Control()
 
 	nextScene = m_teamLogo.Control();
 
+	/// @todo ƒL[‚Ìˆ—‚Á‚Ä‚±‚±‚Å‚¢‚¢‚©‚ÈH
+	if (Scene::m_mousePushState & MOUSE_KEYKIND::M_LEFT_PUSH)
+	{
+		nextScene = SCENE_TITLE;
+	}
+
 	return nextScene;
 }
 

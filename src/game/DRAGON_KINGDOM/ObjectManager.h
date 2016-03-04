@@ -7,6 +7,8 @@ class ObjectManager
 public:
 	ObjectManager();
 	~ObjectManager();
+	void Control();
+	void Draw();
 
 private:
 

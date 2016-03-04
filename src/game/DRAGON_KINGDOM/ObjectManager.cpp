@@ -9,3 +9,13 @@ ObjectManager::~ObjectManager()
 {
 }
 
+void ObjectManager::Control()
+{
+
+}
+
+void ObjectManager::Draw()
+{
+
+}
+

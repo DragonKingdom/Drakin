@@ -21,7 +21,7 @@ int WINAPI WinMain( HINSTANCE hInst,HINSTANCE hPrevInst,LPSTR szStr,INT iCmdShow
 	HWND hWnd=NULL;
 	MSG msg;
 	// ウィンドウの初期化
-	static TCHAR* szAppName = _T("DragonKingdom") ;     
+	TCHAR* szAppName = _T("DragonKingdom") ;     
     WNDCLASSEX  wndclass ;
 
     wndclass.cbSize			= sizeof (wndclass) ;

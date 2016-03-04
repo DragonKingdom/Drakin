@@ -57,40 +57,6 @@ SceneID GameScene::Control()
 			D3DXVECTOR3 vec;
 			m_ClickPosConverter.ConvertForLoad(&vec,(int)m_mousePos.x,(int)m_mousePos.y);
 		}
-		// もし一点目がすでに設置されているなら
-	//	if( m_RoadManager.GetStartflag() )
-	//	{
-	//		// 中央ボタンで制御点設置
-	//		if(centerPush)
-	//		{
-	//			D3DXVECTOR3 vec;
-	//			m_ClickPosConverter.ConvertForLoad(&vec,(int)m_mousePos.x,(int)m_mousePos.y);
-	//			m_RoadManager.SetControlPos(vec.x,vec.z);
-	//		}
-	//		// 今のマウス座標と比べてプレビューを出す
-	//		D3DXVECTOR3 vec;
-	//		m_ClickPosConverter.ConvertForLoad(&vec,(int)m_mousePos.x,(int)m_mousePos.y);
-	//		m_RoadManager.PreviewRoadControl(vec);
-	//		// 右クリックでデータ削除
-	//		if(rightPush)
-	//		{
-	//			m_RoadManager.CleanSetPos();
-	//		}
-	//	}
-	//	break;
-	//}
-	//// 右クリックで状態を戻す
-	//if(  m_state != STATE_NONE && rightPush )
-	//{		
-	//	 m_state = STATE_NONE;
-	//}
-	//// 人間のAI
-	//for( int i = 0 ; i < m_CrossingManager.GetpCrossing()->size() / 3; i++ )
-	//{
-	//	if( rand() % 60 == 0 )
-	//	{
-	//		m_HumanMoveAI.AddHuman();
-	//	}
 	}
 
 	// カメラの座標を更新

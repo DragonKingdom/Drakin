@@ -16,6 +16,8 @@ private:
 	GameData(const GameData &other){}
 	GameData &operator = (const GameData &other){}
 public:
+	~GameData();
+
 	/**
      * インスタンスの取得
      */
