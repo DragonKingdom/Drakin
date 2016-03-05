@@ -20,8 +20,10 @@ const int Timer::DATE_NUM[Timer::MONTH_NUM] =
 const float Timer::INIT_GAME_SPEED = 60.0f;
 
 Timer::Timer() : m_gameData(GameData::getInstance()),
+			     m_stateManager(StateManager::getInstance()),
                  m_time(timeGetTime()), 
-				 m_gameSpeed(INIT_GAME_SPEED)
+				 m_gameSpeed(INIT_GAME_SPEED),
+				 m_gameTime({ 2015, 1, 1, 0, 0, 0 })
 {
 
 }
@@ -48,58 +50,65 @@ void Timer::Control()
 	}
 }
 
-/**
-* @fn
-* @brief ゲーム内時間の計測
-*/
+void Timer::SetGameData()
+{
+	m_gameData->SetGameTime(m_gameTime);
+}
+
+void Timer::GetGameData()
+{
+
+}
+
+void Timer::SetState()
+{
+	// 未実装 というかいらない気も
+}
+
+void Timer::GetState()
+{
+	
+}
+
+
 void Timer::AdvanceTime()
 {
 	DWORD endTime = timeGetTime();
 	// プレイ時間を更新
-	m_gameData.m_time.second = (int)(((endTime - m_time) / 1000 ) * m_gameSpeed);
-	if( m_gameData.m_time.second >= 60)
+	m_gameTime.second = (int)(((endTime - m_time) / 1000) * m_gameSpeed);
+	if (m_gameTime.second >= 60)
 	{
 		// 計測開始時間をリセット
 		m_time = timeGetTime();
 		// 秒の計算
-		AdvanceDate(&m_gameData.m_time.second, &m_gameData.m_time.minute, 60);
+		AdvanceDate(&m_gameTime.second, &m_gameTime.minute, 60);
 		// 分の計算
-		AdvanceDate(&m_gameData.m_time.minute, &m_gameData.m_time.hour, 60);
+		AdvanceDate(&m_gameTime.minute, &m_gameTime.hour, 60);
 		// 時間の計算
-		AdvanceDate(&m_gameData.m_time.hour, &m_gameData.m_time.date, 24);
+		AdvanceDate(&m_gameTime.hour, &m_gameTime.date, 24);
 		// 日の計算
-		AdvanceDate(&m_gameData.m_time.date, &m_gameData.m_time.month, DATE_NUM[m_gameData.m_time.month]);
+		AdvanceDate(&m_gameTime.date, &m_gameTime.month, DATE_NUM[m_gameTime.month]);
 		// 年の計算
-		AdvanceDate(&m_gameData.m_time.month, &m_gameData.m_time.year, MONTH_NUM);
+		AdvanceDate(&m_gameTime.month, &m_gameTime.year, MONTH_NUM);
 	}
 }
-/**
-* @fn
-* @brief 
-*/
+
+
 void Timer::StopTime()
 {
 	// ゲーム内の時間を0にする
 	m_gameSpeed = 0;
 }
-/**
-* @fn
-* @brief 
-*/
+
 void Timer::StartTime()
 {
+	// この部分もそのうち消す
 	m_gameSpeed = INIT_GAME_SPEED;
 	
 	// 計測開始時間をリセットする
 	m_time = timeGetTime();
 }
-/**
-* @fn
-* @brief 時間の単位換算
-* @param (_current) 
-* @param (_next) _currentより一つ上の単位
-* @param (_max) _currentの最大値
-*/
+
 void Timer::AdvanceDate(int* _current,int* _next,int _max)
 {
 	if(*_current >= _max )

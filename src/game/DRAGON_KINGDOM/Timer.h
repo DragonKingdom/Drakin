@@ -8,6 +8,7 @@
 
 #include <Windows.h>
 #include "GameData.h"
+#include "StateManager.h"
 
 class Timer
 {
@@ -20,11 +21,20 @@ public:
 	static const float INIT_GAME_SPEED;
 private:
 	/// ゲームデータクラス
-	GameData& m_gameData; 
+	GameData* m_gameData; 
+	
+	/// ステートの管理クラス
+	StateManager* m_stateManager;
+
 	/// ゲーム画面起動時の時間
 	DWORD m_time; 
+	
 	/// ゲームスピード(UIのボタンで速度が変わる？)
 	float m_gameSpeed; 
+	
+	/// ゲーム内時間
+	Time m_gameTime;
+
 public:
 	~Timer();
 	
@@ -34,20 +44,50 @@ public:
 	void Control();
 
 	/**
+	 * GameDataクラスに共有データをセットする関数
+	 */
+	void SetGameData();
+
+	/**
+	 * GameDataクラスから共有データをゲットする関数
+	 */
+	void GetGameData();
+
+	/**
+	 * StateManagerクラスにこのオブジェクトの状態をセットする
+	 */
+	void SetState();
+
+	/**
+	 * StateManagerクラスからゲーム内の状態をゲットする
+	 */
+	void GetState();
+
+	/**
 	 * 時間の更新関数
 	 */
 	void AdvanceTime();
 
 	/**
 	 * プレイ時間を止める
+	 * 将来的には消す予定
 	 */
 	void StopTime();
+
 	/**
 	 * プレイ時間を進める
 	 */
 	void StartTime();
-	
+
+	/**
+	 * @fn
+	 * @brief 時間の単位換算
+	 * @param (_current)
+	 * @param (_next) _currentより一つ上の単位
+	 * @param (_max) _currentの最大値
+	 */
 	void AdvanceDate(int* _current,int* _next,int _max);
+
 	/**
      * インスタンスの取得
      */
@@ -56,9 +96,14 @@ public:
 		static Timer timer;
 		return timer;
 	};
+
 private:
 	Timer();
-	Timer(const Timer &other) : m_gameData(GameData::getInstance()) , m_time(timeGetTime()) , m_gameSpeed(1.0f){}
+	Timer(const Timer &other) : m_gameData(GameData::getInstance()),
+		m_stateManager(StateManager::getInstance()),
+		m_time(timeGetTime()),
+		m_gameSpeed(INIT_GAME_SPEED),
+		m_gameTime({ 2015, 1, 1, 0, 0, 0 }){}
 	Timer &operator = (const Timer &other){}
 };
 

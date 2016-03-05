@@ -24,6 +24,10 @@ GameScene::~GameScene()
 SceneID GameScene::Control()
 {
 	Scene::Control();
+
+	m_timer.GetState();
+	m_timer.GetGameData();
+
 	m_UI.Control();
 	if (m_UI.CheckPause()){return SceneID::SCENE_GAME; }
 
@@ -58,9 +62,11 @@ SceneID GameScene::Control()
 
 	// カメラの座標を更新
 	m_CameraController.Control(m_mousePos);
-	// プレイ時間を進行
-	m_timer.AdvanceTime();
 	
+	m_timer.Control();
+
+	m_timer.SetState();
+	m_timer.SetGameData();
 
 	return SceneID::SCENE_GAME;
 }
