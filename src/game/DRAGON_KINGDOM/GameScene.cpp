@@ -19,9 +19,6 @@ GameScene::GameScene():
 GameScene::~GameScene()
 {
 	
-	// テクスチャの開放
-	/// @todo Sceneのデストラクタで解放してくれるのにこの処理って必要なん？
-	TextureManager::getInstance().Release();
 }
 
 SceneID GameScene::Control()
