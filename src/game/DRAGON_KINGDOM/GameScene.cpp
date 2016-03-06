@@ -13,12 +13,16 @@ GameScene::GameScene():
 	
 	/// @todo サウンド関連は用意してなかったのでとりあえずBGMだけ流せるように あとよろ
 
+	m_pGameData = GameData::getInstance();
+	m_pStateManager = StateManager::getInstance();
+
 	m_XAudio.SoundPlay(0,true);
 }
 
 GameScene::~GameScene()
 {
-	
+	delete m_pStateManager;
+	delete m_pGameData;
 }
 
 SceneID GameScene::Control()

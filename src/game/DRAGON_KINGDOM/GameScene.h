@@ -9,6 +9,8 @@
 #include "Scene.h"
 
 #include "Map.h"
+#include "GameData.h"
+#include "StateManager.h"
 #include "CameraController.h"
 #include "ClickPosConverter.h"
 #include "Timer.h"
@@ -44,7 +46,12 @@ private:
 	UI m_UI;
 	/// マップクラスオブジェクト
 	Map m_Map;
-	
+
+	/// ゲーム内での共有データを管理するクラス
+	GameData* m_pGameData;
+
+	/// ゲーム内の状態を管理するクラス
+	StateManager* m_pStateManager;
 
 	Texture m_Texture;
 
