@@ -227,7 +227,5 @@ SceneID Scene::Control()
 	//if( pKeyBoard->ChkKeyDown('E') | pGamePad->ChkGamePadDownKEY_E
 	//	Scene::m_keyStateOn |= KEY_E;
 	//}
-
-
 	return m_sceneID;
 }

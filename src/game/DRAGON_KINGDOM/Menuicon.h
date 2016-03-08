@@ -28,7 +28,7 @@ public:
 	};
 
 	/// アイコンの描画開始位置
-	static const D3DXVECTOR2 ICON_POS;
+	const D3DXVECTOR2 m_ICON_POS;
 
 	/// 使用するテクスチャ座標
 	static const Vertex::FRECT UV;
@@ -45,7 +45,7 @@ public:
 	void Draw();
 	void Control();
 
-	int OnClick();
+	int GetID(){return m_selectID;}
 
 };
 #endif

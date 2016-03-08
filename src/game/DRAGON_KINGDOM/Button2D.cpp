@@ -6,11 +6,12 @@
  */
 
 #include "Button2D.h"
-#include "Scene.h"
+#include "InputDeviceFacade.h"
 
 Button2D::Button2D(RefPoint _refPoint, D3DXVECTOR2 _position)
 	: m_refPoint(_refPoint),
-	  m_position(_position)
+	  m_position(_position),
+	  m_pIdf(InputDeviceFacade::GetInstance())
 {
 }
 
@@ -36,8 +37,7 @@ void Button2D::SetRect(float _width, float _height)
 bool Button2D::IsMouseOver()
 {
 	D3DXVECTOR2 pos;
-	pos.x = Scene::m_mousePos.x;
-	pos.y = Scene::m_mousePos.y;
+	pos = m_pIdf->GetMousePos();
 
 	if(m_rect.left <= pos.x && pos.x <= m_rect.right) 
 	{
@@ -51,7 +51,7 @@ bool Button2D::IsMouseOver()
 
 bool Button2D::IsLeftClicked()
 {
-	if(!(Scene::m_mousePushState & Scene::M_LEFT_PUSH)) 
+	if (!(m_pIdf->MouseLeftPush()))
 	{
 		// ‚»‚à‚»‚à¶ƒNƒŠƒbƒN‚³‚ê‚Ä‚¢‚È‚¯‚ê‚Î‘¦return
 		return false;

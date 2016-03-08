@@ -13,15 +13,15 @@
 class Collision
 {
 public:
-
-private:
-
-public:
-	Collision();
-	~Collision();
+	Collision(){};
+	~Collision(){};
 
 	bool PointToSquare(D3DXVECTOR2 _point,Vertex::FRECT _rect);
 private:
 	
 };
+namespace tdCollision{
+	bool PointToSquare(const D3DXVECTOR2 _point, const Vertex::FRECT _rect);
+
+}
 #endif

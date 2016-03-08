@@ -1,8 +1,10 @@
 #include "UI.h"
+#include "InputDeviceFacade.h"
 #include "Scene.h"
 
 UI::UI() :
 m_pWindow(NULL),
+m_pIdf(InputDeviceFacade::GetInstance()),
 m_pauseflg(false)
 {
 	m_pTaskBar = new TaskBar();
@@ -18,7 +20,6 @@ UI::~UI()
 
 void UI::Control()
 {
-
 	m_pTaskBar->Control();
 	m_pMenuicon->Control();
 
@@ -27,11 +28,12 @@ void UI::Control()
 	{
 		return;
 	}
+	//ゲームデータをここでウィンドウに伝える（setGameData）
 	m_pWindow->Control();
 	// ウインドウの状態を取得
 	Window::STATE state = m_pWindow->GetState();
 	// 右クリックされた時
-	if( (Scene::m_mousePushState &Scene::MOUSE_KEYKIND::M_RIGHT))
+	if (m_pIdf->MouseRightPush())
 	{
 		// 削除待ちでない状態の時
 		if( state != Window::STATE_DESTROY)
@@ -70,13 +72,11 @@ void UI::Draw()
 
 GAME_STATE UI::OnClick()
 {
-	/// @todo Observerとか使ってクリック処理の通知は綺麗にしたい誰かあとよろ
-
 	GAME_STATE state = STATE_NONE;
 	// クリックされたらアイコンとの位置を比較。アイコンがクリックされていたらウインドウを生成する
 	if( m_pWindow == NULL )
 	{
-		switch( m_pMenuicon->OnClick() )
+		switch( m_pMenuicon->GetID() )
 		{
 		case OPTION:
 			m_pWindow = new OptionWindow();

@@ -20,6 +20,8 @@ enum RefPoint
  * 自身がクリックされたことやマウスオーバーを取得できる。
  * UI部品等、2Dのボタンオブジェクトは本クラスを継承すると便利なはず。
  */
+class InputDeviceFacade;
+
 class Button2D
 {
 public:
@@ -43,6 +45,7 @@ protected:
 	D3DXVECTOR2 m_position;
 	RefPoint m_refPoint;
 	Vertex::FRECT m_rect;
+	InputDeviceFacade* m_pIdf;
 
 private:
 	// 隠蔽

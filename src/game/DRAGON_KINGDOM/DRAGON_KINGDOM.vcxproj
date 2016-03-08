@@ -95,6 +95,7 @@
     <ClCompile Include="FadeInOut.cpp" />
     <ClCompile Include="GameData.cpp" />
     <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="InputDeviceFacade.cpp" />
     <ClCompile Include="KingdomWindow.cpp" />
     <ClCompile Include="LogoScene.cpp" />
     <ClCompile Include="main.cpp" />
@@ -135,6 +136,7 @@
     <ClInclude Include="FadeInOut.h" />
     <ClInclude Include="GameData.h" />
     <ClInclude Include="GameScene.h" />
+    <ClInclude Include="InputDeviceFacade.h" />
     <ClInclude Include="KingdomWindow.h" />
     <ClInclude Include="LogoScene.h" />
     <ClInclude Include="Map.h" />
