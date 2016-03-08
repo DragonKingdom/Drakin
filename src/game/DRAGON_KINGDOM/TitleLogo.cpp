@@ -15,7 +15,7 @@ namespace
 const int kFadeInTime = 1;
 
 /// 統合ファイル内のテクスチャの座標a
-const Vertex::FRECT kTexCoord(0.0f, 350.0f, 1020.0f, 493.0f);
+const Vertex::FRECT kTexCoord(0.0f, 350.0f, 1200.f, 735.f);
 }
 //----------------------------------------------------------------------
 
@@ -43,7 +43,7 @@ void TitleLogo::Draw()
 	/// @todo ロゴの位置は現物合わせで決め打ちしているが、仕様として欲しい
 	D3DXVECTOR2 center;
 	center.x = CLIENT_WIDTH / 2;
-	center.y = CLIENT_HEIGHT / 6;
+	center.y = CLIENT_HEIGHT / 3.5;
 
 	// 描画
 	Vertex vertex;
