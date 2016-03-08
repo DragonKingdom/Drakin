@@ -1,43 +1,40 @@
+#include "InputDeviceFacade.h"
 #include "Menuicon.h"
 #include "textureManager.h"
-#include "Scene.h"
 #include "Collision.h"
 
-const Vertex::FRECT Menuicon::UV =  Vertex::FRECT(0,0,64,64);
-
-const D3DXVECTOR2 Menuicon::ICON_POS = D3DXVECTOR2(300,640);
+//left top right bottomの順
+const Vertex::FRECT Menuicon::UV = Vertex::FRECT(0,0,64,64);
 
 Menuicon::Menuicon() : 
-m_selectID(-1)
+m_selectID(-1),m_ICON_POS(300, 640)
 {
 	m_Texture = TextureManager::getInstance().Get(TextureManager::GAME_SCENE_TEX::UI);
 }
 
 Menuicon::~Menuicon()
 {
-
 }
 
 void Menuicon::Control()
 {
-	Collision collisiton;
+	InputDeviceFacade* p_id = InputDeviceFacade::GetInstance();
+	const D3DXVECTOR2 mvec = p_id->GetMousePos();
 
-	// カーソルのある位置のアイコンのIDを保存しておく
-	// ※毎フレーム上からなめたくないので描画位置で一つif文をかます
-	if( Scene::m_mousePos.x >= ICON_POS.x && Scene::m_mousePos.y >= ICON_POS.y )
+	// マウス座標がアイコンからあまりに離れている場合は判定しない
+	if (mvec.x >= m_ICON_POS.x && mvec.y >= m_ICON_POS.y)
 	{
-		// 上からなめる
-		for(int i = 0; i < TYPE_MAX;i++)
+		for(int icon = 0; icon < TYPE_MAX;icon++)
 		{
-			Vertex::FRECT rect = Vertex::FRECT(ICON_POS.x + (i * UV.right + i * 5), 
-											   ICON_POS.y,
-											   ICON_POS.x + (i * UV.right + i * 5) + UV.right, 
-											   ICON_POS.y + UV.bottom);
-			
-			if( collisiton.PointToSquare(Scene::m_mousePos,rect))
+			//マウスとの当たり判定用矩形作成
+			Vertex::FRECT rect = Vertex::FRECT(m_ICON_POS.x + (icon * UV.right + icon * 5),
+											   m_ICON_POS.y,
+											   m_ICON_POS.x + (icon * UV.right + icon * 5) + UV.right,
+											   m_ICON_POS.y + UV.bottom);			
+			if (tdCollision::PointToSquare(mvec, rect))
 			{
-				// カーソルが上にあればIDを保存
-				m_selectID = i;
+				// クリックされたアイコンのIDを保存しておく
+				m_selectID = icon;
 				return;
 			}
 		}
@@ -51,16 +48,11 @@ void Menuicon::Draw()
 	for(int i = 0; i < TYPE_MAX;i++)
 	{
 		m_vertex.DrawTextureLT(m_Texture,
-							   ICON_POS.x + (i * UV.right + i * 5),
-							   ICON_POS.y,
+							   m_ICON_POS.x + (i * UV.right + i * 5),
+							   m_ICON_POS.y,
 							   UV.right * i, 
 							   UV.top, 
 							   UV.right + (i * UV.bottom), 
 							   UV.bottom);
 	}
-}
-
-int Menuicon::OnClick()
-{
-	return m_selectID;
 }

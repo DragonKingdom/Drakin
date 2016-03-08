@@ -38,8 +38,6 @@ private:
 	ClickPosConverter m_ClickPosConverter;
 	/// 建築エリア管理クラスオブジェクト
 
-	
-
 	/// タイマークラスオブジェクト
 	Timer& m_timer;
 	/// UIクラスオブジェクト

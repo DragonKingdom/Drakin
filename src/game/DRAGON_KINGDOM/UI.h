@@ -14,6 +14,7 @@
 #include "KingdomWindow.h"
 
 class Window;
+class InputDeviceFacade;
 /**
  * UI‚ğŠÇ—‚·‚éƒNƒ‰ƒX
  */
@@ -31,12 +32,15 @@ public:
 		BUILD,
 		TYPE_MAX,
 	};
+
 private:
 
 	TaskBar* m_pTaskBar;
 	Menuicon* m_pMenuicon;
 	Window* m_pWindow;
 	bool   m_pauseflg;
+	InputDeviceFacade* m_pIdf;
+
 
 public:
 	UI();

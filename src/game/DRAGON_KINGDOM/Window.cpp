@@ -16,8 +16,8 @@ const Vertex::FRECT Window::UV[Window::TYPE_MAX] =
 
 Window::Window(	D3DXVECTOR2 _windowSize , D3DXVECTOR2 _position , D3DXVECTOR2 _targetPos) : 
 	m_windowSize(_windowSize),
-	m_position(_position),
-	m_targetPos(_targetPos),
+	m_position(_position),/*ï`âÊà íu*/
+	m_targetPos(_targetPos),/*à⁄ìÆêÊ*/
 	m_time(LEAVE_LIMIT_TIME),
 	m_move(0,0), 
 	m_initPos(_position)

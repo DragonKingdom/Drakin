@@ -29,7 +29,6 @@ void OptionWindow::Control()
 	//	m_time = LEAVE_LIMIT_TIME;
 	//}
 	Window::Control();
-
 }
 
 void OptionWindow::Draw()

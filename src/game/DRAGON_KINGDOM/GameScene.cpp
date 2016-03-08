@@ -10,7 +10,6 @@ GameScene::GameScene():
 	m_state(STATE_NONE),
 	m_ClickPosConverter(&m_CameraController)
 {
-	
 	/// @todo サウンド関連は用意してなかったのでとりあえずBGMだけ流せるように あとよろ
 
 	m_pGameData = GameData::getInstance();
