@@ -22,16 +22,12 @@ Map::~Map()
 
 void Map::Draw()
 {
-	D3DXMATRIX mat;
-	D3DXMatrixIdentity(&mat);
-	m_pSkyModel->Draw(D3DXVECTOR3(0,0,0),mat);
+	D3DXMATRIX matWorld;
+	D3DXMatrixIdentity(&matWorld);
+	m_pSkyModel->Draw(D3DXVECTOR3(0, 0, 0), matWorld);
 	m_pDevice->SetFVF( D3DFVF_XYZ | D3DFVF_TEX1 );
-	//D3DXMATRIX matWorld;
-	//	D3DXMatrixIdentity(&matWorld);// D3DXMATRIX *pOut
 	m_pDevice->SetTexture(0, m_pTexture->Get());
-	m_pDevice->SetTransform(
-							D3DTS_WORLD,// D3DTRANSFORMSTATETYPE State
-							&mat); // CONST D3DMATRIX* pMatrix
+	m_pDevice->SetTransform(D3DTS_WORLD, &matWorld);
 	m_pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 	//m_pDevice->SetRenderState( D3DRS_ZENABLE, TRUE );
 	CUSTOMVERTEX vertex[] =
@@ -50,6 +46,4 @@ void Map::Draw()
 
 	D3DCOLOR color;
 	color = 0xffffff00;
-	//m_pVertex->DrawTextureLT(*m_pTexture,0,0,color);
-	//m_pVertex->DrawTextureLT(*m_pTexture
 }
