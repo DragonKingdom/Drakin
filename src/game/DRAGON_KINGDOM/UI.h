@@ -6,14 +6,9 @@
 #ifndef UI_H_
 #define UI_H_
 
-#include "TaskBar.h"
-#include "Menuicon.h"
-#include "MenuWindow.h"
-#include "BuildWindow.h"
-#include "OptionWindow.h"
-#include "KingdomWindow.h"
-
 class Window;
+class TaskBar;
+class Menuicon;
 class StateManager;
 class InputDeviceFacade;
 
@@ -51,6 +46,7 @@ public:
 
 	void Draw();
 	void Control();
+	void createWindow();
 
 	GAME_STATE OnClick();
 	bool CheckPause(){ return m_pauseflg; }

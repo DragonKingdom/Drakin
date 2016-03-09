@@ -15,7 +15,6 @@ GameScene::GameScene():
 	/// @todo サウンド関連は用意してなかったのでとりあえずBGMだけ流せるように あとよろ
 
 	m_pGameData = GameData::getInstance();
-
 	m_XAudio.SoundPlay(0,true);
 }
 

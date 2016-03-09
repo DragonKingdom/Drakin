@@ -21,7 +21,7 @@ private:
 	
 };
 namespace tdCollision{
-	bool PointToSquare(const D3DXVECTOR2 _point, const Vertex::FRECT _rect);
+	bool PointToSquare(const D3DXVECTOR2& _point, const Vertex::FRECT& _rect);
 
 }
 #endif
