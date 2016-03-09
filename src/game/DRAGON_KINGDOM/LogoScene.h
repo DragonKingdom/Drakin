@@ -11,7 +11,11 @@
 #include "Scene.h"
 #include "TeamLogo.h"
 
-/// ロゴシーンクラス
+class InputDeviceFacade;
+
+/**
+ * ロゴシーンクラス
+ */
 class LogoScene : public Scene 
 {
 private:
@@ -19,7 +23,7 @@ private:
 	LogoScene& operator=(const LogoScene& rhs);
 	
 	TeamLogo m_teamLogo;
-
+	InputDeviceFacade* m_pInputDevice;
 protected:
 
 public:

@@ -46,21 +46,6 @@ SceneID GameScene::Control()
 			m_state = m_UI.OnClick();
 		}
 		break;
-	case STATE_BUILD_HOUSE:
-		// 道用の座標を割り出す（Y座標０地点でのｘｚが入力される）
-		if(leftPush)
-		{
-			D3DXVECTOR3 vec;
-			m_ClickPosConverter.ConvertForLoad(&vec,(int)m_mousePos.x,(int)m_mousePos.y);
-		}
-		break;
-	case STATE_BUILD_ROAD:
-		// 道用の座標を割り出す（Y座標０地点でのｘｚが入力される）
-		if(leftPush)
-		{
-			D3DXVECTOR3 vec;
-			m_ClickPosConverter.ConvertForLoad(&vec,(int)m_mousePos.x,(int)m_mousePos.y);
-		}
 	}
 
 	// カメラの座標を更新

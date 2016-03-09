@@ -36,6 +36,13 @@ enum SceneID
 	FIN
 };
 
+/// ƒQ[ƒ€ƒV[ƒ“‚Ìó‘Ô
+enum GAMESCENE_STATE
+{
+	GAMESCENE_NORMAL,
+	GAMESCENE_PAUSE,
+};
+
 enum GAME_STATE
 {
 	STATE_NONE,

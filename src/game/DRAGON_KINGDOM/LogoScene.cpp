@@ -7,10 +7,12 @@
 
 #include "LogoScene.h"
 #include "TextureManager.h"
+#include "InputDeviceFacade.h"
 
 LogoScene::LogoScene() :
 	Scene(SceneID::SCENE_LOGO)
 {
+	m_pInputDevice = InputDeviceFacade::GetInstance();
 }
 
 LogoScene::~LogoScene()
@@ -24,9 +26,8 @@ SceneID LogoScene::Control()
 	SceneID nextScene = SceneID::SCENE_LOGO;
 
 	nextScene = m_teamLogo.Control();
-
-	/// @todo ƒL[‚Ìˆ—‚Á‚Ä‚±‚±‚Å‚¢‚¢‚©‚ÈH
-	if (Scene::m_mousePushState & MOUSE_KEYKIND::M_LEFT_PUSH)
+	
+	if (m_pInputDevice->MouseLeftPush())
 	{
 		nextScene = SCENE_TITLE;
 	}
