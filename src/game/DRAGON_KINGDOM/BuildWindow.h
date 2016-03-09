@@ -39,7 +39,7 @@ public:
 	/**
 	*  クリックされたアイコン情報の保存
 	*/
-	virtual void Control();
+	virtual bool Control();
 
 	/**
 	*  ビルドアイコン（道、家）の描画

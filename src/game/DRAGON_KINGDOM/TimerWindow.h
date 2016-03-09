@@ -23,7 +23,7 @@ public:
 	TimerWindow();
 	~TimerWindow();
 
-	virtual void Control();
+	virtual bool Control();
 	virtual void Draw();
 private:
 

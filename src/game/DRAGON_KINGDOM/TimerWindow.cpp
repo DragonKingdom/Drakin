@@ -16,9 +16,9 @@ TimerWindow::~TimerWindow()
 {
 }
 
-void TimerWindow::Control()
+bool TimerWindow::Control()
 {
-	Window::Control();
+	return Window::Control();
 }
 
 void TimerWindow::Draw()

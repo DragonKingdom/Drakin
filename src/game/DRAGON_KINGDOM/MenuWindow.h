@@ -23,7 +23,7 @@ public:
 	MenuWindow();
 	~MenuWindow();
 
-	virtual void Control();
+	virtual bool Control();
 	virtual void Draw();
 };
 

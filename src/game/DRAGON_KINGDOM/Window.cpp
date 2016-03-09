@@ -64,7 +64,7 @@ Window::~Window()
 {
 }
 
-void Window::Control()
+bool Window::Control()
 {
 	switch(m_state)
 	{
@@ -84,7 +84,13 @@ void Window::Control()
 		{
 			m_state = STATE_DESTROY;
 		}
-	};
+	}
+
+	if (m_state == STATE_DESTROY)
+	{
+		return true;
+	}
+	return false;
 }
 
 void Window::Draw()

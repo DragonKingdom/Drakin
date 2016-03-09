@@ -78,7 +78,7 @@ public:
 	/**
 	* ビルドウィンドウの制御
 	*/
-	virtual void Control();
+	virtual bool Control();
 	/**
 	* ウィンドウの描画
 	*/

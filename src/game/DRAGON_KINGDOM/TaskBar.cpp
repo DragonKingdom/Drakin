@@ -35,14 +35,14 @@ void TaskBar::Control()
 
 void TaskBar::Draw()
 {	
-	// 画面下部黒色のバーを描画
-	m_vertex.SetSizeX(1.21f);
-	m_vertex.DrawTextureLT(m_texture,
-						   D3DXVECTOR2(0,CLIENT_HEIGHT - m_uv[TYPE1].bottom + 10),
-						   m_uv[TYPE1]);
-		
-	m_vertex.SetSizeX(1.0f);
-	
+	//// 画面下部黒色のバーを描画
+	//m_vertex.SetSizeX(1.21f);
+	//m_vertex.DrawTextureLT(m_texture,
+	//					   D3DXVECTOR2(0,CLIENT_HEIGHT - m_uv[TYPE1].bottom + 10),
+	//					   m_uv[TYPE1]);
+	//	
+	//m_vertex.SetSizeX(1.0f);
+	//
 	// ウインドウの描画
 	for (int i = 0; i < WINDOW_TYPE_MAX; i++)
 	{

@@ -26,11 +26,11 @@ BuildWindow::~BuildWindow()
 {
 }
 
-void BuildWindow::Control()
+bool  BuildWindow::Control()
 {
-	Window::Control();
-
-	Collision collisiton;
+	bool isDestroy = Window::Control();
+	Collision collisiton;	/// @todo 毎回生成するの？
+	m_selectID = -1;
 
 	// カーソルのある位置のアイコンのIDを保存しておく
 	// ※毎フレーム上からなめたくないので描画位置で一つif文をかます
@@ -48,11 +48,11 @@ void BuildWindow::Control()
 			{
 				// カーソルが上にあればIDを保存
 				m_selectID = i;
-				return;
 			}
 		}
 	}
-	m_selectID = -1;
+
+	return isDestroy;
 }
 
 void BuildWindow::Draw()

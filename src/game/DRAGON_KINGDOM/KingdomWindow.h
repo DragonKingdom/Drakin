@@ -19,7 +19,7 @@ public:
 	KingdomWindow();
 	~KingdomWindow();
 
-	virtual void Control();
+	virtual bool Control();
 	virtual void Draw();
 };
 
