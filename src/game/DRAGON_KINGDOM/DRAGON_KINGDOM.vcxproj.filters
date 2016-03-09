@@ -110,6 +110,18 @@
     <Filter Include="main\SceneManager\InputDevice">
       <UniqueIdentifier>{19c1b4b8-cdcf-4557-bb6d-91293bc26bd8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\RoadManager">
+      <UniqueIdentifier>{0c32cbf9-934c-4518-8bbd-52082e79f736}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager">
+      <UniqueIdentifier>{484306e8-c18f-4e57-8f63-b7d55926b239}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaChecker">
+      <UniqueIdentifier>{973df0d9-6aab-464a-9e30-172403731b97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\HouseManager">
+      <UniqueIdentifier>{e45c865a-ee2e-4c8f-bf1d-f8b60d93d74d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scene.cpp">
@@ -217,6 +229,18 @@
     <ClCompile Include="InputDeviceFacade.cpp">
       <Filter>main\SceneManager\InputDevice</Filter>
     </ClCompile>
+    <ClCompile Include="BuildAreaManager.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager</Filter>
+    </ClCompile>
+    <ClCompile Include="BuildAreaChecker.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaChecker</Filter>
+    </ClCompile>
+    <ClCompile Include="HouseManager.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\HouseManager</Filter>
+    </ClCompile>
+    <ClCompile Include="RoadManager.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -323,6 +347,18 @@
     </ClInclude>
     <ClInclude Include="InputDeviceFacade.h">
       <Filter>main\SceneManager\InputDevice</Filter>
+    </ClInclude>
+    <ClInclude Include="BuildAreaManager.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager</Filter>
+    </ClInclude>
+    <ClInclude Include="BuildAreaChecker.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaChecker</Filter>
+    </ClInclude>
+    <ClInclude Include="HouseManager.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\HouseManager</Filter>
+    </ClInclude>
+    <ClInclude Include="RoadManager.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

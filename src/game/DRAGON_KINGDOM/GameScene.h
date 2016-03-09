@@ -33,13 +33,16 @@ class GameScene : public Scene
 public:
 	Font m_pFont;
 private:
+
+	/// ゲーム内の状態を管理するクラス
+	StateManager m_pStateManager;
 	/// カメラアングルの制御クラス
 	CameraController m_CameraController;
 	ClickPosConverter m_ClickPosConverter;
 	/// 建築エリア管理クラスオブジェクト
 
 	/// タイマークラスオブジェクト
-	Timer& m_timer;
+	Timer m_timer;
 	/// UIクラスオブジェクト
 	UI m_UI;
 	/// マップクラスオブジェクト
@@ -48,8 +51,6 @@ private:
 	/// ゲーム内での共有データを管理するクラス
 	GameData* m_pGameData;
 
-	/// ゲーム内の状態を管理するクラス
-	StateManager* m_pStateManager;
 
 	Texture m_Texture;
 

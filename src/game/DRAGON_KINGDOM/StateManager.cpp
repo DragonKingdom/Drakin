@@ -1,7 +1,5 @@
 #include "StateManager.h"
 
-StateManager* StateManager::m_pStateManager = NULL;
-
 StateManager::StateManager()
 {
 }

@@ -8,7 +8,8 @@
 
 #include <Windows.h>
 #include "GameData.h"
-#include "StateManager.h"
+
+class StateManager;
 
 class Timer
 {
@@ -24,7 +25,7 @@ private:
 	GameData* m_gameData; 
 	
 	/// ステートの管理クラス
-	StateManager* m_stateManager;
+	StateManager* m_pStateManager;
 
 	/// ゲーム画面起動時の時間
 	DWORD m_time; 
@@ -36,6 +37,7 @@ private:
 	Time m_gameTime;
 
 public:
+	Timer(StateManager* pStateManager);
 	~Timer();
 	
 	/**
@@ -88,19 +90,9 @@ public:
 	 */
 	void AdvanceDate(int* _current,int* _next,int _max);
 
-	/**
-     * インスタンスの取得
-     */
-	static Timer& getInstance()
-	{
-		static Timer timer;
-		return timer;
-	};
-
 private:
-	Timer();
-	Timer(const Timer &other) : m_gameData(GameData::getInstance()),
-		m_stateManager(StateManager::getInstance()),
+	Timer(const Timer &other) : 
+		m_gameData(GameData::getInstance()),
 		m_time(timeGetTime()),
 		m_gameSpeed(INIT_GAME_SPEED),
 		m_gameTime({ 2015, 1, 1, 0, 0, 0 }){}

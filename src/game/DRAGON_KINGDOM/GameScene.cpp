@@ -6,21 +6,19 @@
 
 GameScene::GameScene():
 	Scene(SceneID::SCENE_GAME) , 
-	m_timer(Timer::getInstance()) , 
+	m_timer(&m_pStateManager) , 
 	m_state(STATE_NONE),
 	m_ClickPosConverter(&m_CameraController)
 {
 	/// @todo サウンド関連は用意してなかったのでとりあえずBGMだけ流せるように あとよろ
 
 	m_pGameData = GameData::getInstance();
-	m_pStateManager = StateManager::getInstance();
 
 	m_XAudio.SoundPlay(0,true);
 }
 
 GameScene::~GameScene()
 {
-	delete m_pStateManager;
 	delete m_pGameData;
 }
 

@@ -4,16 +4,15 @@
 OptionWindow::OptionWindow() : 
 	Window(D3DXVECTOR2(800,500),
 		   D3DXVECTOR2(CLIENT_WIDTH / 2 ,CLIENT_HEIGHT / 2 ),
-		   D3DXVECTOR2(CLIENT_WIDTH  / 2 ,CLIENT_HEIGHT  / 2)), 
-	       m_pTimer(&Timer::getInstance())
+		   D3DXVECTOR2(CLIENT_WIDTH  / 2 ,CLIENT_HEIGHT  / 2))
 {
 	m_initPos = m_targetPos =  m_position -= m_windowSize / 2;
-	m_pTimer->StopTime();
+	//m_pTimer->StopTime();
 }
 
 OptionWindow::~OptionWindow()
 {
-	m_pTimer->StartTime();
+	//m_pTimer->StartTime();
 }
 
 void OptionWindow::Control()

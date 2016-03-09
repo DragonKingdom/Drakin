@@ -19,11 +19,12 @@ const int Timer::DATE_NUM[Timer::MONTH_NUM] =
 /// 初期のゲームスピード
 const float Timer::INIT_GAME_SPEED = 60.0f;
 
-Timer::Timer() : m_gameData(GameData::getInstance()),
-			     m_stateManager(StateManager::getInstance()),
-                 m_time(timeGetTime()), 
-				 m_gameSpeed(INIT_GAME_SPEED),
-				 m_gameTime({ 2015, 1, 1, 0, 0, 0 })
+Timer::Timer(StateManager* pStateManager) : 
+	m_gameData(GameData::getInstance()),
+	m_pStateManager(pStateManager),
+    m_time(timeGetTime()), 
+	m_gameSpeed(INIT_GAME_SPEED),
+	m_gameTime({ 2015, 1, 1, 0, 0, 0 })
 {
 
 }

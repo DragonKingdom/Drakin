@@ -87,6 +87,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BuildAreaChecker.cpp" />
+    <ClCompile Include="BuildAreaManager.cpp" />
     <ClCompile Include="BuildWindow.cpp" />
     <ClCompile Include="Button2D.cpp" />
     <ClCompile Include="CameraController.cpp" />
@@ -95,6 +97,7 @@
     <ClCompile Include="FadeInOut.cpp" />
     <ClCompile Include="GameData.cpp" />
     <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="HouseManager.cpp" />
     <ClCompile Include="InputDeviceFacade.cpp" />
     <ClCompile Include="KingdomWindow.cpp" />
     <ClCompile Include="LogoScene.cpp" />
@@ -104,6 +107,7 @@
     <ClCompile Include="MenuWindow.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="OptionWindow.cpp" />
+    <ClCompile Include="RoadManager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneFactory.cpp" />
     <ClCompile Include="SceneManager.cpp" />
@@ -127,6 +131,8 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BuildAreaChecker.h" />
+    <ClInclude Include="BuildAreaManager.h" />
     <ClInclude Include="BuildWindow.h" />
     <ClInclude Include="Button2D.h" />
     <ClInclude Include="CameraController.h" />
@@ -136,6 +142,7 @@
     <ClInclude Include="FadeInOut.h" />
     <ClInclude Include="GameData.h" />
     <ClInclude Include="GameScene.h" />
+    <ClInclude Include="HouseManager.h" />
     <ClInclude Include="InputDeviceFacade.h" />
     <ClInclude Include="KingdomWindow.h" />
     <ClInclude Include="LogoScene.h" />
@@ -144,6 +151,7 @@
     <ClInclude Include="MenuWindow.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="OptionWindow.h" />
+    <ClInclude Include="RoadManager.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneFactory.h" />
     <ClInclude Include="SceneManager.h" />
