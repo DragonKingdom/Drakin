@@ -7,7 +7,8 @@
 
 
 
-ObjectManager::ObjectManager()
+ObjectManager::ObjectManager(StateManager* pStateManager):
+m_pStateManager(pStateManager)
 {
 	m_pBuildAreaManager = new BuildAreaManager();
 	m_pBuildAreaChecker = new BuildAreaChecker(m_pBuildAreaManager);
@@ -33,6 +34,6 @@ void ObjectManager::Control()
 
 void ObjectManager::Draw()
 {
-
+	m_pMap->Draw();
 }
 

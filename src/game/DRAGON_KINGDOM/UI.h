@@ -14,7 +14,9 @@
 #include "KingdomWindow.h"
 
 class Window;
+class StateManager;
 class InputDeviceFacade;
+
 /**
  * UI‚ğŠÇ—‚·‚éƒNƒ‰ƒX
  */
@@ -40,10 +42,11 @@ private:
 	Window* m_pWindow;
 	bool   m_pauseflg;
 	InputDeviceFacade* m_pIdf;
+	StateManager* m_pStateManager;
 
 
 public:
-	UI();
+	UI(StateManager* pStateManager);
 	~UI();
 
 	void Draw();

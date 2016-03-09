@@ -4,7 +4,8 @@
 const D3DXVECTOR3 CameraController::LOOK_AT_POS = D3DXVECTOR3(0,0,0);
 const D3DXVECTOR3 CameraController::EYE_POS = D3DXVECTOR3(0,200,-100);
 
-CameraController::CameraController() : 
+CameraController::CameraController(StateManager* pStateManager) :
+	m_pStateManager(pStateManager),
 	m_moveSpeed(5.0f) , 
 	m_eyePos(EYE_POS) , 
 	m_lookAtPos(LOOK_AT_POS) , 

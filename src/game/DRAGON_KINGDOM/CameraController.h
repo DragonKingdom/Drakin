@@ -8,6 +8,9 @@
 
 #include <d3dx9.h>
 #include <camera.h>
+
+class StateManager;
+
 /**
  * カメラアングルの制御を行うクラス
  */
@@ -19,6 +22,8 @@ public:
 	/// カメラの位置
 	static const D3DXVECTOR3 EYE_POS;
 private:
+	StateManager* m_pStateManager;
+
 	Camera* m_pCamera;
 	/// カメラの位置
 	D3DXVECTOR3 m_lookAtPos;
@@ -34,7 +39,7 @@ private:
 	/// マウスをクリックした位置
 	D3DXVECTOR2 m_startPos;
 public:
-	CameraController();
+	CameraController(StateManager* pStateManager);
 	~CameraController();
 	/**
 	 * カメラアングルの制御

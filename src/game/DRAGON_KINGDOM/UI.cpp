@@ -2,9 +2,10 @@
 #include "InputDeviceFacade.h"
 #include "Scene.h"
 
-UI::UI() :
+UI::UI(StateManager* pStateManager) :
 m_pWindow(NULL),
 m_pIdf(InputDeviceFacade::GetInstance()),
+m_pStateManager(pStateManager),
 m_pauseflg(false)
 {
 	m_pTaskBar = new TaskBar();

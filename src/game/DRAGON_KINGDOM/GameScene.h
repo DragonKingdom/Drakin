@@ -35,7 +35,7 @@ public:
 private:
 
 	/// ゲーム内の状態を管理するクラス
-	StateManager m_pStateManager;
+	StateManager m_StateManager;
 	/// カメラアングルの制御クラス
 	CameraController m_CameraController;
 	ClickPosConverter m_ClickPosConverter;
