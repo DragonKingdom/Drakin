@@ -12,7 +12,6 @@ UI::UI(StateManager* pStateManager) :
 m_pWindow(NULL),
 m_pIdf(InputDeviceFacade::GetInstance()),
 m_pStateManager(pStateManager),
-m_pauseflg(false),
 m_pTaskBar(new TaskBar()),
 m_pMenuicon(new Menuicon())
 {
@@ -36,27 +35,9 @@ void UI::Control()
 		return;
 	}
 	//ゲームデータをここでウィンドウに伝える（setGameData）
-	m_pWindow->Control();
-	// ウインドウの状態を取得
-	Window::STATE state = m_pWindow->GetState();
-	// 右クリックされた時
-	if (m_pIdf->MouseRightPush())
-	{
-		// 削除待ちでない状態の時
-		if( state != Window::STATE_DESTROY)
-		{
-			// ウインドウを画面外に移動する命令を出す
-			m_pWindow->SetState(Window::STATE_LEAVE);
-		}
-		else if( state != Window::STATE_WAIT)
-		{
-			// ウインドウを画面外に移動する命令を出す
-			m_pWindow->SetState(Window::STATE_DESTROY);
-		}
-		m_pauseflg = false;
-	}
+
 	 // 状態が削除待ちの時
-	if( state == Window::STATE_DESTROY )
+	if (m_pWindow->Control())
 	{
 		delete m_pWindow;
 		m_pWindow = NULL;
@@ -84,7 +65,6 @@ void UI::createWindow()
 		{
 		case OPTION:
 			m_pWindow = new OptionWindow();
-			m_pauseflg = true;
 			break;
 		case KINGDOM:
 			m_pWindow = new KingdomWindow();
@@ -127,7 +107,6 @@ GAME_STATE UI::OnClick()
 		{
 		case OPTION:
 			m_pWindow = new OptionWindow();
-			m_pauseflg = true;
 			break;
 		case KINGDOM:
 			m_pWindow = new KingdomWindow();

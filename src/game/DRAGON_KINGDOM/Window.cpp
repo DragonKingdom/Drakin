@@ -1,6 +1,6 @@
 #include "Window.h"
 #include "textureManager.h"
-#include "Scene.h"
+#include "InputDeviceFacade.h"
 
 const D3DXVECTOR2 Window::PARTS_SIZE = D3DXVECTOR2(135,135);
 
@@ -66,6 +66,17 @@ Window::~Window()
 
 bool Window::Control()
 {
+	// 右クリックされた時
+	if (m_pInputDevice->MouseRightPush())
+	{
+		// 削除待ちでない状態の時
+		if (m_state != STATE_DESTROY)
+		{
+			// ウインドウを画面外に移動する命令を出す
+			m_state = STATE_LEAVE;
+		}
+	}
+
 	switch(m_state)
 	{
 	case STATE_WAIT:

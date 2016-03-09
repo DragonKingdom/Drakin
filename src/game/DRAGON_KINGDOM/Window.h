@@ -11,6 +11,8 @@
 #include <vertex.h>
 #include "Collision.h"
 
+class InputDeviceFacade;
+
 class Window
 {
 public:
@@ -68,6 +70,8 @@ protected:
 	DIRECTION   m_direction;
 	/// ウインドウの状態
 	STATE		m_state;
+	/// 入力デバイスの状態を管理するクラス
+	InputDeviceFacade* m_pInputDevice;
 
 	Vertex      m_vertex;
 	Collision   m_collision;
