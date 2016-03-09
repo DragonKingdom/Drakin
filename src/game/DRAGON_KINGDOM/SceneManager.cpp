@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include "SceneFactory.h"
 #include "GameData.h"
+#include "InputDeviceFacade.h"
 
 SceneManager::SceneManager(HWND hWnd) :
 	m_pScene( NULL ),
@@ -14,12 +15,12 @@ SceneManager::SceneManager(HWND hWnd) :
 	m_pInput = new Input();
 	m_pInput->Create(hWnd);
 	Scene::SetInput(m_pInput);
-	//GameData* GameData;
-	//GameData->getInstance();
+	InputDeviceFacade::Create();
 }
 
 SceneManager::~SceneManager()
 {
+	InputDeviceFacade::Delete();
 	// シーンオブジェクトを解放
 	if( m_pScene != nullptr ) 
 	{

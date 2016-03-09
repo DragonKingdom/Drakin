@@ -10,26 +10,33 @@
 //唯一のインスタンスの生成
 InputDeviceFacade* InputDeviceFacade::m_pID_instance = NULL;
 
-InputDeviceFacade* InputDeviceFacade::GetInstance(){
+void InputDeviceFacade::Create()
+{
 	if (m_pID_instance == NULL)
 	{
 		m_pID_instance = new InputDeviceFacade();
 	}
+}
+InputDeviceFacade* InputDeviceFacade::GetInstance()
+{
 	return m_pID_instance;
 }
-void InputDeviceFacade::ReleaseInstance(){
+void InputDeviceFacade::Delete()
+{
 	delete m_pID_instance;
-	m_pID_instance = NULL;
 }
 
-const D3DXVECTOR2 InputDeviceFacade::GetMousePos(){
+const D3DXVECTOR2 InputDeviceFacade::GetMousePos()
+{
 	return Scene::m_mousePos;
 }
 
-bool InputDeviceFacade::MouseLeftPush(){
+bool InputDeviceFacade::MouseLeftPush()
+{
 	return Scene::m_mousePushState & Scene::M_LEFT_PUSH;
 }
 
-bool InputDeviceFacade::MouseRightPush(){
+bool InputDeviceFacade::MouseRightPush()
+{
 	return Scene::m_mousePushState & Scene::M_RIGHT_PUSH;
 }

@@ -12,19 +12,23 @@ class InputDeviceFacade{
 
 private:
 	InputDeviceFacade(){};
-	~InputDeviceFacade(){ ReleaseInstance(); }
+	~InputDeviceFacade(){};
 	///本クラス唯一のインスタンスへのポインタ
 	static InputDeviceFacade* m_pID_instance;
 public:
+	/**
+	 * インスタンスを生成する
+	 */
+	static void Create();
 	/**
 	* 唯一のインスタンスへのポインタを得る
 	* @return  本クラスへのポインタ
 	*/
 	static InputDeviceFacade* GetInstance();
 	/**
-	* ポインタの破棄
-	*/
-	void ReleaseInstance();
+	 * インスタンスを破棄する
+	 */
+	static void Delete();
 	/**
 	* マウスの座標を返す
 	* @return マウス座標
