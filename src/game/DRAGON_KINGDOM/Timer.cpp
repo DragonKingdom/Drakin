@@ -1,4 +1,5 @@
 #include "Timer.h"
+#include "StateManager.h"
 
 // ŒŽ–ˆ‚Ì“ú”
 const int Timer::DATE_NUM[Timer::MONTH_NUM] = 
@@ -68,7 +69,7 @@ void Timer::SetState()
 
 void Timer::GetState()
 {
-	
+	m_gameSceneState = m_pStateManager->GetGameSceneState();
 }
 
 

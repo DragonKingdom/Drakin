@@ -11,16 +11,18 @@ public:
 	/**
 	 * ゲームシーンの状態を取得する
 	 */
-	void GetGameSceneState();
+	GAMESCENE_STATE GetGameSceneState();
 
 	/**
 	 * ゲームシーンの状態をセットする
 	 */
-	void SetGameSceneState();
+	void SetGameSceneState(GAMESCENE_STATE _gameSceneState);
 
 private:
 	StateManager(const StateManager &other){}
 	StateManager &operator = (const StateManager &other){}
+
+	GAMESCENE_STATE m_gameSceneState;
 
 };
 

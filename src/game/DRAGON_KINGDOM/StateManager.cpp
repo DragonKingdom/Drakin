@@ -1,6 +1,7 @@
 #include "StateManager.h"
 
-StateManager::StateManager()
+StateManager::StateManager():
+m_gameSceneState(GAMESCENE_NORMAL)
 {
 }
 
@@ -8,12 +9,12 @@ StateManager::~StateManager()
 {
 }
 
-void GetGameSceneState()
+GAMESCENE_STATE StateManager::GetGameSceneState()
 {
-	// –¢ŽÀ‘•
+	return m_gameSceneState;
 }
 
-void SetGameSceneState()
+void StateManager::SetGameSceneState(GAMESCENE_STATE _gameSceneState)
 {
-	// –¢ŽÀ‘•
+	m_gameSceneState = _gameSceneState;
 }
