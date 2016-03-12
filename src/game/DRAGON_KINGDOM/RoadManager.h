@@ -8,7 +8,7 @@ class RoadManager
 public:
 	RoadManager(BuildAreaChecker* pBuildAreaChecker);
 	~RoadManager();
-
+	void  ControlBuildRoad();
 private:
 	BuildAreaChecker* m_pBuildAreaChecker;
 

@@ -6,7 +6,6 @@
 #include "OptionWindow.h"
 #include "KingdomWindow.h"
 #include "InputDeviceFacade.h"
-//#include "Scene.h"
 
 UI::UI(StateManager* pStateManager) :
 m_pWindow(NULL),

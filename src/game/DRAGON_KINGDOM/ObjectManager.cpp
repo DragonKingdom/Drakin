@@ -6,7 +6,6 @@
 #include "RoadManager.h"
 
 
-
 ObjectManager::ObjectManager(StateManager* pStateManager):
 m_pStateManager(pStateManager)
 {
@@ -36,4 +35,18 @@ void ObjectManager::Draw()
 {
 	m_pMap->Draw();
 }
+
+void ObjectManager::RoadBuiuldControl()
+{
+}
+
+void ObjectManager::BuildAreaControl(){}
+
+void ObjectManager::HouseBuildControl(){}
+
+void ObjectManager::GetState(){}
+
+void ObjectManager::SetState(){}
+
+void ObjectManager::SetGameData(){}
 
