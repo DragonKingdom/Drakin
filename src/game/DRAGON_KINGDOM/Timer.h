@@ -30,8 +30,11 @@ private:
 	/// ゲーム画面起動時の時間
 	DWORD m_time; 
 
-	/// ゲームシーンの状態
-	GAMESCENE_STATE m_gameSceneState;
+	/// 現在のゲームシーンの状態
+	GAMESCENE_STATE m_gameState;
+
+	/// 一つ前のゲームシーンの状態
+	GAMESCENE_STATE m_previousGameState;
 	
 	/// ゲームスピード(UIのボタンで速度が変わる？)
 	float m_gameSpeed; 

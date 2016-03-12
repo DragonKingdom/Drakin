@@ -10,6 +10,9 @@
 #include "GameData.h"
 #include "texture.h"
 #include "vertex.h"
+
+class StateManager;
+
 /**
  * 建設関連を表示するウインドウ  
  */
@@ -33,7 +36,7 @@ private:
 	int	   m_selectID;
 
 public:
-	BuildWindow();
+	BuildWindow(StateManager* _pStateManager);
 	~BuildWindow();
 
 	/**

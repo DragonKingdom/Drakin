@@ -2,10 +2,12 @@
  * @file OptionWindow.h
  * @author danjo
  */
-#include "Timer.h"
-
 #ifndef OPTIONWINDOW_H
 #define OPTIONWINDOW_H
+
+#include "Timer.h"
+
+class StateManager;
 
 /**
  * オプション表示するウインドウ
@@ -17,7 +19,7 @@ public:
 private:
 	Timer* m_pTimer;
 public:
-	OptionWindow();
+	OptionWindow(StateManager* _pStateManager);
 	~OptionWindow();
 
 	virtual bool Control();

@@ -12,6 +12,7 @@
 #include "Collision.h"
 
 class InputDeviceFacade;
+class StateManager;
 
 class Window
 {
@@ -72,12 +73,14 @@ protected:
 	STATE		m_state;
 	/// 入力デバイスの状態を管理するクラス
 	InputDeviceFacade* m_pInputDevice;
+	/// ゲーム内の状態管理クラス
+	StateManager* m_pStateManager;
 
 	Vertex      m_vertex;
 	Collision   m_collision;
 public:
 
-	Window(D3DXVECTOR2 _windowSize,D3DXVECTOR2 _position,D3DXVECTOR2 _targetPos);
+	Window(D3DXVECTOR2 _windowSize, D3DXVECTOR2 _position, D3DXVECTOR2 _targetPos, StateManager* _pStateManager);
 	virtual ~Window() = 0;
 	/**
 	* ビルドウィンドウの制御

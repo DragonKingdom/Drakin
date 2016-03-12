@@ -2,10 +2,11 @@
 #include "KingdomWindow.h"
 #include "Scene.h"
 
-KingdomWindow::KingdomWindow() : 
+KingdomWindow::KingdomWindow(StateManager* _pStateManager) :
 	Window(D3DXVECTOR2(500, 500), 
 		   D3DXVECTOR2(CLIENT_WIDTH / 2, CLIENT_HEIGHT / 2), 
-		   D3DXVECTOR2(CLIENT_WIDTH / 2, CLIENT_HEIGHT / 2))
+		   D3DXVECTOR2(CLIENT_WIDTH / 2, CLIENT_HEIGHT / 2),
+		   _pStateManager)
 {
 	m_initPos = m_targetPos =  m_position -= m_windowSize / 2;
 }

@@ -1,18 +1,23 @@
 #include "Window.h"
 #include "OptionWindow.h"
+#include "StateManager.h"
 
-OptionWindow::OptionWindow() : 
+OptionWindow::OptionWindow(StateManager* _pStateManager) :
 	Window(D3DXVECTOR2(800,500),
 		   D3DXVECTOR2(CLIENT_WIDTH / 2 ,CLIENT_HEIGHT / 2 ),
-		   D3DXVECTOR2(CLIENT_WIDTH  / 2 ,CLIENT_HEIGHT  / 2))
+		   D3DXVECTOR2(CLIENT_WIDTH  / 2 ,CLIENT_HEIGHT  / 2),
+		   _pStateManager)
 {
 	m_initPos = m_targetPos =  m_position -= m_windowSize / 2;
-	//m_pTimer->StopTime();
+
+	// オプションウィンドウが生成されたら、ゲームの状態をPAUSEにする
+	m_pStateManager->SetGameSceneState(GAMESCENE_PAUSE);
 }
 
 OptionWindow::~OptionWindow()
 {
-	//m_pTimer->StartTime();
+	// オプションウィンドウが消えたら、ゲームの状態をNORMALに戻す
+	m_pStateManager->SetGameSceneState(GAMESCENE_NORMAL);
 }
 
 bool OptionWindow::Control()

@@ -12,7 +12,7 @@ UI::UI(StateManager* pStateManager) :
 m_pWindow(NULL),
 m_pIdf(InputDeviceFacade::GetInstance()),
 m_pStateManager(pStateManager),
-m_pTaskBar(new TaskBar()),
+m_pTaskBar(new TaskBar(pStateManager)),
 m_pMenuicon(new Menuicon())
 {
 }
@@ -64,10 +64,10 @@ void UI::createWindow()
 		switch (m_pMenuicon->GetID())
 		{
 		case OPTION:
-			m_pWindow = new OptionWindow();
+			m_pWindow = new OptionWindow(m_pStateManager);
 			break;
 		case KINGDOM:
-			m_pWindow = new KingdomWindow();
+			m_pWindow = new KingdomWindow(m_pStateManager);
 			break;
 		case ECONOMY:
 
@@ -79,7 +79,7 @@ void UI::createWindow()
 
 			break;
 		case BUILD:
-			m_pWindow = new BuildWindow();
+			m_pWindow = new BuildWindow(m_pStateManager);
 			break;
 		default:
 			break;
@@ -106,10 +106,10 @@ GAME_STATE UI::OnClick()
 		switch( m_pMenuicon->GetID() )
 		{
 		case OPTION:
-			m_pWindow = new OptionWindow();
+			m_pWindow = new OptionWindow(m_pStateManager);
 			break;
 		case KINGDOM:
-			m_pWindow = new KingdomWindow();
+			m_pWindow = new KingdomWindow(m_pStateManager);
 			break;
 		case ECONOMY:
 
@@ -121,7 +121,7 @@ GAME_STATE UI::OnClick()
 
 			break;
 		case BUILD:
-			m_pWindow = new BuildWindow();
+			m_pWindow = new BuildWindow(m_pStateManager);
 			break;
 		default:
 			break;

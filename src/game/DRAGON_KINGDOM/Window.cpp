@@ -14,13 +14,14 @@ const Vertex::FRECT Window::UV[Window::TYPE_MAX] =
 	Vertex::FRECT(100,100,200,200),
 };
 
-Window::Window(	D3DXVECTOR2 _windowSize , D3DXVECTOR2 _position , D3DXVECTOR2 _targetPos) : 
+Window::Window(D3DXVECTOR2 _windowSize, D3DXVECTOR2 _position, D3DXVECTOR2 _targetPos, StateManager* _pStateManager) :
 	m_windowSize(_windowSize),
 	m_position(_position),/*描画位置*/
 	m_targetPos(_targetPos),/*移動先*/
 	m_time(LEAVE_LIMIT_TIME),
 	m_move(0,0), 
-	m_initPos(_position)
+	m_initPos(_position),
+	m_pStateManager(_pStateManager)
 {	
 	m_texture = TextureManager::getInstance().Get(TextureManager::GAME_SCENE_TEX::WINDOW);
 	// ウインドウが被ってしまう為、ウインドウの最小サイズより小さくならないようにしておく

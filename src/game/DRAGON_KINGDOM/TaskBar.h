@@ -11,6 +11,9 @@
 #include "Collision.h"
 #include "Window.h"
 #include "TimerWindow.h"
+
+class StateManager;
+
 /**
  * タスクバーを描画、制御するクラス
  */
@@ -49,8 +52,10 @@ private:
 	Collision m_collision;
 
 	Window* m_pWindow[WINDOW_TYPE_MAX];
+
+	StateManager* m_pStateManager;
 public:
-	TaskBar();
+	TaskBar(StateManager* _pStateManager);
 	~TaskBar();
 
 	void Control();

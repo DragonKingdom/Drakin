@@ -9,6 +9,8 @@
 #include "vertex.h"
 #include "texture.h"
 
+class StateManager;
+
 /**
  * ？？仕様変更によりいらないかも
  */
@@ -19,8 +21,9 @@ public:
 private:
 	Vertex m_vertex;
 	Texture m_texture;
+
 public:
-	MenuWindow();
+	MenuWindow(StateManager* _pStateManager);
 	~MenuWindow();
 
 	virtual bool Control();

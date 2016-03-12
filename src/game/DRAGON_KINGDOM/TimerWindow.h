@@ -9,6 +9,8 @@
 #include <Font.h>
 #include "GameData.h"
 
+class StateManager;
+
 /**
  * 経過時間を表示するウインドウ
  */
@@ -20,7 +22,7 @@ private:
 	Font m_font;
 	GameData* m_pGameData;
 public:
-	TimerWindow();
+	TimerWindow(StateManager* _pStateManager);
 	~TimerWindow();
 
 	virtual bool Control();
