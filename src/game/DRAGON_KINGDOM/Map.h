@@ -15,7 +15,6 @@ public:
 
 private:
 	Sky*	m_pSky;
-	Sun*	m_pSun;
 	Ground* m_pGround;
 
 };
