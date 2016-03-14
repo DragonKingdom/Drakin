@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "3DModel.h"
 
 /**
  * コンストラクタ

@@ -83,23 +83,6 @@ Model::Model(LPCTSTR _fileName) : m_angle(D3DXVECTOR3(0,0,0)) , m_pDevice(Graphi
 	//	}
 	//}
 
-	//--------------------------------------
-	// ライトの設定	
-	//--------------------------------------
-	D3DLIGHT9	mLight;
-    ZeroMemory( &mLight, sizeof(D3DLIGHT9) );
-	mLight.Type       = D3DLIGHT_DIRECTIONAL;
-    mLight.Diffuse.r  = 1.0f;
-    mLight.Diffuse.g  = 1.0f;
-    mLight.Diffuse.b  = 1.0f;
-    D3DXVECTOR3		mVecDir;
-    mVecDir = D3DXVECTOR3( -0.5f, -0.5f, 1.0f);
-    D3DXVec3Normalize( (D3DXVECTOR3*)&mLight.Direction, &mVecDir );
-    m_pDevice->SetLight( 0, &mLight );
-    m_pDevice->LightEnable( 0, TRUE );
-    m_pDevice->SetRenderState( D3DRS_LIGHTING, TRUE );
-
-
 	//一時データを解放
 	SAFE_RELEASE( pD3DXMtrlBuffer );
 }

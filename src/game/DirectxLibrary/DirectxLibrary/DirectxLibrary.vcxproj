@@ -98,6 +98,7 @@ xcopy /D /K /I /Y $(SolutionDir)$(Configuration)\DirectxLibrary.lib $(SolutionDi
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="3DModel.cpp" />
     <ClCompile Include="3DVertex.cpp" />
     <ClCompile Include="anim3DModel.cpp" />
     <ClCompile Include="animation.cpp" />

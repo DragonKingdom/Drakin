@@ -122,6 +122,15 @@
     <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\HouseManager">
       <UniqueIdentifier>{e45c865a-ee2e-4c8f-bf1d-f8b60d93d74d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\Map\Sky">
+      <UniqueIdentifier>{20952576-18c7-4405-8030-20fa727913bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\Map\Ground">
+      <UniqueIdentifier>{def8e4f1-d98c-4596-848d-6c27029ef1cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Effect">
+      <UniqueIdentifier>{7da21621-94b0-43de-a9c9-c05679b3fcbe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scene.cpp">
@@ -240,6 +249,12 @@
     </ClCompile>
     <ClCompile Include="RoadManager.cpp">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Sky.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\Map\Sky</Filter>
+    </ClCompile>
+    <ClCompile Include="Ground.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\Map\Ground</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -360,8 +375,19 @@
     <ClInclude Include="RoadManager.h">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadManager</Filter>
     </ClInclude>
+    <ClInclude Include="Sky.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\Map\Sky</Filter>
+    </ClInclude>
+    <ClInclude Include="Ground.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\Map\Ground</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Effect\SkyEffect.fx">
+      <Filter>Effect</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

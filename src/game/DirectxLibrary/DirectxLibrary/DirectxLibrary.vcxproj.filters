@@ -122,6 +122,9 @@
     <ClCompile Include="XAudio.cpp">
       <Filter>ソース ファイル\XAudio</Filter>
     </ClCompile>
+    <ClCompile Include="3DModel.cpp">
+      <Filter>ソース ファイル\3DModel</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3DModel.h">
