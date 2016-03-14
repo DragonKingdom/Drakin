@@ -2,21 +2,14 @@
 #include "StateManager.h"
 
 // ŒŽ–ˆ‚Ì“ú”
-const int Timer::DATE_NUM[Timer::MONTH_NUM] = 
+const int Timer::DATE_NUM[MONTH_MAX] =
 {
-	31, // 1ŒŽ
-	28, // 2ŒŽ
-	31, // 3ŒŽ
-	30, // 4ŒŽ
-	31, // 5ŒŽ
-	30, // 6ŒŽ
-	31, // 7ŒŽ
-	31, // 8ŒŽ
-	30, // 9ŒŽ
-	31, // 10ŒŽ
-	30, // 11ŒŽ
-	31,	// 12ŒŽ
+	30, // ‰Š
+	30, // …
+	30, // •—
+	30, // “y
 };
+
 /// ‰Šú‚ÌƒQ[ƒ€ƒXƒs[ƒh
 const float Timer::INIT_GAME_SPEED = 60.0f;
 
@@ -25,7 +18,7 @@ Timer::Timer(StateManager* pStateManager) :
 	m_pStateManager(pStateManager),
     m_time(timeGetTime()), 
 	m_gameSpeed(INIT_GAME_SPEED),
-	m_gameTime({ 2015, 1, 1, 0, 0, 0 }),
+	m_gameTime({ 0, 0, 1, 0, 0, 0 }),
 	m_gameState(GAMESCENE_NORMAL),
 	m_previousGameState(GAMESCENE_NORMAL)
 {
@@ -75,7 +68,6 @@ void Timer::GetState()
 	m_gameState = m_pStateManager->GetGameSceneState();
 }
 
-
 void Timer::AdvanceTime()
 {
 	DWORD endTime = timeGetTime();
@@ -85,24 +77,13 @@ void Timer::AdvanceTime()
 	{
 		// Œv‘ªŠJŽnŽžŠÔ‚ðƒŠƒZƒbƒg
 		m_time = timeGetTime();
-		// •b‚ÌŒvŽZ
-		AdvanceDate(&m_gameTime.second, &m_gameTime.minute, 60);
-		// •ª‚ÌŒvŽZ
-		AdvanceDate(&m_gameTime.minute, &m_gameTime.hour, 60);
-		// ŽžŠÔ‚ÌŒvŽZ
-		AdvanceDate(&m_gameTime.hour, &m_gameTime.date, 24);
-		// “ú‚ÌŒvŽZ
-		AdvanceDate(&m_gameTime.date, &m_gameTime.month, DATE_NUM[m_gameTime.month]);
-		// ”N‚ÌŒvŽZ
-		AdvanceDate(&m_gameTime.month, &m_gameTime.year, MONTH_NUM);
+		
+		AdvanceMinute();
+		AdvanceHour();
+		AdvanceDate();
+		AdvanceMonth();
+		AdvanceYear();
 	}
-}
-
-
-void Timer::StopTime()
-{
-	// ƒQ[ƒ€“à‚ÌŽžŠÔ‚ð0‚É‚·‚é
-	m_gameSpeed = 0;
 }
 
 void Timer::StartTime()
@@ -114,11 +95,49 @@ void Timer::StartTime()
 	m_time = timeGetTime();
 }
 
-void Timer::AdvanceDate(int* _current,int* _next,int _max)
+void Timer::AdvanceMinute()
 {
-	if(*_current >= _max )
+	if (m_gameTime.second >= SECOUND_MAX)
 	{
-		*_next += *_current / _max;
-		*_current = 0;
+		m_gameTime.minute++;
+		m_gameTime.second = 0;
 	}
 }
+
+void Timer::AdvanceHour()
+{
+	if (m_gameTime.minute >= MINUTE_MAX)
+	{
+		m_gameTime.hour++;
+		m_gameTime.minute = 0;
+	}
+}
+
+void Timer::AdvanceDate()
+{
+	if (m_gameTime.hour >= HOUR_MAX)
+	{
+		m_gameTime.date++;
+		m_gameTime.hour = 0;
+	}
+}
+
+void Timer::AdvanceMonth()
+{
+	if (m_gameTime.date > DATE_MAX)
+	{
+		m_gameTime.month++;
+		m_gameTime.date = 1;
+	}
+}
+
+void Timer::AdvanceYear()
+{
+	if (m_gameTime.month >= MONTH_MAX)
+	{
+		m_gameTime.year++;
+		m_gameTime.month = 0;
+	}
+}
+
+

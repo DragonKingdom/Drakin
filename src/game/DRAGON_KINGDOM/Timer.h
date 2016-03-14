@@ -9,18 +9,24 @@
 #include <Windows.h>
 #include "GameData.h"
 
+#define YEAR_MAX
+#define MONTH_MAX 4
+#define DATE_MAX 30
+#define HOUR_MAX 24
+#define MINUTE_MAX 60
+#define SECOUND_MAX 60
+
 class StateManager;
 
 class Timer
 {
 public:
-	/// 月の数(日本語mia)
-	static const int  MONTH_NUM = 12; 
 	/// 月毎の日数
-	static const int DATE_NUM[MONTH_NUM]; 
+	static const int DATE_NUM[MONTH_MAX];
 	/// 初期のゲームスピード
 	static const float INIT_GAME_SPEED;
 private:
+
 	/// ゲームデータクラス
 	GameData* m_gameData; 
 	
@@ -77,24 +83,19 @@ public:
 	void AdvanceTime();
 
 	/**
-	 * プレイ時間を止める
-	 * 将来的には消す予定
-	 */
-	void StopTime();
-
-	/**
 	 * プレイ時間を進める
 	 */
 	void StartTime();
 
-	/**
-	 * @fn
-	 * @brief 時間の単位換算
-	 * @param (_current)
-	 * @param (_next) _currentより一つ上の単位
-	 * @param (_max) _currentの最大値
-	 */
-	void AdvanceDate(int* _current,int* _next,int _max);
+	void AdvanceMinute();
+
+	void AdvanceHour();
+
+	void AdvanceDate();
+
+	void AdvanceMonth();
+
+	void AdvanceYear();
 
 private:
 	Timer(const Timer &other) : 

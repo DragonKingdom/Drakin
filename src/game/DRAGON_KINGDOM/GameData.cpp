@@ -6,9 +6,12 @@ GameData* GameData::m_pGameData = NULL;
 
 GameData::GameData()
 {
-	m_gameTime.year = 2015;
-	m_gameTime.month = 1;
+	m_gameTime.year = 0;
+	m_gameTime.month = 0;
 	m_gameTime.date = 1;
+	m_gameTime.hour = 0;
+	m_gameTime.minute = 0;
+
 }
 
 GameData::~GameData()

@@ -21,6 +21,7 @@ public:
 private:
 	Font m_font;
 	GameData* m_pGameData;
+	Time m_time;
 public:
 	TimerWindow(StateManager* _pStateManager);
 	~TimerWindow();
