@@ -10,3 +10,7 @@ m_pBuildAreaChecker(pBuildAreaChecker)
 RoadManager::~RoadManager()
 {
 }
+void RoadManager::ControlBuildRoad()
+{
+
+}
