@@ -96,6 +96,7 @@ bool Window::Control()
 		{
 			m_state = STATE_DESTROY;
 		}
+		break;
 	}
 
 	if (m_state == STATE_DESTROY)
@@ -163,15 +164,15 @@ void Window::Draw()
 	}
 
 	// 隙間を埋めるサイズ
-	D3DXVECTOR2 size = D3DXVECTOR2(16,16);
-	for(int i = 0; i < m_windowSize.x - PARTS_SIZE.x * 2;)
+	D3DXVECTOR2 size = D3DXVECTOR2(16, 16);
+	for (int i = 0; i < m_windowSize.x - PARTS_SIZE.x * 2;)
 	{
-			// 隙間の部分がpartsSizeより小さい時
-			if( m_windowSize.x - PARTS_SIZE.x * 2 - i <= size.x )
-			{
-				// 余りを求める
-				size.x = m_windowSize.x - PARTS_SIZE.x * 2 - i;
-			}
+		// 隙間の部分がpartsSizeより小さい時
+		if (m_windowSize.x - PARTS_SIZE.x * 2 - i <= size.x)
+		{
+			// 余りを求める
+			size.x = m_windowSize.x - PARTS_SIZE.x * 2 - i;
+		}
 		for(int j = 0; j < m_windowSize.y - PARTS_SIZE.y * 2;)
 		{
 			// 隙間の部分がpartsSizeより小さい時
@@ -217,6 +218,7 @@ bool Window::CheckTargetPos(D3DXVECTOR2 _position,D3DXVECTOR2 _targetPos)
 		break;
 	case DIR_NONE:
 		return true;
+		break;
 	}
 	return false;
 }

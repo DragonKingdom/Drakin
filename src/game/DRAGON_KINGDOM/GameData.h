@@ -54,9 +54,7 @@ public:
 	 */
 	Time GameData::GetGameTime();
 
-	/// @todo TimerWindowで使用されてるから現状ここにおいてる
-	/// プレイ時間
-	Time m_gameTime;
+	
 
 
 private:
@@ -65,6 +63,9 @@ private:
 	GameData &operator = (const GameData &other){}
 
 	static GameData* m_pGameData;
+
+	/// プレイ時間
+	Time m_gameTime;
 };
 
 

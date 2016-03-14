@@ -19,22 +19,48 @@ TimerWindow::~TimerWindow()
 
 bool TimerWindow::Control()
 {
-	return Window::Control();
+	bool isDestroy = Window::Control();
+	
+
+	return isDestroy;
 }
 
 void TimerWindow::Draw()
 {
 	Window::Draw();
 
+	m_time = m_pGameData->GetGameTime();
+
+
+	/// @todo ŒŽ‚ÌŠÇ—•û–@‚Å”Y‚ñ‚Å‚é‚©‚ç‚Æ‚è‚ ‚¦‚¸‚Å‘‚¢‚½
+	std::string Month;
+	if (m_time.month == 0)
+	{
+		Month = "‰Š‚Ì";
+	}
+	else if (m_time.month == 1)
+	{
+		Month = "…‚Ì";
+	}
+	else if (m_time.month == 2)
+	{
+		Month = "•—‚Ì";
+	}
+	else if (m_time.month == 3)
+	{
+		Month = "“y‚Ì";
+	}
+
 	// ƒEƒCƒ“ƒhƒE‚ªˆÚ“®ó‘Ô‚Å‚È‚¯‚ê‚Î•¶Žš‚ð•`‰æ‚·‚é
 	if( m_state != STATE_LEAVE )
 	{
-		std::string str = std::to_string(m_pGameData->m_gameTime.year) + "”N "
-			+ std::to_string(m_pGameData->m_gameTime.month) + "ŒŽ " +  
-			std::to_string(m_pGameData->m_gameTime.date) + "“ú " +
-			std::to_string(m_pGameData->m_gameTime.hour) + "Žž " +
-			std::to_string(m_pGameData->m_gameTime.minute) + "•ª ";
-			//std::to_string(m_pGameData->m_time.second) + "•b ";
+		std::string str = 
+			std::to_string(m_time.year) + "”N "+ 
+			Month + "ŒŽ " +
+			std::to_string(m_time.date) + "“ú " +
+			std::to_string(m_time.hour) + "Žž " +
+			std::to_string(m_time.minute) + "•ª ";
+		
 		m_font.Draw(str.c_str(),TIMER_POSITION);
 	}
 }
