@@ -19,6 +19,5 @@ void Map::Draw()
 {
 	m_pSky->Draw();
 	m_pGround->Draw();
-	m_pGround->Draw();
 
 }
