@@ -25,7 +25,9 @@ Timer::Timer(StateManager* pStateManager) :
 	m_pStateManager(pStateManager),
     m_time(timeGetTime()), 
 	m_gameSpeed(INIT_GAME_SPEED),
-	m_gameTime({ 2015, 1, 1, 0, 0, 0 })
+	m_gameTime({ 2015, 1, 1, 0, 0, 0 }),
+	m_gameState(GAMESCENE_NORMAL),
+	m_previousGameState(GAMESCENE_NORMAL)
 {
 
 }
@@ -41,9 +43,9 @@ Timer::~Timer()
  */
 void Timer::Control()
 {
-	if (true)/*Œ»Ý‚ÌGameScene‚Ìó‘Ô‚ªNORMAL‚¾‚Á‚½‚ç*/
+	if (m_gameState == GAMESCENE_NORMAL)/*Œ»Ý‚ÌGameScene‚Ìó‘Ô‚ªNORMAL‚¾‚Á‚½‚ç*/
 	{
-		if (false)/*ˆê‚Â‘O‚ÌGameScene‚Ìó‘Ô‚ªPAUSE‚¾‚Á‚½‚ç*/
+		if (m_previousGameState == GAMESCENE_PAUSE)/*ˆê‚Â‘O‚ÌGameScene‚Ìó‘Ô‚ªPAUSE‚¾‚Á‚½‚ç*/
 		{
 			StartTime();
 		}
@@ -69,7 +71,8 @@ void Timer::SetState()
 
 void Timer::GetState()
 {
-	m_gameSceneState = m_pStateManager->GetGameSceneState();
+	m_previousGameState = m_gameState;
+	m_gameState = m_pStateManager->GetGameSceneState();
 }
 
 

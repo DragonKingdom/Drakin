@@ -35,7 +35,6 @@ private:
 	TaskBar* m_pTaskBar;
 	Menuicon* m_pMenuicon;
 	Window* m_pWindow;
-	bool   m_pauseflg;
 	InputDeviceFacade* m_pIdf;
 	StateManager* m_pStateManager;
 
@@ -49,6 +48,5 @@ public:
 	void createWindow();
 
 	GAME_STATE OnClick();
-	bool CheckPause(){ return m_pauseflg; }
 };
 #endif

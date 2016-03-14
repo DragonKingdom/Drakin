@@ -1,6 +1,6 @@
 #include "Window.h"
 #include "textureManager.h"
-#include "Scene.h"
+#include "InputDeviceFacade.h"
 
 const D3DXVECTOR2 Window::PARTS_SIZE = D3DXVECTOR2(135,135);
 
@@ -14,13 +14,14 @@ const Vertex::FRECT Window::UV[Window::TYPE_MAX] =
 	Vertex::FRECT(100,100,200,200),
 };
 
-Window::Window(	D3DXVECTOR2 _windowSize , D3DXVECTOR2 _position , D3DXVECTOR2 _targetPos) : 
+Window::Window(D3DXVECTOR2 _windowSize, D3DXVECTOR2 _position, D3DXVECTOR2 _targetPos, StateManager* _pStateManager) :
 	m_windowSize(_windowSize),
 	m_position(_position),/*描画位置*/
 	m_targetPos(_targetPos),/*移動先*/
 	m_time(LEAVE_LIMIT_TIME),
 	m_move(0,0), 
-	m_initPos(_position)
+	m_initPos(_position),
+	m_pStateManager(_pStateManager)
 {	
 	m_texture = TextureManager::getInstance().Get(TextureManager::GAME_SCENE_TEX::WINDOW);
 	// ウインドウが被ってしまう為、ウインドウの最小サイズより小さくならないようにしておく
@@ -66,6 +67,17 @@ Window::~Window()
 
 bool Window::Control()
 {
+	// 右クリックされた時
+	if (m_pInputDevice->MouseRightPush())
+	{
+		// 削除待ちでない状態の時
+		if (m_state != STATE_DESTROY)
+		{
+			// ウインドウを画面外に移動する命令を出す
+			m_state = STATE_LEAVE;
+		}
+	}
+
 	switch(m_state)
 	{
 	case STATE_WAIT:

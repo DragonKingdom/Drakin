@@ -6,6 +6,8 @@
 #ifndef KINGDOMWINDOW_H
 #define KINGDOMWINDOW_H
 
+class StateManager;
+
 /**
  * 王国情報を表示するウインドウ
  */
@@ -16,7 +18,7 @@ public:
 private:
 
 public:
-	KingdomWindow();
+	KingdomWindow(StateManager* _pStateManager);
 	~KingdomWindow();
 
 	virtual bool Control();

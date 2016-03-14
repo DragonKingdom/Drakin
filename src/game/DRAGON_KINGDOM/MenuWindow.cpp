@@ -3,10 +3,11 @@
 #include "Scene.h"
 #include "TextureManager.h"
 
-MenuWindow::MenuWindow(): 
+MenuWindow::MenuWindow(StateManager* _pStateManager) :
 	Window(D3DXVECTOR2(500,200),
 		   D3DXVECTOR2(400,CLIENT_HEIGHT + 270),
-		   D3DXVECTOR2(400,CLIENT_HEIGHT - 270))
+		   D3DXVECTOR2(400,CLIENT_HEIGHT - 270),
+		   _pStateManager)
 {
 	//m_texture = TextureManager::getInstance().Get();
 }

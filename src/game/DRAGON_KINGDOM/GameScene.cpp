@@ -31,7 +31,6 @@ SceneID GameScene::Control()
 	m_timer.GetGameData();
 
 	m_UI.Control();
-	if (m_UI.CheckPause()){return SceneID::SCENE_GAME; }
 
 	bool leftPush = (Scene::m_mousePushState & MOUSE_KEYKIND::M_LEFT_PUSH);
 	bool centerPush = (Scene::m_mousePushState & MOUSE_KEYKIND::M_CENTER);

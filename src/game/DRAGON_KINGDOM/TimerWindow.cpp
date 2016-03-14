@@ -4,10 +4,11 @@
 
 const D3DXVECTOR2 TimerWindow::TIMER_POSITION = D3DXVECTOR2(60,650);
 
-TimerWindow::TimerWindow() : 
+TimerWindow::TimerWindow(StateManager* _pStateManager) : 
 	Window(D3DXVECTOR2(CLIENT_WIDTH-520,100),
 	       D3DXVECTOR2(0,CLIENT_HEIGHT - 110),
-		   D3DXVECTOR2(0,CLIENT_HEIGHT - 110)), 
+		   D3DXVECTOR2(0,CLIENT_HEIGHT - 110),
+		   _pStateManager), 
 	       m_pGameData(GameData::getInstance())
 {
 }
