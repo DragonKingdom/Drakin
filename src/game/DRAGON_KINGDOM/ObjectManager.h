@@ -16,9 +16,6 @@ public:
 
 	void Control();
 	void Draw();
-	void RoadBuiuldControl();
-	void BuildAreaControl();
-	void HouseBuildControl();
 	void GetState();
 	void SetState();
 	void SetGameData();

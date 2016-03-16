@@ -36,17 +36,15 @@ void ObjectManager::Draw()
 	m_pMap->Draw();
 }
 
-void ObjectManager::RoadBuiuldControl()
+void ObjectManager::GetState()
 {
 }
 
-void ObjectManager::BuildAreaControl(){}
+void ObjectManager::SetState()
+{
+}
 
-void ObjectManager::HouseBuildControl(){}
-
-void ObjectManager::GetState(){}
-
-void ObjectManager::SetState(){}
-
-void ObjectManager::SetGameData(){}
+void ObjectManager::SetGameData()
+{
+}
 

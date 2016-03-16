@@ -1,9 +1,9 @@
 /**
-* @file  BuildAreaCheker.h
-* @brief クラスcpp
-
-* @author
-*/
+ * @file  BuildAreaCheker.h
+ * @brief クラスcpp
+ *
+ * @author
+ */
 
 #include "BuildAreaChecker.h"
 #include "BuildAreaManager.h"

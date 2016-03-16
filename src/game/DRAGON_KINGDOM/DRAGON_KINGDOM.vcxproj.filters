@@ -131,6 +131,33 @@
     <Filter Include="Effect">
       <UniqueIdentifier>{7da21621-94b0-43de-a9c9-c05679b3fcbe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\RoadBuilder">
+      <UniqueIdentifier>{98a34805-99d8-4acb-8493-ae2157bc540a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\RoadBuilder\RoadPreviewer">
+      <UniqueIdentifier>{fbbe92b7-e145-4b9e-a4fc-f7fd8a57dec2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\Road">
+      <UniqueIdentifier>{82fd1584-b28a-4985-ae0e-5c97b5b4ef4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\HouseManager\House">
+      <UniqueIdentifier>{c72e5dd6-77f9-4a17-b4d8-305dde0e46cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\HouseManager\HouseBuilder">
+      <UniqueIdentifier>{e2d7562d-811e-40ec-bbbc-894521f82855}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\HouseManager\HouseBuilder\HousePreviewer">
+      <UniqueIdentifier>{40b44ae1-7a67-4965-affc-19ab55dd4290}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildArea">
+      <UniqueIdentifier>{b4783589-9971-4b9a-b6ec-357d1dbf25e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildAreaBuilder">
+      <UniqueIdentifier>{8b129293-991a-4179-95f2-9f5485178d4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildAreaBuilder\BuildAreaPreviewer">
+      <UniqueIdentifier>{38a6eda2-a56b-4d7f-b10c-126c1ba6785b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scene.cpp">
@@ -256,6 +283,33 @@
     <ClCompile Include="Ground.cpp">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\Map\Ground</Filter>
     </ClCompile>
+    <ClCompile Include="Road.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\Road</Filter>
+    </ClCompile>
+    <ClCompile Include="RoadPreviewer.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\RoadBuilder\RoadPreviewer</Filter>
+    </ClCompile>
+    <ClCompile Include="RoadBuilder.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\RoadBuilder</Filter>
+    </ClCompile>
+    <ClCompile Include="House.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\HouseManager\House</Filter>
+    </ClCompile>
+    <ClCompile Include="HousePreviewer.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\HouseManager\HouseBuilder\HousePreviewer</Filter>
+    </ClCompile>
+    <ClCompile Include="HouseBuilder.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\HouseManager\HouseBuilder</Filter>
+    </ClCompile>
+    <ClCompile Include="BuildAreaPreviewer.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildAreaBuilder\BuildAreaPreviewer</Filter>
+    </ClCompile>
+    <ClCompile Include="BuildAreaBuilder.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildAreaBuilder</Filter>
+    </ClCompile>
+    <ClCompile Include="BuildArea.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildArea</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -380,6 +434,33 @@
     </ClInclude>
     <ClInclude Include="Ground.h">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\Map\Ground</Filter>
+    </ClInclude>
+    <ClInclude Include="Road.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\Road</Filter>
+    </ClInclude>
+    <ClInclude Include="RoadPreviewer.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\RoadBuilder\RoadPreviewer</Filter>
+    </ClInclude>
+    <ClInclude Include="RoadBuilder.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\RoadBuilder</Filter>
+    </ClInclude>
+    <ClInclude Include="House.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\HouseManager\House</Filter>
+    </ClInclude>
+    <ClInclude Include="HousePreviewer.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\HouseManager\HouseBuilder\HousePreviewer</Filter>
+    </ClInclude>
+    <ClInclude Include="HouseBuilder.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\HouseManager\HouseBuilder</Filter>
+    </ClInclude>
+    <ClInclude Include="BuildAreaPreviewer.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildAreaBuilder\BuildAreaPreviewer</Filter>
+    </ClInclude>
+    <ClInclude Include="BuildAreaBuilder.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildAreaBuilder</Filter>
+    </ClInclude>
+    <ClInclude Include="BuildArea.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildArea</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
