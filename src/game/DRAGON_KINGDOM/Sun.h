@@ -17,9 +17,6 @@ private:
 	D3DXVECTOR3 m_DirectionalVec;
 	D3DXVECTOR3 m_UpVec;
 	D3DXVECTOR3 m_SunPos;
-	float		m_SunRadius;
-	float		m_SunRotationY;
-	float		m_SunRotationZ;
 
 };
 

@@ -18,7 +18,6 @@ private:
 
 	/// @todo シェーダー使いたいから置く(シェーダーもLibraryにしたい)
 	LPDIRECT3DDEVICE9	m_pDevice;
-	LPD3DXEFFECT		m_pEffect;
 	
 
 };

@@ -24,10 +24,13 @@ Map::~Map()
 void Map::Control()
 {
 	m_pSun->Control();
+	m_pSky->Control();
+	m_pGround->Control();
 }
 
 void Map::Draw()
 {
+	m_pSun->Draw();
 	m_pSky->Draw();
 	m_pGround->Draw();
 }
