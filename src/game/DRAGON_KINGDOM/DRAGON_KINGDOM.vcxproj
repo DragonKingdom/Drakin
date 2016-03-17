@@ -127,6 +127,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Sun.cpp" />
+    <ClCompile Include="SunChecker.cpp" />
     <ClCompile Include="TaskBar.cpp" />
     <ClCompile Include="TeamLogo.cpp" />
     <ClCompile Include="TextureManager.cpp" />
@@ -179,6 +181,8 @@
     <ClInclude Include="Sky.h" />
     <ClInclude Include="StateManager.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Sun.h" />
+    <ClInclude Include="SunChecker.h" />
     <ClInclude Include="TaskBar.h" />
     <ClInclude Include="TeamLogo.h" />
     <ClInclude Include="TextureManager.h" />
