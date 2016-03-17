@@ -28,7 +28,7 @@ ObjectManager::~ObjectManager()
 
 void ObjectManager::Control()
 {
-
+	m_pMap->Control();
 }
 
 void ObjectManager::Draw()

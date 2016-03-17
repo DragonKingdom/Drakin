@@ -1,17 +1,19 @@
 #ifndef SKY_H
 #define SKY_H
 
+class SunChecker;
 
 class Sky
 {
 public:
-	Sky();
+	Sky(SunChecker* pSunChecker);
 	~Sky();
 	void Control();
 	void Draw();
 
 
 private:
+	SunChecker*			m_pSunChecker;
 	Model*				m_pSkyModel;
 
 	/// @todo シェーダー使いたいから置く(シェーダーもLibraryにしたい)

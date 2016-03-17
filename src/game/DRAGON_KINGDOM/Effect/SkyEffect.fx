@@ -4,6 +4,8 @@ float4x4 matWorldViewProj;
 // 太陽の方向ベクトルと上方向ベクトル[0.0f, 1.0f, 0.0f]との内積
 float  DotProduct;
 
+sampler tex0 : register(s0);
+
 struct VS0_OUTPUT
 {
 	float4 Pos    : POSITION;
@@ -12,7 +14,7 @@ struct VS0_OUTPUT
 
 
 // 頂点シェーダ
-float4 VSFunc(
+VS0_OUTPUT VSFunc(
 	float4 Pos    : POSITION,
 	float4 Normal : NORMAL,
 	float2 Tex	  : TEXCOORD)
