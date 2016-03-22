@@ -43,7 +43,7 @@ void TitleLogo::Draw()
 	/// @todo ロゴの位置は現物合わせで決め打ちしているが、仕様として欲しい
 	D3DXVECTOR2 center;
 	center.x = CLIENT_WIDTH / 2;
-	center.y = CLIENT_HEIGHT / 3.5;
+	center.y = CLIENT_HEIGHT / 3.5f;
 
 	// 描画
 	Vertex vertex;

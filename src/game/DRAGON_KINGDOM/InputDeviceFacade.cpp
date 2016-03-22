@@ -33,10 +33,18 @@ const D3DXVECTOR2 InputDeviceFacade::GetMousePos()
 
 bool InputDeviceFacade::MouseLeftPush()
 {
-	return Scene::m_mousePushState & Scene::M_LEFT_PUSH;
+	if (Scene::m_mousePushState & Scene::M_LEFT_PUSH)
+	{
+		return true;
+	}
+	return false;
 }
 
 bool InputDeviceFacade::MouseRightPush()
 {
-	return Scene::m_mousePushState & Scene::M_RIGHT_PUSH;
+	if (Scene::m_mousePushState & Scene::M_RIGHT_PUSH)
+	{
+		return true;
+	}
+	return false;
 }

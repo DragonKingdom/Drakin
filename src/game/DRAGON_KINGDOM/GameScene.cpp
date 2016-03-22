@@ -32,9 +32,23 @@ SceneID GameScene::Control()
 
 	m_UI.Control();
 
-	bool leftPush = (Scene::m_mousePushState & MOUSE_KEYKIND::M_LEFT_PUSH);
-	bool centerPush = (Scene::m_mousePushState & MOUSE_KEYKIND::M_CENTER);
-	bool rightPush = (Scene::m_mousePushState & MOUSE_KEYKIND::M_RIGHT_PUSH);
+
+	/// @todo ここでクリックの判定をして判断してるけど、配下のクラスが判断するようにする
+	bool leftPush = false;
+	bool centerPush = false;
+	bool rightPush = false;
+	if (Scene::m_mousePushState & MOUSE_KEYKIND::M_LEFT_PUSH)
+	{
+		leftPush = true;
+	}
+	if (Scene::m_mousePushState & MOUSE_KEYKIND::M_CENTER)
+	{
+		centerPush = true;
+	}
+	if (Scene::m_mousePushState & MOUSE_KEYKIND::M_RIGHT_PUSH)
+	{
+		rightPush = true;
+	}
 
 	switch( m_state )
 	{

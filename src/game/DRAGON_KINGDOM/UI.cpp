@@ -6,6 +6,7 @@
 #include "OptionWindow.h"
 #include "KingdomWindow.h"
 #include "InputDeviceFacade.h"
+#include "StateManager.h"
 
 UI::UI(StateManager* pStateManager) :
 m_pWindow(NULL),
@@ -28,12 +29,14 @@ void UI::Control()
 	m_pTaskBar->Control();
 	m_pMenuicon->Control();
 
+
 	// ウインドウが生成されていなければ処理を返す
 	if (m_pWindow == NULL)
 	{
 		return;
 	}
 	//ゲームデータをここでウィンドウに伝える（setGameData）
+
 
 	 // 状態が削除待ちの時
 	if (m_pWindow->Control())

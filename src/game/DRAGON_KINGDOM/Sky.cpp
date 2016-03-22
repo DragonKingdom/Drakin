@@ -25,5 +25,7 @@ void Sky::Draw()
 	// •`‰æˆ—
 	D3DXMATRIX matWorld;
 	D3DXMatrixIdentity(&matWorld);
-	m_pSkyModel->Draw(D3DXVECTOR3(0, 0, 0), matWorld);
+	m_pSkyModel->SetState();
+	m_pSkyModel->SetWorldMatrix(D3DXVECTOR3(0, 0, 0), matWorld);
+	m_pSkyModel->Draw();
 }
