@@ -2,6 +2,8 @@
 #include "XAudio.h"
 
 #pragma comment(lib, "dsound.lib")
+#pragma comment(lib, "winmm.lib")
+
 
 #define NULL_DELETE(p) { if( p ){ delete p; p = NULL; } }
 #define NULL_ARRAY_DELETE(p) { if( p ){ delete[] p; p = NULL; } }
