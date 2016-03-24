@@ -8,6 +8,7 @@ class HouseBuilder
 public:
 	HouseBuilder();
 	~HouseBuilder();
+	void PreviewerDraw();
 
 private:
 	HousePreviewer* m_pHousePreviewer;

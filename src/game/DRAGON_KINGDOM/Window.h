@@ -83,7 +83,7 @@ public:
 	Window(D3DXVECTOR2 _windowSize, D3DXVECTOR2 _position, D3DXVECTOR2 _targetPos, StateManager* _pStateManager);
 	virtual ~Window() = 0;
 	/**
-	* ビルドウィンドウの制御
+	* ウィンドウの制御
 	*/
 	virtual bool Control();
 	/**
@@ -91,19 +91,23 @@ public:
 	*/
 	virtual void Draw();
 	/**
-	* 
-	*/
-	virtual GAME_STATE OnClick(){ return STATE_NONE; }
-	/**
-	 * ビルドウィンドウの現在の状態を返す
-	 * @return  m_state
+	 *
 	 */
-	STATE GetState(){ return m_state; }
+	virtual void GetState(){ return; }
 	/**
-	 * ビルドウインドウの状態()をセットする
-	 * @param _state 状態
+	 *
 	 */
-	void SetState(STATE _state){ m_state = _state; }
+	virtual void SetState(){ return; }
+	/**
+	 *
+	 */
+	virtual void GetGameData(){ return; }
+	/**
+	 *
+	 */
+	virtual void SetGameData(){ return; }
+
+
 private:
 	/**
 	 * ビルドウィンドウが移動先へ到達しているか調べる
@@ -113,6 +117,11 @@ private:
 	 * @retval false     到達していない
 	 */
 	bool CheckTargetPos(D3DXVECTOR2 _position,D3DXVECTOR2 _targetPos);
+
+	/**
+	 *
+	 */
+	virtual void OnClick(){ return; }
 
 };
 #endif

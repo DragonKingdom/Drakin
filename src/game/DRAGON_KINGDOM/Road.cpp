@@ -8,4 +8,13 @@ Road::~Road()
 {
 }
 
+void Road:: Control()
+{
+
+}
+
+void Road::Draw()
+{
+
+}
 

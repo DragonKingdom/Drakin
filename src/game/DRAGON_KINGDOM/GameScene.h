@@ -13,17 +13,10 @@
 #include "StateManager.h"
 #include "CameraController.h"
 #include "ClickPosConverter.h"
+#include "ObjectManager.h"
 #include "Timer.h"
 #include "UI.h"
-#include "Map.h"
 #include "Camera.h"
-#include "Input.h"
-#include "vertex.h"
-#include "texture.h"
-#include "Model.h"
-#include "XAudio.h"
-
-#include "Font.h"
 
 /**
  * ゲームシーンを管理するクラス
@@ -38,25 +31,19 @@ private:
 	StateManager m_StateManager;
 	/// カメラアングルの制御クラス
 	CameraController m_CameraController;
+	/// クリックしたxy座標を3d座標に変換してくれる
 	ClickPosConverter m_ClickPosConverter;
-	/// 建築エリア管理クラスオブジェクト
-
 	/// タイマークラスオブジェクト
 	Timer m_timer;
 	/// UIクラスオブジェクト
 	UI m_UI;
-	/// マップクラスオブジェクト
-	Map m_Map;
+	/// オブジェクトの管理クラス
+	ObjectManager m_ObjectManager;
 
 	/// ゲーム内での共有データを管理するクラス
 	GameData* m_pGameData;
 
-
 	Texture m_Texture;
-
-	/// ゲーム状態
-	GAME_STATE m_state;
-
 
 	XAudio m_XAudio;
 

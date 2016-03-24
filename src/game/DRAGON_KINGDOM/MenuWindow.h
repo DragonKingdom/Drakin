@@ -28,6 +28,15 @@ public:
 
 	virtual bool Control();
 	virtual void Draw();
+	virtual void GetState();
+	virtual void SetState();
+	virtual void GetGameData();
+	virtual void SetGameData();
+
+private:
+	virtual void Onclick(){ return; };
+
+
 };
 
 #endif

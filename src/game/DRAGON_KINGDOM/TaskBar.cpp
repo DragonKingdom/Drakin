@@ -32,6 +32,7 @@ TaskBar::~TaskBar()
 
 void TaskBar::Control()
 {
+	/// @todo Windowクラスを修正するまで、Windowのコントロールは呼ばないで
 }
 
 void TaskBar::Draw()
@@ -54,3 +55,48 @@ void TaskBar::Draw()
 		m_pWindow[i]->Draw();
 	}
 }
+
+void TaskBar::GetState()
+{
+	for (int i = 0; i < WINDOW_TYPE_MAX; i++)
+	{
+		if (m_pWindow[i] != NULL)
+		{
+			m_pWindow[i]->GetState();
+		}
+	}
+}
+
+void TaskBar::SetState()
+{
+	for (int i = 0; i < WINDOW_TYPE_MAX; i++)
+	{
+		if (m_pWindow[i] != NULL)
+		{
+			m_pWindow[i]->SetState();
+		}
+	}
+}
+
+void TaskBar::GetGameData()
+{
+	for (int i = 0; i < WINDOW_TYPE_MAX; i++)
+	{
+		if (m_pWindow[i] != NULL)
+		{
+			m_pWindow[i]->GetGameData();
+		}
+	}
+}
+
+void TaskBar::SetGameData()
+{
+	for (int i = 0; i < WINDOW_TYPE_MAX; i++)
+	{
+		if (m_pWindow[i] != NULL)
+		{
+			m_pWindow[i]->SetGameData();
+		}
+	}
+}
+

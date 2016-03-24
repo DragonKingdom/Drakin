@@ -64,6 +64,11 @@ public:
 	*/
 	void Draw();
 
+	void GetState();
+	void SetState();
+	void GetGameData();
+	void SetGameData();
+
 	
 };
 #endif

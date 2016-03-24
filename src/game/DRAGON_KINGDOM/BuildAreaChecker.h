@@ -15,7 +15,7 @@ class BuildAreaChecker
 public:
 	BuildAreaChecker(BuildAreaManager* pBuildAreaManager);
 	~BuildAreaChecker();
-	bool Check();
+	bool AreaCheck();
 
 private:
 	BuildAreaManager* m_pBuildAreaManager;

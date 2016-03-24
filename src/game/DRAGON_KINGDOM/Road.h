@@ -7,6 +7,8 @@ class Road
 public:
 	Road();
 	~Road();
+	void Control();
+	void Draw();
 
 private:
 

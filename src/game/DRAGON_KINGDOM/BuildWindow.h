@@ -20,7 +20,8 @@ class BuildWindow : public Window
 {
 public:
 
-	enum TEX_TYPE{
+	enum TEX_TYPE
+	{
 		HOUSE,
 		ROAD,
 		TYPE_MAX,
@@ -29,11 +30,12 @@ public:
 	static const Vertex::FRECT UV[TYPE_MAX];
 	static const D3DXVECTOR2 ICON_POS;
 private:
-	Font m_font;
-	GameData* m_pGameData;
-	Texture m_texture;
-	Vertex m_vertex;
-	int	   m_selectID;
+	Font			m_font;
+	GameData*		m_pGameData;
+	Texture			m_texture;
+	Vertex			m_vertex;
+	int				m_selectID;
+	BUILD_STATE		m_buildState;
 
 public:
 	BuildWindow(StateManager* _pStateManager);
@@ -49,11 +51,18 @@ public:
 	*/
 	virtual void Draw();
 
+	virtual void GetState();
+	virtual void SetState();
+	virtual void GetGameData();
+	virtual void SetGameData();
+
+private:
 	/**
 	*  クリックチェック
-	*  @return 
+	*  @return
 	*/
-	virtual GAME_STATE OnClick();
+	virtual void OnClick();
+
 };
 
 #endif

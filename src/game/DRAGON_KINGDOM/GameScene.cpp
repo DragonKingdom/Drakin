@@ -9,8 +9,8 @@ GameScene::GameScene():
 	m_CameraController(&m_StateManager),
 	m_timer(&m_StateManager),
 	m_UI(&m_StateManager),
-	m_state(STATE_NONE),
-	m_ClickPosConverter(&m_CameraController)
+	m_ClickPosConverter(&m_CameraController),
+	m_ObjectManager(&m_StateManager)
 {
 	/// @todo サウンド関連は用意してなかったのでとりあえずBGMだけ流せるように あとよろ
 
@@ -20,60 +20,46 @@ GameScene::GameScene():
 
 GameScene::~GameScene()
 {
+	m_XAudio.SoundStop(0);
 	delete m_pGameData;
 }
 
 SceneID GameScene::Control()
 {
+	// デバイスの入力情報を取得
 	Scene::Control();
 
+	
+	// ゲーム内データと状態を管理クラスから取得させる
 	m_timer.GetState();
 	m_timer.GetGameData();
+	m_UI.GetState();
+	m_UI.GetGameData();
+	m_ObjectManager.GetState();
+	m_ObjectManager.GetGameData();
 
-	m_UI.Control();
-
-
-	/// @todo ここでクリックの判定をして判断してるけど、配下のクラスが判断するようにする
-	bool leftPush = false;
-	bool centerPush = false;
-	bool rightPush = false;
-	if (Scene::m_mousePushState & MOUSE_KEYKIND::M_LEFT_PUSH)
-	{
-		leftPush = true;
-	}
-	if (Scene::m_mousePushState & MOUSE_KEYKIND::M_CENTER)
-	{
-		centerPush = true;
-	}
-	if (Scene::m_mousePushState & MOUSE_KEYKIND::M_RIGHT_PUSH)
-	{
-		rightPush = true;
-	}
-
-	switch( m_state )
-	{
-	case STATE_NONE:
-		if(leftPush)
-		{
-			m_state = m_UI.OnClick();
-		}
-		break;
-	}
-
-	// カメラの座標を更新
-	m_CameraController.Control(m_mousePos);
 	
+	// ゲーム内オブジェクトの制御
+	m_UI.Control();
+	m_ObjectManager.Control();
+	m_CameraController.Control(m_mousePos);/// @todo マウス座標とか渡さないようにしとく
 	m_timer.Control();
 
+
+	// オブジェクトのデータと状態を管理クラスに渡す
+	m_UI.SetState();
+	m_UI.SetGameData();
 	m_timer.SetState();
 	m_timer.SetGameData();
+	m_ObjectManager.SetState();
+	m_ObjectManager.SetGameData();
 
 	return SceneID::SCENE_GAME;
 }
 
 void GameScene::Draw()
 {
-	m_Map.Draw();
+	m_ObjectManager.Draw();
 	m_UI.Draw();
 	m_CameraController.Draw();
 }

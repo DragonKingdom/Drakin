@@ -34,3 +34,23 @@ void KingdomWindow::Draw()
 {
 	Window::Draw();
 }
+
+void KingdomWindow::GetState()
+{
+
+}
+
+void KingdomWindow::SetState()
+{
+
+}
+
+void KingdomWindow::GetGameData()
+{
+
+}
+
+void KingdomWindow::SetGameData()
+{
+
+}

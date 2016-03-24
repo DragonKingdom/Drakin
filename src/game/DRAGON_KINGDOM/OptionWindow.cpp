@@ -39,3 +39,24 @@ void OptionWindow::Draw()
 {
 	Window::Draw();
 }
+
+void OptionWindow::GetState()
+{
+
+}
+
+void OptionWindow::SetState()
+{
+
+}
+
+void OptionWindow::GetGameData()
+{
+
+}
+
+void OptionWindow::SetGameData()
+{
+
+}
+

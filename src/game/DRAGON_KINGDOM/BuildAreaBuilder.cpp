@@ -2,9 +2,9 @@
 #include "BuildAreaPreviewer.h"
 
 
-BuildAreaBuilder::BuildAreaBuilder()
+BuildAreaBuilder::BuildAreaBuilder():
+m_pBuildAreaPreviewer(new BuildAreaPreviewer())
 {
-	m_pBuildAreaPreviewer = new BuildAreaPreviewer();
 }
 
 BuildAreaBuilder::~BuildAreaBuilder()

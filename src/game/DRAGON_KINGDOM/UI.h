@@ -45,8 +45,11 @@ public:
 
 	void Draw();
 	void Control();
-	void createWindow();
+	void WindowCreate();
+	void SetGameData();
+	void GetGameData();
+	void SetState();
+	void GetState();
 
-	GAME_STATE OnClick();
 };
 #endif

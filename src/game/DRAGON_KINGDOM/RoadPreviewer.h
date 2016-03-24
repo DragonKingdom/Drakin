@@ -7,6 +7,7 @@ class RoadPreviewer
 public:
 	RoadPreviewer();
 	~RoadPreviewer();
+	void Draw();
 
 private:
 

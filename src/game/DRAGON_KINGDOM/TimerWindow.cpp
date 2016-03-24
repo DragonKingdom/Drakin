@@ -11,6 +11,7 @@ TimerWindow::TimerWindow(StateManager* _pStateManager) :
 		   _pStateManager), 
 	       m_pGameData(GameData::getInstance())
 {
+	m_time = m_pGameData->GetGameTime();
 }
 
 TimerWindow::~TimerWindow()
@@ -21,16 +22,12 @@ bool TimerWindow::Control()
 {
 	bool isDestroy = Window::Control();
 	
-
 	return isDestroy;
 }
 
 void TimerWindow::Draw()
 {
 	Window::Draw();
-
-	m_time = m_pGameData->GetGameTime();
-
 
 	/// @todo ŒŽ‚ÌŠÇ—•û–@‚Å”Y‚ñ‚Å‚é‚©‚ç‚Æ‚è‚ ‚¦‚¸‚Å‘‚¢‚½
 	std::string Month;
@@ -63,4 +60,24 @@ void TimerWindow::Draw()
 		
 		m_font.Draw(str.c_str(),TIMER_POSITION);
 	}
+}
+
+void TimerWindow::GetState()
+{
+
+}
+
+void TimerWindow::SetState()
+{
+
+}
+
+void TimerWindow::GetGameData()
+{
+	m_time = m_pGameData->GetGameTime();
+}
+
+void TimerWindow::SetGameData()
+{
+
 }

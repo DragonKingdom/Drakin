@@ -17,7 +17,10 @@ class HouseManager
 public:
 	HouseManager(BuildAreaChecker* pBuildAreaChecker);
 	~HouseManager();
-	void ControlBuildHouse();
+
+	void BuildControl();
+	void Draw();
+
 private:
 	BuildAreaChecker*		m_pBuildAreaChecker;
 	HouseBuilder*			m_pHouseBuilder;

@@ -8,6 +8,7 @@
 #include "InputDeviceFacade.h"
 #include "StateManager.h"
 
+
 UI::UI(StateManager* pStateManager) :
 m_pWindow(NULL),
 m_pIdf(InputDeviceFacade::GetInstance()),
@@ -29,20 +30,23 @@ void UI::Control()
 	m_pTaskBar->Control();
 	m_pMenuicon->Control();
 
-
-	// ウインドウが生成されていなければ処理を返す
-	if (m_pWindow == NULL)
+	// ウィンドウがあるのならコントロール関数を呼ぶ
+	if (m_pWindow != NULL)
 	{
-		return;
+	
+		if (m_pWindow->Control())
+		{
+			delete m_pWindow;
+			m_pWindow = NULL;
+		}
 	}
-	//ゲームデータをここでウィンドウに伝える（setGameData）
-
-
-	 // 状態が削除待ちの時
-	if (m_pWindow->Control())
+	else
 	{
-		delete m_pWindow;
-		m_pWindow = NULL;
+		// クリックされたら対応するウィンドウを作成
+		if (m_pIdf->MouseLeftPush())
+		{
+			WindowCreate();
+		}
 	}
 }
 
@@ -59,81 +63,67 @@ void UI::Draw()
 		m_pWindow->Draw();
 	}
 }
-void UI::createWindow()
+
+void UI::WindowCreate()
 {
-	if (m_pWindow == NULL)
+	switch (m_pMenuicon->GetID())
 	{
-		switch (m_pMenuicon->GetID())
-		{
-		case OPTION:
-			m_pWindow = new OptionWindow(m_pStateManager);
-			break;
-		case KINGDOM:
-			m_pWindow = new KingdomWindow(m_pStateManager);
-			break;
-		case ECONOMY:
+	case OPTION:
+		m_pWindow = new OptionWindow(m_pStateManager);
+		break;
+	case KINGDOM:
+		m_pWindow = new KingdomWindow(m_pStateManager);
+		break;
+	case ECONOMY:
 
-			break;
-		case QUEST:
+		break;
+	case QUEST:
 
-			break;
-		case HERO:
+		break;
+	case HERO:
 
-			break;
-		case BUILD:
-			m_pWindow = new BuildWindow(m_pStateManager);
-			break;
-		default:
-			break;
-		}
+		break;
+	case BUILD:
+		m_pWindow = new BuildWindow(m_pStateManager);
+		break;
+	default:
+		break;
 	}
 }
 
-//GAME_STATE UI::OnClick()
-//{
-//	GAME_STATE state = STATE_NONE;
-//	if (!m_pWindow == NULL)
-//	{
-//		state = m_pWindow->OnClick();
-//	}
-//	return state;
-//}
-
-GAME_STATE UI::OnClick()
+void UI::SetGameData()
 {
-	GAME_STATE state = STATE_NONE;
-	// クリックされたらアイコンとの位置を比較。アイコンがクリックされていたらウインドウを生成する
-	if( m_pWindow == NULL )
+	m_pTaskBar->SetGameData();
+	if (m_pWindow != NULL)
 	{
-		switch( m_pMenuicon->GetID() )
-		{
-		case OPTION:
-			m_pWindow = new OptionWindow(m_pStateManager);
-			break;
-		case KINGDOM:
-			m_pWindow = new KingdomWindow(m_pStateManager);
-			break;
-		case ECONOMY:
-
-			break;
-		case QUEST:
-
-			break;
-		case HERO:
-
-			break;
-		case BUILD:
-			m_pWindow = new BuildWindow(m_pStateManager);
-			break;
-		default:
-			break;
-		}
-	// もしウインドウが生成状態にあるならばウインドウ内のメニューがクリックされているか調べる
+		m_pWindow->SetGameData();
 	}
-	else
-	{
-		state = m_pWindow->OnClick();	
-	}
-	// 現在の状態を返す
-	return state;
 }
+
+void UI::GetGameData()
+{
+	m_pTaskBar->GetGameData();
+	if (m_pWindow != NULL)
+	{
+		m_pWindow->GetGameData();
+	}
+}
+
+void UI::SetState()
+{
+	m_pTaskBar->SetState();
+	if (m_pWindow != NULL)
+	{
+		m_pWindow->SetState();
+	}
+}
+
+void UI::GetState()
+{
+	m_pTaskBar->GetState();
+	if (m_pWindow != NULL)
+	{
+		m_pWindow->GetState();
+	}
+}
+

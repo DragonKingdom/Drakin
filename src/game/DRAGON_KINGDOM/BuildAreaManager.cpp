@@ -9,9 +9,9 @@
 #include "BuildAreaBuilder.h"
 #include "BuildArea.h"
 
-BuildAreaManager::BuildAreaManager()
+BuildAreaManager::BuildAreaManager():
+m_pBuildAreaBuilder(new BuildAreaBuilder())
 {
-	m_pBuildAreaBuilder = new BuildAreaBuilder();
 }
 
 BuildAreaManager::~BuildAreaManager()

@@ -36,3 +36,24 @@ void MenuWindow::Draw()
 {
 	//Window::Draw();
 }
+
+void MenuWindow::GetState()
+{
+
+}
+
+void MenuWindow::SetState()
+{
+
+}
+
+void MenuWindow::GetGameData()
+{
+
+}
+
+void MenuWindow::SetGameData()
+{
+
+}
+

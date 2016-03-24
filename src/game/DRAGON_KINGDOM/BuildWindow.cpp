@@ -2,7 +2,8 @@
 #include "BuildWindow.h"
 #include "Scene.h"
 #include "TextureManager.h"
-
+#include "StateManager.h"
+#include "InputDeviceFacade.h"
 
 const Vertex::FRECT BuildWindow::UV[BuildWindow::TYPE_MAX] = 
 { 
@@ -18,7 +19,8 @@ BuildWindow::BuildWindow(StateManager* _pStateManager) :
 	D3DXVECTOR2(CLIENT_WIDTH - 550,CLIENT_HEIGHT),
 	D3DXVECTOR2(CLIENT_WIDTH - 550,CLIENT_HEIGHT - 110),
 	_pStateManager), 
-	m_selectID(-1)
+	m_selectID(-1),
+	m_buildState(BUILD_NONE)
 {
 	m_texture = TextureManager::getInstance().Get(TextureManager::GAME_SCENE_TEX::UI);
 }
@@ -30,6 +32,9 @@ BuildWindow::~BuildWindow()
 bool  BuildWindow::Control()
 {
 	bool isDestroy = Window::Control();
+
+	OnClick();
+
 	Collision collisiton;	/// @todo –ˆ‰ñ¶¬‚·‚é‚ÌH
 	m_selectID = -1;
 
@@ -75,16 +80,45 @@ void BuildWindow::Draw()
 	}
 }
 
-GAME_STATE BuildWindow::OnClick()
+void BuildWindow::OnClick()
 {
-	switch( m_selectID )
+	if (m_pInputDevice->MouseLeftPush())
 	{
-	case HOUSE:
-		m_state = STATE_DESTROY;
-		return STATE_BUILD_HOUSE;
-	case ROAD:
-		m_state = STATE_DESTROY;
-		return STATE_BUILD_ROAD;
+		switch (m_selectID)
+		{
+		case HOUSE:
+			m_buildState = BUILD_HOUSE;
+			break;
+		case ROAD:
+			m_buildState = BUILD_ROAD;
+			break;
+		default:
+			break;
+		}
 	}
-	return STATE_NONE;
+	else if (m_pInputDevice->MouseRightPush())
+	{
+		m_buildState = BUILD_NONE;
+	}
+	
+}
+
+void BuildWindow::GetState()
+{
+
+}
+
+void BuildWindow::SetState()
+{
+	m_pStateManager->SetBuildState(m_buildState);
+}
+
+void BuildWindow::GetGameData()
+{
+
+}
+
+void BuildWindow::SetGameData()
+{
+
 }

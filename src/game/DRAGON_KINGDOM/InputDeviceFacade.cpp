@@ -7,7 +7,7 @@
 #include "InputDeviceFacade.h"
 #include "Scene.h"
 
-//唯一のインスタンスの生成
+
 InputDeviceFacade* InputDeviceFacade::m_pID_instance = NULL;
 
 void InputDeviceFacade::Create()
@@ -17,10 +17,12 @@ void InputDeviceFacade::Create()
 		m_pID_instance = new InputDeviceFacade();
 	}
 }
+
 InputDeviceFacade* InputDeviceFacade::GetInstance()
 {
 	return m_pID_instance;
 }
+
 void InputDeviceFacade::Delete()
 {
 	delete m_pID_instance;

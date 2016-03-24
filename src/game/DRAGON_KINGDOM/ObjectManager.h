@@ -18,9 +18,13 @@ public:
 	void Draw();
 	void GetState();
 	void SetState();
+	void GetGameData();
 	void SetGameData();
 
 private:
+	void BuildControl();
+
+
 	StateManager*		m_pStateManager;
 	Map*				m_pMap;
 	HouseManager*		m_pHouseManager;

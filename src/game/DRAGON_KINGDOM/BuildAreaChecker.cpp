@@ -17,7 +17,10 @@ m_pBuildAreaManager(pBuildAreaManager)
 BuildAreaChecker::~BuildAreaChecker()
 {
 }
-//bool BuildAreaChecker::Check()
-//{
-//
-//}
+
+bool BuildAreaChecker::AreaCheck()
+{
+	// ¡‚Í‚Æ‚è‚ ‚¦‚¸false‚ğ•Ô‚·
+	return false;
+}
+

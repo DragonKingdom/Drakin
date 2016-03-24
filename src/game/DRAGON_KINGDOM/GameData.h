@@ -33,7 +33,7 @@ public:
 	{
 		if (m_pGameData == NULL)
 		{
-			m_pGameData = new GameData;
+			m_pGameData = new GameData();
 		}
 		return m_pGameData;
 	};

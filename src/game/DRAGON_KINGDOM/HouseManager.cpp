@@ -11,9 +11,9 @@
 #include "BuildAreaChecker.h"
 
 HouseManager::HouseManager(BuildAreaChecker* pBuildAreaChecker):
-m_pBuildAreaChecker(pBuildAreaChecker)
+m_pBuildAreaChecker(pBuildAreaChecker),
+m_pHouseBuilder(new HouseBuilder())
 {
-	m_pHouseBuilder = new HouseBuilder();
 }
 
 HouseManager::~HouseManager()
@@ -21,9 +21,14 @@ HouseManager::~HouseManager()
 	delete m_pHouseBuilder;
 }
 
-void HouseManager::ControlBuildHouse()
+void HouseManager::BuildControl()
+{
+}
+
+void HouseManager::Draw()
 {
 
 }
+
 
 

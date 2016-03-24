@@ -4,13 +4,12 @@
 #include "Sun.h"
 #include "SunChecker.h"
 
-Map::Map()
+Map::Map():
+m_pSun(new Sun()),
+m_pSunChecker(new SunChecker(m_pSun)),
+m_pSky(new Sky(m_pSunChecker)),
+m_pGround(new Ground())
 {
-	m_pSun			= new Sun();
-	m_pSunChecker	= new SunChecker(m_pSun);
-	m_pSky			= new Sky(m_pSunChecker);
-	m_pGround		= new Ground();
-
 }
 
 Map::~Map()

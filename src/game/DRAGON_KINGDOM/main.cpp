@@ -91,13 +91,16 @@ LRESULT CALLBACK WindowProc(HWND hwnd,UINT message,WPARAM wparam,LPARAM lparam)
         case WM_DESTROY:
             PostQuitMessage(0);
             return  0;
-
+			break;
 		case WM_KEYDOWN:
 			switch((CHAR)wparam)
 			{
 				case VK_ESCAPE:
 					PostQuitMessage(0);
-					break;	
+					return  0;
+				case VK_DELETE:
+					PostQuitMessage(0);
+					return  0;
 			}
 			break;
 		case WM_ACTIVATE:

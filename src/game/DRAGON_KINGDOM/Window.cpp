@@ -21,7 +21,8 @@ Window::Window(D3DXVECTOR2 _windowSize, D3DXVECTOR2 _position, D3DXVECTOR2 _targ
 	m_time(LEAVE_LIMIT_TIME),
 	m_move(0,0), 
 	m_initPos(_position),
-	m_pStateManager(_pStateManager)
+	m_pStateManager(_pStateManager),
+	m_pInputDevice(InputDeviceFacade::GetInstance())
 {	
 	m_texture = TextureManager::getInstance().Get(TextureManager::GAME_SCENE_TEX::WINDOW);
 	// ウインドウが被ってしまう為、ウインドウの最小サイズより小さくならないようにしておく
@@ -67,7 +68,7 @@ Window::~Window()
 
 bool Window::Control()
 {
-	// 右クリックされた時
+	/// @todo Windowすべてが右クリックで破棄されたほうがいいとは限らないので、子が実装すべきなきがする。
 	if (m_pInputDevice->MouseRightPush())
 	{
 		// 削除待ちでない状態の時
