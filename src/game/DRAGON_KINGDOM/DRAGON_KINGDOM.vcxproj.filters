@@ -107,9 +107,6 @@
     <Filter Include="main\SceneManager\Scene\GameScene\Timer">
       <UniqueIdentifier>{fef61349-18e1-489f-95b4-875902c24d49}</UniqueIdentifier>
     </Filter>
-    <Filter Include="main\SceneManager\InputDevice">
-      <UniqueIdentifier>{19c1b4b8-cdcf-4557-bb6d-91293bc26bd8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\RoadManager">
       <UniqueIdentifier>{0c32cbf9-934c-4518-8bbd-52082e79f736}</UniqueIdentifier>
     </Filter>
@@ -163,6 +160,9 @@
     </Filter>
     <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\Map\SunChecker">
       <UniqueIdentifier>{5fb6e02b-0ed1-4560-8e03-0c14e46f017d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\InputDeviceFacade">
+      <UniqueIdentifier>{19c1b4b8-cdcf-4557-bb6d-91293bc26bd8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -269,7 +269,7 @@
       <Filter>main\SceneManager\Scene\GameScene\StateManager</Filter>
     </ClCompile>
     <ClCompile Include="InputDeviceFacade.cpp">
-      <Filter>main\SceneManager\InputDevice</Filter>
+      <Filter>main\SceneManager\InputDeviceFacade</Filter>
     </ClCompile>
     <ClCompile Include="BuildAreaManager.cpp">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager</Filter>
@@ -427,7 +427,7 @@
       <Filter>main\SceneManager\Scene\GameScene\StateManager</Filter>
     </ClInclude>
     <ClInclude Include="InputDeviceFacade.h">
-      <Filter>main\SceneManager\InputDevice</Filter>
+      <Filter>main\SceneManager\InputDeviceFacade</Filter>
     </ClInclude>
     <ClInclude Include="BuildAreaManager.h">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager</Filter>

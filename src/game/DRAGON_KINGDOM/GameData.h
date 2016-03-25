@@ -38,7 +38,7 @@ public:
 		return m_pGameData;
 	};
 
-	// @todo ファイル入出力はこいつがやる感じでいいのかな
+	/// @todo ファイル入出力はこいつがやる感じでいいのかな
 	void Load(int _dataID);
 	void Save(int _dataID);
 
