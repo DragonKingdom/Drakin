@@ -32,18 +32,18 @@ void RoadManager::BuildControl()
 	D3DXVECTOR3 EndPos;
 	D3DXVECTOR2 MousePos;
 
-	// StartPosとEndPosは生成し終わったら初期化しないといかん
 	switch (m_state)
 	{
 	case START_POS_SET:
 		if (m_pInputDevice->MouseLeftPush())
 		{
-			if (m_pBuildAreaChecker->AreaCheck())
+			if (m_pBuildAreaChecker->AreaCheck())		// 今のところはtrueだけ返す
 			{
 				/// @todo マウスの位置がUIとかぶってた場合の処理も考えとく
 
+				// 取得したマウスの座標を3d空間上の座標に変換して渡す
 				MousePos = m_pInputDevice->GetMousePos();
-				m_pClickPosConverter->ConvertForLoad(&StartPos, int(MousePos.x),int(MousePos.y));
+				m_pClickPosConverter->ConvertForLoad(&StartPos, int(MousePos.x), int(MousePos.y));
 				m_pRoadBuilder->StartPosSet(StartPos);
 				m_state = END_POS_SET;
 			}
@@ -51,7 +51,7 @@ void RoadManager::BuildControl()
 
 		break;
 	case END_POS_SET:
-
+		// 取得したマウスの座標を3d空間上の座標に変換して渡す
 		MousePos = m_pInputDevice->GetMousePos();
 		m_pClickPosConverter->ConvertForLoad(&EndPos, int(MousePos.x), int(MousePos.y));
 		m_pRoadBuilder->EndPosSet(EndPos);
@@ -63,16 +63,24 @@ void RoadManager::BuildControl()
 				m_state = ROAD_CREATE;
 			}
 		}
-		/// @todo 右クリックでキャンセルできるようにしたいけど、UIの処理とかぶる
+
+		if (m_pInputDevice->MouseRightPush())
+		{
+			// 右クリックされたら戻るため初期化
+			m_pRoadBuilder->InitStartPos();
+			m_pRoadBuilder->InitEndPos();
+			m_state = START_POS_SET;
+		}
 
 		break;
 	case ROAD_CREATE:
-
 		// 道を生成する
-
 		Road* pRoad = m_pRoadBuilder->RoadBuild();
 		m_pRoad.push_back(pRoad);
 
+		// 次の道作成のための初期化処理
+		m_pRoadBuilder->InitStartPos();
+		m_pRoadBuilder->InitEndPos();
 		m_state = START_POS_SET;
 
 		break;
@@ -85,10 +93,6 @@ void RoadManager::Draw()
 	{
 		m_pRoad[i]->Draw();
 	}
-
-	if (m_state == END_POS_SET)
-	{
-		m_pRoadBuilder->PreviewerDraw();
-	}
+	m_pRoadBuilder->PreviewerDraw();
 }
 

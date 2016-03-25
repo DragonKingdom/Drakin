@@ -19,7 +19,7 @@ BuildAreaManager::~BuildAreaManager()
 	delete m_pBuildAreaBuilder;
 }
 
-void BuildAreaManager::ControlBuildArea()
+void BuildAreaManager::AreaBuildControl()
 {
 
 }

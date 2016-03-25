@@ -143,20 +143,20 @@ void Vertex::VertexDraw(Texture _texture, D3DXVECTOR3* _pVec, D3DCOLOR _color)
 
 	m_pDevice->SetTransform(D3DTS_WORLD, &World);
 
-	CUSTOMVERTEX vertex[] =
+	CUSTOMVERTEX_XYZ vertex[] =
 	{
-		{ _pVec[0].x, _pVec[0].y, _pVec[0].z, 1.0f, _color, 0.0f, 0.0f },
-		{ _pVec[1].x, _pVec[1].y, _pVec[1].z, 1.0f, _color, 1.0f, 0.0f },
-		{ _pVec[2].x, _pVec[2].y, _pVec[2].z, 1.0f, _color, 1.0f, 1.0f },
-		{ _pVec[3].x, _pVec[3].y, _pVec[3].z, 1.0f, _color, 0.0f, 1.0f },
+		{ _pVec[0].x, _pVec[0].y, _pVec[0].z, _color, 0.0f, 0.0f },
+		{ _pVec[1].x, _pVec[1].y, _pVec[1].z, _color, 1.0f, 0.0f },
+		{ _pVec[2].x, _pVec[2].y, _pVec[2].z, _color, 1.0f, 1.0f },
+		{ _pVec[3].x, _pVec[3].y, _pVec[3].z, _color, 0.0f, 1.0f },
 	};
 
 	//画像の描画
-	m_pDevice->SetFVF(D3DFVF_CUSTOMVERTEX);
+	m_pDevice->SetFVF(D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1);
 
 	//背景
 	m_pDevice->SetTexture(0, _texture.Get());
-	m_pDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, vertex, sizeof(CUSTOMVERTEX));
+	m_pDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, vertex, sizeof(CUSTOMVERTEX_XYZ));
 }
 
 

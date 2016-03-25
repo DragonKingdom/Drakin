@@ -34,6 +34,12 @@ private:
 		FLOAT	tu, tv;
 	};
 
+	struct CUSTOMVERTEX_XYZ
+	{
+		FLOAT	x, y, z;
+		DWORD	color;
+		FLOAT	tu, tv;
+	};
 
 	struct ROTATION
 	{

@@ -16,7 +16,7 @@ class BuildAreaManager
 public:
 	BuildAreaManager();
 	~BuildAreaManager();
-	void ControlBuildArea();
+	void AreaBuildControl();
 
 private:
 	BuildAreaBuilder*		m_pBuildAreaBuilder;

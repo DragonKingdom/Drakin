@@ -3,7 +3,8 @@
 
 class Texture;
 
-class Vertex {
+class Vertex 
+{
 public:
 	typedef struct FRECT
 	{
@@ -33,6 +34,12 @@ private:
 		FLOAT	tu, tv;
 	};
 
+	struct CUSTOMVERTEX_XYZ
+	{
+		FLOAT	x, y, z;
+		DWORD	color;
+		FLOAT	tu, tv;
+	};
 
 	struct ROTATION
 	{
@@ -69,6 +76,7 @@ public:
 	void DrawTexture( float _x, float _y, D3DCOLOR _color = D3DCOLOR_ARGB(255,255,255,255));
 	void DrawTexture( float _x, float _y, FRECT _rect, D3DCOLOR _color = D3DCOLOR_ARGB(255,255,255,255));
 
+	void VertexDraw( Texture _texture, D3DXVECTOR3* _pVec, D3DCOLOR _color = D3DCOLOR_ARGB(255,255,255,255) );
 
 public:
 	/// X•ûŒüEY•ûŒü‚Ì”{—¦‚ğ“¯‚É•ÏX

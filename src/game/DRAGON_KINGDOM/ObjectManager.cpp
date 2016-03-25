@@ -46,6 +46,7 @@ void ObjectManager::BuildControl()
 		break;
 	case BUILD_ROAD:
 		m_pRoadManager->BuildControl();
+		m_pBuildAreaManager->AreaBuildControl();
 		break;
 	default:
 		

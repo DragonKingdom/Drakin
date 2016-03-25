@@ -68,7 +68,7 @@ Window::~Window()
 
 bool Window::Control()
 {
-	/// @todo Windowすべてが右クリックで破棄されたほうがいいとは限らないので、子が実装すべきなきがする。
+	/// @todo Windowすべてが右クリックで破棄されるためとても不便(要修正)
 	if (m_pInputDevice->MouseRightPush())
 	{
 		// 削除待ちでない状態の時
