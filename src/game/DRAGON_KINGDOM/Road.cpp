@@ -1,6 +1,6 @@
 #include "Road.h"
 
-Road::Road()
+Road::Road(D3DXVECTOR3 _startPos, D3DXVECTOR3 _endPos)
 {
 }
 

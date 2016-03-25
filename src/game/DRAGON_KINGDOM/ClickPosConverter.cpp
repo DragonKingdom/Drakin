@@ -25,6 +25,8 @@ void ClickPosConverter::Convert(D3DXVECTOR3* pout, float _x, float _y, float fZ,
    D3DXVec3TransformCoord( pout, &D3DXVECTOR3((float)_x,(float)_y,fZ), &tmp );
 }
 
+
+/// @ todo ‚±‚ÌŠÖ”‚à‚¤‚¿‚å‚Á‚Æ‚Ç‚¤‚É‚©‚Å‚«‚È‚¢‚à‚Ì‚©c
 D3DXVECTOR3* ClickPosConverter::ConvertForLoad(D3DXVECTOR3* pout, int Sx, int Sy)
 {
 	// view,proj‚ğ—pˆÓ

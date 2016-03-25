@@ -10,7 +10,7 @@ GameScene::GameScene():
 	m_timer(&m_StateManager),
 	m_UI(&m_StateManager),
 	m_ClickPosConverter(&m_CameraController),
-	m_ObjectManager(&m_StateManager)
+	m_ObjectManager(&m_StateManager, &m_ClickPosConverter)
 {
 	/// @todo サウンド関連は用意してなかったのでとりあえずBGMだけ流せるように あとよろ
 

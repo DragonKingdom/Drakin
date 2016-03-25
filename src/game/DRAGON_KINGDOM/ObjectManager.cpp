@@ -7,13 +7,14 @@
 #include "StateManager.h"
 
 
-ObjectManager::ObjectManager(StateManager* pStateManager):
+ObjectManager::ObjectManager(StateManager* pStateManager, ClickPosConverter* _pClickPosConverter) :
 m_pStateManager(pStateManager),
+m_pClickPosConverter(_pClickPosConverter),
 m_pBuildAreaManager(new BuildAreaManager()),
 m_pBuildAreaChecker(new BuildAreaChecker(m_pBuildAreaManager)),
 m_pMap(new Map()),
 m_pHouseManager(new HouseManager(m_pBuildAreaChecker)),
-m_pRoadManager(new RoadManager(m_pBuildAreaChecker))
+m_pRoadManager(new RoadManager(m_pBuildAreaChecker, _pClickPosConverter))
 {
 }
 

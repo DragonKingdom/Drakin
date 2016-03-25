@@ -20,7 +20,7 @@ BuildAreaChecker::~BuildAreaChecker()
 
 bool BuildAreaChecker::AreaCheck()
 {
-	// ¡‚Í‚Æ‚è‚ ‚¦‚¸false‚ğ•Ô‚·
-	return false;
+	// ¡‚Í‚Æ‚è‚ ‚¦‚¸true‚ğ•Ô‚·
+	return true;
 }
 

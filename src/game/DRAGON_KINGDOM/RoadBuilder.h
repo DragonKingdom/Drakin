@@ -10,15 +10,15 @@ class RoadBuilder
 public:
 	RoadBuilder();
 	~RoadBuilder();
-	void StartPosSet(const D3DXVECTOR2 _startPos);
-	void EndPosSet(const D3DXVECTOR2 _endPos);
+	void StartPosSet(const D3DXVECTOR3 _startPos);
+	void EndPosSet(const D3DXVECTOR3 _endPos);
 	Road* RoadBuild();
 	void  PreviewerDraw();
 
 private:
 	RoadPreviewer*	m_pRoadPreviewer;
-	D3DXVECTOR2		m_StartPos;
-	D3DXVECTOR2		m_EndPos;
+	D3DXVECTOR3		m_StartPos;
+	D3DXVECTOR3		m_EndPos;
 
 
 };

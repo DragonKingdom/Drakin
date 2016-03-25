@@ -1,10 +1,12 @@
 #ifndef ROADMANAGER_H
 #define ROADMANAGER_H
 
+
 class RoadBuilder;
 class Road;
 class BuildAreaChecker;
 class InputDeviceFacade;
+class ClickPosConverter;
 
 /**
  * 道の管理クラス
@@ -12,7 +14,7 @@ class InputDeviceFacade;
 class RoadManager
 {
 public:
-	RoadManager(BuildAreaChecker* pBuildAreaChecker);
+	RoadManager(BuildAreaChecker* pBuildAreaChecker, ClickPosConverter* pClickPosConverter);
 	~RoadManager();
 
 	void BuildControl();
@@ -30,6 +32,10 @@ private:
 	std::vector<Road*>	m_pRoad;
 	ROAD_MANAGER_STATE  m_state;
 	InputDeviceFacade*  m_pInputDevice;
+
+
+	/// @todo テスト用
+	ClickPosConverter* m_pClickPosConverter;
 
 };
 

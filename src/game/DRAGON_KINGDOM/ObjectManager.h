@@ -8,10 +8,12 @@ class RoadManager;
 class BuildAreaManager;
 class BuildAreaChecker;
 
+class ClickPosConverter;
+
 class ObjectManager
 {
 public:
-	ObjectManager(StateManager* _pStateManager);
+	ObjectManager(StateManager* _pStateManager, ClickPosConverter* _pClickPosConverter);
 	~ObjectManager();
 
 	void Control();
@@ -35,6 +37,8 @@ private:
 	GAMESCENE_STATE     m_GameSceneState;
 	BUILD_STATE         m_BuildState;
 
+	/// @todo テスト用にObjectManagerに持たせてる
+	ClickPosConverter* m_pClickPosConverter;
 };
 
 

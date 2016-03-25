@@ -12,11 +12,11 @@
 #include "GameData.h"
 #include "StateManager.h"
 #include "CameraController.h"
-#include "ClickPosConverter.h"
 #include "ObjectManager.h"
 #include "Timer.h"
 #include "UI.h"
 #include "Camera.h"
+#include "ClickPosConverter.h"
 
 /**
  * ゲームシーンを管理するクラス
@@ -31,12 +31,12 @@ private:
 	StateManager m_StateManager;
 	/// カメラアングルの制御クラス
 	CameraController m_CameraController;
-	/// クリックしたxy座標を3d座標に変換してくれる
-	ClickPosConverter m_ClickPosConverter;
 	/// タイマークラスオブジェクト
 	Timer m_timer;
 	/// UIクラスオブジェクト
 	UI m_UI;
+
+	ClickPosConverter m_ClickPosConverter;
 	/// オブジェクトの管理クラス
 	ObjectManager m_ObjectManager;
 
