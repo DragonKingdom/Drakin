@@ -31,6 +31,16 @@ BuildWindow::~BuildWindow()
 
 bool  BuildWindow::Control()
 {
+	if (m_pInputDevice->MouseRightPush() == true && m_buildState == BUILD_NONE)
+	{
+		// 削除待ちでない状態の時
+		if (m_state != STATE_DESTROY)
+		{
+			// ウインドウを画面外に移動する命令を出す
+			m_state = STATE_LEAVE;
+		}
+	}
+
 	bool isDestroy = Window::Control();
 
 	OnClick();

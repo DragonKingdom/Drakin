@@ -20,6 +20,7 @@ TimerWindow::~TimerWindow()
 
 bool TimerWindow::Control()
 {
+	/// @todo タイマーウィンドウの場合この処理いらんよな…
 	bool isDestroy = Window::Control();
 	
 	return isDestroy;

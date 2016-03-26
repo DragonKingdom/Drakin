@@ -32,7 +32,6 @@ TaskBar::~TaskBar()
 
 void TaskBar::Control()
 {
-	/// @todo Windowクラスを修正するまで、Windowのコントロールは呼ばないで
 }
 
 void TaskBar::Draw()

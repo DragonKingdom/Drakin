@@ -1,6 +1,7 @@
 #include "Window.h"
 #include "OptionWindow.h"
 #include "StateManager.h"
+#include "InputDeviceFacade.h"
 
 OptionWindow::OptionWindow(StateManager* _pStateManager) :
 	Window(D3DXVECTOR2(800,500),
@@ -22,16 +23,16 @@ OptionWindow::~OptionWindow()
 
 bool OptionWindow::Control()
 {
-	//	// マウスカーソルがウインドウの範囲内になければウインドウの描画時間を減らす
-	//if( !m_collision.PointToSquare(Scene::m_mousePos,Vertex::FRECT(m_position.x,m_position.y,m_position.x + m_windowSize.x, m_position.y + m_windowSize.y))){
-	//	m_time--;
-	//	if( m_time <= 0 ){
-	//		m_state = STATE_LEAVE;
-	//	}
-	//}else{
-	//	// ウインドウ内にマウスカーソルがあれば時間をリセット
-	//	m_time = LEAVE_LIMIT_TIME;
-	//}
+	if (m_pInputDevice->MouseRightPush())
+	{
+		// 削除待ちでない状態の時
+		if (m_state != STATE_DESTROY)
+		{
+			// ウインドウを画面外に移動する命令を出す
+			m_state = STATE_LEAVE;
+		}
+	}
+
 	return Window::Control();
 }
 

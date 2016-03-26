@@ -68,17 +68,6 @@ Window::~Window()
 
 bool Window::Control()
 {
-	/// @todo Windowすべてが右クリックで破棄されるためとても不便(要修正)
-	if (m_pInputDevice->MouseRightPush())
-	{
-		// 削除待ちでない状態の時
-		if (m_state != STATE_DESTROY)
-		{
-			// ウインドウを画面外に移動する命令を出す
-			m_state = STATE_LEAVE;
-		}
-	}
-
 	switch(m_state)
 	{
 	case STATE_WAIT:
@@ -104,6 +93,7 @@ bool Window::Control()
 	{
 		return true;
 	}
+
 	return false;
 }
 
