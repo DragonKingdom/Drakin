@@ -11,3 +11,13 @@ BuildAreaBuilder::~BuildAreaBuilder()
 {
 	delete m_pBuildAreaPreviewer;
 }
+
+void /* BuildArea* */ BuildAreaBuilder::AreaBuild()
+{
+
+}
+
+void BuildAreaBuilder::PreviewerDraw()
+{
+	m_pBuildAreaPreviewer->Draw();
+}

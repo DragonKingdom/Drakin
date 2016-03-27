@@ -6,6 +6,7 @@ class BuildAreaPreviewer
 public:
 	BuildAreaPreviewer();
 	~BuildAreaPreviewer();
+	void Draw();
 
 private:
 

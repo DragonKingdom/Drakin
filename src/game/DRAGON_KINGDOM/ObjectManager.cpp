@@ -10,7 +10,7 @@
 ObjectManager::ObjectManager(StateManager* pStateManager, ClickPosConverter* _pClickPosConverter) :
 m_pStateManager(pStateManager),
 m_pClickPosConverter(_pClickPosConverter),
-m_pBuildAreaManager(new BuildAreaManager()),
+m_pBuildAreaManager(new BuildAreaManager(_pClickPosConverter)),
 m_pBuildAreaChecker(new BuildAreaChecker(m_pBuildAreaManager)),
 m_pMap(new Map()),
 m_pHouseManager(new HouseManager(m_pBuildAreaChecker)),
@@ -58,6 +58,7 @@ void ObjectManager::Draw()
 {
 	m_pMap->Draw();
 	m_pRoadManager->Draw();
+	m_pBuildAreaManager->Draw();
 }
 
 void ObjectManager::GetState()

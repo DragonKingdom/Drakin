@@ -8,3 +8,8 @@ BuildArea::BuildArea()
 BuildArea::~BuildArea()
 {
 }
+
+void BuildArea::Draw()
+{
+
+}

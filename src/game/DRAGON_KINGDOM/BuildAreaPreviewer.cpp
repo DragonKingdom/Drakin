@@ -8,3 +8,7 @@ BuildAreaPreviewer::~BuildAreaPreviewer()
 {
 }
 
+void BuildAreaPreviewer::Draw()
+{
+
+}

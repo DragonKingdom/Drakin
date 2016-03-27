@@ -10,18 +10,45 @@
 
 class BuildAreaBuilder;
 class BuildArea;
+class InputDeviceFacade;
+class ClickPosConverter;
 
 class BuildAreaManager
 {
 public:
-	BuildAreaManager();
+	BuildAreaManager(ClickPosConverter* _pClickPosConverter);
 	~BuildAreaManager();
+
+	/**
+	 * Area生成の制御関数
+	 */
 	void AreaBuildControl();
+	/**
+	 * 描画関数
+	 */
+	void Draw();
+	/**
+	 * エリアが空いているかどうかをチェックする関数
+	 */
+	bool AreaCheck();
 
 private:
 	BuildAreaBuilder*		m_pBuildAreaBuilder;
 	std::vector<BuildArea*> m_pBuildArea;
 
+
+	enum BUILDAREA_MANAGER_STATE
+	{
+		START_POS_SET,
+		END_POS_SET,
+		BUILDAREA_CREATE
+	};
+	BUILDAREA_MANAGER_STATE  m_state;
+	InputDeviceFacade*  m_pInputDevice;
+
+
+	/// @todo テスト用
+	ClickPosConverter* m_pClickPosConverter;
 };
 
 
