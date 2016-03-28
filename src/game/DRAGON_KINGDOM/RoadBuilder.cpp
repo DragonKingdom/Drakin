@@ -48,6 +48,15 @@ void RoadBuilder::InitEndPos()
 Road* RoadBuilder::RoadBuild()
 {
 	// Roadê∂ê¨èàóù
+	D3DXVECTOR3 Dif;
+	Dif.z = m_EndPos.z - m_StartPos.z;
+	Dif.x = m_EndPos.x - m_StartPos.x;
+
+	int Num_z = int(Dif.z / 70.f);
+	int Num_x = int(Dif.x / 70.f);
+
+	m_EndPos.z = m_StartPos.z + Num_z *70.f;
+	m_EndPos.x = m_StartPos.x + Num_x *70.f;
 	float angle = atan2(m_EndPos.z - m_StartPos.z, m_EndPos.x - m_StartPos.x);
 	Road* pRoad = new Road(m_StartPos, m_EndPos, angle);
 

@@ -15,6 +15,17 @@ void RoadPreviewer::Draw()
 {
 	D3DXVECTOR3 Road[4];
 
+	D3DXVECTOR3 Dif;
+	Dif.z = m_EndPos.z - m_StartPos.z;
+	Dif.x = m_EndPos.x - m_StartPos.x;
+
+	int Num_z = int(Dif.z / 70.f);
+	int Num_x = int(Dif.x / 70.f);
+
+	m_EndPos.z = m_StartPos.z + Num_z * 70.f ;
+	m_EndPos.x = m_StartPos.x + Num_x * 70.f ;
+
+
 	m_angle = atan2(m_EndPos.z - m_StartPos.z, m_EndPos.x - m_StartPos.x);
 
 	Road[0].x = m_StartPos.x + 30 * sin(m_angle);
