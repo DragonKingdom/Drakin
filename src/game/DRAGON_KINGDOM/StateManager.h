@@ -28,12 +28,13 @@ public:
 	 */
 	void SetBuildState(BUILD_STATE _buildState);
 
+
 private:
 	StateManager(const StateManager &other){}
 	StateManager &operator = (const StateManager &other){}
 
-	GAMESCENE_STATE m_gameSceneState;
-	BUILD_STATE m_buildState;
+	GAMESCENE_STATE			m_gameSceneState;
+	BUILD_STATE				m_buildState;
 
 };
 

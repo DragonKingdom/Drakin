@@ -2,18 +2,18 @@
 #define OBJECTMANAGER_H
 
 class StateManager;
+class GameData;
 class Map;
 class HouseManager;
 class RoadManager;
 class BuildAreaManager;
 class BuildAreaChecker;
-
 class ClickPosConverter;
 
 class ObjectManager
 {
 public:
-	ObjectManager(StateManager* _pStateManager, ClickPosConverter* _pClickPosConverter);
+	ObjectManager(StateManager* _pStateManager, GameData* _pGameData, ClickPosConverter* _pClickPosConverter);
 	~ObjectManager();
 
 	void Control();
@@ -28,6 +28,7 @@ private:
 
 
 	StateManager*		m_pStateManager;
+	GameData*			m_pGameData;
 	Map*				m_pMap;
 	HouseManager*		m_pHouseManager;
 	RoadManager*		m_pRoadManager;

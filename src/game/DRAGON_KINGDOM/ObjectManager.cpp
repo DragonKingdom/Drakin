@@ -7,14 +7,15 @@
 #include "StateManager.h"
 
 
-ObjectManager::ObjectManager(StateManager* pStateManager, ClickPosConverter* _pClickPosConverter) :
-m_pStateManager(pStateManager),
+ObjectManager::ObjectManager(StateManager* _pStateManager, GameData* _pGameData, ClickPosConverter* _pClickPosConverter) :
+m_pStateManager(_pStateManager),
+m_pGameData(_pGameData),
 m_pClickPosConverter(_pClickPosConverter),
-m_pBuildAreaManager(new BuildAreaManager(_pClickPosConverter)),
+m_pBuildAreaManager(new BuildAreaManager(_pStateManager, _pGameData, _pClickPosConverter)),
 m_pBuildAreaChecker(new BuildAreaChecker(m_pBuildAreaManager)),
-m_pMap(new Map()),
-m_pHouseManager(new HouseManager(m_pBuildAreaChecker)),
-m_pRoadManager(new RoadManager(m_pBuildAreaChecker, _pClickPosConverter))
+m_pMap(new Map(_pStateManager, _pGameData)),
+m_pHouseManager(new HouseManager(m_pBuildAreaChecker, _pStateManager, _pGameData)),
+m_pRoadManager(new RoadManager(m_pBuildAreaChecker, _pStateManager, _pGameData, _pClickPosConverter))
 {
 }
 
@@ -69,6 +70,8 @@ void ObjectManager::GetState()
 
 void ObjectManager::SetState()
 {
+	m_pRoadManager->SetState();
+	m_pBuildAreaManager->SetState();
 }
 
 void ObjectManager::GetGameData()

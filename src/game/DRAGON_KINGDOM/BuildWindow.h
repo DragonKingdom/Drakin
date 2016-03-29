@@ -30,12 +30,12 @@ public:
 	static const Vertex::FRECT UV[TYPE_MAX];
 	static const D3DXVECTOR2 ICON_POS;
 private:
-	Font			m_font;
-	GameData*		m_pGameData;
-	Texture			m_texture;
-	Vertex			m_vertex;
-	int				m_selectID;
-	BUILD_STATE		m_buildState;
+	Font					m_font;
+	GameData*				m_pGameData;
+	Texture					m_texture;
+	Vertex					m_vertex;
+	int						m_selectID;
+	BUILD_STATE				m_buildState;
 
 public:
 	BuildWindow(StateManager* _pStateManager);

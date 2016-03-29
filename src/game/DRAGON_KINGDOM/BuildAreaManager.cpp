@@ -8,10 +8,13 @@
 #include "BuildAreaManager.h"
 #include "BuildAreaBuilder.h"
 #include "BuildArea.h"
+#include "StateManager.h"
 #include "InputDeviceFacade.h"
 #include "ClickPosConverter.h"
 
-BuildAreaManager::BuildAreaManager(ClickPosConverter* _pClickPosConverter) :
+BuildAreaManager::BuildAreaManager(StateManager* _pStateManager, GameData* _pGameData, ClickPosConverter* _pClickPosConverter) :
+m_pStateManager(_pStateManager),
+m_pGameData(_pGameData),
 m_pBuildAreaBuilder(new BuildAreaBuilder()),
 m_pClickPosConverter(_pClickPosConverter),
 m_pInputDevice(InputDeviceFacade::GetInstance()),
@@ -99,5 +102,25 @@ void BuildAreaManager::Draw()
 bool BuildAreaManager::AreaCheck()
 {
 	return true;		//ç°ÇÕtrueÇæÇØï‘ÇµÇ∆Ç≠
+}
+
+void BuildAreaManager::GetState()
+{
+
+}
+
+void BuildAreaManager::SetState()
+{
+
+}
+
+void BuildAreaManager::GetGameData()
+{
+
+}
+
+void BuildAreaManager::SetGameData()
+{
+
 }
 

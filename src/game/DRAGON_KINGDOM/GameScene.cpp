@@ -6,15 +6,15 @@
 
 GameScene::GameScene():
 	Scene(SceneID::SCENE_GAME) , 
+	m_pGameData(GameData::getInstance()),
 	m_CameraController(&m_StateManager),
 	m_timer(&m_StateManager),
 	m_UI(&m_StateManager),
 	m_ClickPosConverter(&m_CameraController),
-	m_ObjectManager(&m_StateManager, &m_ClickPosConverter)
+	m_ObjectManager(&m_StateManager, m_pGameData, &m_ClickPosConverter)
 {
 	/// @todo サウンド関連は用意してなかったのでとりあえずBGMだけ流せるように あとよろ
-
-	m_pGameData = GameData::getInstance();
+	
 	m_XAudio.SoundPlay(0,true);
 }
 

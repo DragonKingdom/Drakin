@@ -10,7 +10,7 @@
 #include "House.h"
 #include "BuildAreaChecker.h"
 
-HouseManager::HouseManager(BuildAreaChecker* pBuildAreaChecker):
+HouseManager::HouseManager(BuildAreaChecker* pBuildAreaChecker, StateManager* _pStateManager, GameData* _pGameData) :
 m_pBuildAreaChecker(pBuildAreaChecker),
 m_pHouseBuilder(new HouseBuilder())
 {

@@ -29,7 +29,7 @@ BuildWindow::~BuildWindow()
 {
 }
 
-bool  BuildWindow::Control()
+bool BuildWindow::Control()
 {
 	if (m_pInputDevice->MouseRightPush() == true && m_buildState == BUILD_NONE)
 	{
@@ -40,6 +40,7 @@ bool  BuildWindow::Control()
 			m_state = STATE_LEAVE;
 		}
 	}
+	
 
 	bool isDestroy = Window::Control();
 

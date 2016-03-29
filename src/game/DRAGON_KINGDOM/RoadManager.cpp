@@ -2,13 +2,16 @@
 #include "RoadBuilder.h"
 #include "Road.h"
 #include "BuildAreaChecker.h"
+#include "StateManager.h"
 #include "InputDeviceFacade.h"
 
 /// @todo テスト用
 #include "ClickPosConverter.h"
 
 
-RoadManager::RoadManager(BuildAreaChecker* _pBuildAreaChecker, ClickPosConverter* _pClickPosConverter) :
+RoadManager::RoadManager(BuildAreaChecker* _pBuildAreaChecker, StateManager* _pStateManager, GameData* _pGameData, ClickPosConverter* _pClickPosConverter) :
+m_pStateManager(_pStateManager),
+m_pGameData(_pGameData),
 m_pBuildAreaChecker(_pBuildAreaChecker),
 m_pClickPosConverter(_pClickPosConverter),
 m_pRoadBuilder(new RoadBuilder()),
@@ -96,3 +99,22 @@ void RoadManager::Draw()
 	m_pRoadBuilder->PreviewerDraw();
 }
 
+void RoadManager::GetState()
+{
+
+}
+
+void RoadManager::SetState()
+{
+
+}
+
+void RoadManager::GetGameData()
+{
+
+}
+
+void RoadManager::SetGameData()
+{
+
+}

@@ -6,6 +6,8 @@ class RoadBuilder;
 class Road;
 class BuildAreaChecker;
 class InputDeviceFacade;
+class StateManager;
+class GameData;
 class ClickPosConverter;
 
 /**
@@ -14,11 +16,15 @@ class ClickPosConverter;
 class RoadManager
 {
 public:
-	RoadManager(BuildAreaChecker* pBuildAreaChecker, ClickPosConverter* pClickPosConverter);
+	RoadManager(BuildAreaChecker* pBuildAreaChecker, StateManager* _pStateManager, GameData* _pGameData, ClickPosConverter* pClickPosConverter);
 	~RoadManager();
 
 	void BuildControl();
 	void Draw();
+	void GetState();
+	void SetState();
+	void GetGameData();
+	void SetGameData();
 
 private:
 	enum ROAD_MANAGER_STATE
@@ -31,6 +37,8 @@ private:
 	RoadBuilder*		m_pRoadBuilder;
 	std::vector<Road*>	m_pRoad;
 	ROAD_MANAGER_STATE  m_state;
+	StateManager*		m_pStateManager;
+	GameData*			m_pGameData;
 	InputDeviceFacade*  m_pInputDevice;
 
 

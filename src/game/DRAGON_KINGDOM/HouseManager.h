@@ -11,11 +11,13 @@
 class HouseBuilder;
 class House;
 class BuildAreaChecker;
+class StateManager;
+class GameData;
 
 class HouseManager
 {
 public:
-	HouseManager(BuildAreaChecker* pBuildAreaChecker);
+	HouseManager(BuildAreaChecker* pBuildAreaChecker, StateManager* _pStateManager, GameData* _pGameData);
 	~HouseManager();
 
 	void BuildControl();
@@ -25,6 +27,8 @@ private:
 	BuildAreaChecker*		m_pBuildAreaChecker;
 	HouseBuilder*			m_pHouseBuilder;
 	std::vector<House*>		m_pHouse;
+	StateManager*			m_pStateManager;
+	GameData*				m_pGameData;
 
 };
 

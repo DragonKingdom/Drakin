@@ -11,12 +11,14 @@
 class BuildAreaBuilder;
 class BuildArea;
 class InputDeviceFacade;
+class StateManager;
+class GameData;
 class ClickPosConverter;
 
 class BuildAreaManager
 {
 public:
-	BuildAreaManager(ClickPosConverter* _pClickPosConverter);
+	BuildAreaManager(StateManager* _pStateManager, GameData* _pGameData, ClickPosConverter* _pClickPosConverter);
 	~BuildAreaManager();
 
 	/**
@@ -32,6 +34,14 @@ public:
 	 */
 	bool AreaCheck();
 
+	void GetState();
+
+	void SetState();
+
+	void GetGameData();
+
+	void SetGameData();
+
 private:
 	enum BUILDAREA_MANAGER_STATE
 	{
@@ -42,6 +52,8 @@ private:
 	BuildAreaBuilder*			m_pBuildAreaBuilder;
 	std::vector<BuildArea*>		m_pBuildArea;
 	BUILDAREA_MANAGER_STATE		m_state;
+	StateManager*				m_pStateManager;
+	GameData*					m_pGameData;
 	InputDeviceFacade*			m_pInputDevice;
 
 

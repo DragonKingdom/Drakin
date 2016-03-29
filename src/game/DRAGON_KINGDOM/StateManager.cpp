@@ -30,3 +30,4 @@ void StateManager::SetBuildState(BUILD_STATE _buildState)
 	m_buildState = _buildState;
 }
 
+
