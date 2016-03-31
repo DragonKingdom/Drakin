@@ -20,7 +20,9 @@ BuildWindow::BuildWindow(StateManager* _pStateManager) :
 	D3DXVECTOR2(CLIENT_WIDTH - 550,CLIENT_HEIGHT - 110),
 	_pStateManager), 
 	m_selectID(-1),
-	m_buildState(BUILD_NONE)
+	m_buildState(BUILD_NONE),
+	m_roadManagerState(ROADMANAGER_ENUM::START_POS_SET),
+	m_buildAreaManagerState(BUILDAREAMANAGER_ENUM::START_POS_SET)
 {
 	m_texture = TextureManager::getInstance().Get(TextureManager::GAME_SCENE_TEX::UI);
 }
@@ -109,14 +111,34 @@ void BuildWindow::OnClick()
 	}
 	else if (m_pInputDevice->MouseRightPush())
 	{
-		m_buildState = BUILD_NONE;
+		switch (m_buildState)
+		{
+		case BUILD_NONE:
+			break;
+		case BUILD_HOUSE:
+			if (m_buildAreaManagerState == BUILDAREAMANAGER_ENUM::START_POS_SET)
+			{
+				m_buildState = BUILD_NONE;
+			}
+			break;
+		case BUILD_ROAD:
+			if (m_roadManagerState == ROADMANAGER_ENUM::START_POS_SET)
+			{
+				m_buildState = BUILD_NONE;
+			}
+			break;
+		default:
+			break;
+		}
 	}
 	
 }
 
 void BuildWindow::GetState()
 {
-
+	// BUILD‚Ìó‘Ô‚É‚æ‚Á‚ÄŽæ“¾‚·‚éó‘Ô‚ð•Ï‚¦‚½‚Ù‚¤‚ª‚¢‚¢‚©‚à
+	m_roadManagerState = m_pStateManager->GetRoadManagerState();;
+	m_buildAreaManagerState = m_pStateManager->GetBuildAreaManagerState();
 }
 
 void BuildWindow::SetState()

@@ -43,19 +43,12 @@ public:
 	void SetGameData();
 
 private:
-	enum BUILDAREA_MANAGER_STATE
-	{
-		START_POS_SET,
-		END_POS_SET,
-		BUILDAREA_CREATE
-	};
-	BuildAreaBuilder*			m_pBuildAreaBuilder;
-	std::vector<BuildArea*>		m_pBuildArea;
-	BUILDAREA_MANAGER_STATE		m_state;
-	StateManager*				m_pStateManager;
-	GameData*					m_pGameData;
-	InputDeviceFacade*			m_pInputDevice;
-
+	BuildAreaBuilder*				m_pBuildAreaBuilder;
+	std::vector<BuildArea*>			m_pBuildArea;
+	BUILDAREAMANAGER_ENUM::STATE	m_state;
+	StateManager*					m_pStateManager;
+	GameData*						m_pGameData;
+	InputDeviceFacade*				m_pInputDevice;
 
 	/// @todo テスト用
 	ClickPosConverter* m_pClickPosConverter;

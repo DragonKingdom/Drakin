@@ -50,5 +50,24 @@ enum BUILD_STATE
 	BUILD_ROAD
 };
 
+namespace BUILDAREAMANAGER_ENUM
+{
+	enum STATE
+	{
+		START_POS_SET,
+		END_POS_SET,
+		CREATE
+	};
+}
+
+namespace ROADMANAGER_ENUM
+{
+	enum STATE
+	{
+		START_POS_SET,
+		END_POS_SET,
+		CREATE
+	};
+}
 
 #endif // COMMONDECLARATION_H

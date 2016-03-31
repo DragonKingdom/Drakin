@@ -12,13 +12,15 @@
 #include "InputDeviceFacade.h"
 #include "ClickPosConverter.h"
 
+using BUILDAREAMANAGER_ENUM::STATE;
+
 BuildAreaManager::BuildAreaManager(StateManager* _pStateManager, GameData* _pGameData, ClickPosConverter* _pClickPosConverter) :
 m_pStateManager(_pStateManager),
 m_pGameData(_pGameData),
 m_pBuildAreaBuilder(new BuildAreaBuilder()),
 m_pClickPosConverter(_pClickPosConverter),
 m_pInputDevice(InputDeviceFacade::GetInstance()),
-m_state(START_POS_SET)
+m_state(STATE::START_POS_SET)
 {
 	
 }
@@ -40,7 +42,7 @@ void BuildAreaManager::AreaBuildControl()
 
 	switch (m_state)
 	{
-	case START_POS_SET:
+	case STATE::START_POS_SET:
 		if (m_pInputDevice->MouseLeftPush())
 		{
 			if (AreaCheck())
@@ -48,12 +50,12 @@ void BuildAreaManager::AreaBuildControl()
 				MousePos = m_pInputDevice->GetMousePos();
 				m_pClickPosConverter->ConvertForLoad(&StartPos, int(MousePos.x), int(MousePos.y));
 				m_pBuildAreaBuilder->StartPosSet(StartPos);
-				m_state = END_POS_SET;
+				m_state = STATE::END_POS_SET;
 			}
 		}
 
 		break;
-	case END_POS_SET:
+	case STATE::END_POS_SET:
 		MousePos = m_pInputDevice->GetMousePos();
 		m_pClickPosConverter->ConvertForLoad(&EndPos, int(MousePos.x), int(MousePos.y));
 		m_pBuildAreaBuilder->EndPosSet(EndPos);
@@ -62,7 +64,7 @@ void BuildAreaManager::AreaBuildControl()
 		{
 			if (AreaCheck())
 			{
-				m_state = BUILDAREA_CREATE;
+				m_state = STATE::CREATE;
 			}
 		}
 
@@ -71,11 +73,11 @@ void BuildAreaManager::AreaBuildControl()
 			// 右クリックされたら戻るため初期化
 			m_pBuildAreaBuilder->InitStartPos();
 			m_pBuildAreaBuilder->InitEndPos();
-			m_state = START_POS_SET;
+			m_state = STATE::START_POS_SET;
 		}
 
 		break;
-	case BUILDAREA_CREATE:
+	case STATE::CREATE:
 		/// @todo BuildAreaは道の右側と左側で、二つ作る必要がある気がする
 
 		BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild();
@@ -84,7 +86,7 @@ void BuildAreaManager::AreaBuildControl()
 		// 次のために初期化
 		m_pBuildAreaBuilder->InitStartPos();
 		m_pBuildAreaBuilder->InitEndPos();
-		m_state = START_POS_SET;
+		m_state = STATE::START_POS_SET;
 
 		break;
 	}
@@ -111,7 +113,7 @@ void BuildAreaManager::GetState()
 
 void BuildAreaManager::SetState()
 {
-
+	m_pStateManager->SetBuildAreaManagerState(m_state);
 }
 
 void BuildAreaManager::GetGameData()

@@ -14,7 +14,7 @@
 class StateManager;
 
 /**
- * 建設関連を表示するウインドウ  
+ * 建設関連を表示するウインドウ
  */
 class BuildWindow : public Window
 {
@@ -36,6 +36,8 @@ private:
 	Vertex					m_vertex;
 	int						m_selectID;
 	BUILD_STATE				m_buildState;
+	ROADMANAGER_ENUM::STATE m_roadManagerState;
+	BUILDAREAMANAGER_ENUM::STATE m_buildAreaManagerState;
 
 public:
 	BuildWindow(StateManager* _pStateManager);

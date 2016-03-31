@@ -8,6 +8,7 @@
 /// @todo テスト用
 #include "ClickPosConverter.h"
 
+using ROADMANAGER_ENUM::STATE;
 
 RoadManager::RoadManager(BuildAreaChecker* _pBuildAreaChecker, StateManager* _pStateManager, GameData* _pGameData, ClickPosConverter* _pClickPosConverter) :
 m_pStateManager(_pStateManager),
@@ -16,7 +17,7 @@ m_pBuildAreaChecker(_pBuildAreaChecker),
 m_pClickPosConverter(_pClickPosConverter),
 m_pRoadBuilder(new RoadBuilder()),
 m_pInputDevice(InputDeviceFacade::GetInstance()),
-m_state(START_POS_SET)
+m_state(STATE::START_POS_SET)
 {
 }
 
@@ -37,7 +38,7 @@ void RoadManager::BuildControl()
 
 	switch (m_state)
 	{
-	case START_POS_SET:
+	case STATE::START_POS_SET:
 		if (m_pInputDevice->MouseLeftPush())
 		{
 			if (m_pBuildAreaChecker->AreaCheck())		// 今のところはtrueだけ返す
@@ -48,12 +49,12 @@ void RoadManager::BuildControl()
 				MousePos = m_pInputDevice->GetMousePos();
 				m_pClickPosConverter->ConvertForLoad(&StartPos, int(MousePos.x), int(MousePos.y));
 				m_pRoadBuilder->StartPosSet(StartPos);
-				m_state = END_POS_SET;
+				m_state = STATE::END_POS_SET;
 			}
 		}
 
 		break;
-	case END_POS_SET:
+	case STATE::END_POS_SET:
 		// 取得したマウスの座標を3d空間上の座標に変換して渡す
 		MousePos = m_pInputDevice->GetMousePos();
 		m_pClickPosConverter->ConvertForLoad(&EndPos, int(MousePos.x), int(MousePos.y));
@@ -63,7 +64,7 @@ void RoadManager::BuildControl()
 		{
 			if (m_pBuildAreaChecker->AreaCheck())
 			{
-				m_state = ROAD_CREATE;
+				m_state = STATE::CREATE;
 			}
 		}
 
@@ -72,11 +73,11 @@ void RoadManager::BuildControl()
 			// 右クリックされたら戻るため初期化
 			m_pRoadBuilder->InitStartPos();
 			m_pRoadBuilder->InitEndPos();
-			m_state = START_POS_SET;
+			m_state = STATE::START_POS_SET;
 		}
 
 		break;
-	case ROAD_CREATE:
+	case STATE::CREATE:
 		// 道を生成する
 		Road* pRoad = m_pRoadBuilder->RoadBuild();
 		m_pRoad.push_back(pRoad);
@@ -84,7 +85,7 @@ void RoadManager::BuildControl()
 		// 次の道作成のための初期化処理
 		m_pRoadBuilder->InitStartPos();
 		m_pRoadBuilder->InitEndPos();
-		m_state = START_POS_SET;
+		m_state = STATE::START_POS_SET;
 
 		break;
 	}
@@ -101,12 +102,11 @@ void RoadManager::Draw()
 
 void RoadManager::GetState()
 {
-
 }
 
 void RoadManager::SetState()
 {
-
+	m_pStateManager->SetRoadManagerState(m_state);
 }
 
 void RoadManager::GetGameData()
