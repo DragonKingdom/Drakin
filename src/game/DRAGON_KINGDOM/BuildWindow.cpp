@@ -116,13 +116,11 @@ void BuildWindow::OnClick()
 		case BUILD_NONE:
 			break;
 		case BUILD_HOUSE:
-			if (m_buildAreaManagerState == BUILDAREAMANAGER_ENUM::START_POS_SET)
-			{
-				m_buildState = BUILD_NONE;
-			}
+
 			break;
 		case BUILD_ROAD:
-			if (m_roadManagerState == ROADMANAGER_ENUM::START_POS_SET)
+			if (m_roadManagerState == ROADMANAGER_ENUM::START_POS_SET &&
+				m_buildAreaManagerState == BUILDAREAMANAGER_ENUM::START_POS_SET)
 			{
 				m_buildState = BUILD_NONE;
 			}
