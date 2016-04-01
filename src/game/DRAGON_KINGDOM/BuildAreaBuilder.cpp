@@ -14,10 +14,20 @@ BuildAreaBuilder::~BuildAreaBuilder()
 	delete m_pBuildAreaPreviewer;
 }
 
-BuildArea* BuildAreaBuilder::AreaBuild()
+BuildArea* BuildAreaBuilder::AreaBuild(bool _isLeft)
 {
-	/// @todo BuildAreaƒNƒ‰ƒX‚Í–¢ŽÀ‘•‚È‚Ì‚Å‹ó
-	BuildArea* pBuildArea = new BuildArea();
+	D3DXVECTOR3 Dif;
+	Dif.z = m_EndPos.z - m_StartPos.z;
+	Dif.x = m_EndPos.x - m_StartPos.x;
+
+	int Num_z = int(Dif.z / ROAD_H_SIZE);
+	int Num_x = int(Dif.x / ROAD_H_SIZE);
+
+	m_EndPos.z = m_StartPos.z + Num_z * ROAD_H_SIZE;
+	m_EndPos.x = m_StartPos.x + Num_x * ROAD_H_SIZE;
+	float angle = atan2(m_EndPos.z - m_StartPos.z, m_EndPos.x - m_StartPos.x);
+
+	BuildArea* pBuildArea = new BuildArea(_isLeft, m_StartPos, m_EndPos, angle);
 
 	return pBuildArea;
 }

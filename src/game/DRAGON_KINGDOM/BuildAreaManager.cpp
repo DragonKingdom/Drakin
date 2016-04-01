@@ -78,9 +78,11 @@ void BuildAreaManager::AreaBuildControl()
 
 		break;
 	case STATE::CREATE:
-		/// @todo BuildAreaは道の右側と左側で、二つ作る必要がある気がする
+		// とりあえずでやってみた
+		BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild(true);
+		m_pBuildArea.push_back(pBuildArea);
 
-		BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild();
+		pBuildArea = m_pBuildAreaBuilder->AreaBuild(false);
 		m_pBuildArea.push_back(pBuildArea);
 
 		// 次のために初期化

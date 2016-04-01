@@ -13,6 +13,7 @@ public:
 private:
 	Vertex      m_Vertex;
 	Texture		m_Texture;
+	D3DXVECTOR3 m_pRoad[4];
 	D3DXVECTOR3 m_StartPos;
 	D3DXVECTOR3 m_EndPos;
 	float		m_angle;

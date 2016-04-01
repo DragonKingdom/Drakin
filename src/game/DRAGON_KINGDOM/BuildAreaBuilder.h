@@ -9,7 +9,7 @@ class BuildAreaBuilder
 public:
 	BuildAreaBuilder();
 	~BuildAreaBuilder();
-	BuildArea* AreaBuild();
+	BuildArea* AreaBuild(bool _isLeft);
 	void PreviewerDraw();
 	void StartPosSet(D3DXVECTOR3 _startPos);
 	void EndPosSet(D3DXVECTOR3 _endPos);

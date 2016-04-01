@@ -5,7 +5,7 @@
 class BuildArea
 {
 public:
-	BuildArea();
+	BuildArea(bool _isLeft, D3DXVECTOR3 _roadStartPos, D3DXVECTOR3 _roadEndPos, float _angle);
 	~BuildArea();
 	void Draw();
 
@@ -14,6 +14,8 @@ private:
 	Texture		m_Texture;
 	D3DXVECTOR3 m_RoadStartPos;	/*対応する道の始点*/
 	D3DXVECTOR3 m_RoadEndPos;	/*対応する道の終点*/
+	D3DXVECTOR3 m_pBuildArea[4];
+	bool  m_isLeft;/*道に対して左にあるAreaかのフラグ*/
 	float m_x;	/*中心座標*/
 	float m_y;	/*中心座標*/
 	float m_z;	/*中心座標*/
