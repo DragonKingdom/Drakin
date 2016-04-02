@@ -13,22 +13,32 @@ class House;
 class BuildAreaChecker;
 class StateManager;
 class GameData;
+class InputDeviceFacade;
+class ClickPosConverter;
 
 class HouseManager
 {
 public:
-	HouseManager(BuildAreaChecker* pBuildAreaChecker, StateManager* _pStateManager, GameData* _pGameData);
+	HouseManager(BuildAreaChecker* pBuildAreaChecker, StateManager* _pStateManager, GameData* _pGameData, ClickPosConverter* _pClickPosConverter);
 	~HouseManager();
 
 	void BuildControl();
 	void Draw();
+	void GetState();
+	void SetState();
+	void GetGameData();
+	void SetGameData();
 
 private:
-	BuildAreaChecker*		m_pBuildAreaChecker;
-	HouseBuilder*			m_pHouseBuilder;
-	std::vector<House*>		m_pHouse;
-	StateManager*			m_pStateManager;
-	GameData*				m_pGameData;
+	BuildAreaChecker*			m_pBuildAreaChecker;
+	HouseBuilder*				m_pHouseBuilder;
+	std::vector<House*>			m_pHouse;
+	HOUSEMANAGER_ENUM::STATE	m_state;
+	StateManager*				m_pStateManager;
+	GameData*					m_pGameData;
+	InputDeviceFacade*			m_pInputDevice;
+
+	ClickPosConverter*			m_pClickPosConverter;
 
 };
 
