@@ -34,7 +34,10 @@ BuildArea* BuildAreaBuilder::AreaBuild(bool _isLeft)
 
 void BuildAreaBuilder::PreviewerDraw()
 {
-	m_pBuildAreaPreviewer->Draw();
+	if (m_isStartPosSet == true && m_isEndPosSet == true)
+	{
+		m_pBuildAreaPreviewer->Draw();
+	}
 }
 
 void BuildAreaBuilder::StartPosSet(D3DXVECTOR3 _startPos)

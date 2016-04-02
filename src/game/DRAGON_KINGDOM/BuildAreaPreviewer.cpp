@@ -2,22 +2,19 @@
 
 BuildAreaPreviewer::BuildAreaPreviewer()
 {
+	//m_Texture.Load(L"Resource\\image\\BuildArea.png");
 }
 
 BuildAreaPreviewer::~BuildAreaPreviewer()
 {
+	//m_Texture.Release();
 }
 
 void BuildAreaPreviewer::Draw()
 {
 	D3DXVECTOR3 LeftBuildArea[4];
 	D3DXVECTOR3 RightBuildArea[4];
-	//float Ltu[4] = { 0.f, 1.f, 1.f, 0.f };
-	//float Ltv[4] = { 0.f, 0.f, 0.f, 0.f };
-	//float Rtu[4] = { 1.f, 0.f, 0.f, 1.f };
-	//float Rtv[4] = { 0.f, 0.f, 0.f, 0.f };
-
-
+	
 	D3DXVECTOR3 Dif;
 	Dif.z = m_EndPos.z - m_StartPos.z;
 	Dif.x = m_EndPos.x - m_StartPos.x;
@@ -64,8 +61,20 @@ void BuildAreaPreviewer::Draw()
 	RightBuildArea[3].z = m_EndPos.z + (ROAD_W_SIZE / 2 + (ROAD_W_SIZE * 4)) * -cos(m_angle);
 
 
+	//float Ltu[4];
+	//float Ltv[4];
+
+	//Ltu[0] = 0.0f;
+	//Ltv[0] = 0.0f;
+	//Ltu[1] = 4.0f;
+	//Ltv[1] = 0.0f;
+	//Ltu[2] = 4.0f;
+	//Ltv[2] = Num_z*1.0f;
+	//Ltu[3] = 0.0f;
+	//Ltv[3] = Num_z*1.0f;
+
 	m_vertex.VertexDraw(m_Texture, RightBuildArea, D3DCOLOR_ARGB(255, 0, 255, 0));
-	m_vertex.VertexDraw(m_Texture, LeftBuildArea, D3DCOLOR_ARGB(255, 255, 0, 0));
+	m_vertex.VertexDraw(m_Texture, LeftBuildArea,D3DCOLOR_ARGB(255, 255, 0, 0));
 }
 
 void BuildAreaPreviewer::StartPosSet(D3DXVECTOR3 _startPos)

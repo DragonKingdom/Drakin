@@ -52,7 +52,7 @@ m_angle(_angle)
 
 BuildArea::~BuildArea()
 {
-	m_Texture.Release();
+	//m_Texture.Release();
 }
 
 void BuildArea::Draw()
