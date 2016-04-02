@@ -29,11 +29,22 @@ public:
 	 * 描画関数
 	 */
 	void Draw();
-	/**
-	 * エリアが空いているかどうかをチェックする関数
-	 */
-	bool AreaCheck();
 
+	/**
+	* エリアが空いてるかをチェックする関数
+	* @param[in] _checkPos チェックしたい座標
+	* @return エリアが空いていればtrueを返す(ビルドエリアがなくてもtrueを返す)
+	*/
+	bool AreaCheck(D3DXVECTOR3* _checkPos);	
+
+	/**
+	* ビルドエリアの中心座標を取得する関数
+	* @param[in] _checkPos チェックしたいエリアの座標
+	* @param[out] _centerPos エリアの中心位置が入るポインタ
+	* @return エリアが存在しなければfalseを返す
+	*/
+	bool GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos);
+	
 	void GetState();
 
 	void SetState();

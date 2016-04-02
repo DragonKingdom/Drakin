@@ -30,11 +30,11 @@ private:
 	StateManager*		m_pStateManager;
 	GameData*			m_pGameData;
 	Map*				m_pMap;
-	HouseManager*		m_pHouseManager;
-	RoadManager*		m_pRoadManager;
 	BuildAreaManager*	m_pBuildAreaManager;
 	BuildAreaChecker*	m_pBuildAreaChecker;
-
+	HouseManager*		m_pHouseManager;
+	RoadManager*		m_pRoadManager;
+	
 	GAMESCENE_STATE     m_GameSceneState;
 	BUILD_STATE         m_BuildState;
 

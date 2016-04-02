@@ -41,7 +41,7 @@ void RoadManager::BuildControl()
 	case STATE::START_POS_SET:
 		if (m_pInputDevice->MouseLeftPush())
 		{
-			if (m_pBuildAreaChecker->AreaCheck())		// 今のところはtrueだけ返す
+			if (m_pBuildAreaChecker->AreaCheck(NULL/*今のところはNULLで*/))
 			{
 				/// @todo マウスの位置がUIとかぶってた場合の処理も考えとく
 
@@ -62,7 +62,7 @@ void RoadManager::BuildControl()
 
 		if (m_pInputDevice->MouseLeftPush())
 		{
-			if (m_pBuildAreaChecker->AreaCheck())
+			if (m_pBuildAreaChecker->AreaCheck(NULL/*今のところはNULL*/))
 			{
 				m_state = STATE::CREATE;
 			}

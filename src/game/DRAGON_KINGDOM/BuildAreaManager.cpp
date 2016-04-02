@@ -45,7 +45,7 @@ void BuildAreaManager::AreaBuildControl()
 	case STATE::START_POS_SET:
 		if (m_pInputDevice->MouseLeftPush())
 		{
-			if (AreaCheck())
+			if (AreaCheck(NULL/*‚¢‚Ü‚Ì‚Æ‚±‚ë‚ÍNULL*/))
 			{
 				MousePos = m_pInputDevice->GetMousePos();
 				m_pClickPosConverter->ConvertForLoad(&StartPos, int(MousePos.x), int(MousePos.y));
@@ -62,7 +62,7 @@ void BuildAreaManager::AreaBuildControl()
 
 		if (m_pInputDevice->MouseLeftPush())
 		{
-			if (AreaCheck())
+			if (AreaCheck(NULL/*‚¢‚Ü‚Ì‚Æ‚±‚ë‚ÍNULL*/))
 			{
 				m_state = STATE::CREATE;
 			}
@@ -103,9 +103,32 @@ void BuildAreaManager::Draw()
 	m_pBuildAreaBuilder->PreviewerDraw();
 }
 
-bool BuildAreaManager::AreaCheck()
+bool BuildAreaManager::AreaCheck(D3DXVECTOR3* _checkPos)
 {
-	return true;		//¡‚Ítrue‚¾‚¯•Ô‚µ‚Æ‚­
+	if (_checkPos == NULL)
+	{
+		//	NULL‚ª“ü‚Á‚Ä‚½ê‡‚Ìˆ—
+	}
+	else
+	{
+
+	}
+
+	return true;	//‚Æ‚è‚ ‚¦‚¸true
+}
+
+bool BuildAreaManager::GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos)
+{
+	if (_checkPos == NULL || _centerPos == NULL)
+	{
+		//	NULL‚ª“ü‚Á‚Ä‚½ê‡‚Ìˆ—
+	}
+	else
+	{
+
+	}
+
+	return true;	//‚Æ‚è‚ ‚¦‚¸true
 }
 
 void BuildAreaManager::GetState()

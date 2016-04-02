@@ -9,8 +9,8 @@
 #include "BuildAreaManager.h"
 
 
-BuildAreaChecker::BuildAreaChecker(BuildAreaManager* pBuildAreaManager):
-m_pBuildAreaManager(pBuildAreaManager)
+BuildAreaChecker::BuildAreaChecker(BuildAreaManager* _pBuildAreaManager):
+m_pBuildAreaManager(_pBuildAreaManager)
 {
 }
 
@@ -18,9 +18,13 @@ BuildAreaChecker::~BuildAreaChecker()
 {
 }
 
-bool BuildAreaChecker::AreaCheck()
+bool BuildAreaChecker::AreaCheck(D3DXVECTOR3* _checkPos)
 {
-	// ¡‚Í‚Æ‚è‚ ‚¦‚¸true‚ð•Ô‚·
-	return true;
+	return m_pBuildAreaManager->AreaCheck(_checkPos);
+}
+
+bool BuildAreaChecker::GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos)
+{
+	return m_pBuildAreaManager->GetAreaCenterPos(_checkPos, _centerPos);
 }
 
