@@ -11,7 +11,7 @@ HouseBuilder::~HouseBuilder()
 	delete m_pHousePreviewer;
 }
 
-void PreviewerDraw()
+void HouseBuilder::PreviewerDraw()
 {
 
 }

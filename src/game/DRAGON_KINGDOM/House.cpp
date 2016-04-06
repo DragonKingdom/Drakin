@@ -9,3 +9,7 @@ House::~House()
 {
 }
 
+void House::Draw()
+{
+
+}
