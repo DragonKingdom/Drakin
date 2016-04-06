@@ -73,4 +73,13 @@ namespace ROADMANAGER_ENUM
 	};
 }
 
+namespace HOUSEMANAGER_ENUM
+{
+	enum STATE
+	{
+		CREATE_POS_SET,
+		CREATE
+	};
+}
+
 #endif // COMMONDECLARATION_H

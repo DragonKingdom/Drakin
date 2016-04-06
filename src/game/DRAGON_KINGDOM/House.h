@@ -6,6 +6,7 @@ class House
 public:
 	House();
 	~House();
+	void Draw();
 
 private:
 
