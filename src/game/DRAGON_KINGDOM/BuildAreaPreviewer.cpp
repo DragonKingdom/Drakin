@@ -1,13 +1,14 @@
 #include "BuildAreaPreviewer.h"
+#include <math.h>
 
 BuildAreaPreviewer::BuildAreaPreviewer()
 {
-	//m_Texture.Load(L"Resource\\image\\BuildArea.png");
+	m_Texture.Load(L"Resource\\image\\BuildArea.png");
 }
 
 BuildAreaPreviewer::~BuildAreaPreviewer()
 {
-	//m_Texture.Release();
+	m_Texture.Release();
 }
 
 void BuildAreaPreviewer::Draw()
@@ -60,21 +61,37 @@ void BuildAreaPreviewer::Draw()
 	RightBuildArea[3].y = 0.5f;
 	RightBuildArea[3].z = m_EndPos.z + (ROAD_W_SIZE / 2 + (ROAD_W_SIZE * 4)) * -cos(m_angle);
 
+	int length = static_cast<int>(pow(
+		(m_EndPos.x - m_StartPos.x) * (m_EndPos.x - m_StartPos.x) +
+		(m_EndPos.y - m_StartPos.y) * (m_EndPos.y - m_StartPos.y) +
+		(m_EndPos.z - m_StartPos.z) * (m_EndPos.z - m_StartPos.z),
+		0.5));
+	
+	float Ltu[4];
+	float Ltv[4];
+	float Rtu[4];
+	float Rtv[4];
 
-	//float Ltu[4];
-	//float Ltv[4];
+	Ltu[0] = 0.0f;
+	Ltv[0] = 0.0f;
+	Ltu[1] = 4.0f;
+	Ltv[1] = 0.0f;
+	Ltu[2] = 4.0f;
+	Ltv[2] = int(length / ROAD_H_SIZE);
+	Ltu[3] = 0.0f;
+	Ltv[3] = int(length / ROAD_H_SIZE);
 
-	//Ltu[0] = 0.0f;
-	//Ltv[0] = 0.0f;
-	//Ltu[1] = 4.0f;
-	//Ltv[1] = 0.0f;
-	//Ltu[2] = 4.0f;
-	//Ltv[2] = Num_z*1.0f;
-	//Ltu[3] = 0.0f;
-	//Ltv[3] = Num_z*1.0f;
+	Rtu[0] = 4.0f;
+	Rtv[0] = 0.0f;
+	Rtu[1] = 0.0f;
+	Rtv[1] = 0.0f;
+	Rtu[2] = 0.0f;
+	Rtv[2] = int(length / ROAD_H_SIZE);
+	Rtu[3] = 4.0f;
+	Rtv[3] = int(length / ROAD_H_SIZE);
 
-	m_vertex.VertexDraw(m_Texture, RightBuildArea, D3DCOLOR_ARGB(255, 0, 255, 0));
-	m_vertex.VertexDraw(m_Texture, LeftBuildArea,D3DCOLOR_ARGB(255, 255, 0, 0));
+	m_vertex.VertexDraw(m_Texture, RightBuildArea, Rtu, Rtv, D3DCOLOR_ARGB(255, 255, 255, 255));
+	m_vertex.VertexDraw(m_Texture, LeftBuildArea, Ltu, Ltv, D3DCOLOR_ARGB(255, 255, 255, 255));
 }
 
 void BuildAreaPreviewer::StartPosSet(D3DXVECTOR3 _startPos)
