@@ -65,6 +65,13 @@
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winmm.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);DirectxLibrary.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\Library\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <FxCompile>
+      <EntryPointName>TShader</EntryPointName>
+    </FxCompile>
+    <FxCompile>
+      <ShaderModel>2.0</ShaderModel>
+      <ShaderType>Effect</ShaderType>
+    </FxCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -85,6 +92,13 @@
       <AdditionalLibraryDirectories>..\Library\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);DirectxLibrary.lib;</AdditionalDependencies>
     </Link>
+    <FxCompile>
+      <EntryPointName>TShader</EntryPointName>
+    </FxCompile>
+    <FxCompile>
+      <ShaderModel>2.0</ShaderModel>
+      <ShaderType>Effect</ShaderType>
+    </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BuildArea.cpp" />
@@ -107,6 +121,7 @@
     <ClCompile Include="HousePreviewer.cpp" />
     <ClCompile Include="InputDeviceFacade.cpp" />
     <ClCompile Include="KingdomWindow.cpp" />
+    <ClCompile Include="LightScatteringSimulation.cpp" />
     <ClCompile Include="LogoScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -165,6 +180,7 @@
     <ClInclude Include="HousePreviewer.h" />
     <ClInclude Include="InputDeviceFacade.h" />
     <ClInclude Include="KingdomWindow.h" />
+    <ClInclude Include="LightScatteringSimulation.h" />
     <ClInclude Include="LogoScene.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Menuicon.h" />
@@ -202,8 +218,8 @@
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Effect\SkyEffect.fx">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
     </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
