@@ -3,7 +3,7 @@
 
 BuildAreaPreviewer::BuildAreaPreviewer()
 {
-	m_Texture.Load(L"Resource\\image\\BuildArea.png");
+	m_Texture.Load("Resource\\image\\BuildArea.png");
 }
 
 BuildAreaPreviewer::~BuildAreaPreviewer()
@@ -77,18 +77,18 @@ void BuildAreaPreviewer::Draw()
 	Ltu[1] = 4.0f;
 	Ltv[1] = 0.0f;
 	Ltu[2] = 4.0f;
-	Ltv[2] = int(length / ROAD_H_SIZE);
+	Ltv[2] = (float)int(length / ROAD_H_SIZE);
 	Ltu[3] = 0.0f;
-	Ltv[3] = int(length / ROAD_H_SIZE);
+	Ltv[3] = (float)int(length / ROAD_H_SIZE);
 
 	Rtu[0] = 4.0f;
 	Rtv[0] = 0.0f;
 	Rtu[1] = 0.0f;
 	Rtv[1] = 0.0f;
 	Rtu[2] = 0.0f;
-	Rtv[2] = int(length / ROAD_H_SIZE);
+	Rtv[2] = (float)int(length / ROAD_H_SIZE);
 	Rtu[3] = 4.0f;
-	Rtv[3] = int(length / ROAD_H_SIZE);
+	Rtv[3] = (float)int(length / ROAD_H_SIZE);
 
 	m_vertex.VertexDraw(m_Texture, RightBuildArea, Rtu, Rtv, D3DCOLOR_ARGB(255, 255, 255, 255));
 	m_vertex.VertexDraw(m_Texture, LeftBuildArea, Ltu, Ltv, D3DCOLOR_ARGB(255, 255, 255, 255));
