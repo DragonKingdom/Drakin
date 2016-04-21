@@ -6,7 +6,7 @@ m_RoadStartPos(_roadStartPos),
 m_RoadEndPos(_roadEndPos),
 m_angle(_angle)
 {
-	m_Texture.Load(L"Resource\\image\\BuildArea.png");
+	m_Texture.Load("Resource\\image\\BuildArea.png");
 
 	// ìπÇÃí∑Ç≥Ç‡Ç¢ÇÈÇÊÇÀÅcÅH
 	int length = static_cast<int>(pow((m_RoadEndPos.x - m_RoadStartPos.x) * (m_RoadEndPos.x - m_RoadStartPos.x) +
