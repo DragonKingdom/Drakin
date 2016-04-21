@@ -9,8 +9,8 @@ private:
 	float				m_height;
 public:
 	Texture();
-	BOOL Load(const wchar_t* _fileName);
-	BOOL Load(const wchar_t* _fileName,D3DXCOLOR _color);
+	BOOL Load(const char* _fileName);
+	BOOL Load(const char* _fileName,D3DXCOLOR _color);
 	void Release();
 
 public:

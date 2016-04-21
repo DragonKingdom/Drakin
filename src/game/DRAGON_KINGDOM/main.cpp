@@ -5,6 +5,8 @@
 #include <tchar.h>
 #include <graphicsDevice.h>
 
+#include "FbxFileManager.h"
+
 #include "SceneManager.h"
 
 #define GAME_FPS (1000/60)
@@ -46,17 +48,18 @@ int WINAPI WinMain( HINSTANCE hInst,HINSTANCE hPrevInst,LPSTR szStr,INT iCmdShow
 
 	SetWindowText(hWnd,_T("DragonKingdom"));
 	
-	// ダイレクト３Dの初期化関数を呼ぶ
+	// ダイレクト3Dの初期化関数を呼ぶ
 	g_pGraphicsDevice = &GraphicsDevice::getInstance();
 	g_pGraphicsDevice->InitD3D(hWnd,true);
+
+	// fbxファイル読込クラス生成
+	FbxFileManager::Create(g_pGraphicsDevice->GetDevice());
+
 	// シーンマネージャー生成
 	SceneManager sceneManager(hWnd);
 
 	DWORD NowTime = timeGetTime();
 	DWORD OldTime = timeGetTime();
-
-	/// @todo フレーム制御ってこれでいいよな…
-
 
 	// メッセージループ
     ZeroMemory( &msg, sizeof(msg) );
@@ -80,6 +83,10 @@ int WINAPI WinMain( HINSTANCE hInst,HINSTANCE hPrevInst,LPSTR szStr,INT iCmdShow
 			 }
 		 }
 	 }
+
+	// インスタンス破棄
+	FbxFileManager::Release();
+
      return (INT)msg.wParam ;
 }
 

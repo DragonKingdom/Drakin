@@ -3,7 +3,7 @@
 
 RoadPreviewer::RoadPreviewer()
 {
-	m_Texture.Load(L"Road");
+	m_Texture.Load("Road");
 }
 
 RoadPreviewer::~RoadPreviewer()

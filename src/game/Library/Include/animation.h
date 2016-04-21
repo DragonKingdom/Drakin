@@ -6,7 +6,7 @@
 class CAnimation
 {
 public:
-	CAnimation(LPDIRECT3DDEVICE9 _pDevice,wchar_t* _fileName,float _w,float _h,int _animNum);
+	CAnimation(LPDIRECT3DDEVICE9 _pDevice, char* _fileName, float _w, float _h, int _animNum);
 	~CAnimation();
 
 	void Control();

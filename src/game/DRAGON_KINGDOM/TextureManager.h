@@ -37,7 +37,7 @@ private:
 	TextureManager();
 
 	/// シーンIDと、そのシーンでロードするファイル名の連想配列
-	std::map<SceneID, const wchar_t**> m_loadFileNameMap;
+	std::map<SceneID, const char**> m_loadFileNameMap;
 
 	std::vector<Texture> m_texList;	///< 読み込まれているテクスチャ情報
 public:
