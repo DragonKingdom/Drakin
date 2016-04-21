@@ -1,18 +1,20 @@
 #include <d3dx9.h>
 #pragma comment (lib, "d3d9.lib")
 
+#ifndef _LSS_
+#define _LSS_
 class LSS
 {
 private:
 	LPD3DXEFFECT m_pEffect;
 	D3DXHANDLE m_pTechnique, m_pWVPP, m_pLightDir, m_pAmbient, m_pCLUTTU, m_pFogColor, m_pParam1, m_pParam2;
 	D3DXMATRIX m_matView, m_matProj;
-	LPDIRECT3DDEVICE9 m_pd3dDevice;
+	LPDIRECT3DDEVICE9 m_pDevice;
 
 	LPDIRECT3DTEXTURE9 m_pCLUTTexture[2];
 
 public:
-	LSS(LPDIRECT3DDEVICE9 pd3dDevice);
+	LSS();
 	~LSS();
 	void Invalidate();
 	void Restore();
@@ -33,3 +35,4 @@ public:
 	BOOL IsOK();
 	LPD3DXEFFECT GetEffect(){ return m_pEffect; };
 };
+#endif

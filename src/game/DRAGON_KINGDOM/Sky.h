@@ -1,20 +1,22 @@
 #ifndef SKY_H
 #define SKY_H
 
-class SunChecker;
+class Sun;
+class LSS;
 
 class Sky
 {
 public:
-	Sky(SunChecker* pSunChecker);
+	Sky(Sun* pSunChecker);
 	~Sky();
 	void Control();
 	void Draw();
 
 
 private:
-	SunChecker*			m_pSunChecker;
-	Model*				m_pSkyModel;
+	LSS* m_pLSS;
+	Sun*			m_pSun;
+	Model*			m_pSkyModel;
 
 	/// @todo シェーダー使いたいから置く(シェーダーもLibraryにしたい)
 	LPDIRECT3DDEVICE9	m_pDevice;

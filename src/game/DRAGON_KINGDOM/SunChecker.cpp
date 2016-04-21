@@ -11,12 +11,12 @@ SunChecker::~SunChecker()
 {
 }
 
-D3DXVECTOR3 SunChecker::GetDirectionalVec()
+D3DXVECTOR4 SunChecker::GetDirectionalVec()
 {
 	return m_pSun->GetDirectionalVec();
 }
 
-D3DXVECTOR3 SunChecker::GetUpVec()
+D3DXVECTOR4 SunChecker::GetUpVec()
 {
 	return m_pSun->GetUpVec();
 }

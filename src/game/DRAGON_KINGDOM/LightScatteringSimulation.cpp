@@ -1,9 +1,10 @@
 #include "LightScatteringSimulation.h"
+#include "graphicsDevice.h"
+
 #define SAFE_RELEASE(p) if(p){ p->Release(); p = NULL;}
 
-LSS::LSS(LPDIRECT3DDEVICE9 pd3dDevice)
+LSS::LSS() :m_pDevice(GraphicsDevice::getInstance().GetDevice())
 {
-	m_pd3dDevice = pd3dDevice;
 	m_pEffect = NULL;
 	m_pCLUTTexture[0] = NULL;
 	m_pCLUTTexture[1] = NULL;
@@ -35,11 +36,11 @@ HRESULT LSS::Load(char* pCLUTSkyFileName, char* pCLUTLightPowerFileName)
 {
 	D3DCAPS9 caps;
 
-	m_pd3dDevice->GetDeviceCaps(&caps);
+	m_pDevice->GetDeviceCaps(&caps);
 	if (caps.VertexShaderVersion >= D3DVS_VERSION(1, 1) && caps.PixelShaderVersion >= D3DPS_VERSION(2, 0))
 	{
 		LPD3DXBUFFER pErr = NULL;
-		HRESULT hr = D3DXCreateEffectFromFile(m_pd3dDevice, LPCWSTR("LSS.fx"), NULL, NULL, 0, NULL, &m_pEffect, &pErr);
+		HRESULT hr = D3DXCreateEffectFromFile(m_pDevice, "LSS.fx", NULL, NULL, 0, NULL, &m_pEffect, &pErr);
 		if (FAILED(hr))
 			return -1;
 
@@ -55,8 +56,8 @@ HRESULT LSS::Load(char* pCLUTSkyFileName, char* pCLUTLightPowerFileName)
 		m_pEffect->SetTechnique(m_pTechnique);
 
 		//空カラールックアップテーブルをロード
-		hr = D3DXCreateTextureFromFileEx(m_pd3dDevice,
-			LPCWSTR(pCLUTSkyFileName),
+		hr = D3DXCreateTextureFromFileEx(m_pDevice,
+			pCLUTSkyFileName,
 			D3DX_DEFAULT,
 			D3DX_DEFAULT,
 			1,
@@ -73,8 +74,8 @@ HRESULT LSS::Load(char* pCLUTSkyFileName, char* pCLUTLightPowerFileName)
 			return -2;
 
 		//太陽光カラールックアップテーブルをロード
-		hr = D3DXCreateTextureFromFileEx(m_pd3dDevice,
-			LPCWSTR(pCLUTLightPowerFileName),
+		hr = D3DXCreateTextureFromFileEx(m_pDevice,
+			pCLUTLightPowerFileName,
 			D3DX_DEFAULT,
 			D3DX_DEFAULT,
 			1,
@@ -103,8 +104,8 @@ void LSS::Begin()
 {
 	if (m_pEffect)
 	{
-		m_pd3dDevice->GetTransform(D3DTS_VIEW, &m_matView);
-		m_pd3dDevice->GetTransform(D3DTS_PROJECTION, &m_matProj);
+		m_pDevice->GetTransform(D3DTS_VIEW, &m_matView);
+		m_pDevice->GetTransform(D3DTS_PROJECTION, &m_matProj);
 
 		m_pEffect->Begin(NULL, 0);
 	}
@@ -114,7 +115,7 @@ void LSS::BeginPass(UINT Pass)
 {
 	if (m_pEffect)
 	{
-		m_pd3dDevice->SetTexture(0, m_pCLUTTexture[Pass]);
+		m_pDevice->SetTexture(0, m_pCLUTTexture[Pass]);
 		m_pEffect->BeginPass(Pass);
 	}
 }

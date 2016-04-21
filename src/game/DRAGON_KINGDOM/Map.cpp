@@ -7,9 +7,10 @@
 Map::Map(StateManager* _pStateManager, GameData* _pGameData) :
 m_pSun(new Sun()),
 m_pSunChecker(new SunChecker(m_pSun)),
-m_pSky(new Sky(m_pSunChecker)),
+m_pSky(new Sky(m_pSun)),
 m_pGround(new Ground())
 {
+
 }
 
 Map::~Map()
