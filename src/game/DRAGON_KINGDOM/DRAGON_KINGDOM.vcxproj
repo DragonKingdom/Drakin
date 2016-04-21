@@ -20,7 +20,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -55,15 +55,15 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Library\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files\Autodesk\FBX\FBX SDK\2016.1\include;$(SolutionDir)Library\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>%(PrecompiledHeaderFile);%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winmm.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);DirectxLibrary.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\Library\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winmm.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);libfbxsdk-mt.lib;DirectxLibrary.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files\Autodesk\FBX\FBX SDK\2016.1\lib\vs2013\x86\debug;..\Library\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -75,15 +75,15 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ForcedIncludeFiles>%(PrecompiledHeaderFile);%(ForcedIncludeFiles)</ForcedIncludeFiles>
-      <AdditionalIncludeDirectories>$(SolutionDir)Library\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files\Autodesk\FBX\FBX SDK\2016.1\include;$(SolutionDir)Library\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>..\Library\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);DirectxLibrary.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files\Autodesk\FBX\FBX SDK\2016.1\lib\vs2013\x86\release;..\Library\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies);libfbxsdk-md.lib;DirectxLibrary.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

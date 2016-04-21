@@ -2,7 +2,7 @@
 
 #include "animation.h"
 
-CAnimation::CAnimation(LPDIRECT3DDEVICE9 _pDevice,wchar_t* _fileName,float _w,float _h,int _animNum) : m_pDevice(_pDevice)
+CAnimation::CAnimation(LPDIRECT3DDEVICE9 _pDevice, char* _fileName, float _w, float _h, int _animNum) : m_pDevice(_pDevice)
 	, m_index(0) , m_curTime(0) , m_delay(0),m_move(D3DXVECTOR3(0,0,0))
 {
 	m_tex.Load(_fileName,D3DCOLOR_ARGB(0,0,0,0));

@@ -5,7 +5,7 @@ Ground::Ground() :m_pDevice(GraphicsDevice::getInstance().GetDevice())
 {
 	m_pVertex = new Vertex();
 	m_pTexture = new Texture();
-	m_pTexture->Load(_T("texture\\map_tex.png"));
+	m_pTexture->Load(("texture\\map_tex.png"));
 }
 
 Ground::~Ground()

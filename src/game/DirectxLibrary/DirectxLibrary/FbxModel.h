@@ -1,0 +1,72 @@
+#ifndef FBXMODEL_H
+#define FBXMODEL_H
+#include <d3d9.h>
+#include <d3dx9.h>
+#include <vector>
+
+#define USERVERTEX_FVF (D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_TEX1)
+
+// 頂点情報が格納される構造体
+struct UserVertex
+{
+	D3DVECTOR Vec;		// 頂点データ
+	D3DVECTOR Normal;	// 頂点データ
+	float tu;			// テクスチャ座標x
+	float tv;			// テクスチャ座標y
+};
+
+// インデックスを格納する構造体
+struct UserIndex
+{
+	int	IndexCount;		// インデックス数
+	WORD* IndexAry;		// インデックスデータ
+};
+
+struct UserTexture
+{
+	const char* TextureName;
+	LPDIRECT3DTEXTURE9 pTexture;
+};
+
+// Mesh情報が格納される構造体
+struct FbxModelData
+{
+	int							PolygonCount;		// ポリゴン数
+	int							PrimitiveCount;		// 三角ポリゴンの数
+	int							ControlPointCount;	// コントロールポイントの数
+	UserVertex*					pVertex;			// 頂点データ
+	UserIndex					pIndex;				// インデックス系データ
+	std::vector<UserTexture*>	pTextureData;		// テクスチャ情報
+	D3DMATERIAL9				Material;			// マテリアル情報
+};
+
+/**
+ * モデルデータを格納するクラス
+ */
+class FbxModel
+{
+public:
+	enum MODELMODE
+	{
+		NORMAL_MODE,
+		INDEX_MODE,	 
+	};
+
+	FbxModel(LPDIRECT3DDEVICE9 _pDevice);
+	~FbxModel();
+	void      SetMode(MODELMODE _Mode){ m_Mode = _Mode; };
+	MODELMODE GetMode(){ return m_Mode; };
+	void	Draw();
+
+	std::vector<FbxModelData*>	m_pFbxModelData;
+
+private:
+	LPDIRECT3DDEVICE9	m_pDevice;
+	MODELMODE			m_Mode;
+
+
+};
+
+
+
+#endif

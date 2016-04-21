@@ -1,35 +1,35 @@
 #include "TextureManager.h"
 
-#define DUMMY TEXT("dummy")
+#define DUMMY "dummy"
 
 namespace
 {
 	////////////////////////////////////////////////////////
 	// 各シーンでロードするテクスチャのファイル名
-	const wchar_t* FILES_LOGO[] =
+	const char* FILES_LOGO[] =
 	{
-		TEXT("Resource\\image\\LogoScene\\Logo.png"),
+		"Resource\\image\\LogoScene\\Logo.png",
 		NULL,
 	};
-	const wchar_t* FILES_OPENING[] =
+	const char* FILES_OPENING[] =
 	{
 		NULL,
 	};
-	const wchar_t* FILES_TITLE[] =
+	const char* FILES_TITLE[] =
 	{
-		TEXT("Resource\\image\\Title.png"),
-		TEXT("Resource\\image\\Title_BG.png"),
-		TEXT("Resource\\image\\Title_Menu.png"),
+		"Resource\\image\\Title.png",
+		"Resource\\image\\Title_BG.png",
+		"Resource\\image\\Title_Menu.png",
 		NULL,
 	};
-	const wchar_t* FILES_GAME[] =
+	const char* FILES_GAME[] =
 	{
-		TEXT("Resource\\image\\telop.png"),
-		TEXT("Resource\\image\\window.png"),
-		TEXT("Resource\\image\\UI.png"),
+		"Resource\\image\\telop.png",
+		"Resource\\image\\window.png",
+		"Resource\\image\\UI.png",
 		NULL,
 	};
-	const wchar_t* FILES_RESULT[] =
+	const char* FILES_RESULT[] =
 	{
 		NULL,
 	};
@@ -50,16 +50,16 @@ TextureManager::TextureManager()
 void TextureManager::Load(SceneID _sceneID)
 {
 	// そのシーンでロードするファイル名の一覧を取得
-	const wchar_t** fileNameArray = m_loadFileNameMap[_sceneID];
+	const char** fileNameArray = m_loadFileNameMap[_sceneID];
 
 	int texCount = 0;
-	const wchar_t* fileName = fileNameArray[texCount];
+	const char* fileName = fileNameArray[texCount];
 	while(fileName != NULL) 
 	{
 		Texture tex;
 
 		// dummyが読み込まれているなら飛ばす
-		if( wcscmp(fileName, DUMMY) != 0 )  
+		if( strcmp(fileName, DUMMY) != 0 )  
 		{
 			if( !tex.Load(fileName) )
 			{

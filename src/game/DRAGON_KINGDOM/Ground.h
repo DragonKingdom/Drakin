@@ -1,6 +1,7 @@
 #ifndef GROUND_H
 #define GROUND_H
 
+class FbxModel;
 
 class Ground
 {
@@ -19,7 +20,7 @@ private:
 	Vertex* m_pVertex;
 	Texture* m_pTexture;
 	LPDIRECT3DDEVICE9 m_pDevice;
-
+	FbxModel* m_pFbxModel;
 };
 
 
