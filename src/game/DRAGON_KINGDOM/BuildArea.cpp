@@ -25,9 +25,9 @@ m_angle(_angle)
 		m_tu[1] = 4.0f;
 		m_tv[1] = 0.0f;
 		m_tu[2] = 4.0f;
-		m_tv[2] = int(length / ROAD_H_SIZE);
+		m_tv[2] = (float)int(length / ROAD_H_SIZE);
 		m_tu[3] = 0.0f;
-		m_tv[3] = int(length / ROAD_H_SIZE);
+		m_tv[3] = (float)int(length / ROAD_H_SIZE);
 
 		m_pBuildArea[0].x = m_RoadStartPos.x +  (ROAD_W_SIZE / 2 - ROAD_W_SIZE ) * sin(m_angle);
 		m_pBuildArea[0].y = 0.5f;
@@ -49,9 +49,9 @@ m_angle(_angle)
 		m_tu[1] = 0.0f;
 		m_tv[1] = 0.0f;
 		m_tu[2] = 0.0f;
-		m_tv[2] = int(length / ROAD_H_SIZE);
+		m_tv[2] = (float)int(length / ROAD_H_SIZE);
 		m_tu[3] = 4.0f;
-		m_tv[3] = int(length / ROAD_H_SIZE);
+		m_tv[3] = (float)int(length / ROAD_H_SIZE);
 
 		m_pBuildArea[0].x = m_RoadStartPos.x +  (ROAD_W_SIZE / 2 + (ROAD_W_SIZE * 4)) * sin(m_angle);
 		m_pBuildArea[0].y = 0.5f;
