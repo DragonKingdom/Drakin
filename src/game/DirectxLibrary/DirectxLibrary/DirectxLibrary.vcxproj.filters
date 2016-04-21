@@ -63,6 +63,12 @@
     <Filter Include="ソース ファイル\targetver">
       <UniqueIdentifier>{b18c299d-c3f1-4321-8616-b33a8266d32b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FbxFileManager">
+      <UniqueIdentifier>{145e46a6-1934-4479-adb0-5cdcf304bf10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FbxFileManager\FbxModel">
+      <UniqueIdentifier>{b260fca2-f6e0-42ba-a19e-a296a8cbbfd4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -125,6 +131,12 @@
     <ClCompile Include="3DModel.cpp">
       <Filter>ソース ファイル\3DModel</Filter>
     </ClCompile>
+    <ClCompile Include="FbxModel.cpp">
+      <Filter>FbxFileManager\FbxModel</Filter>
+    </ClCompile>
+    <ClCompile Include="FbxFileManager.cpp">
+      <Filter>FbxFileManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3DModel.h">
@@ -180,6 +192,12 @@
     </ClInclude>
     <ClInclude Include="targetver.h">
       <Filter>ソース ファイル\targetver</Filter>
+    </ClInclude>
+    <ClInclude Include="FbxModel.h">
+      <Filter>FbxFileManager\FbxModel</Filter>
+    </ClInclude>
+    <ClInclude Include="FbxFileManager.h">
+      <Filter>FbxFileManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

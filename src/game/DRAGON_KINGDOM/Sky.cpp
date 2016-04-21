@@ -6,7 +6,7 @@ Sky::Sky(SunChecker* pSunChecker) :
 	m_pDevice(GraphicsDevice::getInstance().GetDevice()),
 	m_pSunChecker(pSunChecker)
 {
-	m_pSkyModel = new Model(L"Resource\\Xfile\\doom.x");
+	m_pSkyModel = new Model("Resource\\Xfile\\doom.x");
 	m_pSkyModel->SetScale(D3DXVECTOR3(900, 900, 900));
 }
 

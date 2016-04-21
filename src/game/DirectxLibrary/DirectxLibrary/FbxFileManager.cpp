@@ -1,0 +1,602 @@
+#include "stdafx.h"
+#include "FbxFileManager.h"
+#include <windows.h>
+#include "FbxModel.h"
+
+// Textureの複数取得
+// 法線の複数取得はイラン
+// UVの複数取得
+// 謎のMaterialの対応
+// 
+
+FbxFileManager* FbxFileManager::m_pFbxFileManager = NULL;
+
+FbxFileManager::FbxFileManager(LPDIRECT3DDEVICE9 _pDevice) :
+m_pDevice(_pDevice),
+m_pFbxManager(NULL),
+m_pFbxScene(NULL),
+m_pFbxImporter(NULL),
+m_pFbxIOSettings(NULL),
+m_pFbxModel(NULL)
+{
+	// fbxsdkのManagerクラス生成
+	// こいつがSDK全体を管理してる
+	m_pFbxManager = fbxsdk::FbxManager::Create();
+	if (m_pFbxManager == NULL){ MessageBox(NULL, TEXT("FbxManagerクラスの生成に失敗"), TEXT("エラー"), MB_OK); }
+
+	// FbxSceneクラスの生成
+	// 第一引数はFbxManagerのアドレス
+	// 第二引数は名前を付けれるらしい
+	m_pFbxScene = fbxsdk::FbxScene::Create(m_pFbxManager, "");
+	if (m_pFbxScene == NULL){ MessageBox(NULL, TEXT("FbxSceneクラスの生成に失敗"), TEXT("エラー"), MB_OK); }
+
+	// FbxImporterクラスの生成
+	// こいつはfbxファイルを開くためだけのクラス
+	// 第一引数はFbxManagerのアドレス
+	// 第二引数は名前を付けれるらしい
+	m_pFbxImporter = fbxsdk::FbxImporter::Create(m_pFbxManager, "");
+	if (m_pFbxImporter == NULL){ MessageBox(NULL, TEXT("FbxImporterクラスの生成に失敗"), TEXT("エラー"), MB_OK); }
+
+	// FbxIOSettingsクラスの生成
+	// こいつは入出力のオプションを設定するためのクラスかな？(IOはInput Output なきがする)
+	// 第一引数はFbxManagerのアドレス
+	// 第二引数は名前を付けれるらしい
+	m_pFbxIOSettings = fbxsdk::FbxIOSettings::Create(m_pFbxManager, IOSROOT);
+	if (m_pFbxIOSettings == NULL){ MessageBox(NULL, TEXT("FbxIOSettingクラスの生成に失敗"), TEXT("エラー"), MB_OK); }
+	m_pFbxManager->SetIOSettings(m_pFbxIOSettings);
+
+
+
+
+}
+
+FbxFileManager::~FbxFileManager()
+{
+	m_pFbxScene->Destroy();
+	m_pFbxIOSettings->Destroy();
+	m_pFbxImporter->Destroy();
+	m_pFbxManager->Destroy();
+}
+
+bool FbxFileManager::FileImport(char* _FileName)
+{
+	// fbx開く
+	if (m_pFbxImporter->Initialize(_FileName) == false)
+	{
+		MessageBox(NULL, TEXT("FbxImporterのInitializeに失敗しました"), TEXT("エラー"), MB_OK);
+		return false;
+	}
+
+	// Sceneに情報を渡す
+	if (m_pFbxImporter->Import(m_pFbxScene) == false)
+	{
+		MessageBox(NULL, TEXT("FbxImporterのImportに失敗しました"), TEXT("エラー"), MB_OK);
+		return false;
+	}
+
+	// Scene内のポリゴンをすべて三角形化する(三角形化するポリゴンが多いと結構遅い)
+	FbxGeometryConverter GeometryConverter(m_pFbxManager);
+	if (GeometryConverter.Triangulate(m_pFbxScene, true) == false)
+	{
+		MessageBox(NULL, TEXT("三角形化に失敗しました。"), TEXT("エラー"), MB_OK);
+		return false;
+	}
+	
+
+	return true;
+}
+
+
+bool FbxFileManager::GetModelData(FbxModel* _pFbxModel)
+{
+	m_pFbxModel = _pFbxModel;
+
+	// ルートノード(最上位ノード)の取得
+	fbxsdk::FbxNode* pRootNode = m_pFbxScene->GetRootNode();
+	RecursiveNode(pRootNode);
+
+
+	return true;
+}
+
+
+void FbxFileManager::RecursiveNode(fbxsdk::FbxNode* pNode)
+{
+	for (int i = 0; i < pNode->GetChildCount(); i++)
+	{
+		fbxsdk::FbxNode* pChild = pNode->GetChild(i);  // 子ノードを取得
+		RecursiveNode(pChild);
+	}
+
+	fbxsdk::FbxNodeAttribute* pAttribute = pNode->GetNodeAttribute();
+
+	if (pAttribute != NULL)
+	{
+		switch (pAttribute->GetAttributeType())
+		{
+		case fbxsdk::FbxNodeAttribute::eMesh:
+			GetMesh(pAttribute);		//Meshを作成
+			break;
+		case fbxsdk::FbxNodeAttribute::eCamera:
+			GetCamera(pAttribute);		// カメラを作成
+			break;
+		}
+	}
+}
+
+void FbxFileManager::GetTextureName(
+	fbxsdk::FbxSurfaceMaterial* material,
+	const char* matFlag, 
+	std::vector<const char*>* pOutFileName, 
+	std::vector<fbxsdk::FbxString>* pOutUvSetName,
+	int* OutCount)
+{
+	// プロパティ取得(DiffusやEmissiveなどのデータの塊)
+	fbxsdk::FbxProperty Property = material->FindProperty(matFlag);
+
+	// プロパティにあてられてるレイヤーテクスチャの数取得
+	int LayerTextureCount = Property.GetSrcObjectCount<fbxsdk::FbxLayeredTexture>();
+
+	// レイヤーテクスチャがなければ通常テクスチャを探す
+	if (LayerTextureCount == 0)
+	{
+		// プロパティにあてられてるテクスチャの数を取得
+		int TextureCount = Property.GetSrcObjectCount<fbxsdk::FbxFileTexture>();
+		for (int i = 0; i < TextureCount; ++i)
+		{
+			// テクスチャ数カウント
+			(*OutCount)++;
+			// テクスチャ取得
+			fbxsdk::FbxFileTexture* fbxTexture = FbxCast<fbxsdk::FbxFileTexture>(Property.GetSrcObject<fbxsdk::FbxFileTexture>(i));
+			pOutUvSetName->push_back(fbxTexture->UVSet.Get());
+			pOutFileName->push_back(fbxTexture->GetRelativeFileName());
+			// GetRelativeFileNameは相対パス取得
+			// GetNameは絶対パス取得(こいつなんかおかしい)
+		}
+	}
+	else
+	{
+		// レイヤテクスチャの取得は考え中
+		// というかマルチテクスチャをどう管理するか考えてる最中
+	}
+
+}
+
+// @todo 複数メッシュに対応できてないから改良が必要
+// メッシュ内の情報取得
+void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
+{
+
+	FbxModelData* ModelData = new FbxModelData;
+	ModelData->pVertex = NULL;
+	ModelData->pIndex.IndexAry = NULL;
+
+	// ダウンキャスト
+	fbxsdk::FbxMesh* pFbxMesh = (fbxsdk::FbxMesh*)_pAttribute;
+
+
+	//-------------------------------------------------------------------------
+	//							頂点情報とインデックス
+	//-------------------------------------------------------------------------
+
+	// ポリゴン数を取得する
+	int PolygonCount = pFbxMesh->GetPolygonCount();
+
+	// メッシュの三角形の数カウントする
+	int PrimitiveCount = 0;
+
+	// すべての頂点の数を取得
+	int VertexCount = pFbxMesh->GetPolygonVertexCount();
+
+	// インデックスバッファの数だけ確保
+	WORD* IndexAry = new WORD[VertexCount];
+	int* TmpIndexAry = new int[VertexCount];
+	
+	// コントロールポイント(インデックスバッファが指すデータ)の数を取得
+	int ControlPointCount = pFbxMesh->GetControlPointsCount();
+
+	// コントロールポイントの取得
+	fbxsdk::FbxVector4* pFbxVec = pFbxMesh->GetControlPoints();
+
+	// コントロールポイントの数だけメモリに確保
+	D3DXVECTOR3* pVertex = new D3DXVECTOR3[ControlPointCount];
+
+
+
+	// 頂点情報をセット
+	for (int i = 0; i < ControlPointCount; i++)
+	{
+		pVertex[i].x = (float)pFbxVec[i][0];	// x
+		pVertex[i].y = (float)pFbxVec[i][1];	// y
+		pVertex[i].z = (float)pFbxVec[i][2];	// z
+	}
+
+	// インデックス情報をセット
+	memcpy(TmpIndexAry, pFbxMesh->GetPolygonVertices(), sizeof(int) * VertexCount);
+	for (int i = 0; i < VertexCount; i++)
+	{
+		IndexAry[i] = TmpIndexAry[i];
+	}
+	delete[] TmpIndexAry;
+
+	// メッシュ内の三角形の数を取得
+	for (int i = 0; i < PolygonCount; i++)
+	{
+		switch (pFbxMesh->GetPolygonSize(i))
+		{
+		case 3:
+			PrimitiveCount += 1;
+			break;
+		default:
+			// 三角形化されてなかったらエラー
+			MessageBox(NULL, TEXT("三角形化されていません"), TEXT("エラー"), MB_OK);
+			break;
+
+		}
+	}
+
+
+
+
+
+	////-------------------------------------------------------------------------
+	////								 法線
+	////-------------------------------------------------------------------------
+
+	//法線ベクトルを格納する場所
+	D3DXVECTOR3* pNormalVec = NULL;
+
+	// 法線セット(法線データの塊)の数
+	int NormalSetCount = pFbxMesh->GetElementNormalCount();
+
+	for (int i = 0; i < NormalSetCount; i++)
+	{
+		if (NormalSetCount > 1)
+		{
+			MessageBox(NULL, TEXT("法線セットは一つしか対応してないです"), TEXT("エラー"), MB_OK);
+			break;
+		}
+
+		// 法線セットの取得
+		fbxsdk::FbxGeometryElementNormal* Normal = pFbxMesh->GetElementNormal(i);
+
+		// マッピングモード(法線がどういうふうに定義されてるか)取得
+		FbxGeometryElement::EMappingMode MappingMode = Normal->GetMappingMode();
+
+		// リファレンスモード(データがどのように格納されてるか)取得
+		FbxGeometryElement::EReferenceMode ReferenceMode = Normal->GetReferenceMode();
+
+
+		switch (MappingMode)
+		{
+		case FbxGeometryElement::eNone:
+			MessageBox(NULL, TEXT("マッピングモードが定義されてません"), TEXT("エラー"), MB_OK);
+			break;
+		case FbxGeometryElement::eByControlPoint:			// コントロールポイント全てに情報がある
+			switch (ReferenceMode)
+			{
+			case FbxGeometryElement::eDirect:
+			{
+
+			}
+				break;
+			case FbxGeometryElement::eIndexToDirect:
+			{
+				// 調査中
+			}
+			break;
+			default:
+			{
+				MessageBox(NULL, TEXT("リファレンスモード不明です"), TEXT("エラー"), MB_OK);
+			}
+			break;
+
+			}
+			break;
+		case FbxGeometryElement::eByPolygonVertex:		// 頂点すべてに情報がある
+			switch (ReferenceMode)
+			{
+			case FbxGeometryElement::eDirect:
+			{
+				// @todo なんかミスっとる
+				pNormalVec = new D3DXVECTOR3[VertexCount];
+				for (int i = 0; i < VertexCount; i++)
+				{
+					pNormalVec[i].x = float(Normal->GetDirectArray().GetAt(i)[0]);
+					pNormalVec[i].y = float(Normal->GetDirectArray().GetAt(i)[1]);
+					pNormalVec[i].z = float(Normal->GetDirectArray().GetAt(i)[2]);
+				}
+			}
+			break;
+			case FbxGeometryElement::eIndexToDirect:
+			{
+				// 調査中
+			}
+			break;
+			default:
+			{
+				MessageBox(NULL, TEXT("リファレンスモード不明です"), TEXT("エラー"), MB_OK);
+			}
+			break;
+			}
+
+			break;
+		default:
+			// ほかのパターンは今のとこ勘弁してほしい…
+			MessageBox(NULL, TEXT("マッピングモードが不明です"), TEXT("エラー"), MB_OK);
+			break;
+		}
+	}
+
+
+	//-------------------------------------------------------------------------
+	//							テクスチャ座標
+	//-------------------------------------------------------------------------
+
+	std::vector<fbxsdk::FbxString>UvSetName;
+	std::vector<D3DXVECTOR2*>TextureUv;
+	int* UvIndexAry = NULL;
+
+	int UVSetCount = pFbxMesh->GetElementUVCount();
+
+	for (int i = 0; i < UVSetCount; i++)
+	{
+		// UVセットの取得
+		fbxsdk::FbxGeometryElementUV* UVSet = pFbxMesh->GetElementUV(i);
+
+		// マッピングモードの取得
+		FbxGeometryElement::EMappingMode mapping = UVSet->GetMappingMode();
+
+		// リファレンスモード取得
+		FbxGeometryElement::EReferenceMode reference = UVSet->GetReferenceMode();
+
+		switch (mapping) 
+		{
+		case FbxGeometryElement::eByControlPoint:// eByControlPointのパターンはちょっとまって
+			switch (reference)
+			{
+			case FbxGeometryElement::eDirect:
+				break;
+			case FbxGeometryElement::eIndexToDirect:
+				break;
+			default:
+				break;
+			}
+			break;
+		case FbxGeometryElement::eByPolygonVertex:
+			switch (reference) 
+			{
+			case FbxGeometryElement::eDirect:
+			{
+				TextureUv.push_back(new D3DXVECTOR2[VertexCount]);
+				for (int n = 0; n < VertexCount; n++)
+				{
+					TextureUv[i][n].x = float(UVSet->GetDirectArray().GetAt(n)[0]);
+					TextureUv[i][n].y = 1.0f - float(UVSet->GetDirectArray().GetAt(n)[1]);
+				}
+
+				UvSetName.push_back(UVSet->GetName());
+			}	
+			break;
+			case FbxGeometryElement::eIndexToDirect:
+			{
+				FbxLayerElementArrayTemplate<int>* UvIndex = &UVSet->GetIndexArray();
+
+				/// @todo セット二つに対応してないからリークする
+				TextureUv.push_back(new D3DXVECTOR2[VertexCount]);
+				for (int n = 0; n < VertexCount; n++)
+				{
+					int index = UvIndex->GetAt(n);
+					TextureUv[i][n].x = float(UVSet->GetDirectArray().GetAt(index)[0]);
+					TextureUv[i][n].y = 1.0f - float(UVSet->GetDirectArray().GetAt(index)[1]);
+				}
+
+				UvSetName.push_back(UVSet->GetName());
+			}
+			break;
+			default:
+				break;
+			}
+			break;
+		}
+	}
+
+
+
+	//-------------------------------------------------------------------------
+	//							マテリアルとテクスチャ
+	//-------------------------------------------------------------------------
+
+	int								TextureFileCount = 0;
+	std::vector<const char*>		TextureFileName;
+	std::vector<fbxsdk::FbxString>	TextureUvSetName;
+
+	D3DMATERIAL9 MaterialData;
+	ZeroMemory(&MaterialData, sizeof(D3DMATERIAL9));
+
+
+	// Nodeに戻る
+	fbxsdk::FbxNode* Node = pFbxMesh->GetNode();
+
+	// Materialの数を取得する
+	int MaterialCount = Node->GetMaterialCount();
+	
+	for (int i = 0; i < MaterialCount; i++)
+	{
+		if (MaterialCount > 1)
+		{
+			MessageBox(NULL, TEXT("複数のマテリアルはわりあてられません"), TEXT("エラー"), MB_OK);
+			break;
+		}
+
+
+		// マテリアルの取得
+		fbxsdk::FbxSurfaceMaterial* Material = Node->GetMaterial(i);
+
+		if (Material->GetClassId().Is(fbxsdk::FbxSurfaceLambert::ClassId)) 
+		{
+			// Lambertにダウンキャスト
+			fbxsdk::FbxSurfaceLambert* lambert = (fbxsdk::FbxSurfaceLambert*)Material;
+			
+
+			// Materialはカラーとバンプとすぺきゅらーを優先的にしたい
+
+			// アンビエント
+			MaterialData.Ambient.r = (float)lambert->Ambient.Get().mData[0] * (float)lambert->AmbientFactor.Get();
+			MaterialData.Ambient.g = (float)lambert->Ambient.Get().mData[1] * (float)lambert->AmbientFactor.Get();
+			MaterialData.Ambient.b = (float)lambert->Ambient.Get().mData[2] * (float)lambert->AmbientFactor.Get();
+			GetTextureName(lambert, fbxsdk::FbxSurfaceMaterial::sAmbient, &TextureFileName, &TextureUvSetName, &TextureFileCount);
+
+			// ディフューズ
+			MaterialData.Diffuse.r = (float)lambert->Diffuse.Get().mData[0] * (float)lambert->DiffuseFactor.Get();
+			MaterialData.Diffuse.g = (float)lambert->Diffuse.Get().mData[1] * (float)lambert->DiffuseFactor.Get();
+			MaterialData.Diffuse.b = (float)lambert->Diffuse.Get().mData[2] * (float)lambert->DiffuseFactor.Get();
+			GetTextureName(lambert, fbxsdk::FbxSurfaceMaterial::sDiffuse, &TextureFileName, &TextureUvSetName, &TextureFileCount);
+
+			// エミッシブ
+			/// @todo Emissiveは1に
+			MaterialData.Emissive.r = 1.f;
+			MaterialData.Emissive.g = 1.f;
+			MaterialData.Emissive.b = 1.f;
+			GetTextureName(lambert, fbxsdk::FbxSurfaceMaterial::sEmissive, &TextureFileName, &TextureUvSetName, &TextureFileCount);
+
+			// 透過度
+			MaterialData.Ambient.a  = (float)lambert->TransparentColor.Get().mData[0];
+			MaterialData.Diffuse.a  = (float)lambert->TransparentColor.Get().mData[1];
+			MaterialData.Emissive.a = (float)lambert->TransparentColor.Get().mData[2];
+			GetTextureName(lambert, fbxsdk::FbxSurfaceMaterial::sTransparentColor, &TextureFileName, &TextureUvSetName, &TextureFileCount);
+
+		}
+		else if (Material->GetClassId().Is(fbxsdk::FbxSurfacePhong::ClassId))
+		{
+			// Phongにダウンキャスト
+			fbxsdk::FbxSurfacePhong* phong = (fbxsdk::FbxSurfacePhong*)Material;
+
+			/// @todo Phongもやっとく
+
+			MessageBox(NULL, TEXT("MaterialがPhongです(対応していません)"), TEXT("エラー"), MB_OK);
+		}
+		else
+		{
+			/// @todo Unityちゃんなどのパターンは考慮しない
+			
+			// 現状はほかのパターンはおいておく
+			MessageBox(NULL, TEXT("Materialが不明です"), TEXT("エラー"), MB_OK);
+		}
+
+	}
+
+
+
+	//-------------------------------------------------------------------------
+	//							取得したデータを詰める
+	//-------------------------------------------------------------------------
+
+
+	// インデックス描画と分けたい
+
+	// データセット
+	ModelData->PolygonCount = PolygonCount;
+	ModelData->PrimitiveCount = PrimitiveCount;
+	ModelData->pVertex = new UserVertex[VertexCount];		// 現在はすべての頂点ぶん確保
+	ModelData->pIndex.IndexAry = IndexAry;
+	ModelData->pIndex.IndexCount = VertexCount;
+
+
+	// 頂点情報をセット
+	for (int i = 0; i < VertexCount; i++)
+	{
+		ModelData->pVertex[i].Vec.x = pVertex[IndexAry[i]].x;	// x座標
+		ModelData->pVertex[i].Vec.y = pVertex[IndexAry[i]].y;	// y座標
+		ModelData->pVertex[i].Vec.z = pVertex[IndexAry[i]].z;	// z座標
+	}
+
+	// 法線あるならつめる
+	if (pNormalVec != NULL)
+	{
+		for (int i = 0; i < VertexCount; i++)
+		{
+			ModelData->pVertex[i].Normal.x = pNormalVec[i].x;	// 法線のxベクトル
+			ModelData->pVertex[i].Normal.y = pNormalVec[i].y;	// 法線のyベクトル
+			ModelData->pVertex[i].Normal.z = pNormalVec[i].z;	// 法線のzベクトル
+		}
+	}
+	else
+	{
+		for (int i = 0; i < VertexCount; i++)
+		{
+			ModelData->pVertex[i].Normal.x = 0;		// 法線のxベクトル
+			ModelData->pVertex[i].Normal.y = 0;		// 法線のyベクトル
+			ModelData->pVertex[i].Normal.z = 0;		// 法線のzベクトル
+		}
+	}
+
+	// Uvあるなら詰める
+	if (TextureUv[0] != NULL)
+	{
+		for (int i = 0; i < VertexCount; i++)
+		{
+			ModelData->pVertex[i].tu = TextureUv[0][i].x;	// テクスチャのx座標
+			ModelData->pVertex[i].tv = TextureUv[0][i].y;	// テクスチャのy座標
+		}
+	}
+	else
+	{
+		for (int i = 0; i < VertexCount; i++)
+		{
+			ModelData->pVertex[i].tu = 0;	// テクスチャのx座標
+			ModelData->pVertex[i].tv = 0;	// テクスチャのy座標
+		}
+
+	}
+
+	// マテリアルのでーたがあるなら詰める
+	if (MaterialCount != 0)
+	{
+		ModelData->Material = MaterialData;
+	}
+
+	for (int i = 0; i < TextureFileCount; i++)
+	{
+		// Uvに入ってた名前とテクスチャに入ってた名前を比較していく
+		for (int n = 0; n < UVSetCount; n++)
+		{
+			if (TextureUvSetName[i] == UvSetName[n])
+			{
+				// 名前があってたら追加
+				ModelData->pTextureData.push_back(new UserTexture);
+				ModelData->pTextureData[i]->TextureName = TextureFileName[i];
+				if (FAILED(D3DXCreateTextureFromFile(
+					m_pDevice,
+					ModelData->pTextureData[i]->TextureName,
+					&ModelData->pTextureData[i]->pTexture)))
+				{
+					ModelData->pTextureData[i]->pTexture = NULL;
+				}
+			}
+		}
+	}
+
+	m_pFbxModel->m_pFbxModelData.push_back(ModelData);
+
+
+	//-------------------------------------------------------------------------
+	//								解放処理
+	//-------------------------------------------------------------------------
+
+
+
+	delete[] pNormalVec;
+
+	for (unsigned int i = 0; i < TextureUv.size(); i++)
+	{
+		delete[] TextureUv[i];
+	}
+
+	delete[] pVertex;
+}
+
+void FbxFileManager::GetCamera(fbxsdk::FbxNodeAttribute* _pAttribute)
+{
+
+}

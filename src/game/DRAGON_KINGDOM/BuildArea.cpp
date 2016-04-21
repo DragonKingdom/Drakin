@@ -6,7 +6,7 @@ m_RoadStartPos(_roadStartPos),
 m_RoadEndPos(_roadEndPos),
 m_angle(_angle)
 {
-	//m_Texture.Load(L"Resource\\image\\BuildArea.png");
+	m_Texture.Load(L"Resource\\image\\BuildArea.png");
 
 	// ìπÇÃí∑Ç≥Ç‡Ç¢ÇÈÇÊÇÀÅcÅH
 	int length = static_cast<int>(pow((m_RoadEndPos.x - m_RoadStartPos.x) * (m_RoadEndPos.x - m_RoadStartPos.x) +
@@ -20,6 +20,15 @@ m_angle(_angle)
 
 	if (m_isLeft)
 	{
+		m_tu[0] = 0.0f;
+		m_tv[0] = 0.0f;
+		m_tu[1] = 4.0f;
+		m_tv[1] = 0.0f;
+		m_tu[2] = 4.0f;
+		m_tv[2] = int(length / ROAD_H_SIZE);
+		m_tu[3] = 0.0f;
+		m_tv[3] = int(length / ROAD_H_SIZE);
+
 		m_pBuildArea[0].x = m_RoadStartPos.x +  (ROAD_W_SIZE / 2 - ROAD_W_SIZE ) * sin(m_angle);
 		m_pBuildArea[0].y = 0.5f;
 		m_pBuildArea[0].z = m_RoadStartPos.z +  (ROAD_W_SIZE / 2 - ROAD_W_SIZE ) * -cos(m_angle);
@@ -35,6 +44,15 @@ m_angle(_angle)
 	}
 	else
 	{
+		m_tu[0] = 4.0f;
+		m_tv[0] = 0.0f;
+		m_tu[1] = 0.0f;
+		m_tv[1] = 0.0f;
+		m_tu[2] = 0.0f;
+		m_tv[2] = int(length / ROAD_H_SIZE);
+		m_tu[3] = 4.0f;
+		m_tv[3] = int(length / ROAD_H_SIZE);
+
 		m_pBuildArea[0].x = m_RoadStartPos.x +  (ROAD_W_SIZE / 2 + (ROAD_W_SIZE * 4)) * sin(m_angle);
 		m_pBuildArea[0].y = 0.5f;
 		m_pBuildArea[0].z = m_RoadStartPos.z +  (ROAD_W_SIZE / 2 + (ROAD_W_SIZE * 4)) * -cos(m_angle);
@@ -52,7 +70,7 @@ m_angle(_angle)
 
 BuildArea::~BuildArea()
 {
-	//m_Texture.Release();
+	m_Texture.Release();
 }
 
 void BuildArea::Draw()
@@ -60,14 +78,14 @@ void BuildArea::Draw()
 #ifdef _DEBUG
 	if (m_isLeft)
 	{
-		m_Vertex.VertexDraw(m_Texture, m_pBuildArea, D3DCOLOR_ARGB(255, 255, 0, 0));
+		m_Vertex.VertexDraw(m_Texture, m_pBuildArea, m_tu, m_tv, D3DCOLOR_ARGB(255, 255, 255, 255));
 	}
 	else
 	{
-		m_Vertex.VertexDraw(m_Texture, m_pBuildArea, D3DCOLOR_ARGB(255, 0, 255, 0));
+		m_Vertex.VertexDraw(m_Texture, m_pBuildArea, m_tu, m_tv, D3DCOLOR_ARGB(255, 255, 255, 255));
 	}
 #else
-	m_Vertex.VertexDraw(m_Texture, m_pBuildArea, D3DCOLOR_ARGB(255, 255, 255, 255));
+	m_Vertex.VertexDraw(m_Texture, m_pBuildArea, m_tu, m_tv,D3DCOLOR_ARGB(255, 255, 255, 255));
 #endif
 
 }

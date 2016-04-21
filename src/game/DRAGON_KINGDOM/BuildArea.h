@@ -21,6 +21,8 @@ private:
 	float m_z;	/*中心座標*/
 	float m_w;	/*幅*/
 	float m_h;	/*高さ*/
+	float m_tu[4];	/*テクスチャ座標*/
+	float m_tv[4];	/*テクスチャ座標*/
 	float m_angle;	/*傾き*/
 	BYTE  m_AreaData;	/*エリアの上に何か乗っかってるか*/
 

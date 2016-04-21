@@ -7,8 +7,8 @@ Texture::Texture() : m_pTexture(NULL),m_pDevice(GraphicsDevice::getInstance().Ge
 {
 
 }
-BOOL Texture::Load(const wchar_t* _fileName) {
-	if (FAILED(D3DXCreateTextureFromFileExW(
+BOOL Texture::Load(const char* _fileName) {
+	if (FAILED(D3DXCreateTextureFromFileEx(
 		m_pDevice,
 		_fileName,
 		D3DX_DEFAULT_NONPOW2,
@@ -36,9 +36,9 @@ BOOL Texture::Load(const wchar_t* _fileName) {
 	m_height = static_cast<float>(desc.Height);
 	return TRUE;
 }
-BOOL Texture::Load(const wchar_t* _fileName,D3DXCOLOR _color) {
+BOOL Texture::Load(const char* _fileName, D3DXCOLOR _color) {
 
-	if (FAILED(D3DXCreateTextureFromFileExW(
+	if (FAILED(D3DXCreateTextureFromFileEx(
 		m_pDevice,
 		_fileName,
 		D3DX_DEFAULT_NONPOW2,
