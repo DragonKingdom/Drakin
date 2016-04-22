@@ -4,9 +4,9 @@
 #include "LightScatteringSimulation.h"
 
 
-Sky::Sky(Sun* pSunChecker) :
+Sky::Sky(Sun* pSun) :
 	m_pDevice(GraphicsDevice::getInstance().GetDevice()),
-	m_pSun(pSunChecker)
+	m_pSun(pSun)
 {
 	m_pSkyModel = new Model("Resource\\Xfile\\doom.x");
 	m_pSkyModel->SetScale(D3DXVECTOR3(900, 900, 900));
@@ -28,17 +28,17 @@ void Sky::Draw()
 {
 	// 描画処理
 	D3DXMATRIX matWorld;
-	m_pLSS->Begin();
+	//m_pLSS->Begin();
 	D3DXMatrixIdentity(&matWorld);
-	D3DXVECTOR4 LightDir;
-	m_pLSS->SetMatrix(&matWorld, &LightDir);
-	m_pLSS->SetAmbient(0.1f);
+	D3DXVECTOR4 LightDir = m_pSun->GetDirectionalVec();
+	//m_pLSS->SetMatrix(&matWorld, &LightDir);
+	//m_pLSS->SetAmbient(0.1f);
 	//フォグのパラメータを設定
-	m_pLSS->SetParameters(20.0f, 1.0f);
+	//m_pLSS->SetParameters(20.0f, 1.0f);
 	//フォグの色を設定
-	m_pLSS->SetFogColor(1.0f);
-	m_pLSS->BeginPass(1);
+	//m_pLSS->SetFogColor(1.0f);
+	//m_pLSS->BeginPass(1);
 	m_pSkyModel->Draw();
-	m_pLSS->EndPass();
-	m_pLSS->End();
+	//m_pLSS->EndPass();
+	//m_pLSS->End();
 }
