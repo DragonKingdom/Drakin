@@ -28,17 +28,20 @@ void Sky::Draw()
 {
 	// 描画処理
 	D3DXMATRIX matWorld;
-	//m_pLSS->Begin();
 	D3DXMatrixIdentity(&matWorld);
 	D3DXVECTOR4 LightDir = m_pSun->GetDirectionalVec();
-	//m_pLSS->SetMatrix(&matWorld, &LightDir);
-	//m_pLSS->SetAmbient(0.1f);
+
+	m_pLSS->Begin();
+	m_pSkyModel->SetState();
+	matWorld = m_pSkyModel->SetWorldMatrix(D3DXVECTOR3(0, 0, 0), matWorld);
+	m_pLSS->SetMatrix(&matWorld, &LightDir);
+	m_pLSS->SetAmbient(0.1f);
 	//フォグのパラメータを設定
-	//m_pLSS->SetParameters(20.0f, 1.0f);
+	m_pLSS->SetParameters(20.0f, 1.0f);
 	//フォグの色を設定
-	//m_pLSS->SetFogColor(1.0f);
-	//m_pLSS->BeginPass(1);
+	m_pLSS->SetFogColor(1.0f);
+	m_pLSS->BeginPass(0);
 	m_pSkyModel->Draw();
-	//m_pLSS->EndPass();
-	//m_pLSS->End();
+	m_pLSS->EndPass();
+	m_pLSS->End();
 }

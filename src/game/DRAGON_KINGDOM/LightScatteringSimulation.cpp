@@ -40,9 +40,11 @@ HRESULT LSS::Load(char* pCLUTSkyFileName, char* pCLUTLightPowerFileName)
 	if (caps.VertexShaderVersion >= D3DVS_VERSION(1, 1) && caps.PixelShaderVersion >= D3DPS_VERSION(2, 0))
 	{
 		LPD3DXBUFFER pErr = NULL;
-		HRESULT hr = D3DXCreateEffectFromFile(m_pDevice, "LSS.fx", NULL, NULL, 0, NULL, &m_pEffect, &pErr);
+		HRESULT hr = D3DXCreateEffectFromFile(m_pDevice, "Effect\\SkyEffect.fx", NULL, NULL, 0, NULL, &m_pEffect, &pErr);
 		if (FAILED(hr))
+		{
 			return -1;
+		}
 
 		m_pTechnique = m_pEffect->GetTechniqueByName("TShader");
 		m_pWVPP = m_pEffect->GetParameterByName(NULL, "m_WVPP");

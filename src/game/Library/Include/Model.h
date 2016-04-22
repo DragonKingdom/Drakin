@@ -41,7 +41,7 @@ public:
 
 	void Draw();													// •`‰æ
 	void SetState();												// ŒÅ’è‹@”\‚Å•`‰æ‚·‚éÛ‚Í‚±‚ÌŠÖ”‚ğŒÄ‚ñ‚Å‚©‚ç•`‰æ‚·‚é
-	void SetWorldMatrix(D3DXVECTOR3 _position, D3DXMATRIX _matrix);	// WorldMatrix‚ğ“o˜^‚·‚é
+	D3DMATRIX SetWorldMatrix(D3DXVECTOR3 _position, D3DXMATRIX _matrix);	// WorldMatrix‚ğ“o˜^‚·‚é
 	void SetScale(D3DXVECTOR3 _vecScale);
 	void SetAngle(D3DXVECTOR3 _angle);
 	void SetPosition(D3DXVECTOR3 _position);
