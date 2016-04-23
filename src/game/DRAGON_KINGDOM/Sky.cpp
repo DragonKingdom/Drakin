@@ -37,7 +37,7 @@ void Sky::Draw()
 	m_pLSS->SetMatrix(&matWorld, &LightDir);
 	m_pLSS->SetAmbient(0.1f);
 	//フォグのパラメータを設定
-	m_pLSS->SetParameters(20.0f, 1.0f);
+	m_pLSS->SetParameters(0.0f, 1.0f);
 	//フォグの色を設定
 	m_pLSS->SetFogColor(1.0f);
 	m_pLSS->BeginPass(0);

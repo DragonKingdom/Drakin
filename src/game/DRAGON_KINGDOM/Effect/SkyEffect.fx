@@ -36,16 +36,6 @@ float4 PS0(VS0_OUTPUT In) : COLOR0
 	//空の色をCLUTテーブルから取得
 	Out = tex2D(tex0, float2(m_CLUTTU, 0.0f));
 
-	////雲テクスチャーを取得
-	//float4 Cloud = tex2D(tex1, In.Tex);
-
-	//	//星テクスチャーを取得
-	//	float4 Star = tex2D(tex2, In.Tex);
-
-	//	//雲、または星を空に適応する
-	//	//昼間は雲を、夜は雲にさえぎられていない部分に星をレンダリングする感じ
-	//	Out += lerp(max(0.0f, Star - Cloud), Cloud, Out.a);
-
 	return Out;
 }
 
@@ -96,17 +86,18 @@ float4 PS1(VS1_OUTPUT In) : COLOR0
 
 technique TShader
 {
-	//空のレンダリング
+
+	//空以外のオブジェクトのレンダリング
 	pass P0
 	{
 		VertexShader = compile vs_1_1 VS0();
 		PixelShader = compile ps_2_0 PS0();
 	}
 
-	//空以外のオブジェクトのレンダリング
 	pass P1
 	{
 		VertexShader = compile vs_1_1 VS1();
 		PixelShader = compile ps_2_0 PS1();
 	}
+
 }

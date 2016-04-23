@@ -161,7 +161,7 @@
     <Filter Include="main\SceneManager\Scene\GameScene\LightScatteringSimulation">
       <UniqueIdentifier>{04cc2fee-2188-4c3d-8082-67ea5482d896}</UniqueIdentifier>
     </Filter>
-    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\Map\Sky\Sun">
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\Map\Sun">
       <UniqueIdentifier>{7f40fe01-a48a-495a-9a6c-d89b192bdb54}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -317,7 +317,7 @@
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildArea</Filter>
     </ClCompile>
     <ClCompile Include="Sun.cpp">
-      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\Map\Sky\Sun</Filter>
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\Map\Sun</Filter>
     </ClCompile>
     <ClCompile Include="LightScatteringSimulation.cpp">
       <Filter>main\SceneManager\Scene\GameScene\LightScatteringSimulation</Filter>
@@ -475,7 +475,7 @@
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildArea</Filter>
     </ClInclude>
     <ClInclude Include="Sun.h">
-      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\Map\Sky\Sun</Filter>
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\Map\Sun</Filter>
     </ClInclude>
     <ClInclude Include="LightScatteringSimulation.h">
       <Filter>main\SceneManager\Scene\GameScene\LightScatteringSimulation</Filter>
