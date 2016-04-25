@@ -72,8 +72,8 @@ float4 PS1(VS1_OUTPUT In) : COLOR0
 	//ライトの色をカラールックアップテーブルから取得
 	float4 LightColor = tex2D(tex0, float2(m_CLUTTU, 0.0f));
 
-		//フォグの指数計算により「重み」を計算
-		float f = pow(1.0f - pow(In.LocalPos.z / In.LocalPos.w, m_Param1), m_Param2);
+	//フォグの指数計算により「重み」を計算
+	float f = pow(1.0f - pow(In.LocalPos.z / In.LocalPos.w, m_Param1), m_Param2);
 
 	//フォグを適応する
 	Out = tex2D(tex1, In.Tex) * In.Col * f + m_FogColor * (1.0f - f);

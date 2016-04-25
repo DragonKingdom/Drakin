@@ -21,6 +21,7 @@ public:
 	HRESULT Load(char* pCLUTSkyFileName, char* pCLUTLightPowerFileName);
 	void Begin();
 	void BeginPass(UINT Pass);
+	void BeginPass(UINT Pass,DWORD Stage);
 	void SetAmbient(float Ambient);
 	void SetAmbient(D3DXVECTOR4* pAmbient);
 	void SetMatrix(D3DXMATRIX* pMatWorld, D3DXVECTOR4* pLightDir);
