@@ -126,7 +126,7 @@ void LSS::BeginPass(UINT Pass,DWORD Stage)
 {
 	if (m_pEffect)
 	{
-		//m_pDevice->SetTexture(Stage, m_pCLUTTexture[Pass]);
+		m_pDevice->SetTexture(Stage, m_pCLUTTexture[Pass]);
 		m_pEffect->BeginPass(Pass);
 	}
 }
