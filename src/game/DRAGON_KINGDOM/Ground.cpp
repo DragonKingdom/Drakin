@@ -16,6 +16,7 @@ Ground::~Ground()
 	m_pTexture->Release();
 	delete m_pVertex;
 	delete m_pTexture;
+	delete m_pLSS;
 }
 
 void Ground::Control()
@@ -25,15 +26,15 @@ void Ground::Control()
 
 void Ground::Draw()
 {
-	m_pLSS->Begin();
 	D3DXMATRIX matWorld;
 	D3DXMatrixIdentity(&matWorld);
 	m_pDevice->SetFVF(D3DFVF_XYZ | D3DFVF_TEX1);
 	m_pDevice->SetTransform(D3DTS_WORLD, &matWorld);
 
+	m_pLSS->Begin();
 	//‘¾—z‚ÌŠp“x
 	static float SunRotation = 45.0f;
-	SunRotation -= 0.1f;
+	//SunRotation -= 0.1f;
 	//‘¾—z‚Ì”¼Œa
 	float SunRadius = 350.0f;
 
@@ -49,7 +50,7 @@ void Ground::Draw()
 	m_pLSS->SetMatrix(&matWorld, &LightDir);
 	m_pLSS->SetAmbient(0.1f);
 	//ƒtƒHƒO‚Ìƒpƒ‰ƒ[ƒ^‚ğİ’è
-	m_pLSS->SetParameters(45.0f, 0.5f);
+	m_pLSS->SetParameters(35.0f, 0.5f);
 	//ƒtƒHƒO‚ÌF‚ğİ’è
 	m_pLSS->SetFogColor(1.0f);
 
@@ -66,14 +67,13 @@ void Ground::Draw()
 		{ D3DXVECTOR3(-3500, -0.1f, -3500), 0.f, 1.f },
 	};
 
-	m_pLSS->BeginPass(1,0);
-	m_pDevice->SetTexture(1, m_pTexture->Get());
-	m_pLSS->EndPass();
+	//m_pLSS->BeginPass(1,0);
+	m_pDevice->SetTexture(0, m_pTexture->Get());
 	m_pDevice->DrawPrimitiveUP(
 		D3DPT_TRIANGLEFAN,
 		2,
 		vertex,
 		sizeof(CUSTOMVERTEX));
+	//m_pLSS->EndPass();
 	m_pLSS->End();
-
 }
