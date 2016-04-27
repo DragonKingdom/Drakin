@@ -4,7 +4,7 @@
 class House
 {
 public:
-	House();
+	House(D3DXVECTOR3 HousePos, float angle);
 	~House();
 	void Draw();
 

@@ -60,18 +60,23 @@ void ObjectManager::Draw()
 	m_pMap->Draw();
 	m_pRoadManager->Draw();
 	m_pBuildAreaManager->Draw();
+	m_pHouseManager->Draw();
 }
 
 void ObjectManager::GetState()
 {
 	m_GameSceneState = m_pStateManager->GetGameSceneState();
 	m_BuildState = m_pStateManager->GetBuildState();
+
+
+	m_pHouseManager->GetState();
 }
 
 void ObjectManager::SetState()
 {
 	m_pRoadManager->SetState();
 	m_pBuildAreaManager->SetState();
+	m_pHouseManager->SetState();
 }
 
 void ObjectManager::GetGameData()

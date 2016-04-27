@@ -31,6 +31,14 @@ public:
 	 */
 	bool GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos);
 
+	/**
+	 * ビルドエリアの角度を取得する関数
+	 * @param[in] _checkPos チェックしたいエリア
+	 * @return エリアの角度
+	 */
+	float GetAreaAngle(D3DXVECTOR3* _checkPos);
+
+
 private:
 	BuildAreaManager* m_pBuildAreaManager;
 

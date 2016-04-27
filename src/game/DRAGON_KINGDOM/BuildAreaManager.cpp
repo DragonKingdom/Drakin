@@ -119,7 +119,7 @@ bool BuildAreaManager::AreaCheck(D3DXVECTOR3* _checkPos)
 
 bool BuildAreaManager::GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos)
 {
-	if (_checkPos == NULL || _centerPos == NULL)
+	if (_checkPos == NULL)
 	{
 		//	NULL‚ª“ü‚Á‚Ä‚½ê‡‚Ìˆ—
 	}
@@ -131,9 +131,23 @@ bool BuildAreaManager::GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _ce
 	return true;	//‚Æ‚è‚ ‚¦‚¸true
 }
 
+float BuildAreaManager::GetAreaAngle(D3DXVECTOR3* _checkPos)
+{
+	if (_checkPos == NULL)
+	{
+		//	NULL‚ª“ü‚Á‚Ä‚½ê‡‚Ìˆ—
+	}
+	else
+	{
+
+	}
+
+	return 0.0f;///@todo ‚Æ‚è‚ ‚¦‚¸‚¨‚¢‚Æ‚­
+}
+
 void BuildAreaManager::GetState()
 {
-
+	/// @todo Buildó‘Ô‚ğUI‚©‚ç‚Æ‚Á‚Ä‚«‚Æ‚¢‚ÄAPreviewerDraw‚Ì‚ÌğŒ‚É‚·‚×‚«
 }
 
 void BuildAreaManager::SetState()

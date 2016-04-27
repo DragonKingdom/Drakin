@@ -102,6 +102,7 @@ void RoadManager::Draw()
 
 void RoadManager::GetState()
 {
+	/// @todo Buildó‘Ô‚ğUI‚©‚ç‚Æ‚Á‚Ä‚«‚Æ‚¢‚ÄAPreviewerDraw‚Ì‚ÌğŒ‚É‚·‚×‚«
 }
 
 void RoadManager::SetState()
