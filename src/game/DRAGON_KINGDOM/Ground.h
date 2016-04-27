@@ -2,6 +2,7 @@
 #define GROUND_H
 
 class FbxModel;
+class FbxFileManager;
 
 class Ground
 {
@@ -21,7 +22,6 @@ private:
 	Texture* m_pTexture;
 	LPDIRECT3DDEVICE9 m_pDevice;
 	FbxModel* m_pFbxModel;
+	FbxFileManager* m_pFbxModelManager;
 };
-
-
 #endif

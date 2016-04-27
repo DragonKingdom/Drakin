@@ -1,16 +1,20 @@
 #include "Ground.h"
-
-
+#include "FbxModel.h"
+#include "FbxFileManager.h"
 Ground::Ground() :m_pDevice(GraphicsDevice::getInstance().GetDevice())
 {
 	m_pVertex = new Vertex();
 	m_pTexture = new Texture();
 	m_pTexture->Load(("texture\\map_tex.png"));
+	m_pFbxModel = new FbxModel(m_pDevice);
+	FbxFileManager::Get()->FileImport("fbx//map.fbx");
+	FbxFileManager::Get()->GetModelData(m_pFbxModel);
 }
 
 Ground::~Ground()
 {
 	m_pTexture->Release();
+	delete m_pFbxModel;
 	delete m_pVertex;
 	delete m_pTexture;
 }
@@ -36,10 +40,5 @@ void Ground::Draw()
 		{ D3DXVECTOR3(3500, -0.1f, -3500), 1.f, 1.f },
 		{ D3DXVECTOR3(-3500, -0.1f, -3500), 0.f, 1.f },
 	};
-
-	m_pDevice->DrawPrimitiveUP(
-		D3DPT_TRIANGLEFAN,
-		2,
-		vertex,
-		sizeof(CUSTOMVERTEX));
+	m_pFbxModel->Draw();
 }
