@@ -8,6 +8,7 @@ public:
 	BuildArea(bool _isLeft, D3DXVECTOR3 _roadStartPos, D3DXVECTOR3 _roadEndPos, float _angle);
 	~BuildArea();
 	void Draw();
+	bool PositionCheck(D3DXVECTOR3* _checkPos);
 
 private:
 	Vertex      m_Vertex;

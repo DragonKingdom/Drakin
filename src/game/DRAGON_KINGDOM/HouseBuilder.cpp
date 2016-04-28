@@ -33,6 +33,8 @@ House* HouseBuilder::HouseBuild()
 {
 	House* pHouse = new House(m_BuildPos, m_Angle);
 
+	// ‚È‚ñ‚©ˆ—
+
 	return pHouse;
 }
 

@@ -20,7 +20,8 @@ m_pGameData(_pGameData),
 m_pBuildAreaBuilder(new BuildAreaBuilder()),
 m_pClickPosConverter(_pClickPosConverter),
 m_pInputDevice(InputDeviceFacade::GetInstance()),
-m_state(STATE::START_POS_SET)
+m_state(STATE::START_POS_SET),
+m_buildState(BUILD_NONE)
 {
 	
 }
@@ -78,6 +79,8 @@ void BuildAreaManager::AreaBuildControl()
 
 		break;
 	case STATE::CREATE:
+		/// @todo BuildArea‚Ì’·‚³0‚Å‚àì¬‚Å‚«‚é‚æ‚¤‚É‚È‚Á‚Ä‚µ‚Ü‚Á‚Ä‚é‹C‚ª‚·‚é
+
 		// ‚Æ‚è‚ ‚¦‚¸‚Å‚â‚Á‚Ä‚Ý‚½
 		BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild(true);
 		m_pBuildArea.push_back(pBuildArea);
@@ -100,7 +103,11 @@ void BuildAreaManager::Draw()
 	{
 		m_pBuildArea[i]->Draw();
 	}
-	m_pBuildAreaBuilder->PreviewerDraw();
+
+	if (m_buildState == BUILD_ROAD)
+	{
+		m_pBuildAreaBuilder->PreviewerDraw();
+	}
 }
 
 bool BuildAreaManager::AreaCheck(D3DXVECTOR3* _checkPos)
@@ -111,10 +118,10 @@ bool BuildAreaManager::AreaCheck(D3DXVECTOR3* _checkPos)
 	}
 	else
 	{
-
+		
 	}
 
-	return true;	//‚Æ‚è‚ ‚¦‚¸true
+	return true;	
 }
 
 bool BuildAreaManager::GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos)
@@ -125,7 +132,13 @@ bool BuildAreaManager::GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _ce
 	}
 	else
 	{
-
+		for (unsigned int i = 0; i < m_pBuildArea.size(); i++)
+		{
+			if (m_pBuildArea[i]->PositionCheck(_checkPos))
+			{
+				return true;
+			}
+		}
 	}
 
 	return true;	//‚Æ‚è‚ ‚¦‚¸true
@@ -147,7 +160,7 @@ float BuildAreaManager::GetAreaAngle(D3DXVECTOR3* _checkPos)
 
 void BuildAreaManager::GetState()
 {
-	/// @todo Buildó‘Ô‚ðUI‚©‚ç‚Æ‚Á‚Ä‚«‚Æ‚¢‚ÄAPreviewerDraw‚ÌŽž‚ÌðŒ‚É‚·‚×‚«
+	m_buildState = m_pStateManager->GetBuildState();
 }
 
 void BuildAreaManager::SetState()

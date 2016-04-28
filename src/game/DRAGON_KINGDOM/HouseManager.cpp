@@ -21,7 +21,8 @@ m_pStateManager(_pStateManager),
 m_pHouseBuilder(new HouseBuilder()),
 m_pClickPosConverter(_pClickPosConverter),
 m_pInputDevice(InputDeviceFacade::GetInstance()),
-m_state(STATE::CREATE_POS_SET)
+m_state(STATE::CREATE_POS_SET),
+m_buildState(BUILD_NONE)
 {
 }
 

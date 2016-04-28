@@ -14,8 +14,7 @@ m_angle(_angle)
 									  (m_RoadEndPos.z - m_RoadStartPos.z) * (m_RoadEndPos.z - m_RoadStartPos.z), 
 									   0.5));
 
-	m_h = length / ROAD_H_SIZE;
-	m_w = ROAD_W_SIZE * 4;
+	
 
 
 	if (m_isLeft)
@@ -41,6 +40,12 @@ m_angle(_angle)
 		m_pBuildArea[3].x = m_RoadEndPos.x   +  (ROAD_W_SIZE / 2 - ROAD_W_SIZE ) * sin(m_angle);
 		m_pBuildArea[3].y = 0.5f;
 		m_pBuildArea[3].z = m_RoadEndPos.z   +  (ROAD_W_SIZE / 2 - ROAD_W_SIZE ) * -cos(m_angle);
+
+		m_x = (m_pBuildArea[3].x - m_pBuildArea[0].x) / 2;
+		m_y = (m_pBuildArea[0].z - m_pBuildArea[1].z) / 2;
+
+		m_h = int(length / ROAD_H_SIZE) * ROAD_H_SIZE;
+		m_w = ROAD_W_SIZE * 4;
 	}
 	else
 	{
@@ -65,6 +70,12 @@ m_angle(_angle)
 		m_pBuildArea[3].x = m_RoadEndPos.x   +  (ROAD_W_SIZE / 2 + (ROAD_W_SIZE * 4)) * sin(m_angle);
 		m_pBuildArea[3].y = 0.5f;		       
 		m_pBuildArea[3].z = m_RoadEndPos.z   +  (ROAD_W_SIZE / 2 + (ROAD_W_SIZE * 4)) * -cos(m_angle);
+
+		m_x = (m_pBuildArea[3].x - m_pBuildArea[0].x) / 2;
+		m_y = (m_pBuildArea[0].z - m_pBuildArea[1].z) / 2;
+
+		m_h = int(length / ROAD_H_SIZE) * ROAD_H_SIZE;
+		m_w = ROAD_W_SIZE * 4;
 	}
 }
 
@@ -89,3 +100,27 @@ void BuildArea::Draw()
 #endif
 
 }
+
+
+bool BuildArea::PositionCheck(D3DXVECTOR3* _checkPos)
+{
+	if (m_x + (m_w / 2) > (*_checkPos).x && m_x - (m_w / 2) < (*_checkPos).x)
+	{
+		if (m_z + (m_h / 2) > (*_checkPos).z && m_z - (m_h / 2) < (*_checkPos).z)
+		{
+			if (false)	//ここで建物があるかのチェックをしたい
+			{
+				// 建物あるならスルー
+			}
+			else
+			{
+				return true;
+			}
+		}
+	}
+	
+	return false;
+}
+
+
+

@@ -68,7 +68,8 @@ void ObjectManager::GetState()
 	m_GameSceneState = m_pStateManager->GetGameSceneState();
 	m_BuildState = m_pStateManager->GetBuildState();
 
-
+	m_pRoadManager->GetState();
+	m_pBuildAreaManager->GetState();
 	m_pHouseManager->GetState();
 }
 

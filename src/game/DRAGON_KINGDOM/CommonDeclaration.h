@@ -36,8 +36,8 @@ enum SceneID
 	FIN
 };
 
-#define ROAD_W_SIZE 60.f
-#define ROAD_H_SIZE 60.f
+#define ROAD_W_SIZE 500.f
+#define ROAD_H_SIZE 500.f
 
 /// ƒQ[ƒ€ƒV[ƒ“‚Ìó‘Ô
 enum GAMESCENE_STATE
