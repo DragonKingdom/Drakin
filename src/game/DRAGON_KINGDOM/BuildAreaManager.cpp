@@ -124,7 +124,7 @@ bool BuildAreaManager::AreaCheck(D3DXVECTOR3* _checkPos)
 	return true;	
 }
 
-bool BuildAreaManager::GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos)
+bool BuildAreaManager::GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle)
 {
 	if (_checkPos == NULL)
 	{
@@ -135,28 +135,14 @@ bool BuildAreaManager::GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _ce
 		for (unsigned int i = 0; i < m_pBuildArea.size(); i++)
 		{
 			// チェック座標がビルドエリアの内側にあれば中央座標を取得してtrueを返す
-			if (m_pBuildArea[i]->AreaCenterPos(_checkPos, _centerPos))
+			if (m_pBuildArea[i]->AreaCenterPos(_checkPos, _centerPos, _pAngle))
 			{
 				return true;
 			}
 		}
 	}
 
-	return true;	//とりあえずtrue
-}
-
-float BuildAreaManager::GetAreaAngle(D3DXVECTOR3* _checkPos)
-{
-	if (_checkPos == NULL)
-	{
-		//	NULLが入ってた場合の処理
-	}
-	else
-	{
-
-	}
-
-	return 0.0f;///@todo とりあえずおいとく
+	return true;	/// @todo とりあえずtrue
 }
 
 void BuildAreaManager::GetState()

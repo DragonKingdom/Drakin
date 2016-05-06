@@ -44,19 +44,22 @@ void HouseManager::BuildControl()
 		D3DXVECTOR3 CenterPosition;
 		D3DXVECTOR3 CreatePosition;
 		D3DXVECTOR2 MousePosition;
+		float Angle;
 
 		// マウス座標を3Dに変換
 		MousePosition = m_pInputDevice->GetMousePos();
 		m_pClickPosConverter->ConvertForLoad(&CreatePosition, int(MousePosition.x), int(MousePosition.y));
 
 		// エリアがそもそも存在するのかチェック
-		if (m_pBuildAreaChecker->GetAreaCenterPos(&CreatePosition, &CenterPosition))
+		if (m_pBuildAreaChecker->GetAreaCenterPos(&CreatePosition, &CenterPosition, &Angle))
 		{
 			// エリアは存在するはずなので空いているかのチェック
+			/// @todo 今はとりあえずCreatePositionを渡してるが、Centerを渡す予定
 			if (m_pBuildAreaChecker->AreaCheck(&CreatePosition))
 			{
+				/// @todo 今はとりあえずCreatePositionを渡してるが、Centerを渡す予定
 				m_pHouseBuilder->SetBuildPos(&CreatePosition);
-				m_pHouseBuilder->SetBuildAngle(m_pBuildAreaChecker->GetAreaAngle(&CreatePosition));
+				m_pHouseBuilder->SetBuildAngle(Angle);
 
 
 				// 空いていたらマウスチェック

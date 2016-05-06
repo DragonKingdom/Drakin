@@ -43,13 +43,8 @@ public:
 	* @param[out] _centerPos エリアの中心位置が入るポインタ
 	* @return エリアが存在しなければfalseを返す
 	*/
-	bool GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos);
-	
-	/**
-	 * ビルドエリアの角度を取得する関数
-	 * @param[in] _checkPos チェックしたいエリアの座標
-	 */
-	float GetAreaAngle(D3DXVECTOR3* _checkPos);
+	bool GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle);
+
 
 	void GetState();
 
