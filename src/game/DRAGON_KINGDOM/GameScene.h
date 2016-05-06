@@ -17,6 +17,7 @@
 #include "UI.h"
 #include "Camera.h"
 #include "ClickPosConverter.h"
+#include "DebugMode.h"
 
 /**
  * ゲームシーンを管理するクラス
@@ -46,6 +47,9 @@ private:
 	Texture m_Texture;
 
 	XAudio m_XAudio;
+
+	DebugMode m_DebugMode;
+
 
 public:
 

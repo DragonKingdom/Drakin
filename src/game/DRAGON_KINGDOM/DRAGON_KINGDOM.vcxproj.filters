@@ -164,6 +164,9 @@
     <Filter Include="main\SceneManager\InputDeviceFacade">
       <UniqueIdentifier>{19c1b4b8-cdcf-4557-bb6d-91293bc26bd8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\DebugMode">
+      <UniqueIdentifier>{34433163-41f8-484b-931a-613fcaeaae96}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scene.cpp">
@@ -322,6 +325,9 @@
     <ClCompile Include="SunChecker.cpp">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\Map\SunChecker</Filter>
     </ClCompile>
+    <ClCompile Include="DebugMode.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\DebugMode</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -479,6 +485,9 @@
     </ClInclude>
     <ClInclude Include="SunChecker.h">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\Map\SunChecker</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugMode.h">
+      <Filter>main\SceneManager\Scene\GameScene\DebugMode</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
