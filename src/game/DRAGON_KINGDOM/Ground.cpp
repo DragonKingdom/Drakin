@@ -1,6 +1,8 @@
 #include "Ground.h"
 #include "LightScatteringSimulation.h"
 
+#include "FbxModel.h"
+#include "FbxFileManager.h"
 Ground::Ground() :m_pDevice(GraphicsDevice::getInstance().GetDevice())
 {
 	m_pVertex = new Vertex();
@@ -9,11 +11,15 @@ Ground::Ground() :m_pDevice(GraphicsDevice::getInstance().GetDevice())
 	m_pLSS->Load("Resource\\image\\CLUTSky.jpg", "Resource\\image\\CLUTLight.jpg");
 
 	m_pTexture->Load(("texture\\map_tex.png"));
+	m_pFbxModel = new FbxModel(m_pDevice);
+	FbxFileManager::Get()->FileImport("fbx//map.fbx");
+	FbxFileManager::Get()->GetModelData(m_pFbxModel);
 }
 
 Ground::~Ground()
 {
 	m_pTexture->Release();
+	delete m_pFbxModel;
 	delete m_pVertex;
 	delete m_pTexture;
 	delete m_pLSS;
@@ -50,30 +56,17 @@ void Ground::Draw()
 	m_pLSS->SetMatrix(&matWorld, &LightDir);
 	m_pLSS->SetAmbient(0.1f);
 	//フォグのパラメータを設定
-	m_pLSS->SetParameters(35.0f, 0.5f);
+	m_pLSS->SetParameters(3500.0f, 0.5f);
 	//フォグの色を設定
 	m_pLSS->SetFogColor(1.0f);
 
-	m_pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+	m_pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 	m_pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 
-	m_pDevice->SetRenderState( D3DRS_ZENABLE, TRUE );
+	//m_pDevice->SetRenderState( D3DRS_ZENABLE, TRUE );
 
-	CUSTOMVERTEX vertex[] =
-	{
-		{ D3DXVECTOR3(-3500, -0.1f, 3500), 0.f, 0.f },
-		{ D3DXVECTOR3(3500, -0.1f, 3500), 1.f, 0.f },
-		{ D3DXVECTOR3(3500, -0.1f, -3500), 1.f, 1.f },
-		{ D3DXVECTOR3(-3500, -0.1f, -3500), 0.f, 1.f },
-	};
-
-	//m_pLSS->BeginPass(1,0);
-	m_pDevice->SetTexture(0, m_pTexture->Get());
-	m_pDevice->DrawPrimitiveUP(
-		D3DPT_TRIANGLEFAN,
-		2,
-		vertex,
-		sizeof(CUSTOMVERTEX));
-	//m_pLSS->EndPass();
+	m_pLSS->BeginPass(1,0);
+	m_pFbxModel->Draw();
+	m_pLSS->EndPass();
 	m_pLSS->End();
 }

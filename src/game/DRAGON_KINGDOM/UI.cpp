@@ -33,7 +33,6 @@ void UI::Control()
 	// ウィンドウがあるのならコントロール関数を呼ぶ
 	if (m_pWindow != NULL)
 	{
-	
 		if (m_pWindow->Control())
 		{
 			delete m_pWindow;

@@ -16,9 +16,9 @@ Sky::Sky(Sun* pSun) :
 
 Sky::~Sky()
 {
-	delete m_pSkyModel;
-	delete m_pSun;
 	delete m_pLSS;
+	delete m_pSkyModel;
+	//delete m_pSun;
 }
 
 void Sky::Control()

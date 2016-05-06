@@ -3,6 +3,7 @@
 
 class FbxModel;
 class LSS;
+class FbxFileManager;
 
 class Ground
 {
@@ -23,7 +24,6 @@ private:
 	LPDIRECT3DDEVICE9 m_pDevice;
 	FbxModel* m_pFbxModel;
 	LSS* m_pLSS;
+	FbxFileManager* m_pFbxModelManager;
 };
-
-
 #endif
