@@ -7,7 +7,7 @@ Sky::Sky(SunChecker* pSunChecker) :
 	m_pSunChecker(pSunChecker)
 {
 	m_pSkyModel = new Model("Resource\\Xfile\\doom.x");
-	m_pSkyModel->SetScale(D3DXVECTOR3(900, 900, 900));
+	m_pSkyModel->SetScale(D3DXVECTOR3(7000, 7000, 7000));
 }
 
 Sky::~Sky()

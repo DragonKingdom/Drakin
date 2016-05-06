@@ -33,12 +33,5 @@ void Ground::Draw()
 	m_pDevice->SetTransform(D3DTS_WORLD, &matWorld);
 	m_pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 	//m_pDevice->SetRenderState( D3DRS_ZENABLE, TRUE );
-	CUSTOMVERTEX vertex[] =
-	{
-		{ D3DXVECTOR3(-3500, -0.1f, 3500), 0.f, 0.f },
-		{ D3DXVECTOR3(3500, -0.1f, 3500), 1.f, 0.f },
-		{ D3DXVECTOR3(3500, -0.1f, -3500), 1.f, 1.f },
-		{ D3DXVECTOR3(-3500, -0.1f, -3500), 0.f, 1.f },
-	};
 	m_pFbxModel->Draw();
 }
