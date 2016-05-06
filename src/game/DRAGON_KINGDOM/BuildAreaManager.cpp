@@ -134,7 +134,8 @@ bool BuildAreaManager::GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _ce
 	{
 		for (unsigned int i = 0; i < m_pBuildArea.size(); i++)
 		{
-			if (m_pBuildArea[i]->PositionCheck(_checkPos))
+			// チェック座標がビルドエリアの内側にあれば中央座標を取得してtrueを返す
+			if (m_pBuildArea[i]->AreaCenterPos(_checkPos, _centerPos))
 			{
 				return true;
 			}
