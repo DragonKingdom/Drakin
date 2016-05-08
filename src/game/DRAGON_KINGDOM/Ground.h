@@ -4,11 +4,11 @@
 class FbxModel;
 class LSS;
 class FbxFileManager;
-
+class Sun;
 class Ground
 {
 public:
-	Ground();
+	Ground(Sun* pSun);
 	~Ground();
 	void Control();
 	void Draw();
@@ -25,5 +25,7 @@ private:
 	FbxModel* m_pFbxModel;
 	LSS* m_pLSS;
 	FbxFileManager* m_pFbxModelManager;
+	Sun*			m_pSun;
+
 };
 #endif

@@ -9,7 +9,7 @@ Sky::Sky(Sun* pSun) :
 	m_pSun(pSun)
 {
 	m_pSkyModel = new Model("Resource\\Xfile\\doom.x");
-	m_pSkyModel->SetScale(D3DXVECTOR3(900, 900, 900));
+	m_pSkyModel->SetScale(D3DXVECTOR3(7000, 7000, 7000));
 	m_pLSS = new LSS();
 	m_pLSS->Load("Resource\\image\\CLUTSky.jpg", "Resource\\image\\CLUTLight.jpg");
 }
