@@ -39,8 +39,8 @@ void CameraController::Control(D3DXVECTOR2 _cursorPos)
 	{
 		m_camLength -= m_moveSpeed;
 	}
-	// 左クリックされていたら
-	if( (Scene::m_mousePushState & Scene::MOUSE_KEYKIND::M_LEFT_DRAG ) == Scene::MOUSE_KEYKIND::M_LEFT_DRAG )
+	// 右クリックされていたら
+	if( (Scene::m_mousePushState & Scene::MOUSE_KEYKIND::M_RIGHT_DRAG ) == Scene::MOUSE_KEYKIND::M_RIGHT_DRAG )
 	{
 		 // クリック地点を保存
 		if( m_startPos.x == 0 )
@@ -68,8 +68,8 @@ void CameraController::Control(D3DXVECTOR2 _cursorPos)
 			m_dragVal.y = -80;
 		}
 	}
-	// 左クリックが離されたら
-	if( ( Scene::m_mousePushState & Scene::MOUSE_KEYKIND::M_LEFT_RELEASE ) == Scene::MOUSE_KEYKIND::M_LEFT_RELEASE )
+	// 右クリックが離されたら
+	if ((Scene::m_mousePushState & Scene::MOUSE_KEYKIND::M_RIGHT_RELEASE) == Scene::MOUSE_KEYKIND::M_RIGHT_RELEASE)
 	{
 		m_startPos  = D3DXVECTOR2(0.f,0.f);
 	}

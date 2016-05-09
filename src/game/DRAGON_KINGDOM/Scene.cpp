@@ -57,25 +57,20 @@ SceneID Scene::Control()
 	
 	//// 長押し
 	//	keyPushTime[DIK_RIGHT];
+
+	//このまうす状態取得方法は変だと思うので後で直す。
 	// マウス左クリック
-	
+	tmp_mousePushState = 0;
 	if( pMouse->IsLAction() )
 	{
 		tmp_mousePushState |= M_LEFT;
 		if( ( m_mousePushState & M_LEFT ) )
 		{
 			tmp_mousePushState |= M_LEFT_DOWN;
-			m_mouseClickTime++;
-			if (m_mouseClickTime >= 6)
-			{
-				tmp_mousePushState |= M_LEFT_DRAG;
-			}
 		}
 		else
 		{
 			tmp_mousePushState |= M_LEFT_PUSH;
-			m_mouseDragPos = m_mousePos;
-			m_mouseClickTime = 0;
 		}
 	}
 	else
@@ -83,30 +78,31 @@ SceneID Scene::Control()
 		if( ( m_mousePushState & M_LEFT ) )
 		{
 			tmp_mousePushState |= M_LEFT_RELEASE;
-			m_mouseClickTime = 0;
 		}
 	}
 	// 右クリック
 	if( pMouse->IsRAction() )
 	{
 		tmp_mousePushState |= M_RIGHT;
-		if( ( m_mousePushState & M_RIGHT ) )
+		if ((m_mousePushState & M_RIGHT))
 		{
 			tmp_mousePushState |= M_RIGHT_DOWN;
 			m_mouseClickTime++;
 			if (m_mouseClickTime >= 6)
 			{
-				tmp_mousePushState |= M_LEFT_DRAG;
+				tmp_mousePushState |= M_RIGHT_DRAG;
 			}
 		}
 		else
 		{
 			tmp_mousePushState |= M_RIGHT_PUSH;
+			m_mouseDragPos = m_mousePos;
+			m_mouseClickTime = 0;
 		}
 	}
 	else
 	{
-		if( ( m_mousePushState & M_RIGHT ) )
+		if ((m_mousePushState & M_RIGHT))
 		{
 			tmp_mousePushState |= M_RIGHT_RELEASE;
 			m_mouseClickTime = 0;
