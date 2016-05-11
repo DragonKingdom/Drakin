@@ -1,4 +1,4 @@
-## Drakin Brunch説明
+## Drakin Branch説明
   
 **HouseManager**  
 道の周りに家を建てることが出来るようにする。  
