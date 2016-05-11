@@ -26,6 +26,8 @@ BuildArea* BuildAreaBuilder::AreaBuild(bool _isLeft)
 	m_EndPos.z = m_StartPos.z + Num_z * ROAD_H_SIZE;
 	m_EndPos.x = m_StartPos.x + Num_x * ROAD_H_SIZE;
 	float angle = atan2(m_EndPos.z - m_StartPos.z, m_EndPos.x - m_StartPos.x);
+	D3DXVECTOR3 A = m_StartPos;
+	D3DXVECTOR3 B = m_EndPos;
 
 	BuildArea* pBuildArea = new BuildArea(_isLeft, m_StartPos, m_EndPos, angle);
 

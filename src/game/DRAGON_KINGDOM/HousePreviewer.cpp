@@ -27,8 +27,13 @@ void HousePreviewer::SetAngle(float* _angle)
 
 void HousePreviewer::Draw()
 {
-	D3DXMATRIX World, PositionMatrix;
+	D3DXMATRIX World, PositionMatrix, RotationMatrix;
 	D3DXMatrixIdentity(&World);
+
+	D3DXMatrixIdentity(&RotationMatrix);
+	D3DXMatrixRotationY(&RotationMatrix, m_Angle);
+	D3DXMatrixMultiply(&World, &World, &RotationMatrix);
+
 	D3DXMatrixTranslation(&PositionMatrix, m_BuildPos.x, m_BuildPos.y, m_BuildPos.z);
 	D3DXMatrixMultiply(&World, &World, &PositionMatrix);
 

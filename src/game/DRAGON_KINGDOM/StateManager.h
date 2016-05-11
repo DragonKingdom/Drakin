@@ -6,7 +6,7 @@ class StateManager
 {
 public:
 	StateManager();
-	~StateManager();
+		~StateManager();
 
 	/**
 	 * ƒQ[ƒ€ƒV[ƒ“‚Ìó‘Ô‚ğæ“¾‚·‚é

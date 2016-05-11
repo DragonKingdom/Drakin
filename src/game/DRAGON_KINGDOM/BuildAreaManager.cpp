@@ -142,7 +142,7 @@ bool BuildAreaManager::GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _ce
 		}
 	}
 
-	return true;	/// @todo ‚Æ‚è‚ ‚¦‚¸true
+	return false;	/// @todo ‚Æ‚è‚ ‚¦‚¸true
 }
 
 void BuildAreaManager::GetState()

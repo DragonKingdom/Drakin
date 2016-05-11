@@ -55,10 +55,10 @@ void HouseManager::BuildControl()
 		{
 			// ƒGƒŠƒA‚Í‘¶Ý‚·‚é‚Í‚¸‚È‚Ì‚Å‹ó‚¢‚Ä‚¢‚é‚©‚Ìƒ`ƒFƒbƒN
 			/// @todo ¡‚Í‚Æ‚è‚ ‚¦‚¸CreatePosition‚ð“n‚µ‚Ä‚é‚ªACenter‚ð“n‚·—\’è
-			if (m_pBuildAreaChecker->AreaCheck(&CreatePosition))
+			if (m_pBuildAreaChecker->AreaCheck(&CenterPosition))
 			{
 				/// @todo ¡‚Í‚Æ‚è‚ ‚¦‚¸CreatePosition‚ð“n‚µ‚Ä‚é‚ªACenter‚ð“n‚·—\’è
-				m_pHouseBuilder->SetBuildPos(&CreatePosition);
+				m_pHouseBuilder->SetBuildPos(&CenterPosition);
 				m_pHouseBuilder->SetBuildAngle(Angle);
 
 
