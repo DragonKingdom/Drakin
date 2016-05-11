@@ -57,25 +57,20 @@ SceneID Scene::Control()
 	
 	//// 長押し
 	//	keyPushTime[DIK_RIGHT];
+
+	//このまうす状態取得方法は変だと思うので後で直す。
 	// マウス左クリック
-	
+	tmp_mousePushState = 0;
 	if( pMouse->IsLAction() )
 	{
 		tmp_mousePushState |= M_LEFT;
 		if( ( m_mousePushState & M_LEFT ) )
 		{
 			tmp_mousePushState |= M_LEFT_DOWN;
-			m_mouseClickTime++;
-			if( m_mouseClickTime >= 6 )
-			{
-				tmp_mousePushState |= M_LEFT_DRAG;
-			}
 		}
 		else
 		{
 			tmp_mousePushState |= M_LEFT_PUSH;
-			m_mouseDragPos = m_mousePos;
-			m_mouseClickTime = 0;
 		}
 	}
 	else
@@ -83,25 +78,31 @@ SceneID Scene::Control()
 		if( ( m_mousePushState & M_LEFT ) )
 		{
 			tmp_mousePushState |= M_LEFT_RELEASE;
-			m_mouseClickTime = 0;
 		}
 	}
 	// 右クリック
 	if( pMouse->IsRAction() )
 	{
 		tmp_mousePushState |= M_RIGHT;
-		if( ( m_mousePushState & M_RIGHT ) )
+		if ((m_mousePushState & M_RIGHT))
 		{
 			tmp_mousePushState |= M_RIGHT_DOWN;
+			m_mouseClickTime++;
+			if (m_mouseClickTime >= 6)
+			{
+				tmp_mousePushState |= M_RIGHT_DRAG;
+			}
 		}
 		else
 		{
 			tmp_mousePushState |= M_RIGHT_PUSH;
+			m_mouseDragPos = m_mousePos;
+			m_mouseClickTime = 0;
 		}
 	}
 	else
 	{
-		if( ( m_mousePushState & M_RIGHT ) )
+		if ((m_mousePushState & M_RIGHT))
 		{
 			tmp_mousePushState |= M_RIGHT_RELEASE;
 			m_mouseClickTime = 0;
@@ -147,18 +148,23 @@ SceneID Scene::Control()
 	//	m_keyStateOn |= DOWN;
 	//}
 	////// 以下11/26 追加
-	//if( pKeyBoard->ChkKeyDown(DIK_S) || pGamePad->ChkGamePadAction(InputGamepad::GamePadBtn_B) == InputGamepad::KEY_PUSH) {		// 下矢印キーが押されたら
-	//	m_keyStateOn |= KEY_S;
-	//}
-	//if( pKeyBoard->ChkKeyDown(DIK_D) || pGamePad->ChkGamePadAction(InputGamepad::GamePadBtn_A) == InputGamepad::KEY_PUSH ){
-	//	m_keyStateOn |= KEY_D;
-	//}
-	//if( pKeyBoard->ChkKeyDown(DIK_W) || pGamePad->ChkGamePadAction(InputGamepad::GamePadBtn_Y) == InputGamepad::KEY_PUSH ){
-	//	m_keyStateOn |= KEY_W;
-	//}
-	//if( pKeyBoard->ChkKeyDown(DIK_A) || pGamePad->ChkGamePadAction(InputGamepad::GamePadBtn_X) == InputGamepad::KEY_PUSH){
-	//	m_keyStateOn |= KEY_A;
-	//}
+	//前のキー情報初期化
+	m_keyStateOn = 0;
+
+	if( pKeyBoard->ChkKeyDown(DIK_S) || pGamePad->ChkGamePadAction(InputGamepad::GamePadBtn_B) == InputGamepad::KEY_PUSH) {		// 下矢印キーが押されたら
+		m_keyStateOn |= KEY_S;
+	}
+	if( pKeyBoard->ChkKeyDown(DIK_D) || pGamePad->ChkGamePadAction(InputGamepad::GamePadBtn_A) == InputGamepad::KEY_PUSH ){
+		m_keyStateOn |= KEY_D;
+	}
+	if( pKeyBoard->ChkKeyDown(DIK_W) || pGamePad->ChkGamePadAction(InputGamepad::GamePadBtn_Y) == InputGamepad::KEY_PUSH ){
+		m_keyStateOn |= KEY_W;
+	}
+	if( pKeyBoard->ChkKeyDown(DIK_A) || pGamePad->ChkGamePadAction(InputGamepad::GamePadBtn_X) == InputGamepad::KEY_PUSH){
+		m_keyStateOn |= KEY_A;
+	}
+
+
 	//if( pKeyBoard->ChkKeyDown(DIK_E) ||  pGamePad->ChkGamePadAction(InputGamepad::GamePadBtn_RB) == InputGamepad::KEY_PUSH){
 	//	m_keyStateOn |= KEY_E;
 	//}
@@ -185,19 +191,22 @@ SceneID Scene::Control()
 	//if( pKeyBoard->ChkKeyAction(DIK_DOWN) || pGamePad->ChkGamePadAction(InputGamepad::GamePadLStick_DOWN) == InputGamepad::KEY_PUSH) {		// 下矢印キーが押されたら
 	//	m_keyStatePush |= DOWN;
 	//}
+	
+	//Pushを取るために初期化
+	m_keyStatePush = 0;
 	////// 以下11/26 追加
-	//if( pKeyBoard->ChkKeyAction(DIK_S) || pGamePad->ChkGamePadAction(InputGamepad::GamePadBtn_B) == InputGamepad::KEY_PUSH) {		// 下矢印キーが押されたら
-	//	m_keyStatePush |= KEY_S;
-	//}
-	//if( pKeyBoard->ChkKeyAction(DIK_D) || pGamePad->ChkGamePadAction(InputGamepad::GamePadBtn_A) == InputGamepad::KEY_PUSH ){
-	//	m_keyStatePush |= KEY_D;
-	//}
-	//if( pKeyBoard->ChkKeyAction(DIK_W) || pGamePad->ChkGamePadAction(InputGamepad::GamePadBtn_Y) == InputGamepad::KEY_PUSH ){
-	//	m_keyStatePush |= KEY_W;
-	//}
-	//if( pKeyBoard->ChkKeyAction(DIK_A) || pGamePad->ChkGamePadAction(InputGamepad::GamePadBtn_A) == InputGamepad::KEY_PUSH){
-	//	m_keyStatePush |= KEY_A;
-	//}
+	if( pKeyBoard->ChkKeyAction(DIK_S) || pGamePad->ChkGamePadAction(InputGamepad::GamePadBtn_B) == InputGamepad::KEY_PUSH) {		// 下矢印キーが押されたら
+		m_keyStatePush |= KEY_S;
+	}
+	if( pKeyBoard->ChkKeyAction(DIK_D) || pGamePad->ChkGamePadAction(InputGamepad::GamePadBtn_A) == InputGamepad::KEY_PUSH ){
+		m_keyStatePush |= KEY_D;
+	}
+	if( pKeyBoard->ChkKeyAction(DIK_W) || pGamePad->ChkGamePadAction(InputGamepad::GamePadBtn_Y) == InputGamepad::KEY_PUSH ){
+		m_keyStatePush |= KEY_W;
+	}
+	if( pKeyBoard->ChkKeyAction(DIK_A) || pGamePad->ChkGamePadAction(InputGamepad::GamePadBtn_A) == InputGamepad::KEY_PUSH){
+		m_keyStatePush |= KEY_A;
+	}
 	//if( pKeyBoard->ChkKeyAction(DIK_E) ||  pGamePad->ChkGamePadAction(InputGamepad::GamePadBtn_RB) == InputGamepad::KEY_PUSH){
 	//	m_keyStatePush |= KEY_E;
 	//}

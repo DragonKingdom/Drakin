@@ -48,7 +48,8 @@ public:
 		M_RIGHT_PUSH = 512,
 		M_RIGHT_DOWN = 1024,
 		M_RIGHT_RELEASE = 2048,
-		M_CENTER_PUSH = 4096,
+		M_RIGHT_DRAG = 4096,
+		M_CENTER_PUSH = 8192,
 	};
 	/// キーボード、ゲームパッドの状態
 	enum KEYKIND {

@@ -78,7 +78,7 @@ void InputMouse::Update()
 {
 	//リセットする。そのためクリックはUpdateMouse()を次回呼ぶ前に処理しなければならない。
 	//m_LAction = false;
-	m_RAction = false;
+	//m_RAction = false;
 	m_MAction = false;
 	m_wheel = 0;
 
