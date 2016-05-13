@@ -25,9 +25,10 @@ private:
 	float m_tu[4];	/*テクスチャ座標*/
 	float m_tv[4];	/*テクスチャ座標*/
 	float m_angle;	/*傾き*/
+	int m_length;
 	BYTE  m_AreaData;	/*エリアの上に何か乗っかってるか*/
 	
-	
+	int m_Z;
 	Font m_Font;
 	int m_AreaCountX;
 	int m_AreaCountZ;
