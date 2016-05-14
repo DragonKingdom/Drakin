@@ -9,6 +9,7 @@ class RoadManager;
 class BuildAreaManager;
 class BuildAreaChecker;
 class ClickPosConverter;
+class LSS;
 
 class ObjectManager
 {
@@ -34,7 +35,7 @@ private:
 	BuildAreaChecker*	m_pBuildAreaChecker;
 	HouseManager*		m_pHouseManager;
 	RoadManager*		m_pRoadManager;
-	
+	LSS*				m_pLSS;
 	GAMESCENE_STATE     m_GameSceneState;
 	BUILD_STATE         m_BuildState;
 

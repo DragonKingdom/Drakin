@@ -49,7 +49,7 @@ void FbxModel::Draw()
 
 		for (unsigned int n = 0; n < m_pFbxModelData[i]->pTextureData.size(); n++)
 		{
-			m_pDevice->SetTexture(n, m_pFbxModelData[i]->pTextureData[n]->pTexture);
+			m_pDevice->SetTexture(1, m_pFbxModelData[i]->pTextureData[n]->pTexture);
 		}
 
 		if (m_Mode == FbxModel::NORMAL_MODE)

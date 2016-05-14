@@ -17,9 +17,9 @@ public:
 	void Control();
 
 private:
-	Sky*			m_pSky;
 	Sun*			m_pSun;
-	SunChecker*		m_pSunChecker;
+	Sky*			m_pSky;
+	//SunChecker*		m_pSunChecker;
 	Ground*			m_pGround;
 	StateManager*				m_pStateManager;
 	GameData*					m_pGameData;

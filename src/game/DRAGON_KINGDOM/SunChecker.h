@@ -8,8 +8,8 @@ class SunChecker
 public:
 	SunChecker(Sun* pSun);
 	~SunChecker();
-	D3DXVECTOR3 GetDirectionalVec();
-	D3DXVECTOR3 GetUpVec();
+	D3DXVECTOR4 GetDirectionalVec();
+	D3DXVECTOR4 GetUpVec();
 
 private:
 	Sun* m_pSun;

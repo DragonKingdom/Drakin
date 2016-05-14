@@ -2,12 +2,13 @@
 #define GROUND_H
 
 class FbxModel;
+class LSS;
 class FbxFileManager;
-
+class Sun;
 class Ground
 {
 public:
-	Ground();
+	Ground(Sun* pSun);
 	~Ground();
 	void Control();
 	void Draw();
@@ -22,6 +23,9 @@ private:
 	Texture* m_pTexture;
 	LPDIRECT3DDEVICE9 m_pDevice;
 	FbxModel* m_pFbxModel;
+	LSS* m_pLSS;
 	FbxFileManager* m_pFbxModelManager;
+	Sun*			m_pSun;
+
 };
 #endif

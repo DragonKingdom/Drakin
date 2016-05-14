@@ -91,7 +91,7 @@ void Model::SetState()
 	m_pDevice->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_DIFFUSE);
 }
 
-void Model::SetWorldMatrix(D3DXVECTOR3 _position, D3DXMATRIX _attitude)
+D3DMATRIX Model::SetWorldMatrix(D3DXVECTOR3 _position, D3DXMATRIX _attitude)
 {
 	D3DXMATRIX matWorld = _attitude, matTrans, matScale;
 
@@ -104,6 +104,7 @@ void Model::SetWorldMatrix(D3DXVECTOR3 _position, D3DXMATRIX _attitude)
 
 	// ƒ[ƒ‹ƒhs—ñ‚ð“o˜^
 	m_pDevice->SetTransform(D3DTS_WORLD, &matWorld);
+	return matWorld;
 }
 
 /**
@@ -124,7 +125,7 @@ void Model::Draw()
 		m_pMeshMaterials[i].Diffuse = m_pMeshMaterials[i].Emissive = m_pMeshMaterials[i].Specular = m_pMeshMaterials[i].Ambient;
 		
 		m_pDevice->SetMaterial(&m_pMeshMaterials[i]);
-		m_pDevice->SetTexture(0, m_pTextures[i]);
+		m_pDevice->SetTexture(1, m_pTextures[i]);
 		m_pMesh->DrawSubset(i);
 	}
 }

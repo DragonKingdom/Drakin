@@ -5,7 +5,7 @@
 #include "BuildAreaChecker.h"
 #include "RoadManager.h"
 #include "StateManager.h"
-
+#include "LightScatteringSimulation.h"
 
 ObjectManager::ObjectManager(StateManager* _pStateManager, GameData* _pGameData, ClickPosConverter* _pClickPosConverter) :
 m_pStateManager(_pStateManager),
