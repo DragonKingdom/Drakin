@@ -107,10 +107,8 @@ void CameraController::Draw()
 
 void CameraController::Move(D3DXVECTOR2 _cursorPos)
 {
-	// クライアントの端にマウスがあるかをチェックしてベクトルを決める
 	D3DXVECTOR2 vec = D3DXVECTOR2(0,0);
 
-	// クライアント幅で分岐
 	if( Scene::m_keyStateOn & Scene::KEY_A)
 	{
 		vec.x = sin(D3DXToRadian(m_dragVal.x - 90));
@@ -121,7 +119,6 @@ void CameraController::Move(D3DXVECTOR2 _cursorPos)
 		vec.x = sin(D3DXToRadian(m_dragVal.x + 90));
 		vec.y = cos(D3DXToRadian(m_dragVal.x + 90));
 	}
-	// クライアント高さで分岐
 	if (Scene::m_keyStateOn & Scene::KEY_W)
 	{
 		vec.x = sin(D3DXToRadian(m_dragVal.x));
