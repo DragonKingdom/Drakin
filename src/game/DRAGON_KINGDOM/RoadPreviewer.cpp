@@ -15,18 +15,26 @@ void RoadPreviewer::Draw()
 {
 	D3DXVECTOR3 Road[4];
 
-	D3DXVECTOR3 Dif;
-	Dif.z = m_EndPos.z - m_StartPos.z;
-	Dif.x = m_EndPos.x - m_StartPos.x;
+	// もともとのStartPosからEndPosの長さ
+	int length = static_cast<int>(sqrt(
+		(m_EndPos.x - m_StartPos.x) * (m_EndPos.x - m_StartPos.x) +
+		(m_EndPos.y - m_StartPos.y) * (m_EndPos.y - m_StartPos.y) +
+		(m_EndPos.z - m_StartPos.z) * (m_EndPos.z - m_StartPos.z)));
 
-	int Num_z = int(Dif.z / ROAD_H_SIZE);
-	int Num_x = int(Dif.x / ROAD_H_SIZE);
-
-	m_EndPos.z = m_StartPos.z + Num_z * ROAD_H_SIZE;
-	m_EndPos.x = m_StartPos.x + Num_x * ROAD_H_SIZE;
-
-
+	// StartPosからEndPosの角度をとる
 	m_angle = atan2(m_EndPos.z - m_StartPos.z, m_EndPos.x - m_StartPos.x);
+
+	// エリアの数
+	int NumZ = int(length / ROAD_W_SIZE);
+	int VecLength = (NumZ * ROAD_H_SIZE);
+
+	// EndPosを原点に戻して、正規化、スケーリングして、もう一度同じ場所に戻す
+	D3DXVECTOR3 Vec = m_EndPos - m_StartPos;
+	D3DXVec3Normalize(&Vec, &Vec);
+	D3DXVec3Scale(&Vec, &Vec, VecLength);
+	Vec = Vec + m_StartPos;
+
+
 
 	Road[0].x = m_StartPos.x + (ROAD_W_SIZE / 2) * sin(m_angle);
 	Road[0].y = 0.5f;
@@ -36,13 +44,13 @@ void RoadPreviewer::Draw()
 	Road[1].y = 0.5f;
 	Road[1].z = m_StartPos.z + -(ROAD_W_SIZE / 2) * -cos(m_angle);
 
-	Road[2].x = m_EndPos.x + -(ROAD_W_SIZE / 2) * sin(m_angle);
+	Road[2].x = Vec.x + -(ROAD_W_SIZE / 2) * sin(m_angle);
 	Road[2].y = 0.5f;
-	Road[2].z = m_EndPos.z + -(ROAD_W_SIZE / 2) * -cos(m_angle);
+	Road[2].z = Vec.z + -(ROAD_W_SIZE / 2) * -cos(m_angle);
 
-	Road[3].x = m_EndPos.x + (ROAD_W_SIZE / 2) * sin(m_angle);
+	Road[3].x = Vec.x + (ROAD_W_SIZE / 2) * sin(m_angle);
 	Road[3].y = 0.5f;
-	Road[3].z = m_EndPos.z + (ROAD_W_SIZE / 2) * -cos(m_angle);
+	Road[3].z = Vec.z + (ROAD_W_SIZE / 2) * -cos(m_angle);
 
 	m_vertex.VertexDraw(m_Texture, Road, D3DCOLOR_ARGB(255, 120, 100, 50));
 
