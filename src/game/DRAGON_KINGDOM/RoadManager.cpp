@@ -17,7 +17,8 @@ m_pBuildAreaChecker(_pBuildAreaChecker),
 m_pClickPosConverter(_pClickPosConverter),
 m_pRoadBuilder(new RoadBuilder()),
 m_pInputDevice(InputDeviceFacade::GetInstance()),
-m_state(STATE::START_POS_SET)
+m_state(STATE::START_POS_SET),
+m_buildState(BUILD_ROAD)
 {
 }
 
@@ -78,6 +79,8 @@ void RoadManager::BuildControl()
 
 		break;
 	case STATE::CREATE:
+		/// @todo “¹‚Ì’·‚³0‚Å‚àì‚ê‚Ä‚µ‚Ü‚¤‹C‚ª‚·‚é
+
 		// “¹‚ğ¶¬‚·‚é
 		Road* pRoad = m_pRoadBuilder->RoadBuild();
 		m_pRoad.push_back(pRoad);
@@ -97,11 +100,16 @@ void RoadManager::Draw()
 	{
 		m_pRoad[i]->Draw();
 	}
-	m_pRoadBuilder->PreviewerDraw();
+
+	if (m_buildState == BUILD_ROAD)
+	{
+		m_pRoadBuilder->PreviewerDraw();
+	}
 }
 
 void RoadManager::GetState()
 {
+	m_buildState = m_pStateManager->GetBuildState();
 }
 
 void RoadManager::SetState()

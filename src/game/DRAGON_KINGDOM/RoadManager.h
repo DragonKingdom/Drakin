@@ -31,6 +31,7 @@ private:
 	RoadBuilder*			m_pRoadBuilder;
 	std::vector<Road*>		m_pRoad;
 	ROADMANAGER_ENUM::STATE	m_state;
+	BUILD_STATE				m_buildState;
 	StateManager*			m_pStateManager;
 	GameData*				m_pGameData;
 	InputDeviceFacade*		m_pInputDevice;

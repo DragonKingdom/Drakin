@@ -20,7 +20,8 @@ m_pGameData(_pGameData),
 m_pBuildAreaBuilder(new BuildAreaBuilder()),
 m_pClickPosConverter(_pClickPosConverter),
 m_pInputDevice(InputDeviceFacade::GetInstance()),
-m_state(STATE::START_POS_SET)
+m_state(STATE::START_POS_SET),
+m_buildState(BUILD_NONE)
 {
 	
 }
@@ -78,6 +79,8 @@ void BuildAreaManager::AreaBuildControl()
 
 		break;
 	case STATE::CREATE:
+		/// @todo BuildAreaの長さ0でも作成できるようになってしまってる気がする
+
 		// とりあえずでやってみた
 		BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild(true);
 		m_pBuildArea.push_back(pBuildArea);
@@ -100,7 +103,11 @@ void BuildAreaManager::Draw()
 	{
 		m_pBuildArea[i]->Draw();
 	}
-	m_pBuildAreaBuilder->PreviewerDraw();
+
+	if (m_buildState == BUILD_ROAD)
+	{
+		m_pBuildAreaBuilder->PreviewerDraw();
+	}
 }
 
 bool BuildAreaManager::AreaCheck(D3DXVECTOR3* _checkPos)
@@ -111,29 +118,36 @@ bool BuildAreaManager::AreaCheck(D3DXVECTOR3* _checkPos)
 	}
 	else
 	{
-
+		
 	}
 
-	return true;	//とりあえずtrue
+	return true;	
 }
 
-bool BuildAreaManager::GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos)
+bool BuildAreaManager::GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle)
 {
-	if (_checkPos == NULL || _centerPos == NULL)
+	if (_checkPos == NULL)
 	{
 		//	NULLが入ってた場合の処理
 	}
 	else
 	{
-
+		for (unsigned int i = 0; i < m_pBuildArea.size(); i++)
+		{
+			// チェック座標がビルドエリアの内側にあれば中央座標を取得してtrueを返す
+			if (m_pBuildArea[i]->AreaCenterPos(_checkPos, _centerPos, _pAngle))
+			{
+				return true;
+			}
+		}
 	}
 
-	return true;	//とりあえずtrue
+	return false;	/// @todo とりあえずtrue
 }
 
 void BuildAreaManager::GetState()
 {
-
+	m_buildState = m_pStateManager->GetBuildState();
 }
 
 void BuildAreaManager::SetState()

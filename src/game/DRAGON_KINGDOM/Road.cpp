@@ -7,8 +7,6 @@ m_angle(_angle)
 {
 	m_Texture.Load("Road");
 
-	m_angle = atan2(m_EndPos.z - m_StartPos.z, m_EndPos.x - m_StartPos.x);
-
 	m_pRoad[0].x = m_StartPos.x + (ROAD_W_SIZE / 2) * sin(m_angle);
 	m_pRoad[0].y = 0.5f;
 	m_pRoad[0].z = m_StartPos.z + (ROAD_W_SIZE / 2) * -cos(m_angle);

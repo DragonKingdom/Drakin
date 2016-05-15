@@ -16,18 +16,30 @@ BuildAreaBuilder::~BuildAreaBuilder()
 
 BuildArea* BuildAreaBuilder::AreaBuild(bool _isLeft)
 {
-	D3DXVECTOR3 Dif;
-	Dif.z = m_EndPos.z - m_StartPos.z;
-	Dif.x = m_EndPos.x - m_StartPos.x;
+	// もともとのStartPosからEndPosの長さ
+	int length = static_cast<int>(sqrt(
+		(m_EndPos.x - m_StartPos.x) * (m_EndPos.x - m_StartPos.x) +
+		(m_EndPos.y - m_StartPos.y) * (m_EndPos.y - m_StartPos.y) +
+		(m_EndPos.z - m_StartPos.z) * (m_EndPos.z - m_StartPos.z)));
 
-	int Num_z = int(Dif.z / ROAD_H_SIZE);
-	int Num_x = int(Dif.x / ROAD_H_SIZE);
+	// エリアの数
+	int NumZ = int(length / ROAD_W_SIZE);
+	int VecLength = (NumZ * ROAD_H_SIZE);
+	
 
-	m_EndPos.z = m_StartPos.z + Num_z * ROAD_H_SIZE;
-	m_EndPos.x = m_StartPos.x + Num_x * ROAD_H_SIZE;
+	// StartPosからEndPosの角度をとる
 	float angle = atan2(m_EndPos.z - m_StartPos.z, m_EndPos.x - m_StartPos.x);
 
-	BuildArea* pBuildArea = new BuildArea(_isLeft, m_StartPos, m_EndPos, angle);
+	// EndPosを原点に戻して、正規化、スケーリングして、もう一度同じ場所に戻す
+	D3DXVECTOR3 Vec = m_EndPos - m_StartPos;
+	D3DXVec3Normalize(&Vec, &Vec);
+	D3DXVec3Scale(&Vec, &Vec, VecLength);
+	Vec = Vec + m_StartPos;
+
+	angle = atan2(Vec.z - m_StartPos.z, Vec.x - m_StartPos.x);
+
+
+	BuildArea* pBuildArea = new BuildArea(_isLeft, m_StartPos, Vec, angle);
 
 	return pBuildArea;
 }

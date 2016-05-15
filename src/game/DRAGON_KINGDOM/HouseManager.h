@@ -34,6 +34,7 @@ private:
 	HouseBuilder*				m_pHouseBuilder;
 	std::vector<House*>			m_pHouse;
 	HOUSEMANAGER_ENUM::STATE	m_state;
+	BUILD_STATE					m_buildState;
 	StateManager*				m_pStateManager;
 	GameData*					m_pGameData;
 	InputDeviceFacade*			m_pInputDevice;

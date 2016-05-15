@@ -155,14 +155,17 @@
     <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildAreaBuilder\BuildAreaPreviewer">
       <UniqueIdentifier>{38a6eda2-a56b-4d7f-b10c-126c1ba6785b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\Map\Sun">
+      <UniqueIdentifier>{7f40fe01-a48a-495a-9a6c-d89b192bdb54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\Map\SunChecker">
+      <UniqueIdentifier>{5fb6e02b-0ed1-4560-8e03-0c14e46f017d}</UniqueIdentifier>
+    </Filter>
     <Filter Include="main\SceneManager\InputDeviceFacade">
       <UniqueIdentifier>{19c1b4b8-cdcf-4557-bb6d-91293bc26bd8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="main\SceneManager\Scene\GameScene\LightScatteringSimulation">
-      <UniqueIdentifier>{04cc2fee-2188-4c3d-8082-67ea5482d896}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\Map\Sun">
-      <UniqueIdentifier>{7f40fe01-a48a-495a-9a6c-d89b192bdb54}</UniqueIdentifier>
+    <Filter Include="main\SceneManager\Scene\GameScene\DebugMode">
+      <UniqueIdentifier>{34433163-41f8-484b-931a-613fcaeaae96}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -319,8 +322,11 @@
     <ClCompile Include="Sun.cpp">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\Map\Sun</Filter>
     </ClCompile>
-    <ClCompile Include="LightScatteringSimulation.cpp">
-      <Filter>main\SceneManager\Scene\GameScene\LightScatteringSimulation</Filter>
+    <ClCompile Include="SunChecker.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\Map\SunChecker</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugMode.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\DebugMode</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -477,8 +483,11 @@
     <ClInclude Include="Sun.h">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\Map\Sun</Filter>
     </ClInclude>
-    <ClInclude Include="LightScatteringSimulation.h">
-      <Filter>main\SceneManager\Scene\GameScene\LightScatteringSimulation</Filter>
+    <ClInclude Include="SunChecker.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\Map\SunChecker</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugMode.h">
+      <Filter>main\SceneManager\Scene\GameScene\DebugMode</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

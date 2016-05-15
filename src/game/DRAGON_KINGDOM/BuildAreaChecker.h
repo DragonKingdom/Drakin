@@ -27,9 +27,12 @@ public:
 	 * ビルドエリアの中心座標を取得する関数
 	 * @param[in] _checkPos チェックしたいエリアの座標
 	 * @param[out] _centerPos エリアの中心位置が入るポインタ 
+	 * @param[out] _pAngle エリアの角度が入る
 	 * @return エリアが存在しなければfalseを返す
 	 */
-	bool GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos);
+	bool GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle);
+
+
 
 private:
 	BuildAreaManager* m_pBuildAreaManager;

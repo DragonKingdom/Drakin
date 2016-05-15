@@ -31,20 +31,21 @@ public:
 	void Draw();
 
 	/**
-	* エリアが空いてるかをチェックする関数
+	* エリアが空いてるかをチェックする関数(エリアがあるかは関係ない)
 	* @param[in] _checkPos チェックしたい座標
 	* @return エリアが空いていればtrueを返す(ビルドエリアがなくてもtrueを返す)
 	*/
 	bool AreaCheck(D3DXVECTOR3* _checkPos);	
 
 	/**
-	* ビルドエリアの中心座標を取得する関数
+	* ビルドエリアの存在と中心座標を取得する関数
 	* @param[in] _checkPos チェックしたいエリアの座標
 	* @param[out] _centerPos エリアの中心位置が入るポインタ
 	* @return エリアが存在しなければfalseを返す
 	*/
-	bool GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos);
-	
+	bool GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle);
+
+
 	void GetState();
 
 	void SetState();
@@ -57,6 +58,7 @@ private:
 	BuildAreaBuilder*				m_pBuildAreaBuilder;
 	std::vector<BuildArea*>			m_pBuildArea;
 	BUILDAREAMANAGER_ENUM::STATE	m_state;
+	BUILD_STATE						m_buildState;
 	StateManager*					m_pStateManager;
 	GameData*						m_pGameData;
 	InputDeviceFacade*				m_pInputDevice;
