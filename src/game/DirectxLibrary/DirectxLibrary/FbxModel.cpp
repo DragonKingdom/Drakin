@@ -38,7 +38,7 @@ FbxModel::~FbxModel()
 	}
 }
 
-void FbxModel::Draw()
+void FbxModel::Draw(int stage)
 {
 	// ‚»‚Ì‚¤‚¿Á‚·‚â‚ë‚È
 	m_pDevice->SetFVF(USERVERTEX_FVF);
@@ -49,7 +49,7 @@ void FbxModel::Draw()
 
 		for (unsigned int n = 0; n < m_pFbxModelData[i]->pTextureData.size(); n++)
 		{
-			m_pDevice->SetTexture(1, m_pFbxModelData[i]->pTextureData[n]->pTexture);
+			m_pDevice->SetTexture(stage, m_pFbxModelData[i]->pTextureData[n]->pTexture);
 		}
 
 		if (m_Mode == FbxModel::NORMAL_MODE)

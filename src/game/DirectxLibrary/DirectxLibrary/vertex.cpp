@@ -136,7 +136,7 @@ void Vertex::DrawTexture(float _x, float _y, D3DCOLOR _color)
 	m_pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
 }
 
-void Vertex::VertexDraw(Texture _texture, D3DXVECTOR3* _pVec, D3DCOLOR _color)
+void Vertex::VertexDraw(Texture _texture, D3DXVECTOR3* _pVec, D3DCOLOR _color, int stage)
 {
 	D3DXMATRIX World;
 	D3DXMatrixIdentity(&World);
@@ -155,11 +155,11 @@ void Vertex::VertexDraw(Texture _texture, D3DXVECTOR3* _pVec, D3DCOLOR _color)
 	m_pDevice->SetFVF(D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1);
 
 	//背景
-	m_pDevice->SetTexture(0, _texture.Get());
+	m_pDevice->SetTexture(stage, _texture.Get());
 	m_pDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, vertex, sizeof(CUSTOMVERTEX_XYZ));
 }
 
-void Vertex::VertexDraw(Texture _texture, D3DXVECTOR3* _pVec, float* _ptu, float* _ptv, D3DCOLOR _color)
+void Vertex::VertexDraw(Texture _texture, D3DXVECTOR3* _pVec, float* _ptu, float* _ptv, D3DCOLOR _color,int stage)
 {
 	D3DXMATRIX World;
 	D3DXMatrixIdentity(&World);
@@ -178,7 +178,7 @@ void Vertex::VertexDraw(Texture _texture, D3DXVECTOR3* _pVec, float* _ptu, float
 	m_pDevice->SetFVF(D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1);
 
 	//背景
-	m_pDevice->SetTexture(0, _texture.Get());
+	m_pDevice->SetTexture(1, _texture.Get());
 	m_pDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, vertex, sizeof(CUSTOMVERTEX_XYZ));
 }
 

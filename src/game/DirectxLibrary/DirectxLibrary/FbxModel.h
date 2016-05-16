@@ -56,7 +56,7 @@ public:
 	~FbxModel();
 	void      SetMode(MODELMODE _Mode){ m_Mode = _Mode; };
 	MODELMODE GetMode(){ return m_Mode; };
-	void	Draw();
+	void	Draw(int stage = 0);
 
 	std::vector<FbxModelData*>	m_pFbxModelData;
 

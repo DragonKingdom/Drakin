@@ -1,7 +1,7 @@
 #ifndef BUILDAREA_H
 #define BUILDAREA_H
 
-
+class LSS;
 class BuildArea
 {
 public:
@@ -32,6 +32,17 @@ private:
 	Font m_Font;
 	int m_AreaCountX;
 	int m_AreaCountZ;
+
+	//シェーダーを適用するクラス
+	LSS* m_pLSS;
+
+	D3DXVECTOR4 m_DirectionalVec;
+	D3DXVECTOR4 m_UpVec;
+	D3DXVECTOR4 m_SunPos;
+	//太陽の角度
+	float SunRotation;
+	//太陽の半径
+	float SunRadius;
 
 };
 

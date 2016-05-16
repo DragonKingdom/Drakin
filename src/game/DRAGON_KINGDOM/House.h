@@ -2,7 +2,7 @@
 #define HOUSE_H
 
 class FbxModel;
-
+class LSS;
 class House
 {
 public:
@@ -15,7 +15,7 @@ private:
 	D3DXVECTOR3 m_HousePos;
 	float		m_Angle;
 	D3DXMATRIX	m_World;
-
+	LSS* m_pLSS;
 };
 
 #endif

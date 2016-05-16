@@ -37,7 +37,6 @@ void Ground::Draw()
 	m_pDevice->SetFVF(D3DFVF_XYZ | D3DFVF_TEX1);
 
 	m_pLSS->Begin();
-
 	//‘¾—z‚ÌˆÊ’u‚ğæ“¾
 	D3DXVECTOR4 LightDir = m_pSun->GetDirectionalVec();
 
@@ -55,7 +54,7 @@ void Ground::Draw()
 	m_pDevice->SetRenderState( D3DRS_ZENABLE, TRUE );
 
 	m_pLSS->BeginPass(1,0);
-	m_pFbxModel->Draw();
+	m_pFbxModel->Draw(1);
 	m_pLSS->EndPass();
 	m_pLSS->End();
 }

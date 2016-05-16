@@ -1,6 +1,6 @@
 #ifndef ROAD_H
 #define ROAD_H
-
+class LSS;
 
 class Road
 {
@@ -18,6 +18,7 @@ private:
 	D3DXVECTOR3 m_EndPos;
 	float		m_angle;
 
+	LSS* m_pLSS;
 };
 
 
