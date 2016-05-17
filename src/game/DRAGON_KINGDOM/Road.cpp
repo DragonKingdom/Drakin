@@ -9,16 +9,16 @@ m_pLSS(new LSS())
 	m_Texture.Load("Road");
 
 	m_pRoad[0].x = m_StartPos.x + (ROAD_W_SIZE / 2) * sin(m_angle);
-	m_pRoad[0].y = 0.5f;
+	m_pRoad[0].y = 20.5f;
 	m_pRoad[0].z = m_StartPos.z + (ROAD_W_SIZE / 2) * -cos(m_angle);
 	m_pRoad[1].x = m_StartPos.x + -(ROAD_W_SIZE / 2) * sin(m_angle);
-	m_pRoad[1].y = 0.5f;
+	m_pRoad[1].y = 20.5f;
 	m_pRoad[1].z = m_StartPos.z + -(ROAD_W_SIZE / 2) * -cos(m_angle);
 	m_pRoad[2].x = m_EndPos.x + -(ROAD_W_SIZE / 2) * sin(m_angle);
-	m_pRoad[2].y = 0.5f;
+	m_pRoad[2].y = 20.5f;
 	m_pRoad[2].z = m_EndPos.z + -(ROAD_W_SIZE / 2) * -cos(m_angle);
 	m_pRoad[3].x = m_EndPos.x + (ROAD_W_SIZE / 2) * sin(m_angle);
-	m_pRoad[3].y = 0.5f;
+	m_pRoad[3].y = 20.5f;
 	m_pRoad[3].z = m_EndPos.z + (ROAD_W_SIZE / 2) * -cos(m_angle);
 }
 

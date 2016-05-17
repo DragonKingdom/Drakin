@@ -1,6 +1,5 @@
 #include "BuildAreaPreviewer.h"
 #include <math.h>
-
 BuildAreaPreviewer::BuildAreaPreviewer()
 {
 	m_Texture.Load("Resource\\image\\BuildArea.png");
@@ -24,7 +23,7 @@ void BuildAreaPreviewer::Draw()
 
 	// エリアの数
 	int NumZ = int(length / ROAD_W_SIZE);
-	int VecLength = (NumZ * ROAD_H_SIZE);
+	int VecLength = int(NumZ * ROAD_H_SIZE);
 
 	// EndPosを原点に戻して、正規化、スケーリングして、もう一度同じ場所に戻す
 	D3DXVECTOR3 Vec = m_EndPos - m_StartPos;

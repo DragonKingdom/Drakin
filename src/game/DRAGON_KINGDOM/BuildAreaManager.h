@@ -45,6 +45,12 @@ public:
 	*/
 	bool GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle);
 
+	/**
+	* 道を繋げるために使う敷かれている道をチェックして近くに道があれば、そこのstartposまたはendposとangleを渡す
+	* @param[in] _checkPos チェックしたい座標
+	* @param[in] _pStartOrEndPos startposまたはendpos
+	*/
+	void BuildAreaCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pStartOrEndPos);
 
 	void GetState();
 

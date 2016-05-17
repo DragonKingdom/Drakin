@@ -9,7 +9,7 @@ public:
 	~BuildArea();
 	void Draw();
 	bool AreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle);
-
+	bool GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos);
 private:
 	Vertex      m_Vertex;
 	Texture		m_Texture;
@@ -36,6 +36,7 @@ private:
 	//シェーダーを適用するクラス
 	LSS* m_pLSS;
 
+	//無理やりここで太陽の位置を出しているので今後消す予定
 	D3DXVECTOR4 m_DirectionalVec;
 	D3DXVECTOR4 m_UpVec;
 	D3DXVECTOR4 m_SunPos;
@@ -43,6 +44,7 @@ private:
 	float SunRotation;
 	//太陽の半径
 	float SunRadius;
+	//----------------------------------------------
 
 };
 

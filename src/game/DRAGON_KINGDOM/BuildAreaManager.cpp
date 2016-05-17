@@ -50,6 +50,7 @@ void BuildAreaManager::AreaBuildControl()
 			{
 				MousePos = m_pInputDevice->GetMousePos();
 				m_pClickPosConverter->ConvertForLoad(&StartPos, int(MousePos.x), int(MousePos.y));
+				BuildAreaCheck(&StartPos, &StartPos);
 				m_pBuildAreaBuilder->StartPosSet(StartPos);
 				m_state = STATE::END_POS_SET;
 			}
@@ -82,6 +83,7 @@ void BuildAreaManager::AreaBuildControl()
 		/// @todo BuildArea‚Ì’·‚³0‚Å‚àì¬‚Å‚«‚é‚æ‚¤‚É‚È‚Á‚Ä‚µ‚Ü‚Á‚Ä‚é‹C‚ª‚·‚é
 
 		// ‚Æ‚è‚ ‚¦‚¸‚Å‚â‚Á‚Ä‚Ý‚½
+
 		BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild(true);
 		m_pBuildArea.push_back(pBuildArea);
 
@@ -143,6 +145,21 @@ bool BuildAreaManager::GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _ce
 	}
 
 	return false;	/// @todo ‚Æ‚è‚ ‚¦‚¸true
+}
+
+void BuildAreaManager::BuildAreaCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pStartOrEndPos)
+{
+	int BuildAreaMax = m_pBuildArea.size();
+	if (BuildAreaMax == 0) return;
+
+	for (int i = 0; i < BuildAreaMax; i++)
+	{
+		if (m_pBuildArea[i]->GetStartOrEndPos(_checkPos, _pStartOrEndPos))
+		{
+			return;
+		}
+	}
+	return;
 }
 
 void BuildAreaManager::GetState()
