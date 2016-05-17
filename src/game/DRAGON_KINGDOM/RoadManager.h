@@ -36,6 +36,7 @@ private:
 	GameData*				m_pGameData;
 	InputDeviceFacade*		m_pInputDevice;
 
+	void RoadCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pStartOrEndPos);
 	/// @todo テスト用
 	ClickPosConverter*		m_pClickPosConverter;
 

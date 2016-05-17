@@ -49,6 +49,7 @@ void RoadManager::BuildControl()
 				// 取得したマウスの座標を3d空間上の座標に変換して渡す
 				MousePos = m_pInputDevice->GetMousePos();
 				m_pClickPosConverter->ConvertForLoad(&StartPos, int(MousePos.x), int(MousePos.y));
+				RoadCheck(&StartPos, &StartPos);
 				m_pRoadBuilder->StartPosSet(StartPos);
 				m_state = STATE::END_POS_SET;
 			}
@@ -59,6 +60,7 @@ void RoadManager::BuildControl()
 		// 取得したマウスの座標を3d空間上の座標に変換して渡す
 		MousePos = m_pInputDevice->GetMousePos();
 		m_pClickPosConverter->ConvertForLoad(&EndPos, int(MousePos.x), int(MousePos.y));
+		RoadCheck(&EndPos, &EndPos);
 		m_pRoadBuilder->EndPosSet(EndPos);
 
 		if (m_pInputDevice->MouseLeftPush())
@@ -125,4 +127,19 @@ void RoadManager::GetGameData()
 void RoadManager::SetGameData()
 {
 
+}
+
+void RoadManager::RoadCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pStartOrEndPos)
+{
+	int BuildAreaMax = m_pRoad.size();
+	if (BuildAreaMax == 0) return;
+
+	for (int i = 0; i < BuildAreaMax; i++)
+	{
+		if (m_pRoad[i]->GetStartOrEndPos(_checkPos, _pStartOrEndPos))
+		{
+			return;
+		}
+	}
+	return;
 }
