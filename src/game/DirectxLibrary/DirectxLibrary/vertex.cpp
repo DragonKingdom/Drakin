@@ -178,7 +178,7 @@ void Vertex::VertexDraw(Texture _texture, D3DXVECTOR3* _pVec, float* _ptu, float
 	m_pDevice->SetFVF(D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1);
 
 	//背景
-	m_pDevice->SetTexture(1, _texture.Get());
+	m_pDevice->SetTexture(stage, _texture.Get());
 	m_pDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, vertex, sizeof(CUSTOMVERTEX_XYZ));
 }
 
