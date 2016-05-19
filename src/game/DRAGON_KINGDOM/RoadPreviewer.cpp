@@ -37,19 +37,19 @@ void RoadPreviewer::Draw()
 
 
 	Road[0].x = m_StartPos.x + (ROAD_W_SIZE / 2) * sin(m_angle);
-	Road[0].y = 0.5f;
+	Road[0].y = 20.f;
 	Road[0].z = m_StartPos.z + (ROAD_W_SIZE / 2) * -cos(m_angle);
 
 	Road[1].x = m_StartPos.x + -(ROAD_W_SIZE / 2) * sin(m_angle);
-	Road[1].y = 0.5f;
+	Road[1].y = 20.f;
 	Road[1].z = m_StartPos.z + -(ROAD_W_SIZE / 2) * -cos(m_angle);
 
 	Road[2].x = Vec.x + -(ROAD_W_SIZE / 2) * sin(m_angle);
-	Road[2].y = 0.5f;
+	Road[2].y = 20.f;
 	Road[2].z = Vec.z + -(ROAD_W_SIZE / 2) * -cos(m_angle);
 
 	Road[3].x = Vec.x + (ROAD_W_SIZE / 2) * sin(m_angle);
-	Road[3].y = 0.5f;
+	Road[3].y = 20.f;
 	Road[3].z = Vec.z + (ROAD_W_SIZE / 2) * -cos(m_angle);
 
 	m_vertex.VertexDraw(m_Texture, Road, D3DCOLOR_ARGB(255, 120, 100, 50));

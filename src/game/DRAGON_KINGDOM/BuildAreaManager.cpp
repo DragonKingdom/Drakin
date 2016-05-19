@@ -79,9 +79,6 @@ void BuildAreaManager::AreaBuildControl()
 
 		break;
 	case STATE::CREATE:
-		/// @todo BuildArea‚Ì’·‚³0‚Å‚àì¬‚Å‚«‚é‚æ‚¤‚É‚È‚Á‚Ä‚µ‚Ü‚Á‚Ä‚é‹C‚ª‚·‚é
-
-		// ‚Æ‚è‚ ‚¦‚¸‚Å‚â‚Á‚Ä‚Ý‚½
 		BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild(true);
 		m_pBuildArea.push_back(pBuildArea);
 
@@ -99,9 +96,12 @@ void BuildAreaManager::AreaBuildControl()
 
 void BuildAreaManager::Draw()
 {
-	for (unsigned int i = 0; i < m_pBuildArea.size(); i++)
+	if (m_buildState != BUILD_NONE)
 	{
-		m_pBuildArea[i]->Draw();
+		for (unsigned int i = 0; i < m_pBuildArea.size(); i++)
+		{
+			m_pBuildArea[i]->Draw();
+		}
 	}
 
 	if (m_buildState == BUILD_ROAD)
@@ -142,7 +142,7 @@ bool BuildAreaManager::GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _ce
 		}
 	}
 
-	return false;	/// @todo ‚Æ‚è‚ ‚¦‚¸true
+	return false;
 }
 
 void BuildAreaManager::GetState()
