@@ -37,6 +37,13 @@ public:
 
 	bool MouseLeftPush();
 	bool MouseRightPush();
+	bool GetKeyOnW();
+	bool GetKeyOnA();
+	bool GetKeyOnS();
+	bool GetKeyOnD();
+	bool GetKeyOnQ();
+
+	bool GetKeyPushQ();
 
 
 };

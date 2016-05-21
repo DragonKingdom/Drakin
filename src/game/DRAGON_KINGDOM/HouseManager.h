@@ -22,8 +22,21 @@ public:
 	HouseManager(BuildAreaChecker* pBuildAreaChecker, StateManager* _pStateManager, GameData* _pGameData, ClickPosConverter* _pClickPosConverter);
 	~HouseManager();
 
+	/**
+	 * Œšİ‚Ìˆ—‚ğs‚¤ŠÖ”
+	 */
 	void BuildControl();
+	
+	/**
+	 * “P‹‚Ìˆ—‚ğs‚¤ŠÖ”
+	 */
+	void RemoveControl();
+
+	/**
+	 * ‰Æ‚Ì•`‰æŠÖ”
+	 */
 	void Draw();
+
 	void GetState();
 	void SetState();
 	void GetGameData();

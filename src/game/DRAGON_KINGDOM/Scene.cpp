@@ -168,9 +168,9 @@ SceneID Scene::Control()
 	//if( pKeyBoard->ChkKeyDown(DIK_E) ||  pGamePad->ChkGamePadAction(InputGamepad::GamePadBtn_RB) == InputGamepad::KEY_PUSH){
 	//	m_keyStateOn |= KEY_E;
 	//}
-	//if( pKeyBoard->ChkKeyDown(DIK_Q) ||  pGamePad->ChkGamePadAction(InputGamepad::GamePadBtn_LB) == InputGamepad::KEY_PUSH){
-	//	m_keyStateOn |= KEY_Q;
-	//}
+	if( pKeyBoard->ChkKeyDown(DIK_Q) ||  pGamePad->ChkGamePadAction(InputGamepad::GamePadBtn_LB) == InputGamepad::KEY_PUSH){
+		m_keyStateOn |= KEY_Q;
+	}
 	//if( pKeyBoard->ChkKeyDown(DIK_Z) ||  pGamePad->ChkGamePadAction(InputGamepad::GamePadBtn_BACK) == InputGamepad::KEY_PUSH){
 	//	m_keyStateOn |= KEY_Z;
 	//}
@@ -210,9 +210,9 @@ SceneID Scene::Control()
 	//if( pKeyBoard->ChkKeyAction(DIK_E) ||  pGamePad->ChkGamePadAction(InputGamepad::GamePadBtn_RB) == InputGamepad::KEY_PUSH){
 	//	m_keyStatePush |= KEY_E;
 	//}
-	//if( pKeyBoard->ChkKeyAction(DIK_Q) ||  pGamePad->ChkGamePadAction(InputGamepad::GamePadBtn_LB) == InputGamepad::KEY_PUSH){
-	//	m_keyStatePush |= KEY_Q;
-	//}
+	if( pKeyBoard->ChkKeyAction(DIK_Q) ||  pGamePad->ChkGamePadAction(InputGamepad::GamePadBtn_LB) == InputGamepad::KEY_PUSH){
+		m_keyStatePush |= KEY_Q;
+	}
 	//if( pKeyBoard->ChkKeyAction(DIK_Z) ||  pGamePad->ChkGamePadAction(InputGamepad::GamePadBtn_R3) == InputGamepad::KEY_PUSH){
 	//	m_keyStatePush |= KEY_Z;
 	//}

@@ -49,6 +49,9 @@ void ObjectManager::BuildControl()
 		m_pRoadManager->BuildControl();
 		m_pBuildAreaManager->AreaBuildControl();
 		break;
+	case BUILD_REMOVE:
+
+		break;
 	default:
 		
 		break;

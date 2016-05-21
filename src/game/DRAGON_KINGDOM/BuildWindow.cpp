@@ -129,6 +129,20 @@ void BuildWindow::OnClick()
 			break;
 		}
 	}
+
+
+	/// @todo 撤去ボタンがないのでQキーで対応(一時コード)
+	if (m_pInputDevice->GetKeyPushQ())
+	{
+		if (m_buildState == BUILD_REMOVE)
+		{
+			m_buildState = BUILD_NONE;
+		}
+		else
+		{
+			m_buildState = BUILD_REMOVE;
+		}
+	}
 	
 }
 

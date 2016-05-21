@@ -50,3 +50,58 @@ bool InputDeviceFacade::MouseRightPush()
 	}
 	return false;
 }
+
+bool InputDeviceFacade::GetKeyOnW()
+{
+	if (Scene::m_keyStateOn & Scene::KEY_W)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool InputDeviceFacade::GetKeyOnA()
+{
+	if (Scene::m_keyStateOn & Scene::KEY_A)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool InputDeviceFacade::GetKeyOnS()
+{
+	if (Scene::m_keyStateOn & Scene::KEY_S)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool InputDeviceFacade::GetKeyOnD()
+{
+	if (Scene::m_keyStateOn & Scene::KEY_D)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool InputDeviceFacade::GetKeyOnQ()
+{
+	if (Scene::m_keyStateOn & Scene::KEY_Q)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool InputDeviceFacade::GetKeyPushQ()
+{
+	if (Scene::m_keyStatePush & Scene::KEY_Q)
+	{
+		return true;
+	}
+	return false;
+}
+

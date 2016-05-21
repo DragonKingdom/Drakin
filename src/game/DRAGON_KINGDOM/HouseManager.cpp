@@ -91,6 +91,11 @@ void HouseManager::BuildControl()
 	}
 }
 
+void HouseManager::RemoveControl()
+{
+
+}
+
 void HouseManager::Draw()
 {
 	for (unsigned int i = 0; i < m_pHouse.size(); i++)
