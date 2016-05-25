@@ -24,6 +24,7 @@ m_pInputDevice(InputDeviceFacade::GetInstance()),
 m_state(STATE::CREATE_POS_SET),
 m_buildState(BUILD_NONE)
 {
+
 }
 
 HouseManager::~HouseManager()
@@ -48,16 +49,14 @@ void HouseManager::BuildControl()
 
 		// マウス座標を3Dに変換
 		MousePosition = m_pInputDevice->GetMousePos();
-		m_pClickPosConverter->ConvertForLoad(&CreatePosition, int(MousePosition.x), int(MousePosition.y));
+		m_pClickPosConverter->ConvertForLoad(&CreatePosition, static_cast<int>(MousePosition.x), static_cast<int>(MousePosition.y));
 
 		// エリアがそもそも存在するのかチェック
 		if (m_pBuildAreaChecker->GetAreaCenterPos(&CreatePosition, &CenterPosition, &Angle))
 		{
 			// エリアは存在するはずなので空いているかのチェック
-			/// @todo 今はとりあえずCreatePositionを渡してるが、Centerを渡す予定
 			if (m_pBuildAreaChecker->AreaCheck(&CenterPosition))
 			{
-				/// @todo 今はとりあえずCreatePositionを渡してるが、Centerを渡す予定
 				m_pHouseBuilder->SetBuildPos(&CenterPosition);
 				m_pHouseBuilder->SetBuildAngle(Angle);
 				m_pHouseBuilder->SetDrawState(true);
@@ -93,7 +92,44 @@ void HouseManager::BuildControl()
 
 void HouseManager::RemoveControl()
 {
+	D3DXVECTOR3 RemovePosition;
+	D3DXVECTOR2 MousePosition;
 
+	float CheckPosX = 0.f;
+	float CheckPosZ = 0.f;
+
+	// マウス座標を3Dに変換
+	MousePosition = m_pInputDevice->GetMousePos();
+	m_pClickPosConverter->ConvertForLoad(&RemovePosition, static_cast<int>(MousePosition.x), static_cast<int>(MousePosition.y));
+
+
+	if (m_pInputDevice->MouseLeftPush())
+	{
+		for (unsigned int i = 0; i < m_pHouse.size(); i++)
+		{
+			
+			CheckPosX = m_pHouse[i]->m_HousePos.x +
+				(RemovePosition.z - m_pHouse[i]->m_HousePos.z) * cos(m_pHouse[i]->m_Angle) -
+				(RemovePosition.x - m_pHouse[i]->m_HousePos.x) * sin(m_pHouse[i]->m_Angle);
+
+			CheckPosZ = m_pHouse[i]->m_HousePos.z +
+				(RemovePosition.z - m_pHouse[i]->m_HousePos.z) * sin(m_pHouse[i]->m_Angle) +
+				(RemovePosition.x - m_pHouse[i]->m_HousePos.x) * cos(m_pHouse[i]->m_Angle);
+
+
+			/// @todo 一時コード(家の大きさが500なのでその範囲をチェックしてる)
+			if (m_pHouse[i]->m_HousePos.x - 250 < CheckPosX &&
+				m_pHouse[i]->m_HousePos.x + 250 > CheckPosX)
+			{
+				if (m_pHouse[i]->m_HousePos.z - 250 < CheckPosZ &&
+					m_pHouse[i]->m_HousePos.z + 250 > CheckPosZ)
+				{
+					delete m_pHouse[i];
+					m_pHouse.erase(m_pHouse.begin() + i);
+				}
+			}
+		}
+	}
 }
 
 void HouseManager::Draw()

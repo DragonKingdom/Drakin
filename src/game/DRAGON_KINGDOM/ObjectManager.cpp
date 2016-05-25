@@ -50,6 +50,7 @@ void ObjectManager::BuildControl()
 		m_pBuildAreaManager->AreaBuildControl();
 		break;
 	case BUILD_REMOVE:
+		m_pHouseManager->RemoveControl();
 
 		break;
 	default:

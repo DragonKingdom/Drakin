@@ -15,6 +15,7 @@ class StateManager;
 class GameData;
 class InputDeviceFacade;
 class ClickPosConverter;
+class FbxModel;
 
 class HouseManager
 {

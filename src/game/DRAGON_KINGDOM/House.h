@@ -10,12 +10,14 @@ public:
 	~House();
 	void Draw();
 
-private:
-	FbxModel*   m_pModel;
 	D3DXVECTOR3 m_HousePos;
 	float		m_Angle;
 	D3DXMATRIX	m_World;
+
+private:
+	FbxModel*   m_pModel;
 	LSS* m_pLSS;
+
 };
 
 #endif
