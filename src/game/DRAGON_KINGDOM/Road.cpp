@@ -82,7 +82,7 @@ void Road::Draw()
 
 }
 
-bool Road::GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos)
+bool Road::GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos, float* _outputAngleDegree)
 {
 	float length = pow((_checkPos->x - m_StartPos.x)*(_checkPos->x - m_StartPos.x) +
 		(_checkPos->y - m_StartPos.y)*(_checkPos->y - m_StartPos.y) +
@@ -90,6 +90,7 @@ bool Road::GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos)
 
 	if (length < 3000.f)
 	{
+		*_outputAngleDegree = D3DXToDegree(m_angle);
 		*_outputPos = m_StartPos;
 		return true;
 	}
@@ -101,6 +102,7 @@ bool Road::GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos)
 
 	if (length < 3000.f)
 	{
+		*_outputAngleDegree = D3DXToDegree(m_angle);
 		*_outputPos = m_EndPos;
 		return true;
 	}

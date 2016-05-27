@@ -33,8 +33,9 @@ RoadManager::~RoadManager()
 
 void RoadManager::BuildControl()
 {
-	D3DXVECTOR3 StartPos;
-	D3DXVECTOR3 EndPos;
+	//クラスに入れるまでもないと思ったので、スタティックにしている
+	static D3DXVECTOR3 StartPos;
+	static D3DXVECTOR3 EndPos;
 	D3DXVECTOR2 MousePos;
 	//StartPosで道が繋がっているかのフラグ
 	static bool RoadLinkStart;
@@ -93,8 +94,30 @@ void RoadManager::BuildControl()
 	case STATE::CREATE:
 		/// @todo 道の長さ0でも作れてしまう気がする
 		// 道を生成する
-		Road* pRoad = m_pRoadBuilder->RoadBuild();
-		m_pRoad.push_back(pRoad);
+		float angle = 0;
+		if (RoadLinkStart)
+		{
+			if (roadStartAngle < 0)
+			{
+				roadStartAngle = 360.f + roadStartAngle;
+			}
+			float roadAngle = D3DXToDegree(atan2(EndPos.z - StartPos.z, EndPos.x - StartPos.x));
+			if (roadAngle < 0)
+			{
+				roadAngle = 360.f + roadAngle;
+			}
+			angle = roadAngle - roadStartAngle;
+		}
+
+		//道が90度以上の急な道は作れない
+		if (angle > 270.f && RoadLinkStart == true ||
+			angle > -90.f && angle < 0 && RoadLinkStart == true ||
+			angle < 90.f && angle > 0 && RoadLinkStart == true ||
+			RoadLinkStart == false)
+		{
+			Road* pRoad = m_pRoadBuilder->RoadBuild();
+			m_pRoad.push_back(pRoad);
+		}
 
 		// 次の道作成のための初期化処理
 		m_pRoadBuilder->InitStartPos();
@@ -147,7 +170,7 @@ bool RoadManager::RoadCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pStartOrEndPos
 
 	for (int i = 0; i < BuildAreaMax; i++)
 	{
-		if (m_pRoad[i]->GetStartOrEndPos(_checkPos, _pStartOrEndPos))
+		if (m_pRoad[i]->GetStartOrEndPos(_checkPos, _pStartOrEndPos, _outputAngleDegree))
 		{
 			return true;
 		}

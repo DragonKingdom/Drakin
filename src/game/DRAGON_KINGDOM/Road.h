@@ -9,7 +9,7 @@ public:
 	~Road();
 	void Control();
 	void Draw();
-	bool GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos);
+	bool GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos, float* _outputAngleDegree);
 
 private:
 	Vertex      m_Vertex;

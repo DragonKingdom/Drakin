@@ -100,19 +100,26 @@ void BuildAreaManager::AreaBuildControl()
 			{
 				roadStartAngle = 360.f + roadStartAngle;
 			}
-			float test = D3DXToDegree(atan2(EndPos.z - StartPos.z, EndPos.x - StartPos.x));
-			if (test < 0)
+			float roadAngle = D3DXToDegree(atan2(EndPos.z - StartPos.z, EndPos.x - StartPos.x));
+			if (roadAngle < 0)
 			{
-				test = 360.f + test;
+				roadAngle = 360.f + roadAngle;
 			}
-			angle = test - roadStartAngle;
+			angle = roadAngle - roadStartAngle;
 		}
 
-		BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild(true,roadStartAngle);
-		m_pBuildArea.push_back(pBuildArea);
+		//“¹‚ª90“xˆÈã‚Ì‹}‚È“¹‚Íì‚ê‚È‚¢
+		if (angle > 270.f && RoadLinkStart == true || 
+			angle > -90.f && angle < 0 && RoadLinkStart == true || 
+			angle < 90.f && angle > 0 && RoadLinkStart == true ||
+			RoadLinkStart == false)
+		{
+			BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild(true,roadStartAngle);
+			m_pBuildArea.push_back(pBuildArea);
 
-		pBuildArea = m_pBuildAreaBuilder->AreaBuild(false,roadStartAngle);
-		m_pBuildArea.push_back(pBuildArea);
+			pBuildArea = m_pBuildAreaBuilder->AreaBuild(false,roadStartAngle);
+			m_pBuildArea.push_back(pBuildArea);
+		}
 
 		// ŽŸ‚Ì‚½‚ß‚É‰Šú‰»
 		m_pBuildAreaBuilder->InitStartPos();
