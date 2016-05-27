@@ -41,7 +41,7 @@ void Sky::Draw()
 	m_pLSS->SetParameters(35.0f, 0.5f);
 	//フォグの色を設定
 	m_pLSS->SetFogColor(1.0f);
-	m_pLSS->BeginPass(0);
+	m_pLSS->BeginPass(0,1);
 	m_pSkyModel->Draw();
 	m_pLSS->EndPass();
 	m_pLSS->End();

@@ -53,8 +53,8 @@ void Ground::Draw()
 
 	m_pDevice->SetRenderState( D3DRS_ZENABLE, TRUE );
 
-	m_pLSS->BeginPass(1,0);
-	m_pFbxModel->Draw(1);
+	m_pLSS->BeginPass(1,1);
+	m_pFbxModel->Draw(0);
 	m_pLSS->EndPass();
 	m_pLSS->End();
 }

@@ -36,6 +36,12 @@ void RoadManager::BuildControl()
 	D3DXVECTOR3 StartPos;
 	D3DXVECTOR3 EndPos;
 	D3DXVECTOR2 MousePos;
+	//StartPosで道が繋がっているかのフラグ
+	static bool RoadLinkStart;
+	//EndPosで道が繋がっているかのフラグ
+	static bool RoadLinkEnd;
+	static float roadStartAngle = 0.f;
+	static float roadEndAngle = 0.f;
 
 	switch (m_state)
 	{
@@ -47,9 +53,13 @@ void RoadManager::BuildControl()
 				/// @todo マウスの位置がUIとかぶってた場合の処理も考えとく
 
 				// 取得したマウスの座標を3d空間上の座標に変換して渡す
+				RoadLinkStart = false;
+				RoadLinkEnd = false;
+				roadStartAngle = 0.f;
+				roadEndAngle = 0.f;
 				MousePos = m_pInputDevice->GetMousePos();
 				m_pClickPosConverter->ConvertForLoad(&StartPos, int(MousePos.x), int(MousePos.y));
-				RoadCheck(&StartPos, &StartPos);
+				RoadLinkStart = RoadCheck(&StartPos, &StartPos, &roadStartAngle);
 				m_pRoadBuilder->StartPosSet(StartPos);
 				m_state = STATE::END_POS_SET;
 			}
@@ -60,7 +70,7 @@ void RoadManager::BuildControl()
 		// 取得したマウスの座標を3d空間上の座標に変換して渡す
 		MousePos = m_pInputDevice->GetMousePos();
 		m_pClickPosConverter->ConvertForLoad(&EndPos, int(MousePos.x), int(MousePos.y));
-		RoadCheck(&EndPos, &EndPos);
+		RoadLinkEnd = RoadCheck(&EndPos, &EndPos, &roadEndAngle);
 		m_pRoadBuilder->EndPosSet(EndPos);
 
 		if (m_pInputDevice->MouseLeftPush())
@@ -82,7 +92,6 @@ void RoadManager::BuildControl()
 		break;
 	case STATE::CREATE:
 		/// @todo 道の長さ0でも作れてしまう気がする
-
 		// 道を生成する
 		Road* pRoad = m_pRoadBuilder->RoadBuild();
 		m_pRoad.push_back(pRoad);
@@ -91,7 +100,6 @@ void RoadManager::BuildControl()
 		m_pRoadBuilder->InitStartPos();
 		m_pRoadBuilder->InitEndPos();
 		m_state = STATE::START_POS_SET;
-
 		break;
 	}
 }
@@ -129,17 +137,20 @@ void RoadManager::SetGameData()
 
 }
 
-void RoadManager::RoadCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pStartOrEndPos)
+bool RoadManager::RoadCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pStartOrEndPos, float* _outputAngleDegree)
 {
 	int BuildAreaMax = m_pRoad.size();
-	if (BuildAreaMax == 0) return;
+	if (BuildAreaMax == 0)
+	{
+		return false;
+	}
 
 	for (int i = 0; i < BuildAreaMax; i++)
 	{
 		if (m_pRoad[i]->GetStartOrEndPos(_checkPos, _pStartOrEndPos))
 		{
-			return;
+			return true;
 		}
 	}
-	return;
+	return false;
 }

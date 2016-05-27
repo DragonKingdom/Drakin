@@ -5,11 +5,12 @@ class LSS;
 class BuildArea
 {
 public:
-	BuildArea(bool _isLeft, D3DXVECTOR3 _roadStartPos, D3DXVECTOR3 _roadEndPos, float _angle);
+	BuildArea(bool _isLeft, D3DXVECTOR3 _roadStartPos, D3DXVECTOR3 _roadEndPos, float _angle, float _roadLinkAngle);
 	~BuildArea();
 	void Draw();
 	bool AreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle);
-	bool GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos);
+	bool GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos, float* _outputAngleDegree);
+	float GetAngleDegree(){ return D3DXToDegree(m_angle); };
 private:
 	Vertex      m_Vertex;
 	Texture		m_Texture;

@@ -37,10 +37,16 @@ BuildAreaManager::~BuildAreaManager()
 
 void BuildAreaManager::AreaBuildControl()
 {
-	D3DXVECTOR3 StartPos;
-	D3DXVECTOR3 EndPos;
+	//クラスに入れるまでもないと思ったので、スタティックにしている
+	static D3DXVECTOR3 StartPos;
+	static D3DXVECTOR3 EndPos;
 	D3DXVECTOR2 MousePos;
-
+	//StartPosで道が繋がっているかのフラグ
+	static bool RoadLinkStart;
+	//EndPosで道が繋がっているかのフラグ
+	static bool RoadLinkEnd;
+	static float roadStartAngle = 0.f;
+	static float roadEndAngle = 0.f;
 	switch (m_state)
 	{
 	case STATE::START_POS_SET:
@@ -48,9 +54,13 @@ void BuildAreaManager::AreaBuildControl()
 		{
 			if (AreaCheck(NULL/*いまのところはNULL*/))
 			{
+				RoadLinkStart = false;
+				RoadLinkEnd = false;
+				roadStartAngle = 0.f;
+				roadEndAngle = 0.f;	
 				MousePos = m_pInputDevice->GetMousePos();
 				m_pClickPosConverter->ConvertForLoad(&StartPos, int(MousePos.x), int(MousePos.y));
-				BuildAreaCheck(&StartPos, &StartPos);
+				RoadLinkStart = BuildAreaCheck(&StartPos, &StartPos, &roadStartAngle);
 				m_pBuildAreaBuilder->StartPosSet(StartPos);
 				m_state = STATE::END_POS_SET;
 			}
@@ -60,7 +70,7 @@ void BuildAreaManager::AreaBuildControl()
 	case STATE::END_POS_SET:
 		MousePos = m_pInputDevice->GetMousePos();
 		m_pClickPosConverter->ConvertForLoad(&EndPos, int(MousePos.x), int(MousePos.y));
-		BuildAreaCheck(&EndPos, &EndPos);
+		RoadLinkEnd = BuildAreaCheck(&EndPos, &EndPos, &roadEndAngle);
 		m_pBuildAreaBuilder->EndPosSet(EndPos);
 
 		if (m_pInputDevice->MouseLeftPush())
@@ -82,20 +92,24 @@ void BuildAreaManager::AreaBuildControl()
 		break;
 	case STATE::CREATE:
 		/// @todo BuildAreaの長さ0でも作成できるようになってしまってる気がする
-
 		// とりあえずでやってみた
+		float angle = 0;
+		if (RoadLinkStart)
+		{
+			float test = D3DXToDegree(atan2(EndPos.z - StartPos.z, EndPos.x - StartPos.x));
+			angle = D3DXToDegree(atan2(EndPos.z - StartPos.z, EndPos.x - StartPos.x)) - roadStartAngle;
+		}
 
-		BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild(true);
+		BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild(true,roadStartAngle);
 		m_pBuildArea.push_back(pBuildArea);
 
-		pBuildArea = m_pBuildAreaBuilder->AreaBuild(false);
+		pBuildArea = m_pBuildAreaBuilder->AreaBuild(false,roadStartAngle);
 		m_pBuildArea.push_back(pBuildArea);
 
 		// 次のために初期化
 		m_pBuildAreaBuilder->InitStartPos();
 		m_pBuildAreaBuilder->InitEndPos();
 		m_state = STATE::START_POS_SET;
-
 		break;
 	}
 }
@@ -148,19 +162,22 @@ bool BuildAreaManager::GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _ce
 	return false;	/// @todo とりあえずtrue
 }
 
-void BuildAreaManager::BuildAreaCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pStartOrEndPos)
+bool BuildAreaManager::BuildAreaCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pStartOrEndPos, float* _outputAngleDegree)
 {
 	int BuildAreaMax = m_pBuildArea.size();
-	if (BuildAreaMax == 0) return;
+	if (BuildAreaMax == 0)
+	{
+		return false;
+	}
 
 	for (int i = 0; i < BuildAreaMax; i++)
 	{
-		if (m_pBuildArea[i]->GetStartOrEndPos(_checkPos, _pStartOrEndPos))
+		if (m_pBuildArea[i]->GetStartOrEndPos(_checkPos, _pStartOrEndPos,_outputAngleDegree))
 		{
-			return;
+			return true;
 		}
 	}
-	return;
+	return false;
 }
 
 void BuildAreaManager::GetState()
