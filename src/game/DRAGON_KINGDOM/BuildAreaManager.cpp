@@ -96,8 +96,16 @@ void BuildAreaManager::AreaBuildControl()
 		float angle = 0;
 		if (RoadLinkStart)
 		{
+			if (roadStartAngle < 0)
+			{
+				roadStartAngle = 360.f + roadStartAngle;
+			}
 			float test = D3DXToDegree(atan2(EndPos.z - StartPos.z, EndPos.x - StartPos.x));
-			angle = D3DXToDegree(atan2(EndPos.z - StartPos.z, EndPos.x - StartPos.x)) - roadStartAngle;
+			if (test < 0)
+			{
+				test = 360.f + test;
+			}
+			angle = test - roadStartAngle;
 		}
 
 		BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild(true,roadStartAngle);
