@@ -13,7 +13,7 @@ GameData::GameData()
 	m_gameTime.minute = 0;
 
 	/// @todo ‚Æ‚è‚ ‚¦‚¸‚Å‚»‚ê‚Á‚Û‚¢”’l‚ğ“ü‚ê‚Ä‚é‚¾‚¯
-	m_KingdomData.Money = 1000;
+	m_KingdomData.Money = 2000;
 	m_KingdomData.Popularity = 50;
 	m_KingdomData.Population = 10;
 	m_KingdomData.Satisfaction = 50;
@@ -77,4 +77,10 @@ int GameData::GetMoney()
 {
 	return m_KingdomData.Money;
 }
+
+void GameData::DecreaseMoney(int DecreaseValue)
+{
+	m_KingdomData.Money -= DecreaseValue;
+}
+
 

@@ -87,6 +87,12 @@ public:
 	 */
 	int GetMoney();
 
+	/**
+	 * ‚¨‹à‚ğŒ¸­‚·‚éŠÖ”
+	 * @param[in] DecreaseValue ‚¨‹à‚ÌŒ¸­’l
+	 */
+	void DecreaseMoney(int DecreaseValue);
+
 private:
 	GameData();
 	GameData(const GameData &other){}

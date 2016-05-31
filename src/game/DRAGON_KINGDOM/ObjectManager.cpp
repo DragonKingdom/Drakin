@@ -82,11 +82,11 @@ void ObjectManager::SetState()
 
 void ObjectManager::GetGameData()
 {
-
+	m_pHouseManager->GetGameData();
 }
 
 void ObjectManager::SetGameData()
 {
-
+	m_pHouseManager->SetGameData();
 }
 

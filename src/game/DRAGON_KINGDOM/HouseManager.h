@@ -8,6 +8,8 @@
 #ifndef HOUSEMANAGER_H
 #define HOUSEMANAGER_H
 
+#define HOUSE_COST 100
+
 class HouseBuilder;
 class House;
 class BuildAreaChecker;
@@ -38,9 +40,10 @@ private:
 	StateManager*				m_pStateManager;
 	GameData*					m_pGameData;
 	InputDeviceFacade*			m_pInputDevice;
-
 	ClickPosConverter*			m_pClickPosConverter;
 
+	int							m_Money;		// Œ»İ‚ÌŠ‹à‚ğŠi”[‚·‚é•Ï”
+	int							m_HouseCost;	// Œšİ‚É‚©‚©‚Á‚½ƒRƒXƒg‚ğŠi”[‚·‚é•Ï”
 };
 
 
