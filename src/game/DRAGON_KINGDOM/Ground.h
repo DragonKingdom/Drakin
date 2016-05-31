@@ -20,9 +20,11 @@ private:
 		FLOAT	tu, tv;
 	};
 	Vertex* m_pVertex;
-	Texture* m_pTexture;
 	LPDIRECT3DDEVICE9 m_pDevice;
-	FbxModel* m_pFbxModel;
+	FbxModel* m_pGroundModel;
+	FbxModel* m_pMountainModel;
+
+
 	LSS* m_pLSS;
 	FbxFileManager* m_pFbxModelManager;
 	Sun*			m_pSun;

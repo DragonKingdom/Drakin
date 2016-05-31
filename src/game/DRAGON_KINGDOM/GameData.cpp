@@ -12,6 +12,13 @@ GameData::GameData()
 	m_gameTime.hour = 0;
 	m_gameTime.minute = 0;
 
+	/// @todo ‚Æ‚è‚ ‚¦‚¸‚Å‚»‚ê‚Á‚Û‚¢”’l‚ğ“ü‚ê‚Ä‚é‚¾‚¯
+	m_KingdomData.Money = 1000;
+	m_KingdomData.Popularity = 50;
+	m_KingdomData.Population = 10;
+	m_KingdomData.Satisfaction = 50;
+	m_KingdomData.Security = 100;
+
 }
 
 GameData::~GameData()
@@ -50,3 +57,24 @@ Time GameData::GetGameTime()
 {
 	return m_gameTime;
 }
+
+void GameData::SetKingdomData(KingdomData _setKingdomData)
+{
+	m_KingdomData = _setKingdomData;
+}
+
+KingdomData GameData::GetKingdomData()
+{
+	return m_KingdomData;
+}
+
+void GameData::SetMoney(int _setMoney)
+{
+	m_KingdomData.Money = _setMoney;
+}
+
+int GameData::GetMoney()
+{
+	return m_KingdomData.Money;
+}
+
