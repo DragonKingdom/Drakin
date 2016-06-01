@@ -36,36 +36,36 @@ void BuildAreaPreviewer::Draw()
 	D3DXVECTOR3 RightBuildArea[4];
 
 	LeftBuildArea[0].x = m_StartPos.x + (ROAD_W_SIZE / 2 - ROAD_W_SIZE) * sin(m_angle);
-	LeftBuildArea[0].y = 0.5f;
+	LeftBuildArea[0].y = 20.f;
 	LeftBuildArea[0].z = m_StartPos.z + (ROAD_W_SIZE / 2 - ROAD_W_SIZE) * -cos(m_angle);
 
 	LeftBuildArea[1].x = m_StartPos.x + -(ROAD_W_SIZE / 2 + (ROAD_W_SIZE * 4)) * sin(m_angle);
-	LeftBuildArea[1].y = 0.5f;
+	LeftBuildArea[1].y = 20.f;
 	LeftBuildArea[1].z = m_StartPos.z + -(ROAD_W_SIZE / 2 + (ROAD_W_SIZE * 4)) * -cos(m_angle);
 	
 	LeftBuildArea[2].x = Vec.x + -(ROAD_W_SIZE / 2 + (ROAD_W_SIZE * 4)) * sin(m_angle);
-	LeftBuildArea[2].y = 0.5f;
+	LeftBuildArea[2].y = 20.f;
 	LeftBuildArea[2].z = Vec.z + -(ROAD_W_SIZE / 2 + (ROAD_W_SIZE * 4)) * -cos(m_angle);
 	
 	LeftBuildArea[3].x = Vec.x + (ROAD_W_SIZE / 2 - ROAD_W_SIZE) * sin(m_angle);
-	LeftBuildArea[3].y = 0.5f;
+	LeftBuildArea[3].y = 20.f;
 	LeftBuildArea[3].z = Vec.z + (ROAD_W_SIZE / 2 - ROAD_W_SIZE) * -cos(m_angle);
 
 
 	RightBuildArea[0].x = m_StartPos.x + (ROAD_W_SIZE / 2 + (ROAD_W_SIZE * 4)) * sin(m_angle);
-	RightBuildArea[0].y = 0.5f;
+	RightBuildArea[0].y = 20.f;
 	RightBuildArea[0].z = m_StartPos.z + (ROAD_W_SIZE / 2 + (ROAD_W_SIZE * 4)) * -cos(m_angle);
 	
 	RightBuildArea[1].x = m_StartPos.x + -(ROAD_W_SIZE / 2 - ROAD_W_SIZE) * sin(m_angle);
-	RightBuildArea[1].y = 0.5f;
+	RightBuildArea[1].y = 20.f;
 	RightBuildArea[1].z = m_StartPos.z + -(ROAD_W_SIZE / 2 - ROAD_W_SIZE) * -cos(m_angle);
 	
 	RightBuildArea[2].x = Vec.x + -(ROAD_W_SIZE / 2 - ROAD_W_SIZE) * sin(m_angle);
-	RightBuildArea[2].y = 0.5f;
+	RightBuildArea[2].y = 20.f;
 	RightBuildArea[2].z = Vec.z + -(ROAD_W_SIZE / 2 - ROAD_W_SIZE) * -cos(m_angle);
 	
 	RightBuildArea[3].x = Vec.x + (ROAD_W_SIZE / 2 + (ROAD_W_SIZE * 4)) * sin(m_angle);
-	RightBuildArea[3].y = 0.5f;
+	RightBuildArea[3].y = 20.f;
 	RightBuildArea[3].z = Vec.z + (ROAD_W_SIZE / 2 + (ROAD_W_SIZE * 4)) * -cos(m_angle);
 	
 	float Ltu[4];

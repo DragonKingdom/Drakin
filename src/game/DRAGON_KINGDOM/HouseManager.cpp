@@ -60,7 +60,7 @@ void HouseManager::BuildControl()
 				/// @todo 今はとりあえずCreatePositionを渡してるが、Centerを渡す予定
 				m_pHouseBuilder->SetBuildPos(&CenterPosition);
 				m_pHouseBuilder->SetBuildAngle(Angle);
-
+				m_pHouseBuilder->SetDrawState(true);
 
 				// 空いていたらマウスチェック
 				if (m_pInputDevice->MouseLeftPush())
@@ -68,6 +68,10 @@ void HouseManager::BuildControl()
 					m_state = STATE::CREATE;
 				}
 			}
+		}
+		else
+		{
+			m_pHouseBuilder->SetDrawState(false);
 		}
 	}
 	break;

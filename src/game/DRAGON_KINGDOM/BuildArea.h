@@ -34,6 +34,8 @@ private:
 	Font m_Font;
 	int m_AreaCountX;
 	int m_AreaCountZ;
+	float MousePosX;
+	float MousePosZ;
 
 	//シェーダーを適用するクラス
 	LSS* m_pLSS;

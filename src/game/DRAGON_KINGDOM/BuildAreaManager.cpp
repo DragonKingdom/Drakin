@@ -132,9 +132,12 @@ void BuildAreaManager::AreaBuildControl()
 
 void BuildAreaManager::Draw()
 {
-	for (unsigned int i = 0; i < m_pBuildArea.size(); i++)
+	if (m_buildState != BUILD_NONE)
 	{
-		m_pBuildArea[i]->Draw();
+		for (unsigned int i = 0; i < m_pBuildArea.size(); i++)
+		{
+			m_pBuildArea[i]->Draw();
+		}
 	}
 
 	if (m_buildState == BUILD_ROAD)
@@ -175,7 +178,7 @@ bool BuildAreaManager::GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _ce
 		}
 	}
 
-	return false;	/// @todo ‚Æ‚è‚ ‚¦‚¸true
+	return false;
 }
 
 bool BuildAreaManager::BuildAreaCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pStartOrEndPos, float* _outputAngleDegree)

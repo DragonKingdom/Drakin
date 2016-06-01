@@ -3,7 +3,8 @@
 #include "House.h"
 
 HouseBuilder::HouseBuilder():
-m_pHousePreviewer(new HousePreviewer())
+m_pHousePreviewer(new HousePreviewer()),
+m_isDraw(false)
 {
 }
 
@@ -14,7 +15,10 @@ HouseBuilder::~HouseBuilder()
 
 void HouseBuilder::PreviewerDraw()
 {
-	m_pHousePreviewer->Draw();
+	if (m_isDraw == true)
+	{
+		m_pHousePreviewer->Draw();
+	}
 }
 
 void HouseBuilder::SetBuildPos(D3DXVECTOR3* _BuildPos)
@@ -28,6 +32,12 @@ void HouseBuilder::SetBuildAngle(float _angle)
 	m_Angle = _angle;
 	m_pHousePreviewer->SetAngle(&_angle);
 }
+
+void HouseBuilder::SetDrawState(bool _isDraw)
+{
+	m_isDraw = _isDraw;
+}
+
 
 House* HouseBuilder::HouseBuild()
 {

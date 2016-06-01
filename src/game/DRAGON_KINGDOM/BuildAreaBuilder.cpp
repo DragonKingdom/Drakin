@@ -23,8 +23,8 @@ BuildArea* BuildAreaBuilder::AreaBuild(bool _isLeft, float _roadLinkAngle, bool 
 		(m_EndPos.z - m_StartPos.z) * (m_EndPos.z - m_StartPos.z)));
 
 	// エリアの数
-	int NumZ = int(length / ROAD_W_SIZE);
-	int VecLength = (NumZ * ROAD_H_SIZE);
+	int NumZ = static_cast<int>(length / ROAD_W_SIZE);
+	int VecLength = static_cast<int>(NumZ * ROAD_H_SIZE);
 	
 
 	// StartPosからEndPosの角度をとる
@@ -33,7 +33,7 @@ BuildArea* BuildAreaBuilder::AreaBuild(bool _isLeft, float _roadLinkAngle, bool 
 	// EndPosを原点に戻して、正規化、スケーリングして、もう一度同じ場所に戻す
 	D3DXVECTOR3 Vec = m_EndPos - m_StartPos;
 	D3DXVec3Normalize(&Vec, &Vec);
-	D3DXVec3Scale(&Vec, &Vec, VecLength);
+	D3DXVec3Scale(&Vec, &Vec, static_cast<float>(VecLength));
 	Vec = Vec + m_StartPos;
 
 	angle = atan2(Vec.z - m_StartPos.z, Vec.x - m_StartPos.x);
