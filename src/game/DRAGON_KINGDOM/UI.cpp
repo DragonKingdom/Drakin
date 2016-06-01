@@ -5,6 +5,7 @@
 #include "BuildWindow.h"
 #include "OptionWindow.h"
 #include "KingdomWindow.h"
+#include"TimerWindow.h"
 #include "InputDeviceFacade.h"
 #include "StateManager.h"
 
@@ -58,6 +59,7 @@ void UI::Draw()
 	// アイコンの描画
 	m_pMenuicon->Draw();
 
+
 	if( m_pWindow != NULL )
 	{
 		m_pWindow->Draw();
@@ -66,29 +68,45 @@ void UI::Draw()
 
 void UI::WindowCreate()
 {
+	//IconIDをCheckし、どの種類のウィンドを開くか判定している
+
+
 	switch (m_pMenuicon->GetID())
 	{
-	case OPTION:
-		m_pWindow = new OptionWindow(m_pStateManager);
+	//case BUILD:
+	case LOAD:
+	case CLASS:
+	case SHOP:
+	case WEAPON:
+	case ARMOR:
+	case MAGIC:
+	case CHURCH:
+	case INN:
+	case BOOZE:
+	case PLAZA:
+	case SOLDIER:
+	case SPECIAL:
+		m_pWindow = new BuildWindow(m_pStateManager);
 		break;
 	case KINGDOM:
 		m_pWindow = new KingdomWindow(m_pStateManager);
 		break;
 	case ECONOMY:
-
+		//m_pWindow = new EconomyWindow(m_pStateManager);
 		break;
 	case QUEST:
-
+		m_pWindow = new MenuWindow(m_pStateManager);
 		break;
 	case HERO:
 
 		break;
-	case BUILD:
-		m_pWindow = new BuildWindow(m_pStateManager);
+	case OPTION:
+		m_pWindow = new OptionWindow(m_pStateManager);
 		break;
 	default:
 		break;
 	}
+
 }
 
 void UI::SetGameData()

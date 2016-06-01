@@ -39,7 +39,7 @@ int WINAPI WinMain( HINSTANCE hInst,HINSTANCE hPrevInst,LPSTR szStr,INT iCmdShow
 
     RegisterClassEx (&wndclass) ;
 
-    hWnd = CreateWindow (szAppName,szAppName,WS_OVERLAPPEDWINDOW | WS_VISIBLE,  
+	hWnd = CreateWindow(szAppName, szAppName, WS_OVERLAPPEDWINDOW | WS_VISIBLE,
 		0, 0, 1600, 900, NULL, NULL, hInst, NULL);
     ShowWindow (hWnd,SW_SHOW) ;
     UpdateWindow (hWnd) ;

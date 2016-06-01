@@ -15,9 +15,9 @@ const Vertex::FRECT BuildWindow::UV[BuildWindow::TYPE_MAX] =
 const D3DXVECTOR2 BuildWindow::ICON_POS = D3DXVECTOR2(800,640);
 
 BuildWindow::BuildWindow(StateManager* _pStateManager) :
-	Window(D3DXVECTOR2(550,100),
-	D3DXVECTOR2(CLIENT_WIDTH - 550,CLIENT_HEIGHT),
-	D3DXVECTOR2(CLIENT_WIDTH - 550,CLIENT_HEIGHT - 110),
+	Window(D3DXVECTOR2(850,100),
+	D3DXVECTOR2(CLIENT_WIDTH - 880,CLIENT_HEIGHT),
+	D3DXVECTOR2(CLIENT_WIDTH - 880,CLIENT_HEIGHT - 210),
 	_pStateManager), 
 	m_selectID(-1),
 	m_buildState(BUILD_NONE),
@@ -62,7 +62,7 @@ bool BuildWindow::Control()
 											   ICON_POS.y,
 											   ICON_POS.x + (i * UV[HOUSE].right + i * 10.f) + UV[HOUSE].right, 
 											   ICON_POS.y + UV[HOUSE].bottom);
-			
+
 			if(collisiton.PointToSquare(Scene::m_mousePos,rect))
 			{
 				// ÉJÅ[É\ÉãÇ™è„Ç…Ç†ÇÍÇŒIDÇï€ë∂

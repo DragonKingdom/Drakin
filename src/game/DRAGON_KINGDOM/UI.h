@@ -21,12 +21,24 @@ public:
 	/// ウインドウの種類
 	enum WINDOW_TYPE
 	{
-		OPTION,
+		//BUILD,
+		LOAD,
+		CLASS,
+		SHOP,
+		WEAPON,
+		ARMOR,
+		MAGIC,
+		CHURCH,
+		INN,
+		BOOZE,
+		PLAZA,
+		SOLDIER,
+		SPECIAL,
 		KINGDOM,
 		ECONOMY,
-		QUEST,
 		HERO,
-		BUILD,
+		QUEST,
+		OPTION,
 		TYPE_MAX,
 	};
 

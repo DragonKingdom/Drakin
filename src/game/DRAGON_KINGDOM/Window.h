@@ -40,7 +40,7 @@ public:
 		STATE_WAIT,		///< 動いていない状態
 		STATE_MOVE,		///< 移動している状態
 		STATE_LEAVE,	///< 画面外に移動している状態
-		STATE_DESTROY,  ///< 消してけろ
+		STATE_DESTROY,  ///< ウィンドを消してる状態
 	};
 
 	/// ウインドウの移動方向
