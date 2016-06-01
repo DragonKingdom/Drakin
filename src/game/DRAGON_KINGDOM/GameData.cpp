@@ -78,9 +78,13 @@ int GameData::GetMoney()
 	return m_KingdomData.Money;
 }
 
-void GameData::DecreaseMoney(int DecreaseValue)
+void GameData::IncreaseMoney(int _IncreaseValue)
 {
-	m_KingdomData.Money -= DecreaseValue;
+	m_KingdomData.Money += _IncreaseValue;
 }
 
+void GameData::DecreaseMoney(int _DecreaseValue)
+{
+	m_KingdomData.Money -= _DecreaseValue;
+}
 

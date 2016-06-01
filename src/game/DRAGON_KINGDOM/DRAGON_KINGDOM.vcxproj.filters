@@ -167,6 +167,9 @@
     <Filter Include="main\SceneManager\Scene\GameScene\DebugMode">
       <UniqueIdentifier>{34433163-41f8-484b-931a-613fcaeaae96}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\Kingdom">
+      <UniqueIdentifier>{7fcdc10a-0d69-40f6-b373-fb24bec5e672}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scene.cpp">
@@ -326,6 +329,9 @@
       <Filter>main\SceneManager\Scene\GameScene\DebugMode</Filter>
     </ClCompile>
     <ClCompile Include="LightScatteringSimulation.cpp" />
+    <ClCompile Include="Kingdom.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\Kingdom</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -485,6 +491,9 @@
       <Filter>main\SceneManager\Scene\GameScene\DebugMode</Filter>
     </ClInclude>
     <ClInclude Include="LightScatteringSimulation.h" />
+    <ClInclude Include="Kingdom.h">
+      <Filter>main\SceneManager\Scene\GameScene\Kingdom</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

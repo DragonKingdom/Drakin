@@ -11,6 +11,7 @@ GameScene::GameScene():
 	m_timer(&m_StateManager),
 	m_UI(&m_StateManager),
 	m_ClickPosConverter(&m_CameraController),
+	m_Kingdom(m_pGameData),
 	m_ObjectManager(&m_StateManager, m_pGameData, &m_ClickPosConverter),
 	m_DebugMode(&m_ClickPosConverter)
 {
