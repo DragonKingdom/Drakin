@@ -110,9 +110,10 @@ void RoadManager::BuildControl()
 		}
 
 		//“¹‚ª90“xˆÈã‚Ì‹}‚È“¹‚Íì‚ê‚È‚¢
-		if (angle > 270.f && RoadLinkStart == true ||
-			angle > -90.f && angle < 0 && RoadLinkStart == true ||
-			angle < 90.f && angle > 0 && RoadLinkStart == true ||
+		if (angle > 270.f && RoadLinkStart ||
+			angle < -270.f && RoadLinkStart ||
+			angle > -90.f && angle < 0 && RoadLinkStart ||
+			angle < 90.f && angle > 0 && RoadLinkStart ||
 			RoadLinkStart == false)
 		{
 			Road* pRoad = m_pRoadBuilder->RoadBuild();
