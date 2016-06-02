@@ -35,6 +35,8 @@ SceneID GameScene::Control()
 	// ゲーム内データと状態を管理クラスから取得させる
 	m_timer.GetState();
 	m_timer.GetGameData();
+	m_Kingdom.GetState();
+	m_Kingdom.GetGameData();
 	m_UI.GetState();
 	m_UI.GetGameData();
 	m_ObjectManager.GetState();
@@ -42,6 +44,7 @@ SceneID GameScene::Control()
 
 	
 	// ゲーム内オブジェクトの制御
+	m_Kingdom.Control();
 	m_UI.Control();
 	m_ObjectManager.Control();
 	m_CameraController.Control(m_mousePos);/// @todo マウス座標とか渡さないようにしとく
@@ -49,6 +52,8 @@ SceneID GameScene::Control()
 
 
 	// オブジェクトのデータと状態を管理クラスに渡す
+	m_Kingdom.SetState();
+	m_Kingdom.SetGameData();
 	m_UI.SetState();
 	m_UI.SetGameData();
 	m_timer.SetState();
@@ -62,6 +67,7 @@ SceneID GameScene::Control()
 void GameScene::Draw()
 {
 	m_ObjectManager.Draw();
+	m_Kingdom.Draw();
 	m_UI.Draw();
 	m_CameraController.Draw();
 
