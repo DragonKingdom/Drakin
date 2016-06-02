@@ -30,32 +30,32 @@ public:
 private:
 
 	/// ゲーム内の状態を管理するクラス
-	StateManager m_StateManager;
+	StateManager* m_pStateManager;
 
 	/// ゲーム内での共有データを管理するクラス
 	GameData* m_pGameData;
 
 	/// カメラアングルの制御クラス
-	CameraController m_CameraController;
+	CameraController* m_pCameraController;
 
 	/// タイマークラスオブジェクト
-	Timer m_timer;
+	Timer* m_ptimer;
 
 	/// UIクラスオブジェクト
-	UI m_UI;
+	UI* m_pUI;
 
 	/// マウス座標を3dに変換するクラス
-	ClickPosConverter m_ClickPosConverter;
+	ClickPosConverter* m_pClickPosConverter;
 
 	/// 王国のデータを管理するクラス
-	Kingdom m_Kingdom;
+	Kingdom* m_pKingdom;
 
 	/// オブジェクトの管理クラス
-	ObjectManager m_ObjectManager;
+	ObjectManager* m_pObjectManager;
 
 	XAudio m_XAudio;
 
-	DebugMode m_DebugMode;
+	DebugMode* m_pDebugMode;
 
 
 public:
