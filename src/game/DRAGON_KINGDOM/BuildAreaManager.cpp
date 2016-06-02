@@ -54,13 +54,14 @@ void BuildAreaManager::AreaBuildControl()
 		{
 			if (AreaCheck(NULL/*いまのところはNULL*/))
 			{
-				RoadLinkStart = false;
+				//RoadLinkEndおまえが犯人だ！
+				RoadLinkStart = false; /*S*/
 				RoadLinkEnd = false;
 				roadStartAngle = 0.f;
 				roadEndAngle = 0.f;	
 				MousePos = m_pInputDevice->GetMousePos();
 				m_pClickPosConverter->ConvertForLoad(&StartPos, int(MousePos.x), int(MousePos.y));
-				RoadLinkStart = BuildAreaCheck(&StartPos, &StartPos, &roadStartAngle);
+				BuildAreaCheck(&StartPos, &StartPos, &roadStartAngle, &roadEndAngle, &RoadLinkStart, &RoadLinkEnd);
 				m_pBuildAreaBuilder->StartPosSet(StartPos);
 				m_state = STATE::END_POS_SET;
 			}
@@ -70,7 +71,7 @@ void BuildAreaManager::AreaBuildControl()
 	case STATE::END_POS_SET:
 		MousePos = m_pInputDevice->GetMousePos();
 		m_pClickPosConverter->ConvertForLoad(&EndPos, int(MousePos.x), int(MousePos.y));
-		RoadLinkEnd = BuildAreaCheck(&EndPos, &EndPos, &roadEndAngle);
+		BuildAreaCheck(&EndPos, &EndPos, &roadStartAngle, &roadEndAngle, &RoadLinkStart, &RoadLinkEnd);
 		m_pBuildAreaBuilder->EndPosSet(EndPos);
 
 		if (m_pInputDevice->MouseLeftPush())
@@ -93,9 +94,9 @@ void BuildAreaManager::AreaBuildControl()
 	case STATE::CREATE:
 		/// @todo BuildAreaの長さ0でも作成できるようになってしまってる気がする
 		// とりあえずでやってみた
-		float angle = 0;
 		if (RoadLinkStart)
 		{
+			//角度を360度で計算出来るようにしている。
 			if (roadStartAngle < 0)
 			{
 				roadStartAngle = 360.f + roadStartAngle;
@@ -105,20 +106,20 @@ void BuildAreaManager::AreaBuildControl()
 			{
 				roadAngle = 360.f + roadAngle;
 			}
-			angle = roadAngle - roadStartAngle;
+			roadStartAngle = roadAngle - roadStartAngle;
 		}
 
-		//道が90度以上の急な道は作れない
-		if (angle > 270.f && RoadLinkStart || 
-			angle < -270.f && RoadLinkStart ||
-			angle > -90.f && angle < 0 && RoadLinkStart || 
-			angle < 90.f && angle > 0 && RoadLinkStart ||
+		//道が直角より急な道は作れない
+		if (roadStartAngle > 270.f && RoadLinkStart || 
+			roadStartAngle < -270.f && RoadLinkStart ||
+			roadStartAngle > -90.f && roadStartAngle < 0 && RoadLinkStart ||
+			roadStartAngle < 90.f && roadStartAngle > 0 && RoadLinkStart ||
 			RoadLinkStart == false)
 		{
-			BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild(true, angle, RoadLinkStart);
+			BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild(true, roadStartAngle, RoadLinkStart);
 			m_pBuildArea.push_back(pBuildArea);
 
-			pBuildArea = m_pBuildAreaBuilder->AreaBuild(false, angle, RoadLinkStart);
+			pBuildArea = m_pBuildAreaBuilder->AreaBuild(false, roadStartAngle, RoadLinkStart);
 			m_pBuildArea.push_back(pBuildArea);
 		}
 
@@ -181,22 +182,17 @@ bool BuildAreaManager::GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _ce
 	return false;
 }
 
-bool BuildAreaManager::BuildAreaCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pStartOrEndPos, float* _outputAngleDegree)
+void BuildAreaManager::BuildAreaCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pStartOrEndPos, float* _outputStartAngleDegree, float* _outputEndAngleDegree, bool* _startLinkFlag, bool* _endLinkFlag)
 {
 	int BuildAreaMax = m_pBuildArea.size();
-	if (BuildAreaMax == 0)
-	{
-		return false;
-	}
+	if (BuildAreaMax == 0) return;
 
 	for (int i = 0; i < BuildAreaMax; i++)
 	{
-		if (m_pBuildArea[i]->GetStartOrEndPos(_checkPos, _pStartOrEndPos,_outputAngleDegree))
-		{
-			return true;
-		}
+		m_pBuildArea[i]->GetStartOrEndPos(_checkPos, _pStartOrEndPos, _outputStartAngleDegree, _startLinkFlag, _endLinkFlag);
+		if (*_startLinkFlag || *_endLinkFlag) return;
 	}
-	return false;
+	return;
 }
 
 void BuildAreaManager::GetState()
