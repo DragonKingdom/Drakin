@@ -54,7 +54,8 @@ void BuildAreaManager::AreaBuildControl()
 		{
 			if (AreaCheck(NULL/*いまのところはNULL*/))
 			{
-				RoadLinkStart = false;
+				//RoadLinkEndおまえが犯人だ！
+				RoadLinkStart = false; /*S*/
 				RoadLinkEnd = false;
 				roadStartAngle = 0.f;
 				roadEndAngle = 0.f;	
@@ -110,22 +111,6 @@ void BuildAreaManager::AreaBuildControl()
 			roadStartAngle = roadAngle - roadStartAngle;
 		}
 
-		//if (RoadLinkEnd)
-		//{
-		//	//角度を360度で計算出来るようにしている。
-		//	if (roadEndAngle < 0)
-		//	{
-		//		roadEndAngle = 360.f + roadEndAngle;
-		//	}
-		//	float roadAngle = D3DXToDegree(atan2(EndPos.z - StartPos.z, EndPos.x - StartPos.x));
-		//	if (roadAngle < 0)
-		//	{
-		//		roadAngle = 360.f + roadAngle;
-		//	}
-		//	roadEndAngle = roadAngle - roadEndAngle;
-		//}
-
-
 		//道が直角より急な道は作れない
 		if (roadStartAngle > 270.f && RoadLinkStart || 
 			roadStartAngle < -270.f && RoadLinkStart ||
@@ -133,10 +118,10 @@ void BuildAreaManager::AreaBuildControl()
 			roadStartAngle < 90.f && roadStartAngle > 0 && RoadLinkStart ||
 			RoadLinkStart == false)
 		{
-			BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild(true, roadStartAngle, roadEndAngle, RoadLinkStart, RoadLinkEnd);
+			BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild(true, roadStartAngle, RoadLinkStart);
 			m_pBuildArea.push_back(pBuildArea);
 
-			pBuildArea = m_pBuildAreaBuilder->AreaBuild(false, roadStartAngle, roadEndAngle, RoadLinkStart, RoadLinkEnd);
+			pBuildArea = m_pBuildAreaBuilder->AreaBuild(false, roadStartAngle, RoadLinkStart);
 			m_pBuildArea.push_back(pBuildArea);
 		}
 
@@ -199,14 +184,14 @@ bool BuildAreaManager::GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _ce
 	return false;
 }
 
-void BuildAreaManager::BuildAreaCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pStartOrEndPos, float* _roadLinkStartAngle, float* _roadLinkEndAngle, bool* _startLinkFlag, bool* _endLinkFlag)
+void BuildAreaManager::BuildAreaCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pStartOrEndPos, float* _outputStartAngleDegree, float* _outputEndAngleDegree, bool* _startLinkFlag, bool* _endLinkFlag)
 {
 	int BuildAreaMax = m_pBuildArea.size();
 	if (BuildAreaMax == 0) return;
 
 	for (int i = 0; i < BuildAreaMax; i++)
 	{
-		m_pBuildArea[i]->GetStartOrEndPos(_checkPos, _pStartOrEndPos, _roadLinkStartAngle, _roadLinkEndAngle, _startLinkFlag, _endLinkFlag);
+		m_pBuildArea[i]->GetStartOrEndPos(_checkPos, _pStartOrEndPos, _outputStartAngleDegree, _startLinkFlag, _endLinkFlag);
 		if (*_startLinkFlag || *_endLinkFlag) return;
 	}
 	return;

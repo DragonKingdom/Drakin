@@ -49,10 +49,10 @@ public:
 	* 道を繋げるために使う敷かれている道をチェックして近くに道があれば、そこのstartposまたはendposとangleを渡す
 	* @param[in] _checkPos チェックしたい座標
 	* @param[in] _pStartOrEndPos startposまたはendpos
-	* @param[in] _outputAngleDegree 見つけた道の角度
+	* @param[in] _outputStartAngleDegree 見つけた道の角度
 	* @return 周辺に道がなければfalseを返す
 	*/
-	void BuildAreaCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pStartOrEndPos, float* _roadLinkStartAngle, float* _roadLinkEndAngle, bool* _startLinkFlag, bool* _endLinkFlag);
+	void BuildAreaCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pStartOrEndPos, float* _outputStartAngleDegree, float* _outputEndAngleDegree, bool* _startLinkFlag, bool* _endLinkFlag);
 
 	void GetState();
 

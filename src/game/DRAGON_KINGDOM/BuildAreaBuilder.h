@@ -9,7 +9,7 @@ class BuildAreaBuilder
 public:
 	BuildAreaBuilder();
 	~BuildAreaBuilder();
-	BuildArea* AreaBuild(bool _isLeft, float _roadLinkStartAngle, float _roadLinkEndAngle, bool _roadLinkStart, bool _roadEndStart);
+	BuildArea* AreaBuild(bool _isLeft, float _roadLinkAngle,bool _roadLinkStart);
 	void PreviewerDraw();
 	void StartPosSet(D3DXVECTOR3 _startPos);
 	void EndPosSet(D3DXVECTOR3 _endPos);
