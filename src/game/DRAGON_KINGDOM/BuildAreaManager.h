@@ -52,7 +52,7 @@ public:
 	* @param[in] _outputAngleDegree Œ©‚Â‚¯‚½“¹‚ÌŠp“x
 	* @return Žü•Ó‚É“¹‚ª‚È‚¯‚ê‚Îfalse‚ð•Ô‚·
 	*/
-	bool BuildAreaCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pStartOrEndPos, float* _outputAngleDegree);
+	void BuildAreaCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pStartOrEndPos, float* _roadLinkStartAngle, float* _roadLinkEndAngle, bool* _startLinkFlag, bool* _endLinkFlag);
 
 	void GetState();
 

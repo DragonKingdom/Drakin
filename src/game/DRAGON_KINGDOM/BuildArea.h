@@ -5,11 +5,11 @@ class LSS;
 class BuildArea
 {
 public:
-	BuildArea(bool _isLeft, D3DXVECTOR3 _roadStartPos, D3DXVECTOR3 _roadEndPos, float _angle, float _roadLinkAngle,bool _roadLinkStart);
+	BuildArea(bool _isLeft, D3DXVECTOR3 _roadStartPos, D3DXVECTOR3 _roadEndPos, float _angle, float _roadLinkStartAngle, float _roadLinkEndAngle, bool _roadLinkStart, bool roadLinkEnd);
 	~BuildArea();
 	void Draw();
 	bool AreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle);
-	bool GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos, float* _outputAngleDegree);
+	void GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos, float* _roadLinkStartAngle, float* _roadLinkEndAngle, bool* _startLinkFlag, bool* _endLinkFlag);
 	float GetAngleDegree(){ return D3DXToDegree(m_angle); };
 private:
 	Vertex      m_Vertex;
@@ -26,7 +26,8 @@ private:
 	float m_tu[4];	/*テクスチャ座標*/
 	float m_tv[4];	/*テクスチャ座標*/
 	float m_angle;	/*傾き*/
-	float m_roadLinkAngle; /*道が繋がっていた場所からの角度*/ 
+	float m_roadStartLinkAngle; /*道が繋がっていた場所からの角度*/ 
+	float m_roadEndLinkAngle; /*道が繋がっていた場所からの角度*/
 	int	  m_length;
 	BYTE  m_AreaData;	/*エリアの上に何か乗っかってるか*/
 	
