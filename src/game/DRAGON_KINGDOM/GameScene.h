@@ -19,6 +19,7 @@
 #include "Camera.h"
 #include "ClickPosConverter.h"
 #include "DebugMode.h"
+#include "NowLoading.h"
 
 /**
  * ゲームシーンを管理するクラス
@@ -28,6 +29,8 @@ class GameScene : public Scene
 public:
 	Font m_pFont;
 private:
+
+	NowLoading*	m_pNowLoading;
 
 	/// ゲーム内の状態を管理するクラス
 	StateManager* m_pStateManager;

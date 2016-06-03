@@ -7,6 +7,14 @@
 GameScene::GameScene():
 	Scene(SceneID::SCENE_GAME)
 {
+	// nowloadingd表示する画像読み込み
+	Texture NowLosdingTexture;
+	NowLosdingTexture.Load("Resource\\image\\NowLoading.png");
+
+	// スレッド立てる
+	m_pNowLoading = new NowLoading();
+	m_pNowLoading->ThreadCreate(&NowLosdingTexture);
+
 	m_pStateManager = new StateManager();
 
 	m_pGameData = GameData::getInstance();
@@ -25,6 +33,11 @@ GameScene::GameScene():
 
 	m_pDebugMode = new DebugMode(m_pClickPosConverter);
 
+
+	// スレッド落とす
+	m_pNowLoading->ThreadDestroy();
+
+	NowLosdingTexture.Release();
 
 	/// @todo サウンド関連は用意してなかったのでとりあえずBGMだけ流せるように あとよろ
 	
