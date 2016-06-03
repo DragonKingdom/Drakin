@@ -9,7 +9,7 @@ public:
 	~BuildArea();
 	void Draw();
 	bool AreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle);
-	void GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos, float* _outputAngleDegree, bool* _startLinkFlag,bool* _endLinkFlag);
+	bool GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos, float* _outputAngleDegree);
 	float GetAngleDegree(){ return D3DXToDegree(m_angle); };
 private:
 	Vertex      m_Vertex;

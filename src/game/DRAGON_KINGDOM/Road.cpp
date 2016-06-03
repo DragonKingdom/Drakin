@@ -29,7 +29,6 @@ m_pLSS(new LSS())
 Road::~Road()
 {
 	m_Texture.Release();
-	delete m_pLSS;
 }
 
 void Road::Control()
