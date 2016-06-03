@@ -39,25 +39,25 @@ bool NowLoading::ThreadCreate(Texture* _pTexture)
 
 bool NowLoading::ThreadDestroy()
 {
-	// スレッドがなければ無視
+	// スレッドがなければ処理を返す
 	if (m_ThreadFlag == false)
 	{
 		return false;
 	}
 
-	// flag変更
+	// スレッドの終了フラグを立てる
 	m_ThreadDestroyFlag = true;
 
-	// 待機処理
+	// スレッドが終了するまで待機
 	WaitForSingleObject(m_ThreadHandle, INFINITE);
 
-	// closeThread
+	// スレッドを閉じる
 	CloseHandle(m_ThreadHandle);
 
 	// 事後処理
-	m_ThreadHandle = NULL;
-	m_ThreadDestroyFlag = false;
 	m_ThreadFlag = false;
+	m_ThreadDestroyFlag = false;
+	m_ThreadHandle = NULL;
 
 
 	return true;
@@ -65,6 +65,7 @@ bool NowLoading::ThreadDestroy()
 
 void NowLoading::Control(NowLoadingThreadData* pData)
 {
+	// とりあえず画像スクロールでそれっぽいのを作ってる
 	for (int i = 0; i < 4; i++)
 	{
 		pData->tu[i] -= SCROOL_SPEED;
@@ -73,9 +74,11 @@ void NowLoading::Control(NowLoadingThreadData* pData)
 
 void NowLoading::Draw(NowLoadingThreadData* pData)
 {
+	// 描画前処理
 	GraphicsDevice::getInstance().GetDevice()->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_XRGB(0, 0, 0), 1.f, 0);
 	GraphicsDevice::getInstance().GetDevice()->BeginScene();
 
+	// 描画処理
 	pData->vertex.DrawTexture(
 		*pData->pTexture,
 		pData->Vec,
@@ -84,6 +87,7 @@ void NowLoading::Draw(NowLoadingThreadData* pData)
 		D3DCOLOR_ARGB(255, 255, 255, 255),
 		0);
 
+	// 描画後処理
 	GraphicsDevice::getInstance().GetDevice()->EndScene();
 	GraphicsDevice::getInstance().GetDevice()->Present(NULL, NULL, NULL, NULL);
 }
@@ -124,9 +128,9 @@ DWORD WINAPI NowLoading::NowLoadingThread(LPVOID _pTexture)
 	ThreadData.tv[3] = 1.0f;
 
 
+	// ループ処理
 	DWORD NowTime = timeGetTime();
 	DWORD OldTime = timeGetTime();
-
 	while (m_ThreadDestroyFlag == false)
 	{
 		NowTime = timeGetTime();
@@ -138,7 +142,5 @@ DWORD WINAPI NowLoading::NowLoadingThread(LPVOID _pTexture)
 			OldTime = timeGetTime();
 		}
 	}
-
-
 	return 0;
 }
