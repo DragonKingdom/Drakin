@@ -87,6 +87,18 @@ public:
 	 */
 	int GetMoney();
 
+	/**
+	 * お金を増加する関数
+	 * @param[in] _IncreaseValue お金の上昇値
+	 */
+	void IncreaseMoney(int _IncreaseValue);
+
+	/**
+	 * お金を減少する関数
+	 * @param[in] _DecreaseValue お金の減少値
+	 */
+	void DecreaseMoney(int _DecreaseValue);
+
 private:
 	GameData();
 	GameData(const GameData &other){}
@@ -97,6 +109,7 @@ private:
 	/// プレイ時間
 	Time			m_gameTime;
 	KingdomData		m_KingdomData;
+
 
 };
 

@@ -13,6 +13,7 @@
 #include "StateManager.h"
 #include "CameraController.h"
 #include "ObjectManager.h"
+#include "Kingdom.h"
 #include "Timer.h"
 #include "UI.h"
 #include "Camera.h"
@@ -29,26 +30,32 @@ public:
 private:
 
 	/// ゲーム内の状態を管理するクラス
-	StateManager m_StateManager;
-	/// カメラアングルの制御クラス
-	CameraController m_CameraController;
-	/// タイマークラスオブジェクト
-	Timer m_timer;
-	/// UIクラスオブジェクト
-	UI m_UI;
-
-	ClickPosConverter m_ClickPosConverter;
-	/// オブジェクトの管理クラス
-	ObjectManager m_ObjectManager;
+	StateManager* m_pStateManager;
 
 	/// ゲーム内での共有データを管理するクラス
 	GameData* m_pGameData;
 
-	Texture m_Texture;
+	/// カメラアングルの制御クラス
+	CameraController* m_pCameraController;
+
+	/// タイマークラスオブジェクト
+	Timer* m_ptimer;
+
+	/// UIクラスオブジェクト
+	UI* m_pUI;
+
+	/// マウス座標を3dに変換するクラス
+	ClickPosConverter* m_pClickPosConverter;
+
+	/// 王国のデータを管理するクラス
+	Kingdom* m_pKingdom;
+
+	/// オブジェクトの管理クラス
+	ObjectManager* m_pObjectManager;
 
 	XAudio m_XAudio;
 
-	DebugMode m_DebugMode;
+	DebugMode* m_pDebugMode;
 
 
 public:

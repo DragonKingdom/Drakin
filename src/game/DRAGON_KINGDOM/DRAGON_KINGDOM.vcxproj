@@ -121,6 +121,7 @@
     <ClCompile Include="HouseManager.cpp" />
     <ClCompile Include="HousePreviewer.cpp" />
     <ClCompile Include="InputDeviceFacade.cpp" />
+    <ClCompile Include="Kingdom.cpp" />
     <ClCompile Include="KingdomWindow.cpp" />
     <ClCompile Include="LightScatteringSimulation.cpp" />
     <ClCompile Include="LogoScene.cpp" />
@@ -180,6 +181,7 @@
     <ClInclude Include="HouseManager.h" />
     <ClInclude Include="HousePreviewer.h" />
     <ClInclude Include="InputDeviceFacade.h" />
+    <ClInclude Include="Kingdom.h" />
     <ClInclude Include="KingdomWindow.h" />
     <ClInclude Include="LightScatteringSimulation.h" />
     <ClInclude Include="LogoScene.h" />
