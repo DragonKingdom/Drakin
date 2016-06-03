@@ -75,6 +75,7 @@ public:
 
 	void DrawTexture( float _x, float _y, D3DCOLOR _color = D3DCOLOR_ARGB(255,255,255,255));
 	void DrawTexture( float _x, float _y, FRECT _rect, D3DCOLOR _color = D3DCOLOR_ARGB(255,255,255,255));
+	void DrawTexture(Texture _texture, D3DXVECTOR3* _pVec, float* _ptu, float* _ptv, D3DCOLOR _color = D3DCOLOR_ARGB(255, 255, 255, 255), int stage = 0);
 
 	void VertexDraw(Texture _texture, D3DXVECTOR3* _pVec, D3DCOLOR _color = D3DCOLOR_ARGB(255, 255, 255, 255), int stage = 0);
 	void VertexDraw( Texture _texture, D3DXVECTOR3* _pVec, float* _ptu, float* _ptv, D3DCOLOR _color = D3DCOLOR_ARGB( 255, 255, 255, 255),int stage = 0 );

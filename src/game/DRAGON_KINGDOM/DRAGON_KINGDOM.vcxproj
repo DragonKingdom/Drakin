@@ -129,6 +129,7 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Menuicon.cpp" />
     <ClCompile Include="MenuWindow.cpp" />
+    <ClCompile Include="NowLoading.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="OptionWindow.cpp" />
     <ClCompile Include="Road.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="Menuicon.h" />
     <ClInclude Include="MenuWindow.h" />
+    <ClInclude Include="NowLoading.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="OptionWindow.h" />
     <ClInclude Include="Road.h" />

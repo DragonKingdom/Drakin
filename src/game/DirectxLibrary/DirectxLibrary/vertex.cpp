@@ -136,6 +136,24 @@ void Vertex::DrawTexture(float _x, float _y, D3DCOLOR _color)
 	m_pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
 }
 
+void Vertex::DrawTexture(Texture _texture, D3DXVECTOR3* _pVec, float* _ptu, float* _ptv, D3DCOLOR _color, int stage)
+{
+	CUSTOMVERTEX vertex[] =
+	{
+		{ _pVec[0].x, _pVec[0].y, _pVec[0].z, 1.0f, _color, _ptu[0], _ptv[0] },
+		{ _pVec[1].x, _pVec[1].y, _pVec[1].z, 1.0f, _color, _ptu[1], _ptv[1] },
+		{ _pVec[2].x, _pVec[2].y, _pVec[2].z, 1.0f, _color, _ptu[2], _ptv[2] },
+		{ _pVec[3].x, _pVec[3].y, _pVec[3].z, 1.0f, _color, _ptu[3], _ptv[3] },
+	};
+
+	//画像の描画
+	m_pDevice->SetFVF(D3DFVF_CUSTOMVERTEX);
+
+	//背景
+	m_pDevice->SetTexture(stage, _texture.Get());
+	m_pDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, vertex, sizeof(CUSTOMVERTEX));
+}
+
 void Vertex::VertexDraw(Texture _texture, D3DXVECTOR3* _pVec, D3DCOLOR _color, int stage)
 {
 	D3DXMATRIX World;
