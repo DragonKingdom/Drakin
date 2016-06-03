@@ -75,6 +75,8 @@ void BuildAreaManager::AreaBuildControl()
 
 		if (m_pInputDevice->MouseLeftPush())
 		{
+
+
 			if (AreaCheck(NULL/*‚¢‚Ü‚Ì‚Æ‚±‚ë‚ÍNULL*/))
 			{
 				m_state = STATE::CREATE;
