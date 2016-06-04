@@ -9,6 +9,8 @@
 #include "TextureManager.h"
 #include "TitleMenuButton.h"
 #include "FileSaveLoad.h"
+#include "SelectMenu.h"
+#include "InputDeviceFacade.h"
 
 //----------------------------------------------------------------------
 namespace 
@@ -48,10 +50,15 @@ m_isSelectMenu(false)
 	center.y += space;
 
 	m_buttons.push_back(new TitleMenuButton(kTexMenuExitCoord, center));
+
+	m_pSelectMenu = new SelectMenu(m_pFileSaveLoad);
+
 }
 
 TitleMenu::~TitleMenu()
 {
+	delete m_pSelectMenu;
+
 	for(int i = 0; i < TitleMenuButton::kButtonMax; ++i) 
 	{
 		delete m_buttons[i];
@@ -67,34 +74,52 @@ SceneID TitleMenu::Control()
 	}
 
 	SceneID nextScene = SceneID::SCENE_TITLE;
-	for(int i = 0; i < TitleMenuButton::kButtonMax; ++i) 
+
+	if (m_isSelectMenu == false)
 	{
+		for (int i = 0; i < TitleMenuButton::kButtonMax; ++i)
+		{
 
-		if (m_buttons[i]->Control()){
-			switch(i){
-			case 0:
-				nextScene = SceneID::SCENE_GAME;
-				break;
-			case 1:
-				/// @todo 読み込むファイルを選ぶようにする
-				m_isSelectMenu = true;
+			if (m_buttons[i]->Control())
+			{
+				switch (i)
+				{
+				case 0:
+					nextScene = SceneID::SCENE_GAME;
+					break;
+				case 1:
+					/// @todo 読み込むファイルを選ぶようにする
+					m_isSelectMenu = true;
 
-				m_pFileSaveLoad->FileLoadInit("Save/TestKingdom.save");
 
-				nextScene = SceneID::SCENE_CONTINUE_GAME;
-				break;
-			case 2:
-				break;
-			case 3:
-				nextScene = SceneID::FIN;
+					break;
+				case 2:
+					break;
+				case 3:
+					nextScene = SceneID::FIN;
+					break;
+				}
+			}
+
+			if (nextScene != SceneID::SCENE_TITLE)
+			{
 				break;
 			}
-		};
-		if(nextScene != SceneID::SCENE_TITLE)
-		{
-			break;
 		}
 	}
+	else
+	{
+		if (InputDeviceFacade::GetInstance()->MouseRightPush())
+		{
+			m_isSelectMenu = false;
+		}
+		else if (m_pSelectMenu->Control())
+		{
+			nextScene = SceneID::SCENE_CONTINUE_GAME;
+		}
+	}
+
+	
 	return nextScene;
 }
 
@@ -108,5 +133,10 @@ void TitleMenu::Draw()
 	for(int i = 0; i < TitleMenuButton::kButtonMax; ++i) 
 	{
 		m_buttons[i]->Draw();
+	}
+
+	if (m_isSelectMenu)
+	{
+		m_pSelectMenu->Draw();
 	}
 }

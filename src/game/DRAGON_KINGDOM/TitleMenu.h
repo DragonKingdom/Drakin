@@ -11,6 +11,7 @@
 class TitleMenuButton;
 class Collision;
 class FileSaveLoad;
+class SelectMenu;
 
 /// タイトル画面のメニュークラス
 class TitleMenu
@@ -27,6 +28,7 @@ public:
 protected:
 
 private:
+	SelectMenu* m_pSelectMenu;
 	std::vector<TitleMenuButton*> m_buttons;
 	FileSaveLoad* m_pFileSaveLoad;
 	bool m_isSelectMenu;

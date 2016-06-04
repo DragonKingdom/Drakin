@@ -176,8 +176,11 @@
     <Filter Include="main\SceneManager\Scene\GameScene\FileSaveLoad">
       <UniqueIdentifier>{4dc2f0fa-efa9-4f16-abc0-7a95aa066d15}</UniqueIdentifier>
     </Filter>
-    <Filter Include="main\SceneManager\Scene\TitleScene\TitleMenu\SelectWindow">
+    <Filter Include="main\SceneManager\Scene\TitleScene\TitleMenu\SelectMenu">
       <UniqueIdentifier>{60ad0d58-658a-4910-8cb3-feef7fba8f7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\TitleScene\TitleMenu\SelectMenu\SelectMenuButton">
+      <UniqueIdentifier>{6890121a-0f66-4603-8045-45d7493551d1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -348,7 +351,10 @@
       <Filter>main\SceneManager\Scene\GameScene\FileSaveLoad</Filter>
     </ClCompile>
     <ClCompile Include="SelectMenu.cpp">
-      <Filter>main\SceneManager\Scene\TitleScene\TitleMenu\SelectWindow</Filter>
+      <Filter>main\SceneManager\Scene\TitleScene\TitleMenu\SelectMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectMenuButton.cpp">
+      <Filter>main\SceneManager\Scene\TitleScene\TitleMenu\SelectMenu\SelectMenuButton</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -519,7 +525,10 @@
       <Filter>main\SceneManager\Scene\GameScene\FileSaveLoad</Filter>
     </ClInclude>
     <ClInclude Include="SelectMenu.h">
-      <Filter>main\SceneManager\Scene\TitleScene\TitleMenu\SelectWindow</Filter>
+      <Filter>main\SceneManager\Scene\TitleScene\TitleMenu\SelectMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectMenuButton.h">
+      <Filter>main\SceneManager\Scene\TitleScene\TitleMenu\SelectMenu\SelectMenuButton</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
