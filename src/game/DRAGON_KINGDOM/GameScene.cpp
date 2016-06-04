@@ -75,7 +75,7 @@ GameScene::~GameScene()
 	
 	delete m_pGameData;
 
-
+	delete m_pNowLoading;
 
 	m_XAudio.SoundStop(0);
 }

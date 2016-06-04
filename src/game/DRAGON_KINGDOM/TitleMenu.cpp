@@ -59,7 +59,7 @@ TitleMenu::~TitleMenu()
 {
 	delete m_pSelectMenu;
 
-	for(int i = 0; i < TitleMenuButton::kButtonMax; ++i) 
+	for(int i = 0; i < TitleMenuButton::kButtonMax; i++) 
 	{
 		delete m_buttons[i];
 	}
@@ -88,7 +88,6 @@ SceneID TitleMenu::Control()
 					nextScene = SceneID::SCENE_GAME;
 					break;
 				case 1:
-					/// @todo 読み込むファイルを選ぶようにする
 					m_isSelectMenu = true;
 
 

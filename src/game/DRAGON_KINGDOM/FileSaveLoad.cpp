@@ -15,6 +15,11 @@ bool FileSaveLoad::FileLoadInit(char* _pFileName)
 	// ファイルを開く
 	fopen_s(&m_pFile, _pFileName, "r");
 
+	if (m_pFile == NULL)
+	{
+		return false;
+	}
+
 	// ファイルのサイズを取得する
 	fseek(m_pFile, 0, SEEK_END);
 	m_fileSize = ftell(m_pFile);
@@ -180,6 +185,35 @@ bool FileSaveLoad::GetGroupMember(std::vector<bool>* _pGroupMemberData)
 			{
 				_pGroupMemberData->push_back(true);
 			}
+		}
+	}
+
+	return true;
+}
+
+bool FileSaveLoad::GetGroupMember(std::vector<std::string>* _pGroupMemberData)
+{
+	// グループ名からtmpバッファに文字列を移す
+	char* Str;
+	char* context;
+	strcpy_s(m_pTmpBuffer, m_fileSize, m_pGroupBuffer);
+
+	// 最初のグループ名は無視
+	Str = strtok_s(m_pTmpBuffer, "{},", &context);
+	
+	while (1)
+	{
+		Str = strtok_s(NULL, "{},", &context);
+
+		if (Str == NULL)
+		{
+			// NULLならデータはないのでループから抜ける
+			break;
+		}
+		else
+		{
+			// NULLじゃなければデータがあるので追加
+			_pGroupMemberData->push_back(Str);
 		}
 	}
 

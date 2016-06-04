@@ -6,9 +6,10 @@
 #include "TitleMenuButton.h"
 #include "Font.h"
 
-#define MAX_SAVE_FILE 5		// セーブデータの最大数
-#define BUTTON_SPACE 100	// ボタンとボタンの間隔
-#define DEFAULT_CENTERPOS_Y 200
+#define MAX_SAVE_FILE 5			// セーブデータの最大数
+#define BUTTON_SPACE 100		// ボタンとボタンの間隔
+#define DEFAULT_CENTERPOS_Y 200	// セーブデータセレクトボタンのy座標基準値
+#define SAVEDATA_NAME_POS_X 450	// セーブデータセレクトボタンの名前のx座標位置
 
 class FileSaveLoad;
 class SelectMenuButton;
@@ -45,7 +46,7 @@ private:
 	std::vector<SelectMenuButton*> m_pButtons;
 
 	// ボタンの名前
-	std::vector<std::string> m_pButttonName;
+	std::vector<std::string> m_pButtonName;
 
 	// フォントクラス
 	Font m_Font;

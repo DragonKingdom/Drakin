@@ -82,6 +82,13 @@ public:
 	* @param[out] _pGroupMemberData データを格納するvectorのアドレス
 	* @return 成功したら:true 失敗したら:false
 	*/
+	bool GetGroupMember(std::vector<std::string>* _pGroupMemberData);
+
+	/**
+	* チェックしているグループのメンバを取得する
+	* @param[out] _pGroupMemberData データを格納するvectorのアドレス
+	* @return 成功したら:true 失敗したら:false
+	*/
 	bool GetGroupMember(std::vector<D3DXVECTOR3>* _pGroupMemberData);
 
 

@@ -27,44 +27,84 @@ m_pfile(NULL)
 	}
 
 	// ファイルが存在するか一つ一つチェック
-	fopen_s(&m_pfile,"Save/SaveData1.save","r");
-	if (m_pfile != NULL)
+	
+	if (m_pFileSaveLoad->FileLoadInit("Save/SaveData1.save"))
 	{
 		m_isFile[0] = true;
-		fclose(m_pfile);
-		m_pfile = NULL;
+
+		m_pFileSaveLoad->StepGroup("FileName");
+		m_pFileSaveLoad->GetGroupMember(&m_pButtonName);
+
+		m_pFileSaveLoad->FileLoadEnd();
+	}
+	else
+	{
+		m_isFile[0] = false;
+		m_pButtonName.push_back("NONE");
 	}
 
-	fopen_s(&m_pfile, "Save/SaveData2.save", "r");
-	if (m_pfile != NULL)
+
+	if (m_pFileSaveLoad->FileLoadInit("Save/SaveData2.save"))
 	{
 		m_isFile[1] = true;
-		fclose(m_pfile);
-		m_pfile = NULL;
+
+		m_pFileSaveLoad->StepGroup("FileName");
+		m_pFileSaveLoad->GetGroupMember(&m_pButtonName);
+
+		m_pFileSaveLoad->FileLoadEnd();
+	}
+	else
+	{
+		m_isFile[1] = false;
+		m_pButtonName.push_back("NONE");
 	}
 
-	fopen_s(&m_pfile, "Save/SaveData3.save", "r");
-	if (m_pfile != NULL)
+
+	if (m_pFileSaveLoad->FileLoadInit("Save/SaveData3.save"))
 	{
 		m_isFile[2] = true;
-		fclose(m_pfile);
-		m_pfile = NULL;
+
+		m_pFileSaveLoad->StepGroup("FileName");
+		m_pFileSaveLoad->GetGroupMember(&m_pButtonName);
+
+		m_pFileSaveLoad->FileLoadEnd();
+	}
+	else
+	{
+		m_isFile[2] = false;
+		m_pButtonName.push_back("NONE");
 	}
 
-	fopen_s(&m_pfile, "Save/SaveData4.save", "r");
-	if (m_pfile != NULL)
+
+	if (m_pFileSaveLoad->FileLoadInit("Save/SaveData4.save"))
 	{
 		m_isFile[3] = true;
-		fclose(m_pfile);
-		m_pfile = NULL;
+
+		m_pFileSaveLoad->StepGroup("FileName");
+		m_pFileSaveLoad->GetGroupMember(&m_pButtonName);
+
+		m_pFileSaveLoad->FileLoadEnd();
+	}
+	else
+	{
+		m_isFile[3] = false;
+		m_pButtonName.push_back("NONE");
 	}
 
-	fopen_s(&m_pfile, "Save/SaveData5.save", "r");
-	if (m_pfile != NULL)
+
+	if (m_pFileSaveLoad->FileLoadInit("Save/SaveData5.save"))
 	{
 		m_isFile[4] = true;
-		fclose(m_pfile);
-		m_pfile = NULL;
+
+		m_pFileSaveLoad->StepGroup("FileName");
+		m_pFileSaveLoad->GetGroupMember(&m_pButtonName);
+
+		m_pFileSaveLoad->FileLoadEnd();
+	}
+	else
+	{
+		m_isFile[4] = false;
+		m_pButtonName.push_back("NONE");
 	}
 
 
@@ -146,8 +186,11 @@ void SelectMenu::Draw()
 	for (int i = 0; i < MAX_SAVE_FILE; ++i)
 	{
 		m_pButtons[i]->Draw();
+		m_Font.Draw(
+			m_pButtonName[i].c_str(),
+			D3DXVECTOR2(SAVEDATA_NAME_POS_X, DEFAULT_CENTERPOS_Y + BUTTON_SPACE * i),
+			D3DCOLOR_ARGB(255,0,0,0));
 	}
 
-	//m_Font.Draw();
 }
 

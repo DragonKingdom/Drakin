@@ -28,6 +28,15 @@ public:
 	 * @param[in] _pos     描画座標
 	 */
 	void Draw(LPCSTR _pString,D3DXVECTOR2 _pos);
+
+	/**
+	* テキストの描画
+	* @param[in] _pString 表示したい文字
+	* @param[in] _pos     描画座標
+	* @param[in] _color   文字色
+	*/
+	void Draw(LPCSTR _pString, D3DXVECTOR2 _pos,D3DCOLOR _color);
+
 private:
 };
 
