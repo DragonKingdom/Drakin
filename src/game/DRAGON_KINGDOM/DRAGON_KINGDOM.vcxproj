@@ -140,6 +140,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneFactory.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="SelectMenu.cpp" />
     <ClCompile Include="Sky.cpp" />
     <ClCompile Include="StateManager.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -201,6 +202,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneFactory.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="SelectMenu.h" />
     <ClInclude Include="Sky.h" />
     <ClInclude Include="StateManager.h" />
     <ClInclude Include="stdafx.h" />

@@ -5,8 +5,9 @@
 #include <d3dx9.h>
 #include <tchar.h>
 
-GameScene::GameScene():
-	Scene(SceneID::SCENE_GAME)
+GameScene::GameScene(FileSaveLoad* _pFileSaveLoad, bool _isContinue) :
+	Scene(SceneID::SCENE_GAME),
+	m_pFileSaveLoad(_pFileSaveLoad)
 {
 	// nowloadingd表示する画像読み込み
 	Texture NowLosdingTexture;
@@ -35,24 +36,22 @@ GameScene::GameScene():
 	m_pDebugMode = new DebugMode(m_pClickPosConverter);
 
 
+
+	// 続きからを選択されたらセーブデータを読む
+	if (_isContinue == true)
+	{
+		// ファイルを読む
+		FileLoad();
+	}
+	
+
+
 	// スレッド落とす
 	m_pNowLoading->ThreadDestroy();
 
 	NowLosdingTexture.Release();
 
 	
-	/// @todo 一時的なテストコード
-
-	// ファイルを読む
-	FileSaveLoad SaveLoad;
-	SaveLoad.FileLoadInit("testKingdom.save");
-
-	m_pGameData->Load(&SaveLoad);
-
-	// ファイルを閉じる
-	SaveLoad.FileLoadEnd();
-
-
 	m_XAudio.SoundPlay(0,true);
 }
 
@@ -127,4 +126,21 @@ void GameScene::Draw()
 	m_pCameraController->Draw();
 
 	m_pDebugMode->DebugDisplay();
+}
+
+
+void GameScene::FileLoad()
+{
+	// タイトルでファイルは開かれるのであとは読んで閉じる
+
+	// データを取得
+	m_pGameData->Load(m_pFileSaveLoad);
+
+	// ファイルを閉じる
+	m_pFileSaveLoad->FileLoadEnd();
+}
+
+void GameScene::FileSave()
+{
+
 }

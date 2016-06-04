@@ -7,9 +7,12 @@
 
 #include "TitleScene.h"
 #include "TextureManager.h"
+#include "FileSaveLoad.h"
 
-TitleScene::TitleScene()
-	: Scene(SceneID::SCENE_TITLE)
+TitleScene::TitleScene(FileSaveLoad* _pFileSaveLoad): 
+Scene(SceneID::SCENE_TITLE),
+m_pFileSaveLoad(_pFileSaveLoad),
+m_menu(_pFileSaveLoad)
 {
 }
 

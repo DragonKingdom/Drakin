@@ -9,6 +9,7 @@
 #define SCENEFACTORY_H
 
 class Scene;
+class FileSaveLoad;
 
 /// シーンファクトリークラス
 /**
@@ -35,11 +36,21 @@ public:
 	 */
 	Scene* CreateScene(SceneID _sceneID);
 
+	/*
+	 * 初期化
+	 */
+	void Init(FileSaveLoad* _pFileSaveLoad)
+	{
+		m_pFileSaveLoad = _pFileSaveLoad;
+	}
+
 	virtual ~SceneFactory() {}
 
 private:
 	SceneFactory() {}
 	DISALLOW_COPY_AND_ASSIGN(SceneFactory);
+	FileSaveLoad* m_pFileSaveLoad;
+
 };
 
 #endif // SCENEFACTORY_H

@@ -8,6 +8,7 @@
 #include "TitleMenu.h"
 #include "TextureManager.h"
 #include "TitleMenuButton.h"
+#include "FileSaveLoad.h"
 
 //----------------------------------------------------------------------
 namespace 
@@ -24,8 +25,10 @@ const Vertex::FRECT kTexMenuExitCoord(0.0f, 263.0f, 438.0f, 350.0f);
 //----------------------------------------------------------------------
 
 
-TitleMenu::TitleMenu()
-	: m_visible(false)
+TitleMenu::TitleMenu(FileSaveLoad* _pFileSaveLoad):
+m_pFileSaveLoad(_pFileSaveLoad),
+m_visible(false),
+m_isSelectMenu(false)
 {
 	/// @todo ボタンの位置は現物合わせで決め打ちしているが、仕様として欲しい
 	D3DXVECTOR2 center;
@@ -73,6 +76,12 @@ SceneID TitleMenu::Control()
 				nextScene = SceneID::SCENE_GAME;
 				break;
 			case 1:
+				/// @todo 読み込むファイルを選ぶようにする
+				m_isSelectMenu = true;
+
+				m_pFileSaveLoad->FileLoadInit("Save/TestKingdom.save");
+
+				nextScene = SceneID::SCENE_CONTINUE_GAME;
 				break;
 			case 2:
 				break;

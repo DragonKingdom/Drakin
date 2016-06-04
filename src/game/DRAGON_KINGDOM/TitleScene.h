@@ -14,10 +14,12 @@
 #include "TitlePushToStart.h"
 #include "TitleMenu.h"
 
+class FileSaveLoad;
+
 /// タイトルシーンクラス
 class TitleScene : public Scene {
 public:
-	TitleScene();
+	TitleScene(FileSaveLoad* _pFileSaveLoad);
 	virtual ~TitleScene();
 
 	virtual SceneID Control();
@@ -30,6 +32,7 @@ private:
 	TitleLogo m_logo;
 	TitlePushToStart m_pushToStart;
 	TitleMenu m_menu;
+	FileSaveLoad*	m_pFileSaveLoad;
 
 	DISALLOW_COPY_AND_ASSIGN(TitleScene);
 };

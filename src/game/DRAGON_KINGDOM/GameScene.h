@@ -21,6 +21,8 @@
 #include "DebugMode.h"
 #include "NowLoading.h"
 
+class FileSaveLoad;
+
 /**
  * ゲームシーンを管理するクラス
  */
@@ -60,10 +62,21 @@ private:
 
 	DebugMode* m_pDebugMode;
 
+	FileSaveLoad*	m_pFileSaveLoad;
+
+	/**
+	 * セーブファイルを読み込む関数
+	 */
+	void FileLoad();
+
+	/**
+	 * セーブファイルを作成する関数
+	 */
+	void FileSave();
 
 public:
 
-	GameScene();
+	GameScene(FileSaveLoad* _pFileSaveLoad, bool _isContinue);
 	~GameScene();
 
 	virtual SceneID Control();

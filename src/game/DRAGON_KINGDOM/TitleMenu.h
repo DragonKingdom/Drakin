@@ -10,12 +10,13 @@
 
 class TitleMenuButton;
 class Collision;
+class FileSaveLoad;
 
 /// タイトル画面のメニュークラス
 class TitleMenu
 {
 public:
-	TitleMenu();
+	TitleMenu(FileSaveLoad* _pFileSaveLoad);
 	virtual ~TitleMenu();
 
 	SceneID Control();
@@ -27,6 +28,8 @@ protected:
 
 private:
 	std::vector<TitleMenuButton*> m_buttons;
+	FileSaveLoad* m_pFileSaveLoad;
+	bool m_isSelectMenu;
 
 	DISALLOW_COPY_AND_ASSIGN(TitleMenu);
 
