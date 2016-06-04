@@ -1,7 +1,8 @@
 #include "GameScene.h"
 #include "GameData.h"
-#include <d3dx9.h>
 #include "TextureManager.h"
+#include "FileSaveLoad.h"
+#include <d3dx9.h>
 #include <tchar.h>
 
 GameScene::GameScene():
@@ -39,8 +40,19 @@ GameScene::GameScene():
 
 	NowLosdingTexture.Release();
 
-	/// @todo サウンド関連は用意してなかったのでとりあえずBGMだけ流せるように あとよろ
 	
+	/// @todo 一時的なテストコード
+
+	// ファイルを読む
+	FileSaveLoad SaveLoad;
+	SaveLoad.FileLoadInit("testKingdom.save");
+
+	m_pGameData->Load(&SaveLoad);
+
+	// ファイルを閉じる
+	SaveLoad.FileLoadEnd();
+
+
 	m_XAudio.SoundPlay(0,true);
 }
 

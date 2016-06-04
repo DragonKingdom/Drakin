@@ -6,6 +6,7 @@
 #ifndef GAMEDATA_H
 #define GAMEDATA_H
 
+class FileSaveLoad;
 
 /// @todo Time構造体の定義場所
 struct Time
@@ -48,8 +49,8 @@ public:
 	};
 
 	/// @todo ファイル入出力はこいつがやる感じでいいのかな
-	void Load(int _dataID);
-	void Save(int _dataID);
+	void Load(FileSaveLoad* _pFileSaveLoad);
+	void Save(FileSaveLoad* _pFileSaveLoad);
 
 	/**
 	 * ゲーム内時間をセットする関数

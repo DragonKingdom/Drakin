@@ -113,6 +113,7 @@
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="DebugMode.cpp" />
     <ClCompile Include="FadeInOut.cpp" />
+    <ClCompile Include="FileSaveLoad.cpp" />
     <ClCompile Include="GameData.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="Ground.cpp" />
@@ -174,6 +175,7 @@
     <ClInclude Include="CommonDeclaration.h" />
     <ClInclude Include="DebugMode.h" />
     <ClInclude Include="FadeInOut.h" />
+    <ClInclude Include="FileSaveLoad.h" />
     <ClInclude Include="GameData.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="Ground.h" />

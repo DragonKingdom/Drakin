@@ -103,6 +103,7 @@ public:
 	/**
 	 * グループを作成する
 	 * @param[in] _pGroupName 作成するグループの名前
+	 * @param[in] セットするデータが入ったvectorのアドレス
 	 * @return 成功したら:true 失敗したら:false
 	 */
 	bool CreateGroup(char* _pGroupName, std::vector<int>* _pGroupMemberData);
