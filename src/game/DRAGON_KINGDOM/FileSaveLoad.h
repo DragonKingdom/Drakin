@@ -116,6 +116,14 @@ public:
 	bool CreateGroup(char* _pGroupName, std::vector<int>* _pGroupMemberData);
 
 	/**
+	* グループを作成する
+	* @param[in] _pGroupName 作成するグループの名前
+	* @param[in] セットするデータが入ったvectorのアドレス
+	* @return 成功したら:true 失敗したら:false
+	*/
+	bool CreateGroup(char* _pGroupName, std::vector<std::string>* _pGroupMemberData);
+
+	/**
 	 * ファイルをセーブする
 	 * @return 成功したら:true 失敗したら:false
 	 */
@@ -137,6 +145,11 @@ private:
 	// 現在チェックしてるグループが格納される
 	char*   m_pGroupBuffer;
 
+	// ファイル読み込みモードになってるかのフラグ
+	bool isFileLoadMode;
+
+	// ファイル書き込みモードになってるかのフラグ
+	bool isFileSaveMode;
 
 };
 

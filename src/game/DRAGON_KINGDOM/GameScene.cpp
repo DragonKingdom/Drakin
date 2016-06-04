@@ -43,7 +43,6 @@ GameScene::GameScene(FileSaveLoad* _pFileSaveLoad, bool _isContinue) :
 		// ファイルを読む
 		FileLoad();
 	}
-	
 
 
 	// スレッド落とす
@@ -142,5 +141,16 @@ void GameScene::FileLoad()
 
 void GameScene::FileSave()
 {
+	// ファイルを開く
+	m_pFileSaveLoad->FileSaveInit("Save/Test.save", LARGE_SAVE_FILE);
 
+	// GameDataのデータを入れてもらう
+	m_pGameData->Save(m_pFileSaveLoad);
+
+
+	// ファイルに書き込む
+	m_pFileSaveLoad->FileSave();
+
+	// ファイルを閉じる
+	m_pFileSaveLoad->FileSaveEnd();
 }
