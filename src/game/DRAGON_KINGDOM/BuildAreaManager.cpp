@@ -95,6 +95,7 @@ void BuildAreaManager::AreaBuildControl()
 	case STATE::CREATE:
 		/// @todo BuildAreaの長さ0でも作成できるようになってしまってる気がする
 		// とりあえずでやってみた
+		
 		if (RoadLinkStart)
 		{
 			if (roadStartAngle < 0)
@@ -102,10 +103,18 @@ void BuildAreaManager::AreaBuildControl()
 				roadStartAngle = 360.f + roadStartAngle;
 			}
 			float roadAngle = D3DXToDegree(atan2(EndPos.z - StartPos.z, EndPos.x - StartPos.x));
+			//繋げられている道のStartPosからの場合、指定座標のEndPosからStartPosの角度を取らないと行けない、EndPosの場合反対
+			float roadAngle2 = D3DXToDegree(atan2(StartPos.z - EndPos.z, StartPos.x - EndPos.x));//テスト用
+
 			if (roadAngle < 0)
 			{
 				roadAngle = 360.f + roadAngle;
 			}
+			if (roadAngle2 < 0)
+			{
+				roadAngle2 = 360.f + roadAngle2;
+			}
+
 			roadStartAngle = roadAngle - roadStartAngle;
 		}
 
@@ -115,20 +124,28 @@ void BuildAreaManager::AreaBuildControl()
 			{
 				roadEndAngle = 360.f + roadEndAngle;
 			}
-			float roadAngle = D3DXToDegree(atan2(EndPos.z - StartPos.z, EndPos.x - StartPos.x));
+			float roadAngle = D3DXToDegree(atan2(StartPos.z - EndPos.z, StartPos.x - EndPos.x ));
+			//繋げられている道のEndPosからの場合、指定座標のEndPosからStartPosの角度を取らないと行けない、EndPosの場合反対
+			float roadAngle2 = D3DXToDegree(atan2(EndPos.z - StartPos.z, EndPos.x - StartPos.x));//テスト用
+
 			if (roadAngle < 0)
 			{
 				roadAngle = 360.f + roadAngle;
 			}
+			if (roadAngle2 < 0)
+			{
+				roadAngle2 = 360.f + roadAngle2;
+			}
+
 			roadEndAngle = roadAngle - roadEndAngle;
 		}
 
+		bool roadStartAngleOver = RoadAngleCheck(roadStartAngle);
+		bool roadEndAngleOver = RoadAngleCheck(roadEndAngle);
 
 		//道が90度以上の急な道は作れない
-		if (roadStartAngle > 270.f && RoadLinkStart || 
-			roadStartAngle < -270.f && RoadLinkStart ||
-			roadStartAngle > -90.f && roadStartAngle < 0 && RoadLinkStart || 
-			roadStartAngle < 90.f && roadStartAngle > 0 && RoadLinkStart ||
+		if (roadStartAngleOver && RoadLinkStart && 
+			roadEndAngleOver && RoadLinkEnd ||
 			RoadLinkStart == false && RoadLinkEnd == false)
 		{
 			BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild(true, roadStartAngle, RoadLinkStart);
@@ -137,6 +154,30 @@ void BuildAreaManager::AreaBuildControl()
 			pBuildArea = m_pBuildAreaBuilder->AreaBuild(false, roadStartAngle, RoadLinkStart);
 			m_pBuildArea.push_back(pBuildArea);
 		}
+		else if (roadStartAngleOver && RoadLinkStart && RoadLinkEnd == false ||
+				 roadEndAngleOver && RoadLinkEnd && RoadLinkStart == false)
+		{
+			BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild(true, roadStartAngle, RoadLinkStart);
+			m_pBuildArea.push_back(pBuildArea);
+
+			pBuildArea = m_pBuildAreaBuilder->AreaBuild(false, roadStartAngle, RoadLinkStart);
+			m_pBuildArea.push_back(pBuildArea);
+		}
+
+		//道が90度以上の急な道は作れない
+		//if (roadStartAngle > 270.f && RoadLinkStart ||
+		//	roadStartAngle < -270.f && RoadLinkStart ||
+		//	roadStartAngle > -90.f && roadStartAngle < 0 && RoadLinkStart ||
+		//	roadStartAngle < 90.f && roadStartAngle > 0 && RoadLinkStart ||
+		//	RoadLinkStart == false && RoadLinkEnd == false)
+		//{
+		//	BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild(true, roadStartAngle, RoadLinkStart);
+		//	m_pBuildArea.push_back(pBuildArea);
+
+		//	pBuildArea = m_pBuildAreaBuilder->AreaBuild(false, roadStartAngle, RoadLinkStart);
+		//	m_pBuildArea.push_back(pBuildArea);
+		//}
+
 
 		// 次のために初期化
 		m_pBuildAreaBuilder->InitStartPos();
@@ -211,6 +252,18 @@ bool BuildAreaManager::BuildAreaCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pSta
 		{
 			return true;
 		}
+	}
+	return false;
+}
+
+bool BuildAreaManager::RoadAngleCheck(float _roadAngle)
+{
+	if (_roadAngle > 270.f ||
+		_roadAngle < -270.f ||
+		_roadAngle > -90.f && _roadAngle < 0 ||
+		_roadAngle < 90.f && _roadAngle > 0)
+	{
+		return true;
 	}
 	return false;
 }
