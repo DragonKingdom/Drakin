@@ -110,6 +110,21 @@ void BuildAreaManager::AreaBuildControl()
 			angle = roadAngle - roadStartAngle;
 		}
 
+		if (RoadLinkEnd)
+		{
+			if (roadEndAngle < 0)
+			{
+				roadEndAngle = 360.f + roadEndAngle;
+			}
+			float roadAngle = D3DXToDegree(atan2(EndPos.z - StartPos.z, EndPos.x - StartPos.x));
+			if (roadAngle < 0)
+			{
+				roadAngle = 360.f + roadAngle;
+			}
+			angle = roadAngle - roadEndAngle;
+		}
+
+
 		//“¹‚ª90“xˆÈã‚Ì‹}‚È“¹‚Íì‚ê‚È‚¢
 		if (angle > 270.f && RoadLinkStart || 
 			angle < -270.f && RoadLinkStart ||
