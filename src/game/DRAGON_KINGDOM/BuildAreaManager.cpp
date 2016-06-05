@@ -95,7 +95,6 @@ void BuildAreaManager::AreaBuildControl()
 	case STATE::CREATE:
 		/// @todo BuildArea‚Ì’·‚³0‚Å‚àì¬‚Å‚«‚é‚æ‚¤‚É‚È‚Á‚Ä‚µ‚Ü‚Á‚Ä‚é‹C‚ª‚·‚é
 		// ‚Æ‚è‚ ‚¦‚¸‚Å‚â‚Á‚Ä‚İ‚½
-		float angle = 0;
 		if (RoadLinkStart)
 		{
 			if (roadStartAngle < 0)
@@ -107,7 +106,7 @@ void BuildAreaManager::AreaBuildControl()
 			{
 				roadAngle = 360.f + roadAngle;
 			}
-			angle = roadAngle - roadStartAngle;
+			roadStartAngle = roadAngle - roadStartAngle;
 		}
 
 		if (RoadLinkEnd)
@@ -121,21 +120,21 @@ void BuildAreaManager::AreaBuildControl()
 			{
 				roadAngle = 360.f + roadAngle;
 			}
-			angle = roadAngle - roadEndAngle;
+			roadEndAngle = roadAngle - roadEndAngle;
 		}
 
 
 		//“¹‚ª90“xˆÈã‚Ì‹}‚È“¹‚Íì‚ê‚È‚¢
-		if (angle > 270.f && RoadLinkStart || 
-			angle < -270.f && RoadLinkStart ||
-			angle > -90.f && angle < 0 && RoadLinkStart || 
-			angle < 90.f && angle > 0 && RoadLinkStart ||
-			RoadLinkStart == false)
+		if (roadStartAngle > 270.f && RoadLinkStart || 
+			roadStartAngle < -270.f && RoadLinkStart ||
+			roadStartAngle > -90.f && roadStartAngle < 0 && RoadLinkStart || 
+			roadStartAngle < 90.f && roadStartAngle > 0 && RoadLinkStart ||
+			RoadLinkStart == false && RoadLinkEnd == false)
 		{
-			BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild(true, angle, RoadLinkStart);
+			BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild(true, roadStartAngle, RoadLinkStart);
 			m_pBuildArea.push_back(pBuildArea);
 
-			pBuildArea = m_pBuildAreaBuilder->AreaBuild(false, angle, RoadLinkStart);
+			pBuildArea = m_pBuildAreaBuilder->AreaBuild(false, roadStartAngle, RoadLinkStart);
 			m_pBuildArea.push_back(pBuildArea);
 		}
 

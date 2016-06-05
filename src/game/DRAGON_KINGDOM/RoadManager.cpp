@@ -114,7 +114,7 @@ void RoadManager::BuildControl()
 			angle < -270.f && RoadLinkStart ||
 			angle > -90.f && angle < 0 && RoadLinkStart ||
 			angle < 90.f && angle > 0 && RoadLinkStart ||
-			RoadLinkStart == false)
+			RoadLinkStart == false && RoadLinkEnd == false)
 		{
 			Road* pRoad = m_pRoadBuilder->RoadBuild();
 			m_pRoad.push_back(pRoad);
