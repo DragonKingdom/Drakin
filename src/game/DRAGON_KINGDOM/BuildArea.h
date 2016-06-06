@@ -5,7 +5,7 @@ class LSS;
 class BuildArea
 {
 public:
-	BuildArea(bool _isLeft, D3DXVECTOR3 _roadStartPos, D3DXVECTOR3 _roadEndPos, float _angle, float _roadLinkAngle,bool _roadLinkStart);
+	BuildArea(bool _isLeft, D3DXVECTOR3 _roadStartPos, D3DXVECTOR3 _roadEndPos, float _angle, float _roadStartAngle, float _roadEndAngle, bool _roadLinkStart, bool _roadLinkEnd);
 	~BuildArea();
 	void Draw();
 	bool AreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle);
@@ -26,7 +26,8 @@ private:
 	float m_tu[4];	/*テクスチャ座標*/
 	float m_tv[4];	/*テクスチャ座標*/
 	float m_angle;	/*傾き*/
-	float m_roadLinkAngle; /*道が繋がっていた場所からの角度*/ 
+	float m_roadStartAngle; /*道が繋がっていた場所からの角度*/
+	float m_roadEndAngle; /*道が繋がっていた場所からの角度*/
 	int	  m_length;
 	BYTE  m_AreaData;	/*エリアの上に何か乗っかってるか*/
 	
@@ -37,6 +38,7 @@ private:
 	float MousePosX;
 	float MousePosZ;
 
+	bool RoadAngleCheck(float _roadAngle);
 	//シェーダーを適用するクラス
 	LSS* m_pLSS;
 

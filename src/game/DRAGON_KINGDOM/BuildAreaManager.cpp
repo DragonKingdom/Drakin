@@ -160,36 +160,21 @@ void BuildAreaManager::AreaBuildControl()
 			roadEndAngleOver && EndPosLink ||
 			StartPosLink == false && EndPosLink == false)
 		{
-			BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild(true, roadStartAngle, StartPosLink);
+			BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild(true, roadStartAngle, roadEndAngle, StartPosLink, EndPosLink);
 			m_pBuildArea.push_back(pBuildArea);
 
-			pBuildArea = m_pBuildAreaBuilder->AreaBuild(false, roadStartAngle, StartPosLink);
+			pBuildArea = m_pBuildAreaBuilder->AreaBuild(false, roadStartAngle, roadEndAngle, StartPosLink, EndPosLink);
 			m_pBuildArea.push_back(pBuildArea);
 		}
 		else if (roadStartAngleOver && StartPosLink && EndPosLink == false ||
 				 roadEndAngleOver && EndPosLink && StartPosLink == false)
 		{
-			BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild(true, roadStartAngle, StartPosLink);
+			BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild(true,roadStartAngle, roadEndAngle, StartPosLink, EndPosLink);
 			m_pBuildArea.push_back(pBuildArea);
 
-			pBuildArea = m_pBuildAreaBuilder->AreaBuild(false, roadStartAngle, StartPosLink);
+			pBuildArea = m_pBuildAreaBuilder->AreaBuild(false, roadStartAngle, roadEndAngle, StartPosLink, EndPosLink);
 			m_pBuildArea.push_back(pBuildArea);
 		}
-
-		//“¹‚ª90“xˆÈã‚Ì‹}‚È“¹‚Íì‚ê‚È‚¢
-		//if (roadStartAngle > 270.f && StartPosLink ||
-		//	roadStartAngle < -270.f && StartPosLink ||
-		//	roadStartAngle > -90.f && roadStartAngle < 0 && StartPosLink ||
-		//	roadStartAngle < 90.f && roadStartAngle > 0 && StartPosLink ||
-		//	StartPosLink == false && EndPosLink == false)
-		//{
-		//	BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild(true, roadStartAngle, StartPosLink);
-		//	m_pBuildArea.push_back(pBuildArea);
-
-		//	pBuildArea = m_pBuildAreaBuilder->AreaBuild(false, roadStartAngle, StartPosLink);
-		//	m_pBuildArea.push_back(pBuildArea);
-		//}
-
 
 		// ŽŸ‚Ì‚½‚ß‚É‰Šú‰»
 		m_pBuildAreaBuilder->InitStartPos();
