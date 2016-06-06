@@ -60,6 +60,8 @@ void BuildAreaManager::AreaBuildControl()
 			{
 				StartPosLink = false;
 				EndPosLink = false;
+				roadLinkStart_StartPos = false;
+				roadLinkEnd_StartPos = false;
 				roadStartAngle = 0.f;
 				roadEndAngle = 0.f;	
 				MousePos = m_pInputDevice->GetMousePos();

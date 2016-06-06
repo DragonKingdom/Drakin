@@ -38,9 +38,14 @@ void RoadManager::BuildControl()
 	static D3DXVECTOR3 EndPos;
 	D3DXVECTOR2 MousePos;
 	//StartPosで道が繋がっているかのフラグ
-	static bool RoadLinkStart;
+	static bool StartPosLink;
 	//EndPosで道が繋がっているかのフラグ
-	static bool RoadLinkEnd;
+	static bool EndPosLink;
+	//StartPosで繋げられた道が始点か？
+	static bool roadLinkStart_StartPos;
+	//EndPosで繋げられた道が始点か？
+	static bool roadLinkEnd_StartPos;
+
 	static float roadStartAngle = 0.f;
 	static float roadEndAngle = 0.f;
 
@@ -54,13 +59,15 @@ void RoadManager::BuildControl()
 				/// @todo マウスの位置がUIとかぶってた場合の処理も考えとく
 
 				// 取得したマウスの座標を3d空間上の座標に変換して渡す
-				RoadLinkStart = false;
-				RoadLinkEnd = false;
+				StartPosLink = false;
+				EndPosLink = false;
+				roadLinkStart_StartPos = false;
+				roadLinkEnd_StartPos = false;
 				roadStartAngle = 0.f;
 				roadEndAngle = 0.f;
 				MousePos = m_pInputDevice->GetMousePos();
 				m_pClickPosConverter->ConvertForLoad(&StartPos, int(MousePos.x), int(MousePos.y));
-				RoadLinkStart = RoadCheck(&StartPos, &StartPos, &roadStartAngle);
+				StartPosLink = RoadCheck(&StartPos, &StartPos, &roadStartAngle, &roadLinkStart_StartPos);
 				m_pRoadBuilder->StartPosSet(StartPos);
 				m_state = STATE::END_POS_SET;
 			}
@@ -71,7 +78,7 @@ void RoadManager::BuildControl()
 		// 取得したマウスの座標を3d空間上の座標に変換して渡す
 		MousePos = m_pInputDevice->GetMousePos();
 		m_pClickPosConverter->ConvertForLoad(&EndPos, int(MousePos.x), int(MousePos.y));
-		RoadLinkEnd = RoadCheck(&EndPos, &EndPos, &roadEndAngle);
+		EndPosLink = RoadCheck(&EndPos, &EndPos, &roadEndAngle, &roadLinkEnd_StartPos);
 		m_pRoadBuilder->EndPosSet(EndPos);
 
 		if (m_pInputDevice->MouseLeftPush())
@@ -94,27 +101,69 @@ void RoadManager::BuildControl()
 	case STATE::CREATE:
 		/// @todo 道の長さ0でも作れてしまう気がする
 		// 道を生成する
-		float angle = 0;
-		if (RoadLinkStart)
+		if (StartPosLink)
 		{
 			if (roadStartAngle < 0)
 			{
 				roadStartAngle = 360.f + roadStartAngle;
 			}
-			float roadAngle = D3DXToDegree(atan2(EndPos.z - StartPos.z, EndPos.x - StartPos.x));
+			float roadAngle;
+			if (roadLinkStart_StartPos)
+			{
+				//繋げられている道のStartPosからの場合、指定座標のEndPosからStartPosの角度を取らないと行けない、EndPosの場合反対
+				roadAngle = D3DXToDegree(atan2(StartPos.z - EndPos.z, StartPos.x - EndPos.x));
+			}
+			else
+			{
+				roadAngle = D3DXToDegree(atan2(EndPos.z - StartPos.z, EndPos.x - StartPos.x));
+			}
+
 			if (roadAngle < 0)
 			{
 				roadAngle = 360.f + roadAngle;
 			}
+
 			roadStartAngle = roadAngle - roadStartAngle;
 		}
 
+		if (EndPosLink)
+		{
+			if (roadEndAngle < 0)
+			{
+				roadEndAngle = 360.f + roadEndAngle;
+			}
+			float roadAngle;
+			if (roadLinkEnd_StartPos)
+			{
+				roadAngle = D3DXToDegree(atan2(EndPos.z - StartPos.z, EndPos.x - StartPos.x));
+			}
+			else
+			{
+				//繋げられている道のEndPosからの場合、指定座標のEndPosからStartPosの角度を取らないと行けない、EndPosの場合反対
+				roadAngle = D3DXToDegree(atan2(StartPos.z - EndPos.z, StartPos.x - EndPos.x));
+			}
+
+			if (roadAngle < 0)
+			{
+				roadAngle = 360.f + roadAngle;
+			}
+
+			roadEndAngle = roadAngle - roadEndAngle;
+		}
+
+		bool roadStartAngleOver = RoadAngleCheck(roadStartAngle);
+		bool roadEndAngleOver = RoadAngleCheck(roadEndAngle);
+
 		//道が90度以上の急な道は作れない
-		if (roadStartAngle > 270.f && RoadLinkStart ||
-			roadStartAngle < -270.f && RoadLinkStart ||
-			roadStartAngle > -90.f && roadStartAngle < 0 && RoadLinkStart ||
-			roadStartAngle < 90.f && roadStartAngle > 0 && RoadLinkStart ||
-			RoadLinkStart == false && RoadLinkEnd == false)
+		if (roadStartAngleOver && StartPosLink &&
+			roadEndAngleOver && EndPosLink ||
+			StartPosLink == false && EndPosLink == false)
+		{
+			Road* pRoad = m_pRoadBuilder->RoadBuild();
+			m_pRoad.push_back(pRoad);
+		}
+		else if (roadStartAngleOver && StartPosLink && EndPosLink == false ||
+			roadEndAngleOver && EndPosLink && StartPosLink == false)
 		{
 			Road* pRoad = m_pRoadBuilder->RoadBuild();
 			m_pRoad.push_back(pRoad);
@@ -161,7 +210,7 @@ void RoadManager::SetGameData()
 
 }
 
-bool RoadManager::RoadCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pStartOrEndPos, float* _outputAngleDegree)
+bool RoadManager::RoadCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pStartOrEndPos, float* _outputAngleDegree, bool* _startPos)
 {
 	int BuildAreaMax = m_pRoad.size();
 	if (BuildAreaMax == 0)
@@ -171,10 +220,23 @@ bool RoadManager::RoadCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pStartOrEndPos
 
 	for (int i = 0; i < BuildAreaMax; i++)
 	{
-		if (m_pRoad[i]->GetStartOrEndPos(_checkPos, _pStartOrEndPos, _outputAngleDegree))
+		if (m_pRoad[i]->GetStartOrEndPos(_checkPos, _pStartOrEndPos, _outputAngleDegree, _startPos))
 		{
 			return true;
 		}
 	}
 	return false;
 }
+
+bool RoadManager::RoadAngleCheck(float _roadAngle)
+{
+	if (_roadAngle > 270.f ||
+		_roadAngle < -270.f ||
+		_roadAngle > -90.f && _roadAngle < 0 ||
+		_roadAngle < 90.f && _roadAngle > 0)
+	{
+		return true;
+	}
+	return false;
+}
+
