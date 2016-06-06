@@ -75,8 +75,8 @@ void House::Draw()
 
 	GraphicsDevice::getInstance().GetDevice()->SetRenderState(D3DRS_ZENABLE, TRUE);
 
-	m_pLSS->BeginPass(1,0);
-	m_pModel->Draw(1);
+	m_pLSS->BeginPass(1,1);
+	m_pModel->Draw();
 	m_pLSS->EndPass();
 	m_pLSS->End();
 }

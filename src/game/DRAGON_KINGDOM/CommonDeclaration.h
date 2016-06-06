@@ -38,6 +38,8 @@ enum SceneID
 
 #define ROAD_W_SIZE 500.f
 #define ROAD_H_SIZE 500.f
+#define BULDAREA_LINK 5
+
 
 /// ƒQ[ƒ€ƒV[ƒ“‚Ìó‘Ô
 enum GAMESCENE_STATE

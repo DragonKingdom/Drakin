@@ -63,6 +63,17 @@ private:
 	GameData*						m_pGameData;
 	InputDeviceFacade*				m_pInputDevice;
 
+	/**
+	* 道を繋げるために使う敷かれている道をチェックして近くに道があれば、そこのstartposまたはendposとangleを渡す
+	* @param[in] _checkPos チェックしたい座標
+	* @param[in] _pStartOrEndPos startposまたはendpos
+	* @param[in] _outputAngleDegree 見つけた道の角度
+	* @return 周辺に道がなければfalseを返す
+	*/
+	bool BuildAreaCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pStartOrEndPos, float* _outputAngleDegree, bool* _startPos);
+
+	bool RoadAngleCheck(float _roadAngle);
+
 	/// @todo テスト用
 	ClickPosConverter* m_pClickPosConverter;
 };

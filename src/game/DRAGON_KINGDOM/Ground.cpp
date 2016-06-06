@@ -57,11 +57,12 @@ void Ground::Draw()
 	m_pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 	m_pDevice->SetRenderState( D3DRS_ZENABLE, TRUE );
 
-	m_pLSS->BeginPass(1,0);
+	m_pLSS->BeginPass(1,1);
+	//m_pLSS->BeginPass(1,0);
 
 	// •`‰æ
-	m_pGroundModel->Draw(1);
-	m_pMountainModel->Draw(1);
+	m_pGroundModel->Draw(0);
+	m_pMountainModel->Draw(0);
 
 	m_pLSS->EndPass();
 	m_pLSS->End();

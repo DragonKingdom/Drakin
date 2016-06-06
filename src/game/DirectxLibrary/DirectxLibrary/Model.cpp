@@ -125,7 +125,7 @@ void Model::Draw()
 		m_pMeshMaterials[i].Diffuse = m_pMeshMaterials[i].Emissive = m_pMeshMaterials[i].Specular = m_pMeshMaterials[i].Ambient;
 		
 		m_pDevice->SetMaterial(&m_pMeshMaterials[i]);
-		m_pDevice->SetTexture(1, m_pTextures[i]);
+		m_pDevice->SetTexture(0, m_pTextures[i]);
 		m_pMesh->DrawSubset(i);
 	}
 }

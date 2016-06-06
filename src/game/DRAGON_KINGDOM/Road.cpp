@@ -12,12 +12,15 @@ m_pLSS(new LSS())
 	m_pRoad[0].x = m_StartPos.x + (ROAD_W_SIZE / 2) * sin(m_angle);
 	m_pRoad[0].y = 20.f;
 	m_pRoad[0].z = m_StartPos.z + (ROAD_W_SIZE / 2) * -cos(m_angle);
+	
 	m_pRoad[1].x = m_StartPos.x + -(ROAD_W_SIZE / 2) * sin(m_angle);
 	m_pRoad[1].y = 20.f;
 	m_pRoad[1].z = m_StartPos.z + -(ROAD_W_SIZE / 2) * -cos(m_angle);
+	
 	m_pRoad[2].x = m_EndPos.x + -(ROAD_W_SIZE / 2) * sin(m_angle);
 	m_pRoad[2].y = 20.f;
 	m_pRoad[2].z = m_EndPos.z + -(ROAD_W_SIZE / 2) * -cos(m_angle);
+	
 	m_pRoad[3].x = m_EndPos.x + (ROAD_W_SIZE / 2) * sin(m_angle);
 	m_pRoad[3].y = 20.f;
 	m_pRoad[3].z = m_EndPos.z + (ROAD_W_SIZE / 2) * -cos(m_angle);
@@ -76,10 +79,39 @@ void Road::Draw()
 	GraphicsDevice::getInstance().GetDevice()->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 	GraphicsDevice::getInstance().GetDevice()->SetRenderState(D3DRS_ZENABLE, TRUE);
 
-	m_pLSS->BeginPass(1, 0);
-	m_Vertex.VertexDraw(m_Texture, m_pRoad, D3DCOLOR_ARGB(255, 255, 255, 255), 1);
+	m_pLSS->BeginPass(1, 1);
+	m_Vertex.VertexDraw(m_Texture, m_pRoad, D3DCOLOR_ARGB(255, 255, 255, 255), 0);
 	m_pLSS->EndPass();
 	m_pLSS->End();
 
 }
+
+bool Road::GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos, float* _outputAngleDegree, bool* _startPos)
+{
+	double length = pow((_checkPos->x - m_StartPos.x)*(_checkPos->x - m_StartPos.x) +
+					   (_checkPos->z - m_StartPos.z)*(_checkPos->z - m_StartPos.z), 0.5);
+
+	if (length < 3000.f)
+	{
+		*_outputAngleDegree = D3DXToDegree(m_angle);
+		*_outputPos = m_StartPos;
+		*_startPos = true;
+		return true;
+	}
+
+
+	length = pow((_checkPos->x - m_EndPos.x)*(_checkPos->x - m_EndPos.x) +
+				 (_checkPos->z - m_EndPos.z)*(_checkPos->z - m_EndPos.z), 0.5);
+
+	if (length < 3000.f)
+	{
+		*_outputAngleDegree = D3DXToDegree(m_angle);
+		*_outputPos = m_EndPos;
+		*_startPos = false;
+		return true;
+	}
+	return false;
+}
+
+
 
