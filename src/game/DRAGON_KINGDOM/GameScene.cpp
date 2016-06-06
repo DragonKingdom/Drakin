@@ -134,6 +134,7 @@ void GameScene::FileLoad()
 
 	// データを取得
 	m_pGameData->Load(m_pFileSaveLoad);
+	m_pObjectManager->Load(m_pFileSaveLoad);
 
 	// ファイルを閉じる
 	m_pFileSaveLoad->FileLoadEnd();

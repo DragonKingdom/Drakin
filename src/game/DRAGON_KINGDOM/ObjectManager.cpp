@@ -5,6 +5,7 @@
 #include "BuildAreaChecker.h"
 #include "RoadManager.h"
 #include "StateManager.h"
+#include "FileSaveLoad.h"
 #include "LightScatteringSimulation.h"
 
 ObjectManager::ObjectManager(StateManager* _pStateManager, GameData* _pGameData, ClickPosConverter* _pClickPosConverter) :
@@ -88,5 +89,15 @@ void ObjectManager::GetGameData()
 void ObjectManager::SetGameData()
 {
 	m_pHouseManager->SetGameData();
+}
+
+void ObjectManager::Load(FileSaveLoad* _pFileSaveLoad)
+{
+	m_pHouseManager->Load(_pFileSaveLoad);
+}
+
+void ObjectManager::Save(FileSaveLoad* _pFileSaveLoad)
+{
+
 }
 

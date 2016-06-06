@@ -1,2 +1,4 @@
 FileName{moto};
 GameData{16000,3000,100,80,85,};
+HouseVertex{322.863159,0.500000000,891.823120,};
+HouseVertexAngle{0.175367683,};

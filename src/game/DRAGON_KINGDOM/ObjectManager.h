@@ -9,6 +9,7 @@ class RoadManager;
 class BuildAreaManager;
 class BuildAreaChecker;
 class ClickPosConverter;
+class FileSaveLoad;
 class LSS;
 
 class ObjectManager
@@ -23,6 +24,9 @@ public:
 	void SetState();
 	void GetGameData();
 	void SetGameData();
+
+	void Load(FileSaveLoad* _pFileSaveLoad);
+	void Save(FileSaveLoad* _pFileSaveLoad);
 
 private:
 	void BuildControl();
