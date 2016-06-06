@@ -28,7 +28,7 @@ void BuildAreaPreviewer::Draw()
 	// EndPosを原点に戻して、正規化、スケーリングして、もう一度同じ場所に戻す
 	D3DXVECTOR3 Vec = m_EndPos - m_StartPos;
 	D3DXVec3Normalize(&Vec, &Vec);
-	D3DXVec3Scale(&Vec, &Vec, VecLength);
+	D3DXVec3Scale(&Vec, &Vec, float(VecLength));
 	Vec = Vec + m_StartPos;
 
 
