@@ -42,9 +42,13 @@ void BuildAreaManager::AreaBuildControl()
 	static D3DXVECTOR3 EndPos;
 	D3DXVECTOR2 MousePos;
 	//StartPosで道が繋がっているかのフラグ
-	static bool RoadLinkStart;
+	static bool StartPosLink;
 	//EndPosで道が繋がっているかのフラグ
-	static bool RoadLinkEnd;
+	static bool EndPosLink;
+	//StartPosで繋げられた道が始点か？
+	static bool roadLinkStart_StartPos;
+	//EndPosで繋げられた道が始点か？
+	static bool roadLinkEnd_StartPos;
 	static float roadStartAngle = 0.f;
 	static float roadEndAngle = 0.f;
 	switch (m_state)
@@ -54,13 +58,13 @@ void BuildAreaManager::AreaBuildControl()
 		{
 			if (AreaCheck(NULL/*いまのところはNULL*/))
 			{
-				RoadLinkStart = false;
-				RoadLinkEnd = false;
+				StartPosLink = false;
+				EndPosLink = false;
 				roadStartAngle = 0.f;
 				roadEndAngle = 0.f;	
 				MousePos = m_pInputDevice->GetMousePos();
 				m_pClickPosConverter->ConvertForLoad(&StartPos, int(MousePos.x), int(MousePos.y));
-				RoadLinkStart = BuildAreaCheck(&StartPos, &StartPos, &roadStartAngle);
+				StartPosLink = BuildAreaCheck(&StartPos, &StartPos, &roadStartAngle, &roadLinkStart_StartPos);
 				m_pBuildAreaBuilder->StartPosSet(StartPos);
 				m_state = STATE::END_POS_SET;
 			}
@@ -70,7 +74,7 @@ void BuildAreaManager::AreaBuildControl()
 	case STATE::END_POS_SET:
 		MousePos = m_pInputDevice->GetMousePos();
 		m_pClickPosConverter->ConvertForLoad(&EndPos, int(MousePos.x), int(MousePos.y));
-		RoadLinkEnd = BuildAreaCheck(&EndPos, &EndPos, &roadEndAngle);
+		EndPosLink = BuildAreaCheck(&EndPos, &EndPos, &roadEndAngle, &roadLinkEnd_StartPos);
 		m_pBuildAreaBuilder->EndPosSet(EndPos);
 
 		if (m_pInputDevice->MouseLeftPush())
@@ -96,45 +100,51 @@ void BuildAreaManager::AreaBuildControl()
 		/// @todo BuildAreaの長さ0でも作成できるようになってしまってる気がする
 		// とりあえずでやってみた
 		
-		if (RoadLinkStart)
+		if (StartPosLink)
 		{
 			if (roadStartAngle < 0)
 			{
 				roadStartAngle = 360.f + roadStartAngle;
 			}
-			float roadAngle = D3DXToDegree(atan2(EndPos.z - StartPos.z, EndPos.x - StartPos.x));
-			//繋げられている道のStartPosからの場合、指定座標のEndPosからStartPosの角度を取らないと行けない、EndPosの場合反対
-			float roadAngle2 = D3DXToDegree(atan2(StartPos.z - EndPos.z, StartPos.x - EndPos.x));//テスト用
+			float roadAngle;
+			if (roadLinkStart_StartPos)
+			{
+				//繋げられている道のStartPosからの場合、指定座標のEndPosからStartPosの角度を取らないと行けない、EndPosの場合反対
+				roadAngle = D3DXToDegree(atan2(StartPos.z - EndPos.z, StartPos.x - EndPos.x));
+			}
+			else
+			{
+				roadAngle = D3DXToDegree(atan2(EndPos.z - StartPos.z, EndPos.x - StartPos.x));
+			}
 
 			if (roadAngle < 0)
 			{
 				roadAngle = 360.f + roadAngle;
-			}
-			if (roadAngle2 < 0)
-			{
-				roadAngle2 = 360.f + roadAngle2;
 			}
 
 			roadStartAngle = roadAngle - roadStartAngle;
 		}
 
-		if (RoadLinkEnd)
+		if (EndPosLink)
 		{
 			if (roadEndAngle < 0)
 			{
 				roadEndAngle = 360.f + roadEndAngle;
 			}
-			float roadAngle = D3DXToDegree(atan2(StartPos.z - EndPos.z, StartPos.x - EndPos.x ));
-			//繋げられている道のEndPosからの場合、指定座標のEndPosからStartPosの角度を取らないと行けない、EndPosの場合反対
-			float roadAngle2 = D3DXToDegree(atan2(EndPos.z - StartPos.z, EndPos.x - StartPos.x));//テスト用
+			float roadAngle;
+			if (roadLinkEnd_StartPos)
+			{
+				roadAngle = D3DXToDegree(atan2(EndPos.z - StartPos.z, EndPos.x - StartPos.x));
+			}
+			else
+			{
+			    //繋げられている道のEndPosからの場合、指定座標のEndPosからStartPosの角度を取らないと行けない、EndPosの場合反対
+				roadAngle = D3DXToDegree(atan2(StartPos.z - EndPos.z, StartPos.x - EndPos.x));
+			}
 
 			if (roadAngle < 0)
 			{
 				roadAngle = 360.f + roadAngle;
-			}
-			if (roadAngle2 < 0)
-			{
-				roadAngle2 = 360.f + roadAngle2;
 			}
 
 			roadEndAngle = roadAngle - roadEndAngle;
@@ -144,37 +154,37 @@ void BuildAreaManager::AreaBuildControl()
 		bool roadEndAngleOver = RoadAngleCheck(roadEndAngle);
 
 		//道が90度以上の急な道は作れない
-		if (roadStartAngleOver && RoadLinkStart && 
-			roadEndAngleOver && RoadLinkEnd ||
-			RoadLinkStart == false && RoadLinkEnd == false)
+		if (roadStartAngleOver && StartPosLink && 
+			roadEndAngleOver && EndPosLink ||
+			StartPosLink == false && EndPosLink == false)
 		{
-			BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild(true, roadStartAngle, RoadLinkStart);
+			BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild(true, roadStartAngle, StartPosLink);
 			m_pBuildArea.push_back(pBuildArea);
 
-			pBuildArea = m_pBuildAreaBuilder->AreaBuild(false, roadStartAngle, RoadLinkStart);
+			pBuildArea = m_pBuildAreaBuilder->AreaBuild(false, roadStartAngle, StartPosLink);
 			m_pBuildArea.push_back(pBuildArea);
 		}
-		else if (roadStartAngleOver && RoadLinkStart && RoadLinkEnd == false ||
-				 roadEndAngleOver && RoadLinkEnd && RoadLinkStart == false)
+		else if (roadStartAngleOver && StartPosLink && EndPosLink == false ||
+				 roadEndAngleOver && EndPosLink && StartPosLink == false)
 		{
-			BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild(true, roadStartAngle, RoadLinkStart);
+			BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild(true, roadStartAngle, StartPosLink);
 			m_pBuildArea.push_back(pBuildArea);
 
-			pBuildArea = m_pBuildAreaBuilder->AreaBuild(false, roadStartAngle, RoadLinkStart);
+			pBuildArea = m_pBuildAreaBuilder->AreaBuild(false, roadStartAngle, StartPosLink);
 			m_pBuildArea.push_back(pBuildArea);
 		}
 
 		//道が90度以上の急な道は作れない
-		//if (roadStartAngle > 270.f && RoadLinkStart ||
-		//	roadStartAngle < -270.f && RoadLinkStart ||
-		//	roadStartAngle > -90.f && roadStartAngle < 0 && RoadLinkStart ||
-		//	roadStartAngle < 90.f && roadStartAngle > 0 && RoadLinkStart ||
-		//	RoadLinkStart == false && RoadLinkEnd == false)
+		//if (roadStartAngle > 270.f && StartPosLink ||
+		//	roadStartAngle < -270.f && StartPosLink ||
+		//	roadStartAngle > -90.f && roadStartAngle < 0 && StartPosLink ||
+		//	roadStartAngle < 90.f && roadStartAngle > 0 && StartPosLink ||
+		//	StartPosLink == false && EndPosLink == false)
 		//{
-		//	BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild(true, roadStartAngle, RoadLinkStart);
+		//	BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild(true, roadStartAngle, StartPosLink);
 		//	m_pBuildArea.push_back(pBuildArea);
 
-		//	pBuildArea = m_pBuildAreaBuilder->AreaBuild(false, roadStartAngle, RoadLinkStart);
+		//	pBuildArea = m_pBuildAreaBuilder->AreaBuild(false, roadStartAngle, StartPosLink);
 		//	m_pBuildArea.push_back(pBuildArea);
 		//}
 
@@ -238,7 +248,7 @@ bool BuildAreaManager::GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _ce
 	return false;
 }
 
-bool BuildAreaManager::BuildAreaCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pStartOrEndPos, float* _outputAngleDegree)
+bool BuildAreaManager::BuildAreaCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pStartOrEndPos, float* _outputAngleDegree,bool* _startPos)
 {
 	int BuildAreaMax = m_pBuildArea.size();
 	if (BuildAreaMax == 0)
@@ -248,7 +258,7 @@ bool BuildAreaManager::BuildAreaCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pSta
 
 	for (int i = 0; i < BuildAreaMax; i++)
 	{
-		if (m_pBuildArea[i]->GetStartOrEndPos(_checkPos, _pStartOrEndPos,_outputAngleDegree))
+		if (m_pBuildArea[i]->GetStartOrEndPos(_checkPos, _pStartOrEndPos, _outputAngleDegree, _startPos))
 		{
 			return true;
 		}
