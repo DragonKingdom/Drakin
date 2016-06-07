@@ -6,8 +6,8 @@ float4 m_FogColor;              //フォグカラー
 float  m_Param1;                //フォグの計算式のパラメータ１
 float  m_Param2;                //フォグの計算式のパラメータ２
 
-sampler tex0 : register(s0);    //Pass0:空用のCLUTテーブル　Pass1:ライト用CLUTテーブル
-sampler tex1 : register(s1);    //Pass0:雲　　　　　　　　　Pass1:デカールマップ
+sampler tex0 : register(s1);    //Pass0:空用のCLUTテーブル　Pass1:ライト用CLUTテーブル
+sampler tex1 : register(s0);    //Pass0:雲　　　　　　　　　Pass1:デカールマップ
 sampler tex2 : register(s2);    //Pass0:星
 
 //Pass0:空のレンダリング
@@ -57,8 +57,8 @@ VS1_OUTPUT VS1(float4 Pos    : POSITION,
 	Out.Pos = mul(Pos, m_WVPP);
 
 	float3 L = -m_LightDir.xyz;
-		float3 N = normalize(Normal.xyz);
-		Out.Col = max(m_Ambient, dot(N, L));
+	float3 N = normalize(Normal.xyz);
+	Out.Col = max(m_Ambient, dot(N, L));
 	Out.Tex = Tex;
 	Out.LocalPos = Out.Pos;
 

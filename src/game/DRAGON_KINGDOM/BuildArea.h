@@ -5,11 +5,12 @@ class LSS;
 class BuildArea
 {
 public:
-	BuildArea(bool _isLeft, D3DXVECTOR3 _roadStartPos, D3DXVECTOR3 _roadEndPos, float _angle);
+	BuildArea(bool _isLeft, D3DXVECTOR3 _roadStartPos, D3DXVECTOR3 _roadEndPos, float _angle, float _roadStartAngle, float _roadEndAngle, bool _roadLinkStart, bool _roadLinkEnd);
 	~BuildArea();
 	void Draw();
 	bool AreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle);
-
+	bool GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos, float* _outputAngleDegree, bool* _startPos);
+	float GetAngleDegree(){ return D3DXToDegree(m_angle); };
 private:
 	Vertex      m_Vertex;
 	Texture		m_Texture;
@@ -25,7 +26,9 @@ private:
 	float m_tu[4];	/*テクスチャ座標*/
 	float m_tv[4];	/*テクスチャ座標*/
 	float m_angle;	/*傾き*/
-	int m_length;
+	float m_roadStartAngle; /*道が繋がっていた場所からの角度*/
+	float m_roadEndAngle; /*道が繋がっていた場所からの角度*/
+	int	  m_length;
 	BYTE  m_AreaData;	/*エリアの上に何か乗っかってるか*/
 	
 	int m_Z;
@@ -35,9 +38,11 @@ private:
 	float MousePosX;
 	float MousePosZ;
 
+	bool RoadAngleCheck(float _roadAngle);
 	//シェーダーを適用するクラス
 	LSS* m_pLSS;
 
+	//無理やりここで太陽の位置を出しているので今後消す予定
 	D3DXVECTOR4 m_DirectionalVec;
 	D3DXVECTOR4 m_UpVec;
 	D3DXVECTOR4 m_SunPos;
@@ -45,6 +50,7 @@ private:
 	float SunRotation;
 	//太陽の半径
 	float SunRadius;
+	//----------------------------------------------
 
 };
 

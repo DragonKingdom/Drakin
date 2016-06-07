@@ -2,7 +2,7 @@
 #include "Scene.h"
 
 const D3DXVECTOR3 CameraController::LOOK_AT_POS = D3DXVECTOR3(0,0,0);
-const D3DXVECTOR3 CameraController::EYE_POS = D3DXVECTOR3(0,200,-100);
+const D3DXVECTOR3 CameraController::EYE_POS = D3DXVECTOR3(0,200,-200);
 
 CameraController::CameraController(StateManager* pStateManager) :
 	m_pStateManager(pStateManager),
