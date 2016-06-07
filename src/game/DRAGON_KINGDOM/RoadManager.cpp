@@ -41,6 +41,7 @@ void RoadManager::BuildControl()
 	static bool StartPosLink;
 	//EndPosで道が繋がっているかのフラグ
 	static bool EndPosLink;
+
 	//StartPosで繋げられた道が始点か？
 	static bool roadLinkStart_StartPos;
 	//EndPosで繋げられた道が始点か？
@@ -69,6 +70,7 @@ void RoadManager::BuildControl()
 				m_pClickPosConverter->ConvertForLoad(&StartPos, int(MousePos.x), int(MousePos.y));
 				StartPosLink = RoadCheck(&StartPos, &StartPos, &roadStartAngle, &roadLinkStart_StartPos);
 				m_pRoadBuilder->StartPosSet(StartPos);
+				m_pRoadBuilder->StartPosLinkSet(RoadCheck(&StartPos, &StartPos, &roadStartAngle, &roadLinkStart_StartPos));
 				m_state = STATE::END_POS_SET;
 			}
 		}
@@ -80,6 +82,7 @@ void RoadManager::BuildControl()
 		m_pClickPosConverter->ConvertForLoad(&EndPos, int(MousePos.x), int(MousePos.y));
 		EndPosLink = RoadCheck(&EndPos, &EndPos, &roadEndAngle, &roadLinkEnd_StartPos);
 		m_pRoadBuilder->EndPosSet(EndPos);
+		m_pRoadBuilder->EndPosLinkSet(RoadCheck(&EndPos, &EndPos, &roadEndAngle, &roadLinkEnd_StartPos));
 
 		if (m_pInputDevice->MouseLeftPush())
 		{
@@ -101,69 +104,9 @@ void RoadManager::BuildControl()
 	case STATE::CREATE:
 		/// @todo 道の長さ0でも作れてしまう気がする
 		// 道を生成する
-		if (StartPosLink)
-		{
-			if (roadStartAngle < 0)
-			{
-				roadStartAngle = 360.f + roadStartAngle;
-			}
-			float roadAngle;
-			if (roadLinkStart_StartPos)
-			{
-				//繋げられている道のStartPosからの場合、指定座標のEndPosからStartPosの角度を取らないと行けない、EndPosの場合反対
-				roadAngle = D3DXToDegree(atan2(StartPos.z - EndPos.z, StartPos.x - EndPos.x));
-			}
-			else
-			{
-				roadAngle = D3DXToDegree(atan2(EndPos.z - StartPos.z, EndPos.x - StartPos.x));
-			}
-
-			if (roadAngle < 0)
-			{
-				roadAngle = 360.f + roadAngle;
-			}
-
-			roadStartAngle = roadAngle - roadStartAngle;
-		}
-
-		if (EndPosLink)
-		{
-			if (roadEndAngle < 0)
-			{
-				roadEndAngle = 360.f + roadEndAngle;
-			}
-			float roadAngle;
-			if (roadLinkEnd_StartPos)
-			{
-				roadAngle = D3DXToDegree(atan2(EndPos.z - StartPos.z, EndPos.x - StartPos.x));
-			}
-			else
-			{
-				//繋げられている道のEndPosからの場合、指定座標のEndPosからStartPosの角度を取らないと行けない、EndPosの場合反対
-				roadAngle = D3DXToDegree(atan2(StartPos.z - EndPos.z, StartPos.x - EndPos.x));
-			}
-
-			if (roadAngle < 0)
-			{
-				roadAngle = 360.f + roadAngle;
-			}
-
-			roadEndAngle = roadAngle - roadEndAngle;
-		}
-
-		bool roadStartAngleOver = RoadAngleCheck(roadStartAngle);
-		bool roadEndAngleOver = RoadAngleCheck(roadEndAngle);
 
 		//道が90度以上の急な道は作れない
-		if (roadStartAngleOver && StartPosLink &&
-			roadEndAngleOver && EndPosLink ||
-			StartPosLink == false && EndPosLink == false)
-		{
-			Road* pRoad = m_pRoadBuilder->RoadBuild();
-			m_pRoad.push_back(pRoad);
-		}
-		else if (roadStartAngleOver && StartPosLink && EndPosLink == false ||
-			roadEndAngleOver && EndPosLink && StartPosLink == false)
+		if (m_pRoadBuilder->BuildCheck(roadStartAngle, roadEndAngle, roadLinkStart_StartPos, roadLinkEnd_StartPos))
 		{
 			Road* pRoad = m_pRoadBuilder->RoadBuild();
 			m_pRoad.push_back(pRoad);
