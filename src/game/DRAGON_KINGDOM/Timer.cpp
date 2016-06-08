@@ -54,7 +54,7 @@ void Timer::SetGameData()
 
 void Timer::GetGameData()
 {
-
+	m_gameTime = m_gameData->GetGameTime();
 }
 
 void Timer::SetState()
