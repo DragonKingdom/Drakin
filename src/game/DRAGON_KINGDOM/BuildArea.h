@@ -16,6 +16,8 @@ private:
 	Texture		m_Texture;
 	D3DXVECTOR3 m_RoadStartPos;	/*対応する道の始点*/
 	D3DXVECTOR3 m_RoadEndPos;	/*対応する道の終点*/
+	D3DXVECTOR3 m_StartPos;
+	D3DXVECTOR3 m_EndPos;
 	D3DXVECTOR3 m_pBuildArea[4];
 	bool  m_isLeft;/*道に対して左にあるAreaかのフラグ*/
 	float m_x;	/*中心座標*/
@@ -29,6 +31,7 @@ private:
 	float m_roadStartAngle; /*道が繋がっていた場所からの角度*/
 	float m_roadEndAngle; /*道が繋がっていた場所からの角度*/
 	int	  m_length;
+	int	  m_roadLength;
 	BYTE  m_AreaData;	/*エリアの上に何か乗っかってるか*/
 	
 	int m_Z;

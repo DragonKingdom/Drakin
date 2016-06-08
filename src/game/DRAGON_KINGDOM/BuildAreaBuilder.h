@@ -9,15 +9,17 @@ class BuildAreaBuilder
 public:
 	BuildAreaBuilder();
 	~BuildAreaBuilder();
-	BuildArea* AreaBuild(bool _isLeft, float _roadStartAngle, float _roadEndAngle);
+	BuildArea* AreaBuild(bool _isLeft);
 	void PreviewerDraw();
 	void StartPosSet(D3DXVECTOR3 _startPos);
 	void EndPosSet(D3DXVECTOR3 _endPos);
 	void StartPosLinkSet(bool _startLink);
 	void EndPosLinkSet(bool _endLink);
+	void SetRoadStartAngle(float _roadStartAngle){ m_roadStartAngle = _roadStartAngle; }
+	void SetRoadEndAngle(float _roadEndAngle){ m_roadEndAngle = _roadEndAngle; }
 	void InitStartPos();
 	void InitEndPos();
-	bool BuildCheck(float _roadStartAngle, float _roadEndAngle, bool roadLinkStart_StartPos, bool roadLinkEnd_StartPos);
+	bool BuildCheck(bool roadLinkStart_StartPos, bool roadLinkEnd_StartPos);
 
 private:
 	bool BuildAngleCheck(float _roadAngle);
@@ -25,6 +27,8 @@ private:
 	BuildAreaPreviewer* m_pBuildAreaPreviewer;
 	D3DXVECTOR3 m_StartPos;
 	D3DXVECTOR3 m_EndPos;
+	float		m_roadStartAngle;
+	float		m_roadEndAngle;
 	bool		m_StartPosLink;
 	bool		m_EndPosLink;
 	bool		m_isStartPosSet;

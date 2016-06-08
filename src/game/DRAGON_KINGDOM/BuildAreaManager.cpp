@@ -40,6 +40,9 @@ void BuildAreaManager::AreaBuildControl()
 	D3DXVECTOR3 StartPos;
 	D3DXVECTOR3 EndPos;
 	D3DXVECTOR2 MousePos;
+	float roadStartAngle = 0.f;
+	float roadEndAngle = 0.f;
+
 	switch (m_state)
 	{
 	case STATE::START_POS_SET:
@@ -49,11 +52,10 @@ void BuildAreaManager::AreaBuildControl()
 			{
 				m_roadLinkStart_StartPos = false;
 				m_roadLinkEnd_StartPos = false;
-				m_roadStartAngle = 0.f;
-				m_roadEndAngle = 0.f;	
 				MousePos = m_pInputDevice->GetMousePos();
 				m_pClickPosConverter->ConvertForLoad(&StartPos, int(MousePos.x), int(MousePos.y));
-				m_pBuildAreaBuilder->StartPosLinkSet(BuildAreaCheck(&StartPos, &StartPos, &m_roadStartAngle, &m_roadLinkStart_StartPos));
+				m_pBuildAreaBuilder->StartPosLinkSet(BuildAreaCheck(&StartPos, &StartPos, &roadStartAngle, &m_roadLinkStart_StartPos));
+				m_pBuildAreaBuilder->SetRoadStartAngle(roadStartAngle);
 				m_pBuildAreaBuilder->StartPosSet(StartPos);
 				m_state = STATE::END_POS_SET;
 			}
@@ -63,7 +65,8 @@ void BuildAreaManager::AreaBuildControl()
 	case STATE::END_POS_SET:
 		MousePos = m_pInputDevice->GetMousePos();
 		m_pClickPosConverter->ConvertForLoad(&EndPos, int(MousePos.x), int(MousePos.y));
-		m_pBuildAreaBuilder->EndPosLinkSet(BuildAreaCheck(&EndPos, &EndPos, &m_roadEndAngle, &m_roadLinkEnd_StartPos));
+		m_pBuildAreaBuilder->EndPosLinkSet(BuildAreaCheck(&EndPos, &EndPos, &roadEndAngle, &m_roadLinkEnd_StartPos));
+		m_pBuildAreaBuilder->SetRoadEndAngle(roadEndAngle);
 		m_pBuildAreaBuilder->EndPosSet(EndPos);
 
 		if (m_pInputDevice->MouseLeftPush())
@@ -86,12 +89,12 @@ void BuildAreaManager::AreaBuildControl()
 	case STATE::CREATE:
 		/// @todo BuildArea‚Ì’·‚³0‚Å‚àì¬‚Å‚«‚é‚æ‚¤‚É‚È‚Á‚Ä‚µ‚Ü‚Á‚Ä‚é‹C‚ª‚·‚é
 		// ‚Æ‚è‚ ‚¦‚¸‚Å‚â‚Á‚Ä‚Ý‚½
-		if (m_pBuildAreaBuilder->BuildCheck(m_roadStartAngle,m_roadEndAngle,m_roadLinkStart_StartPos,m_roadLinkEnd_StartPos))
+		if (m_pBuildAreaBuilder->BuildCheck(m_roadLinkStart_StartPos,m_roadLinkEnd_StartPos))
 		{
-			BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild(true, m_roadStartAngle, m_roadEndAngle);
+			BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild(true);
 			m_pBuildArea.push_back(pBuildArea);
 
-			pBuildArea = m_pBuildAreaBuilder->AreaBuild(false, m_roadStartAngle, m_roadEndAngle);
+			pBuildArea = m_pBuildAreaBuilder->AreaBuild(false);
 			m_pBuildArea.push_back(pBuildArea);
 		}
 
