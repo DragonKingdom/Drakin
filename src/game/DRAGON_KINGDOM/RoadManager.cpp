@@ -33,17 +33,9 @@ RoadManager::~RoadManager()
 
 void RoadManager::BuildControl()
 {
-	//クラスに入れるまでもないと思ったので、スタティックにしている
-	static D3DXVECTOR3 StartPos;
-	static D3DXVECTOR3 EndPos;
+	D3DXVECTOR3 StartPos;
+	D3DXVECTOR3 EndPos;
 	D3DXVECTOR2 MousePos;
-	//StartPosで繋げられた道が始点か？
-	static bool roadLinkStart_StartPos;
-	//EndPosで繋げられた道が始点か？
-	static bool roadLinkEnd_StartPos;
-
-	static float roadStartAngle = 0.f;
-	static float roadEndAngle = 0.f;
 
 	switch (m_state)
 	{
@@ -55,13 +47,13 @@ void RoadManager::BuildControl()
 				/// @todo マウスの位置がUIとかぶってた場合の処理も考えとく
 
 				// 取得したマウスの座標を3d空間上の座標に変換して渡す
-				roadLinkStart_StartPos = false;
-				roadLinkEnd_StartPos = false;
-				roadStartAngle = 0.f;
-				roadEndAngle = 0.f;
+				m_roadLinkStart_StartPos = false;
+				m_roadLinkEnd_StartPos = false;
+				m_roadStartAngle = 0.f;
+				m_roadEndAngle = 0.f;
 				MousePos = m_pInputDevice->GetMousePos();
 				m_pClickPosConverter->ConvertForLoad(&StartPos, int(MousePos.x), int(MousePos.y));
-				m_pRoadBuilder->StartPosLinkSet(RoadCheck(&StartPos, &StartPos, &roadStartAngle, &roadLinkStart_StartPos));
+				m_pRoadBuilder->StartPosLinkSet(RoadCheck(&StartPos, &StartPos, &m_roadStartAngle, &m_roadLinkStart_StartPos));
 				m_pRoadBuilder->StartPosSet(StartPos);
 				m_state = STATE::END_POS_SET;
 			}
@@ -72,7 +64,7 @@ void RoadManager::BuildControl()
 		// 取得したマウスの座標を3d空間上の座標に変換して渡す
 		MousePos = m_pInputDevice->GetMousePos();
 		m_pClickPosConverter->ConvertForLoad(&EndPos, int(MousePos.x), int(MousePos.y));
-		m_pRoadBuilder->EndPosLinkSet(RoadCheck(&EndPos, &EndPos, &roadEndAngle, &roadLinkEnd_StartPos));
+		m_pRoadBuilder->EndPosLinkSet(RoadCheck(&EndPos, &EndPos, &m_roadEndAngle, &m_roadLinkEnd_StartPos));
 		m_pRoadBuilder->EndPosSet(EndPos);
 
 		if (m_pInputDevice->MouseLeftPush())
@@ -97,7 +89,7 @@ void RoadManager::BuildControl()
 		// 道を生成する
 
 		//道が90度以上の急な道は作れない
-		if (m_pRoadBuilder->BuildCheck(roadStartAngle, roadEndAngle, roadLinkStart_StartPos, roadLinkEnd_StartPos))
+		if (m_pRoadBuilder->BuildCheck(m_roadStartAngle, m_roadEndAngle, m_roadLinkStart_StartPos, m_roadLinkEnd_StartPos))
 		{
 			Road* pRoad = m_pRoadBuilder->RoadBuild();
 			m_pRoad.push_back(pRoad);
