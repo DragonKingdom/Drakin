@@ -36,6 +36,14 @@ private:
 	GameData*				m_pGameData;
 	InputDeviceFacade*		m_pInputDevice;
 
+	//StartPosで繋げられた道が始点か？
+	bool m_roadLinkStart_StartPos;
+	//EndPosで繋げられた道が始点か？
+	bool m_roadLinkEnd_StartPos;
+
+	float m_roadStartAngle;
+	float m_roadEndAngle;
+
 	bool RoadCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pStartOrEndPos, float* _outputAngleDegree, bool* _startPos);
 	bool RoadAngleCheck(float _roadAngle);
 	/// @todo テスト用
