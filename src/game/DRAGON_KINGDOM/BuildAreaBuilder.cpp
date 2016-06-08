@@ -14,7 +14,7 @@ BuildAreaBuilder::~BuildAreaBuilder()
 	delete m_pBuildAreaPreviewer;
 }
 
-BuildArea* BuildAreaBuilder::AreaBuild(bool _isLeft, float _roadStartAngle, float _roadEndAngle, bool _roadLinkStart, bool _roadLinkEnd)
+BuildArea* BuildAreaBuilder::AreaBuild(bool _isLeft, float _roadStartAngle, float _roadEndAngle)
 {
 	// ‚à‚Æ‚à‚Æ‚ÌStartPos‚©‚çEndPos‚Ì’·‚³
 	int length = static_cast<int>(sqrt(

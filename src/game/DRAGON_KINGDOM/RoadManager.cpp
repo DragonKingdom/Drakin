@@ -37,11 +37,6 @@ void RoadManager::BuildControl()
 	static D3DXVECTOR3 StartPos;
 	static D3DXVECTOR3 EndPos;
 	D3DXVECTOR2 MousePos;
-	//StartPosで道が繋がっているかのフラグ
-	static bool StartPosLink;
-	//EndPosで道が繋がっているかのフラグ
-	static bool EndPosLink;
-
 	//StartPosで繋げられた道が始点か？
 	static bool roadLinkStart_StartPos;
 	//EndPosで繋げられた道が始点か？
@@ -60,17 +55,14 @@ void RoadManager::BuildControl()
 				/// @todo マウスの位置がUIとかぶってた場合の処理も考えとく
 
 				// 取得したマウスの座標を3d空間上の座標に変換して渡す
-				StartPosLink = false;
-				EndPosLink = false;
 				roadLinkStart_StartPos = false;
 				roadLinkEnd_StartPos = false;
 				roadStartAngle = 0.f;
 				roadEndAngle = 0.f;
 				MousePos = m_pInputDevice->GetMousePos();
 				m_pClickPosConverter->ConvertForLoad(&StartPos, int(MousePos.x), int(MousePos.y));
-				StartPosLink = RoadCheck(&StartPos, &StartPos, &roadStartAngle, &roadLinkStart_StartPos);
-				m_pRoadBuilder->StartPosSet(StartPos);
 				m_pRoadBuilder->StartPosLinkSet(RoadCheck(&StartPos, &StartPos, &roadStartAngle, &roadLinkStart_StartPos));
+				m_pRoadBuilder->StartPosSet(StartPos);
 				m_state = STATE::END_POS_SET;
 			}
 		}
@@ -80,9 +72,8 @@ void RoadManager::BuildControl()
 		// 取得したマウスの座標を3d空間上の座標に変換して渡す
 		MousePos = m_pInputDevice->GetMousePos();
 		m_pClickPosConverter->ConvertForLoad(&EndPos, int(MousePos.x), int(MousePos.y));
-		EndPosLink = RoadCheck(&EndPos, &EndPos, &roadEndAngle, &roadLinkEnd_StartPos);
-		m_pRoadBuilder->EndPosSet(EndPos);
 		m_pRoadBuilder->EndPosLinkSet(RoadCheck(&EndPos, &EndPos, &roadEndAngle, &roadLinkEnd_StartPos));
+		m_pRoadBuilder->EndPosSet(EndPos);
 
 		if (m_pInputDevice->MouseLeftPush())
 		{
