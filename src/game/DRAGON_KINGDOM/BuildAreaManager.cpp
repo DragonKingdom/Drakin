@@ -10,6 +10,7 @@
 #include "BuildArea.h"
 #include "StateManager.h"
 #include "InputDeviceFacade.h"
+#include "FileSaveLoad.h"
 #include "ClickPosConverter.h"
 
 using BUILDAREAMANAGER_ENUM::STATE;
@@ -200,6 +201,40 @@ void BuildAreaManager::GetGameData()
 }
 
 void BuildAreaManager::SetGameData()
+{
+
+}
+
+void BuildAreaManager::Load(FileSaveLoad* _pFileSaveLoad)
+{
+	// 読み込むデータを格納するvector
+	std::vector<float> BuildAreaVec;
+
+	// Groupをチェックして読み込む
+	_pFileSaveLoad->StepGroup("BuildAreaStartEndPos");
+	_pFileSaveLoad->GetGroupMember(&BuildAreaVec);
+
+	// データを取得
+
+	for (unsigned int x = 0; x < BuildAreaVec.size(); x += 3)
+	{
+		D3DXVECTOR3 StartVec, EndVec;
+		StartVec.x = BuildAreaVec[x];
+		StartVec.y = BuildAreaVec[x + 1];
+		StartVec.z = BuildAreaVec[x + 2];
+		EndVec.x = BuildAreaVec[x + 3];
+		EndVec.y = BuildAreaVec[x + 4];
+		EndVec.z = BuildAreaVec[x + 5];
+		m_pBuildAreaBuilder->StartPosSet(StartVec);
+		m_pBuildAreaBuilder->EndPosSet(EndVec);
+
+
+		//BuildArea* pArea = m_pBuildAreaBuilder->AreaBuild();
+		//m_pBuildArea.push_back(pArea);
+	}
+}
+
+void BuildAreaManager::Save(FileSaveLoad* _pFileSaveLoad)
 {
 
 }

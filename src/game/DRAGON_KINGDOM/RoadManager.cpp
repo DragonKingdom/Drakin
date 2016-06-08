@@ -3,6 +3,7 @@
 #include "Road.h"
 #include "BuildAreaChecker.h"
 #include "StateManager.h"
+#include "FileSaveLoad.h"
 #include "InputDeviceFacade.h"
 
 /// @todo テスト用
@@ -132,6 +133,25 @@ void RoadManager::GetGameData()
 }
 
 void RoadManager::SetGameData()
+{
+
+}
+
+void RoadManager::Load(FileSaveLoad* _pFileSaveLoad)
+{
+	std::vector<float> Vertex;
+	std::vector<float> Angle;
+
+	_pFileSaveLoad->StepGroup("HouseVertex");
+	_pFileSaveLoad->GetGroupMember(&Vertex);
+
+	_pFileSaveLoad->StepGroup("HouseVertexAngle");
+	_pFileSaveLoad->GetGroupMember(&Angle);
+
+
+}
+
+void RoadManager::Save(FileSaveLoad* _pFileSaveLoad)
 {
 
 }

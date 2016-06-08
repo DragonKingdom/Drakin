@@ -13,6 +13,7 @@ class BuildArea;
 class InputDeviceFacade;
 class StateManager;
 class GameData;
+class FileSaveLoad;
 class ClickPosConverter;
 
 class BuildAreaManager
@@ -53,6 +54,11 @@ public:
 	void GetGameData();
 
 	void SetGameData();
+
+	void Load(FileSaveLoad* _pFileSaveLoad);
+
+	void Save(FileSaveLoad* _pFileSaveLoad);
+
 
 private:
 	BuildAreaBuilder*				m_pBuildAreaBuilder;
