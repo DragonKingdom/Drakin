@@ -14,7 +14,7 @@ BuildAreaBuilder::~BuildAreaBuilder()
 	delete m_pBuildAreaPreviewer;
 }
 
-BuildArea* BuildAreaBuilder::AreaBuild(bool _isLeft, float _roadStartAngle, float _roadEndAngle)
+BuildArea* BuildAreaBuilder::AreaBuild(bool _isLeft)
 {
 	// ‚à‚Æ‚à‚Æ‚ÌStartPos‚©‚çEndPos‚Ì’·‚³
 	int length = static_cast<int>(sqrt(
@@ -39,7 +39,7 @@ BuildArea* BuildAreaBuilder::AreaBuild(bool _isLeft, float _roadStartAngle, floa
 	angle = atan2(Vec.z - m_StartPos.z, Vec.x - m_StartPos.x);
 
 	
-	BuildArea* pBuildArea = new BuildArea(_isLeft, m_StartPos, Vec, angle, _roadStartAngle, _roadEndAngle, m_StartPosLink, m_EndPosLink);
+	BuildArea* pBuildArea = new BuildArea(_isLeft, m_StartPos, Vec, angle, m_roadStartAngle, m_roadEndAngle, m_StartPosLink, m_EndPosLink);
 
 	return pBuildArea;
 }
@@ -70,6 +70,7 @@ void BuildAreaBuilder::InitStartPos()
 {
 	m_isStartPosSet = false;
 	m_StartPosLink = false;
+	m_roadStartAngle = 0.f;
 	m_pBuildAreaPreviewer->InitStartPos();
 	m_StartPos = D3DXVECTOR3(0, 0, 0);
 }
@@ -78,6 +79,7 @@ void BuildAreaBuilder::InitEndPos()
 {
 	m_isEndPosSet = false;
 	m_EndPosLink = false;
+	m_roadEndAngle = 0.f;
 	m_pBuildAreaPreviewer->InitEndPos();
 	m_EndPos = D3DXVECTOR3(0, 0, 0);
 }
@@ -92,13 +94,13 @@ void BuildAreaBuilder::EndPosLinkSet(bool _endLink)
 	m_EndPosLink = _endLink;
 }
 
-bool BuildAreaBuilder::BuildCheck(float _roadStartAngle, float _roadEndAngle, bool _roadLinkStart_StartPos, bool _roadLinkEnd_StartPos)
+bool BuildAreaBuilder::BuildCheck(bool _roadLinkStart_StartPos, bool _roadLinkEnd_StartPos)
 {
 	if (m_StartPosLink)
 	{
-		if (_roadStartAngle < 0)
+		if (m_roadStartAngle < 0)
 		{
-			_roadStartAngle = 360.f + _roadStartAngle;
+			m_roadStartAngle = 360.f + m_roadStartAngle;
 		}
 		float roadAngle;
 		if (_roadLinkStart_StartPos)
@@ -116,14 +118,14 @@ bool BuildAreaBuilder::BuildCheck(float _roadStartAngle, float _roadEndAngle, bo
 			roadAngle = 360.f + roadAngle;
 		}
 
-		_roadStartAngle = roadAngle - _roadStartAngle;
+		m_roadStartAngle = roadAngle - m_roadStartAngle;
 	}
 
 	if (m_EndPosLink)
 	{
-		if (_roadEndAngle < 0)
+		if (m_roadEndAngle < 0)
 		{
-			_roadEndAngle = 360.f + _roadEndAngle;
+			m_roadEndAngle = 360.f + m_roadEndAngle;
 		}
 		float roadAngle;
 		if (_roadLinkEnd_StartPos)
@@ -140,10 +142,10 @@ bool BuildAreaBuilder::BuildCheck(float _roadStartAngle, float _roadEndAngle, bo
 		{
 			roadAngle = 360.f + roadAngle;
 		}
-		_roadEndAngle = roadAngle - _roadEndAngle;
+		m_roadEndAngle = roadAngle - m_roadEndAngle;
 	}
-	bool roadStartAngleOver = BuildAngleCheck(_roadStartAngle);
-	bool roadEndAngleOver = BuildAngleCheck(_roadEndAngle);
+	bool roadStartAngleOver = BuildAngleCheck(m_roadStartAngle);
+	bool roadEndAngleOver = BuildAngleCheck(m_roadEndAngle);
 
 	//“¹‚ª90“xˆÈã‚Ì‹}‚È“¹‚Íì‚ê‚È‚¢
 	if (roadStartAngleOver && m_StartPosLink &&

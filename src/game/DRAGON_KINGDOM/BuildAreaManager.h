@@ -73,8 +73,6 @@ private:
 	bool m_roadLinkStart_StartPos;
 	//EndPosで繋げられた道が始点か？
 	bool m_roadLinkEnd_StartPos;
-	float m_roadStartAngle;
-	float m_roadEndAngle;
 
 	/**
 	* 道を繋げるために使う敷かれている道をチェックして近くに道があれば、そこのstartposまたはendposとangleを渡す

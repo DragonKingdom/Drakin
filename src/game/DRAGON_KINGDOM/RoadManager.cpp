@@ -37,7 +37,8 @@ void RoadManager::BuildControl()
 	D3DXVECTOR3 StartPos;
 	D3DXVECTOR3 EndPos;
 	D3DXVECTOR2 MousePos;
-
+	float roadStartAngle = 0.f;
+	float roadEndAngle = 0.f;
 	switch (m_state)
 	{
 	case STATE::START_POS_SET:
@@ -50,11 +51,10 @@ void RoadManager::BuildControl()
 				// 取得したマウスの座標を3d空間上の座標に変換して渡す
 				m_roadLinkStart_StartPos = false;
 				m_roadLinkEnd_StartPos = false;
-				m_roadStartAngle = 0.f;
-				m_roadEndAngle = 0.f;
 				MousePos = m_pInputDevice->GetMousePos();
 				m_pClickPosConverter->ConvertForLoad(&StartPos, int(MousePos.x), int(MousePos.y));
-				m_pRoadBuilder->StartPosLinkSet(RoadCheck(&StartPos, &StartPos, &m_roadStartAngle, &m_roadLinkStart_StartPos));
+				m_pRoadBuilder->StartPosLinkSet(RoadCheck(&StartPos, &StartPos, &roadStartAngle, &m_roadLinkStart_StartPos));
+				m_pRoadBuilder->SetRoadStartAngle(roadStartAngle);
 				m_pRoadBuilder->StartPosSet(StartPos);
 				m_state = STATE::END_POS_SET;
 			}
@@ -65,7 +65,8 @@ void RoadManager::BuildControl()
 		// 取得したマウスの座標を3d空間上の座標に変換して渡す
 		MousePos = m_pInputDevice->GetMousePos();
 		m_pClickPosConverter->ConvertForLoad(&EndPos, int(MousePos.x), int(MousePos.y));
-		m_pRoadBuilder->EndPosLinkSet(RoadCheck(&EndPos, &EndPos, &m_roadEndAngle, &m_roadLinkEnd_StartPos));
+		m_pRoadBuilder->EndPosLinkSet(RoadCheck(&EndPos, &EndPos, &roadEndAngle, &m_roadLinkEnd_StartPos));
+		m_pRoadBuilder->SetRoadEndAngle(roadEndAngle);
 		m_pRoadBuilder->EndPosSet(EndPos);
 
 		if (m_pInputDevice->MouseLeftPush())
@@ -90,7 +91,7 @@ void RoadManager::BuildControl()
 		// 道を生成する
 
 		//道が90度以上の急な道は作れない
-		if (m_pRoadBuilder->BuildCheck(m_roadStartAngle, m_roadEndAngle, m_roadLinkStart_StartPos, m_roadLinkEnd_StartPos))
+		if (m_pRoadBuilder->BuildCheck(m_roadLinkStart_StartPos, m_roadLinkEnd_StartPos))
 		{
 			Road* pRoad = m_pRoadBuilder->RoadBuild();
 			m_pRoad.push_back(pRoad);
