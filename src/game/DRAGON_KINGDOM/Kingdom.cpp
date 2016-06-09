@@ -3,7 +3,7 @@
 
 Kingdom::Kingdom(GameData* _pGameData) :
 m_pGameData(_pGameData),
-m_isPay(false)
+m_isPay(true)
 {
 	// ‰Šú‰»
 	m_RisingKingdomData.Money = 0;

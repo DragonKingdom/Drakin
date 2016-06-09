@@ -22,10 +22,13 @@ Scene* SceneFactory::CreateScene(SceneID _sceneID)
 	case SCENE_OPENING:
 		break;
 	case SCENE_TITLE:
-		pScene = new TitleScene();
+		pScene = new TitleScene(m_pFileSaveLoad);
 		break;
 	case SCENE_GAME:
-		pScene = new GameScene();
+		pScene = new GameScene(m_pFileSaveLoad, false);
+		break;
+	case SCENE_CONTINUE_GAME:
+		pScene = new GameScene(m_pFileSaveLoad, true);
 		break;
 	case SCENE_RESULT:
 		break;

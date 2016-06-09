@@ -8,6 +8,9 @@
 #include "TitleMenu.h"
 #include "TextureManager.h"
 #include "TitleMenuButton.h"
+#include "FileSaveLoad.h"
+#include "SelectMenu.h"
+#include "InputDeviceFacade.h"
 
 //----------------------------------------------------------------------
 namespace 
@@ -24,8 +27,10 @@ const Vertex::FRECT kTexMenuExitCoord(0.0f, 263.0f, 438.0f, 350.0f);
 //----------------------------------------------------------------------
 
 
-TitleMenu::TitleMenu()
-	: m_visible(false)
+TitleMenu::TitleMenu(FileSaveLoad* _pFileSaveLoad):
+m_pFileSaveLoad(_pFileSaveLoad),
+m_visible(false),
+m_isSelectMenu(false)
 {
 	/// @todo ボタンの位置は現物合わせで決め打ちしているが、仕様として欲しい
 	D3DXVECTOR2 center;
@@ -45,11 +50,16 @@ TitleMenu::TitleMenu()
 	center.y += space;
 
 	m_buttons.push_back(new TitleMenuButton(kTexMenuExitCoord, center));
+
+	m_pSelectMenu = new SelectMenu(m_pFileSaveLoad);
+
 }
 
 TitleMenu::~TitleMenu()
 {
-	for(int i = 0; i < TitleMenuButton::kButtonMax; ++i) 
+	delete m_pSelectMenu;
+
+	for(int i = 0; i < TitleMenuButton::kButtonMax; i++) 
 	{
 		delete m_buttons[i];
 	}
@@ -64,28 +74,51 @@ SceneID TitleMenu::Control()
 	}
 
 	SceneID nextScene = SceneID::SCENE_TITLE;
-	for(int i = 0; i < TitleMenuButton::kButtonMax; ++i) 
-	{
 
-		if (m_buttons[i]->Control()){
-			switch(i){
-			case 0:
-				nextScene = SceneID::SCENE_GAME;
-				break;
-			case 1:
-				break;
-			case 2:
-				break;
-			case 3:
-				nextScene = SceneID::FIN;
+	if (m_isSelectMenu == false)
+	{
+		for (int i = 0; i < TitleMenuButton::kButtonMax; ++i)
+		{
+
+			if (m_buttons[i]->Control())
+			{
+				switch (i)
+				{
+				case 0:
+					nextScene = SceneID::SCENE_GAME;
+					break;
+				case 1:
+					m_isSelectMenu = true;
+
+
+					break;
+				case 2:
+					break;
+				case 3:
+					nextScene = SceneID::FIN;
+					break;
+				}
+			}
+
+			if (nextScene != SceneID::SCENE_TITLE)
+			{
 				break;
 			}
-		};
-		if(nextScene != SceneID::SCENE_TITLE)
-		{
-			break;
 		}
 	}
+	else
+	{
+		if (InputDeviceFacade::GetInstance()->MouseRightPush())
+		{
+			m_isSelectMenu = false;
+		}
+		else if (m_pSelectMenu->Control())
+		{
+			nextScene = SceneID::SCENE_CONTINUE_GAME;
+		}
+	}
+
+	
 	return nextScene;
 }
 
@@ -99,5 +132,10 @@ void TitleMenu::Draw()
 	for(int i = 0; i < TitleMenuButton::kButtonMax; ++i) 
 	{
 		m_buttons[i]->Draw();
+	}
+
+	if (m_isSelectMenu)
+	{
+		m_pSelectMenu->Draw();
 	}
 }

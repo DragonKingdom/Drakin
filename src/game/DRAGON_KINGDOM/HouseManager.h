@@ -16,6 +16,7 @@ class BuildAreaChecker;
 class StateManager;
 class GameData;
 class InputDeviceFacade;
+class FileSaveLoad;
 class ClickPosConverter;
 class FbxModel;
 
@@ -44,6 +45,9 @@ public:
 	void SetState();
 	void GetGameData();
 	void SetGameData();
+
+	void Load(FileSaveLoad* _pFileSaveLoad);
+	void Save(FileSaveLoad* _pFileSaveLoad);
 
 private:
 	BuildAreaChecker*			m_pBuildAreaChecker;

@@ -1,6 +1,7 @@
 #include "GameData.h"
+#include "FileSaveLoad.h"
 #include <fstream>
-#include <sstream>
+#include <vector>
 
 GameData* GameData::m_pGameData = NULL;
 
@@ -26,26 +27,57 @@ GameData::~GameData()
 
 }
 
-void GameData::Load(int _dataID)
+void GameData::Load(FileSaveLoad* _pFileSaveLoad)
 {
-	// 文字列生成
-	std::stringstream ss;
-	ss << "SaveData\\SAVE";
-	ss << _dataID;
-	ss << ".txt";
+	// 読み込むデータを格納するvector
+	std::vector<int> KingdomLoadData;
+	std::vector<int> TimeLoadData;
 
-	std::ifstream ifs(ss.str());
+	// Groupをチェックして読み込む
+	_pFileSaveLoad->StepGroup("GameData");
+	_pFileSaveLoad->GetGroupMember(&KingdomLoadData);
+
+	_pFileSaveLoad->StepGroup("GameTime");
+	_pFileSaveLoad->GetGroupMember(&TimeLoadData);
+
+	// データを取得
+	m_KingdomData.Money = KingdomLoadData[0];
+	m_KingdomData.Population = KingdomLoadData[1];
+	m_KingdomData.Security = KingdomLoadData[2];
+	m_KingdomData.Satisfaction = KingdomLoadData[3];
+	m_KingdomData.Popularity = KingdomLoadData[4];
+
+	m_gameTime.year = TimeLoadData[0];
+	m_gameTime.month = TimeLoadData[1];
+	m_gameTime.date = TimeLoadData[2];
+	m_gameTime.hour = TimeLoadData[3];
+	m_gameTime.minute = TimeLoadData[4];
+	m_gameTime.second = TimeLoadData[5];
 }
 
-void GameData::Save(int _dataID)
+void GameData::Save(FileSaveLoad* _pFileSaveLoad)
 {
-	// 文字列生成
-	std::stringstream ss;
-	ss << "SaveData\\SAVE";
-	ss << _dataID;
-	ss << ".txt";
+	// セーブするデータを格納するvector
+	std::vector<int> KingdomSaveData;
+	std::vector<int> TimeSaveData;
 
-	std::ofstream ofs(ss.str());
+	// データを用意
+	KingdomSaveData.push_back(m_KingdomData.Money);
+	KingdomSaveData.push_back(m_KingdomData.Population);
+	KingdomSaveData.push_back(m_KingdomData.Security);
+	KingdomSaveData.push_back(m_KingdomData.Satisfaction);
+	KingdomSaveData.push_back(m_KingdomData.Popularity);
+
+	TimeSaveData.push_back(m_gameTime.year);
+	TimeSaveData.push_back(m_gameTime.month);
+	TimeSaveData.push_back(m_gameTime.date);
+	TimeSaveData.push_back(m_gameTime.hour);
+	TimeSaveData.push_back(m_gameTime.minute);
+	TimeSaveData.push_back(m_gameTime.second);
+
+	// セーブ
+	_pFileSaveLoad->CreateGroup("GameData", &KingdomSaveData);
+	_pFileSaveLoad->CreateGroup("GameData", &KingdomSaveData);
 }
 
 void GameData::SetGameTime(Time _SetTimeData)

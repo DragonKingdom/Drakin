@@ -3,6 +3,7 @@
 #include "SceneFactory.h"
 #include "GameData.h"
 #include "InputDeviceFacade.h"
+#include "FileSaveLoad.h"
 
 SceneManager::SceneManager(HWND hWnd) :
 	m_pScene( NULL ),
@@ -16,10 +17,15 @@ SceneManager::SceneManager(HWND hWnd) :
 	m_pInput->Create(hWnd);
 	Scene::SetInput(m_pInput);
 	InputDeviceFacade::Create();
+
+	m_pFileSaveLoad = new FileSaveLoad();
+	SceneFactory::Instance().Init(m_pFileSaveLoad);
 }
 
 SceneManager::~SceneManager()
 {
+	delete m_pFileSaveLoad;
+	
 	InputDeviceFacade::Delete();
 	// シーンオブジェクトを解放
 	if( m_pScene != nullptr ) 

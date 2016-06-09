@@ -11,6 +11,8 @@
 #include <graphicsDevice.h>
 #include "Scene.h"
 
+class FileSaveLoad;
+
 /**
  * シーンの遷移、管理を行うクラス
  */
@@ -45,6 +47,9 @@ private:
 
 	/// 次のシーンIDを保存しておく入れ物
 	SceneID			m_nextSceneID;
+
+	/// セーブファイルを読み書きするクラス
+	FileSaveLoad*	m_pFileSaveLoad;
 
 	//ゲーム終了フラグ //2/19 追加
 	bool m_End;

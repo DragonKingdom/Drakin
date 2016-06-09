@@ -1,11 +1,13 @@
 #include "GameScene.h"
 #include "GameData.h"
-#include <d3dx9.h>
 #include "TextureManager.h"
+#include "FileSaveLoad.h"
+#include <d3dx9.h>
 #include <tchar.h>
 
-GameScene::GameScene():
-	Scene(SceneID::SCENE_GAME)
+GameScene::GameScene(FileSaveLoad* _pFileSaveLoad, bool _isContinue) :
+	Scene(SceneID::SCENE_GAME),
+	m_pFileSaveLoad(_pFileSaveLoad)
 {
 	// nowloadingd表示する画像読み込み
 	Texture NowLosdingTexture;
@@ -34,12 +36,20 @@ GameScene::GameScene():
 	m_pDebugMode = new DebugMode(m_pClickPosConverter);
 
 
+
+	// 続きからを選択されたらセーブデータを読む
+	if (_isContinue == true)
+	{
+		// ファイルを読む
+		FileLoad();
+	}
+
+
 	// スレッド落とす
 	m_pNowLoading->ThreadDestroy();
 
 	NowLosdingTexture.Release();
 
-	/// @todo サウンド関連は用意してなかったのでとりあえずBGMだけ流せるように あとよろ
 	
 	m_XAudio.SoundPlay(0,true);
 }
@@ -64,7 +74,7 @@ GameScene::~GameScene()
 	
 	delete m_pGameData;
 
-
+	delete m_pNowLoading;
 
 	m_XAudio.SoundStop(0);
 }
@@ -115,4 +125,33 @@ void GameScene::Draw()
 	m_pCameraController->Draw();
 
 	m_pDebugMode->DebugDisplay();
+}
+
+
+void GameScene::FileLoad()
+{
+	// タイトルでファイルは開かれるのであとは読んで閉じる
+
+	// データを取得
+	m_pGameData->Load(m_pFileSaveLoad);
+	m_pObjectManager->Load(m_pFileSaveLoad);
+
+	// ファイルを閉じる
+	m_pFileSaveLoad->FileLoadEnd();
+}
+
+void GameScene::FileSave()
+{
+	// ファイルを開く
+	m_pFileSaveLoad->FileSaveInit("Save/Test.save", LARGE_SAVE_FILE);
+
+	// GameDataのデータを入れてもらう
+	m_pGameData->Save(m_pFileSaveLoad);
+
+
+	// ファイルに書き込む
+	m_pFileSaveLoad->FileSave();
+
+	// ファイルを閉じる
+	m_pFileSaveLoad->FileSaveEnd();
 }

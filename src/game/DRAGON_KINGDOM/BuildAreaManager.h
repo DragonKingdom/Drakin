@@ -63,6 +63,11 @@ private:
 	GameData*						m_pGameData;
 	InputDeviceFacade*				m_pInputDevice;
 
+	//StartPosで繋げられた道が始点か？
+	bool m_roadLinkStart_StartPos;
+	//EndPosで繋げられた道が始点か？
+	bool m_roadLinkEnd_StartPos;
+
 	/**
 	* 道を繋げるために使う敷かれている道をチェックして近くに道があれば、そこのstartposまたはendposとangleを渡す
 	* @param[in] _checkPos チェックしたい座標

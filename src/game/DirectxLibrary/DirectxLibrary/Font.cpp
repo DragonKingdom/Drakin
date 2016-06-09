@@ -38,10 +38,30 @@ void Font::Draw(LPCSTR _pString,D3DXVECTOR2 _pos)
 	rc.right = (LONG)_pos.x + desc.Width * strlen(_pString);
 	rc.bottom = (LONG)_pos.y + desc.Height * strlen(_pString);
 	m_pFont->DrawTextA(
-	NULL,					// NULL
-	_pString,		// 描画テキスト
-	-1,						// 全て表示
-	&rc,						// 表示範囲
-	DT_LEFT,					// 左寄せ
+	NULL,							// NULL
+	_pString,						// 描画テキスト
+	-1,								// 全て表示
+	&rc,							// 表示範囲
+	DT_LEFT,						// 左寄せ
 	D3DCOLOR_XRGB(255,255,255));	// 白色
 }
+
+void Font::Draw(LPCSTR _pString, D3DXVECTOR2 _pos, D3DCOLOR _color)
+{
+	RECT rc;
+	D3DXFONT_DESC desc;
+	m_pFont->GetDesc(&desc);
+
+	rc.left = (LONG)_pos.x;
+	rc.top = (LONG)_pos.y;
+	rc.right = (LONG)_pos.x + desc.Width * strlen(_pString);
+	rc.bottom = (LONG)_pos.y + desc.Height * strlen(_pString);
+	m_pFont->DrawTextA(
+		NULL,			// NULL
+		_pString,		// 描画テキスト
+		-1,				// 全て表示
+		&rc,			// 表示範囲
+		DT_LEFT,		// 左寄せ
+		_color);		// 白色
+}
+

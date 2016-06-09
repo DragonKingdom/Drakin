@@ -12,6 +12,7 @@
 #include "StateManager.h"
 #include "GameData.h"
 #include "InputDeviceFacade.h"
+#include "FileSaveLoad.h"
 #include "ClickPosConverter.h"
 
 using HOUSEMANAGER_ENUM::STATE;
@@ -182,5 +183,40 @@ void HouseManager::SetGameData()
 
 	// ƒRƒXƒg‚ğ‰Šú‰»
 	m_HouseCost = 0;
+}
+
+void HouseManager::Load(FileSaveLoad* _pFileSaveLoad)
+{
+	std::vector<float> Vertex;
+	std::vector<float> Angle;
+
+	_pFileSaveLoad->StepGroup("HouseVertex");
+	_pFileSaveLoad->GetGroupMember(&Vertex);
+	
+	_pFileSaveLoad->StepGroup("HouseVertexAngle");
+	_pFileSaveLoad->GetGroupMember(&Angle);
+
+
+	for (unsigned int i = 0; i < Angle.size(); i++)
+	{
+		for (unsigned int x = 0; x < Vertex.size(); x += 3)
+		{
+			D3DXVECTOR3 Vec;
+			Vec.x = Vertex[x];
+			Vec.y = Vertex[x + 1];
+			Vec.z = Vertex[x + 2];
+			m_pHouseBuilder->SetBuildPos(&Vec);
+		}
+
+		m_pHouseBuilder->SetBuildAngle(Angle[i]);
+
+		House* pHouse = m_pHouseBuilder->HouseBuild();
+		m_pHouse.push_back(pHouse);
+	}
+}
+
+void HouseManager::Save(FileSaveLoad* _pFileSaveLoad)
+{
+
 }
 

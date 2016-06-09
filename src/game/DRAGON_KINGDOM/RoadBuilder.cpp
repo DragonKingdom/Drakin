@@ -34,6 +34,7 @@ void RoadBuilder::EndPosSet(const D3DXVECTOR3 _endPos)
 void RoadBuilder::InitStartPos()
 {
 	m_isStartPointSet = false;
+	m_StartPosLink = false;
 	m_pRoadPreviewer->InitStartPos();
 	m_StartPos = D3DXVECTOR3(0, 0, 0);
 }
@@ -41,6 +42,7 @@ void RoadBuilder::InitStartPos()
 void RoadBuilder::InitEndPos()
 {
 	m_isEndPointSet = false;
+	m_EndPosLink = false;
 	m_pRoadPreviewer->InitEndPos();
 	m_EndPos = D3DXVECTOR3(0, 0, 0);
 }
@@ -79,5 +81,98 @@ void RoadBuilder::PreviewerDraw()
 	{
 		m_pRoadPreviewer->Draw();
 	}
+}
+
+void RoadBuilder::StartPosLinkSet(bool _startLink)
+{
+	m_StartPosLink = _startLink;
+}
+
+void RoadBuilder::EndPosLinkSet(bool _endLink)
+{
+	m_EndPosLink = _endLink;
+}
+
+bool RoadBuilder::BuildCheck(bool _roadLinkStart_StartPos, bool _roadLinkEnd_StartPos)
+{
+	if (m_StartPosLink)
+	{
+		if (m_roadStartAngle < 0)
+		{
+			m_roadStartAngle = 360.f + m_roadStartAngle;
+		}
+		float roadAngle;
+		if (_roadLinkStart_StartPos)
+		{
+			//繋げられている道のStartPosからの場合、指定座標のEndPosからStartPosの角度を取らないと行けない、EndPosの場合反対
+			roadAngle = D3DXToDegree(atan2(m_StartPos.z - m_EndPos.z, m_StartPos.x - m_EndPos.x));
+		}
+		else
+		{
+			roadAngle = D3DXToDegree(atan2(m_EndPos.z - m_StartPos.z, m_EndPos.x - m_StartPos.x));
+		}
+
+		if (roadAngle < 0)
+		{
+			roadAngle = 360.f + roadAngle;
+		}
+
+		m_roadStartAngle = roadAngle - m_roadStartAngle;
+	}
+
+	if (m_EndPosLink)
+	{
+		if (m_roadEndAngle < 0)
+		{
+			m_roadEndAngle = 360.f + m_roadEndAngle;
+		}
+		float roadAngle;
+		if (_roadLinkEnd_StartPos)
+		{
+			roadAngle = D3DXToDegree(atan2(m_EndPos.z - m_StartPos.z, m_EndPos.x - m_StartPos.x));
+		}
+		else
+		{
+			//繋げられている道のEndPosからの場合、指定座標のEndPosからStartPosの角度を取らないと行けない、EndPosの場合反対
+			roadAngle = D3DXToDegree(atan2(m_StartPos.z - m_EndPos.z, m_StartPos.x - m_EndPos.x));
+		}
+
+		if (roadAngle < 0)
+		{
+			roadAngle = 360.f + roadAngle;
+		}
+		m_roadEndAngle = roadAngle - m_roadEndAngle;
+	}
+	bool roadStartAngleOver = BuildAngleCheck(m_roadStartAngle);
+	bool roadEndAngleOver = BuildAngleCheck(m_roadEndAngle);
+
+	//道が90度以上の急な道は作れない
+	if (roadStartAngleOver && m_StartPosLink &&
+		roadEndAngleOver && m_EndPosLink ||
+		m_StartPosLink == false && m_EndPosLink == false)
+	{
+		return true;
+	}
+	else if (roadStartAngleOver && m_StartPosLink && m_EndPosLink == false ||
+		roadEndAngleOver && m_EndPosLink && m_StartPosLink == false)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool RoadBuilder::BuildAngleCheck(float _roadAngle)
+{
+	if (_roadAngle > 270.f ||
+		_roadAngle < -270.f ||
+		_roadAngle > -90.f && _roadAngle < 0 ||
+		_roadAngle < 90.f && _roadAngle > 0)
+	{
+		return true;
+	}
+	return false;
 }
 
