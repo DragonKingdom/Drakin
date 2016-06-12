@@ -37,6 +37,8 @@ enum SceneID
 	FIN
 };
 
+#define WORLD_END_PLUS 33000.f
+#define WORLD_END_MINUS -33000.f
 #define ROAD_W_SIZE 500.f
 #define ROAD_H_SIZE 500.f
 #define BULDAREA_LINK 5

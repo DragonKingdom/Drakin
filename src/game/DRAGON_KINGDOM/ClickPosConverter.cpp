@@ -34,7 +34,7 @@ D3DXVECTOR3* ClickPosConverter::ConvertForLoad(D3DXVECTOR3* pout, int Sx, int Sy
 	float viewAngle = D3DXToRadian(90);       // 視野角
 	float aspect = (float)1280.f/ 720.f;      // アスペクト比
 	float nearZ = 1.f;                        // 最近点
-	float farZ = 4000.f;                      // 最遠点
+	float farZ = 100000.f;                      // 最遠点
 
 	// ビュー変換用の行列に変換
 	D3DXMATRIX matView;
