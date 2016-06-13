@@ -25,10 +25,10 @@ Camera::~Camera()
 void Camera::Look(D3DXVECTOR3 _eyePos, D3DXVECTOR3 _lookAtPos)
 {
 	D3DXVECTOR3 upVec = D3DXVECTOR3(0,1,0);   // カメラの上方向を設定
-	float viewAngle = D3DXToRadian(90);       // 視野角
+	float viewAngle = D3DXToRadian(50);       // 視野角
 	float aspect = 1280.f/ 720.f;             // アスペクト比
 	float nearZ = 1.f;                        // 最近点
-	float farZ = 100000.f;                      // 最遠点
+	float farZ = 150000.f;                      // 最遠点
 
 	// ビュー変換用の行列に変換
 	D3DXMATRIX matView;

@@ -9,8 +9,8 @@ CameraController::CameraController(StateManager* pStateManager) :
 	m_moveSpeed(5.0f) , 
 	m_eyePos(EYE_POS) , 
 	m_lookAtPos(LOOK_AT_POS) , 
-	m_dragVal(0.f,0.f) , 
-	m_camLength(200.f), 
+	m_dragVal(0.f,-70.f) , 
+	m_camLength(30000.f), 
 	m_startPos(0.f,0.f)
 {
 	m_pCamera = new Camera();
@@ -32,7 +32,10 @@ void CameraController::Control(D3DXVECTOR2 _cursorPos)
 	// スクロールされたらカメラのZ軸を移動
 	if( Scene::m_mousePushState == Scene::MOUSE_KEYKIND::M_WHEEL_DOWN )
 	{
-		m_camLength += m_moveSpeed;
+		if (m_camLength < 40000)
+		{
+			m_camLength += m_moveSpeed;
+		}
 	}
 	// スクロールされ
 	if( Scene::m_mousePushState == Scene::MOUSE_KEYKIND::M_WHEEL_UP )
@@ -74,7 +77,7 @@ void CameraController::Control(D3DXVECTOR2 _cursorPos)
 		m_startPos  = D3DXVECTOR2(0.f,0.f);
 	}
 
-	if( m_dragVal.y <= - 170 )
+	if( m_dragVal.y <= -170 )
 	{
 		m_dragVal.y = -170;
 	}
@@ -109,7 +112,7 @@ void CameraController::Move(D3DXVECTOR2 _cursorPos)
 {
 	D3DXVECTOR2 vec = D3DXVECTOR2(0,0);
 
-	if( Scene::m_keyStateOn & Scene::KEY_A)
+	if (Scene::m_keyStateOn & Scene::KEY_A)
 	{
 		vec.x = sin(D3DXToRadian(m_dragVal.x - 90));
 		vec.y = cos(D3DXToRadian(m_dragVal.x - 90));
@@ -128,6 +131,24 @@ void CameraController::Move(D3DXVECTOR2 _cursorPos)
 	{
 		vec.x = sin(D3DXToRadian(m_dragVal.x + 180));
 		vec.y = cos(D3DXToRadian(m_dragVal.x + 180));
+	}
+
+	if (m_lookAtPos.x > WORLD_END_PLUS)
+	{
+		m_lookAtPos.x = WORLD_END_PLUS;
+	}
+	else if (m_lookAtPos.x < WORLD_END_MINUS)
+	{
+		m_lookAtPos.x = WORLD_END_MINUS;
+	}
+
+	if (m_lookAtPos.z > WORLD_END_PLUS)
+	{
+		m_lookAtPos.z = WORLD_END_PLUS;
+	}
+	else if (m_lookAtPos.z < WORLD_END_MINUS)
+	{
+		m_lookAtPos.z = WORLD_END_MINUS;
 	}
 
 	// カメラの位置を移動させる
