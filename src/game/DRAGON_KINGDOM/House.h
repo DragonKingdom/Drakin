@@ -9,6 +9,7 @@ public:
 	House(D3DXVECTOR3 _housePos, float _angle);
 	~House();
 	void Draw();
+	void GetHouseData(std::vector<float>* _pHouseVertexData, std::vector<float>* _pHouseAngleData);
 
 private:
 	FbxModel*   m_pModel;

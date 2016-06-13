@@ -10,6 +10,7 @@ public:
 	void Control();
 	void Draw();
 	bool GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos, float* _outputAngleDegree, bool* _startPos);
+	void GetStartEndData(std::vector<float>* _pRoadVertexData);
 
 private:
 	Vertex      m_Vertex;

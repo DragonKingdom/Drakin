@@ -140,21 +140,53 @@ void RoadManager::SetGameData()
 
 void RoadManager::Load(FileSaveLoad* _pFileSaveLoad)
 {
-	std::vector<float> Vertex;
-	std::vector<float> Angle;
+	// 読み込むデータを格納するvector
+	std::vector<float> RoadVec;
 
-	_pFileSaveLoad->StepGroup("HouseVertex");
-	_pFileSaveLoad->GetGroupMember(&Vertex);
+	// Groupをチェックして読み込む
+	_pFileSaveLoad->StepGroup("RoadStartEndPos");
+	_pFileSaveLoad->GetGroupMember(&RoadVec);
 
-	_pFileSaveLoad->StepGroup("HouseVertexAngle");
-	_pFileSaveLoad->GetGroupMember(&Angle);
+	// データを取得
+	for (unsigned int x = 0; x < RoadVec.size() / 6; x++)
+	{
+		D3DXVECTOR3 StartVec, EndVec;
 
+		// Roadには6つの座標情報があるのでx*6でアクセスしてる
+		StartVec.x = RoadVec[x * 6];
+		StartVec.y = RoadVec[x * 6 + 1];
+		StartVec.z = RoadVec[x * 6 + 2];
 
+		EndVec.x = RoadVec[x * 6 + 3];
+		EndVec.y = RoadVec[x * 6 + 4];
+		EndVec.z = RoadVec[x * 6 + 5];
+		
+		m_pRoadBuilder->StartPosSet(StartVec);
+		m_pRoadBuilder->EndPosSet(EndVec);
+
+		// 道の生成
+		Road* pRoad = m_pRoadBuilder->RoadBuild();
+		m_pRoad.push_back(pRoad);
+
+		// 生成後は初期化しておく
+		m_pRoadBuilder->InitStartPos();
+		m_pRoadBuilder->InitEndPos();
+	}
 }
 
 void RoadManager::Save(FileSaveLoad* _pFileSaveLoad)
 {
+	// セーブするデータを格納するvector
+	std::vector<float> RoadVec;
+	
+	// データを用意
+	for (unsigned int i = 0; i < m_pRoad.size(); i++)
+	{
+		m_pRoad[i]->GetStartEndData(&RoadVec);
+	}
 
+	// セーブ
+	_pFileSaveLoad->CreateGroup("RoadStartEndPos", &RoadVec);
 }
 
 bool RoadManager::RoadCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pStartOrEndPos, float* _outputAngleDegree, bool* _startPos)

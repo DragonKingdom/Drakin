@@ -84,6 +84,10 @@ SceneID GameScene::Control()
 	// デバイスの入力情報を取得
 	Scene::Control();
 
+	if (Scene::m_keyStatePush &Scene::KEY_Z)
+	{
+		FileSave();
+	}
 	
 	// ゲーム内データと状態を管理クラスから取得させる
 	m_ptimer->GetState();
@@ -143,11 +147,12 @@ void GameScene::FileLoad()
 void GameScene::FileSave()
 {
 	// ファイルを開く
-	m_pFileSaveLoad->FileSaveInit("Save/Test.save", LARGE_SAVE_FILE);
+	m_pFileSaveLoad->FileSaveInit("Save/TestData.save", LARGE_SAVE_FILE);
 
 	// GameDataのデータを入れてもらう
 	m_pGameData->Save(m_pFileSaveLoad);
 
+	m_pObjectManager->Save(m_pFileSaveLoad);
 
 	// ファイルに書き込む
 	m_pFileSaveLoad->FileSave();

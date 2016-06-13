@@ -77,7 +77,7 @@ void GameData::Save(FileSaveLoad* _pFileSaveLoad)
 
 	// ƒZ[ƒu
 	_pFileSaveLoad->CreateGroup("GameData", &KingdomSaveData);
-	_pFileSaveLoad->CreateGroup("GameData", &KingdomSaveData);
+	_pFileSaveLoad->CreateGroup("GameTime", &TimeSaveData);
 }
 
 void GameData::SetGameTime(Time _SetTimeData)

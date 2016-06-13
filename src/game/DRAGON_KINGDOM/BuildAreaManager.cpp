@@ -212,33 +212,98 @@ void BuildAreaManager::Load(FileSaveLoad* _pFileSaveLoad)
 {
 	// 読み込むデータを格納するvector
 	std::vector<float> BuildAreaVec;
+	std::vector<float> BuildAreaAngle;
+	std::vector<int>  BuildAreaFlag;
+
 
 	// Groupをチェックして読み込む
 	_pFileSaveLoad->StepGroup("BuildAreaStartEndPos");
 	_pFileSaveLoad->GetGroupMember(&BuildAreaVec);
 
-	// データを取得
+	_pFileSaveLoad->StepGroup("BuildAreaStartEndAngle");
+	_pFileSaveLoad->GetGroupMember(&BuildAreaAngle);
 
-	for (unsigned int x = 0; x < BuildAreaVec.size(); x += 3)
+	_pFileSaveLoad->StepGroup("BuildAreaFlag");
+	_pFileSaveLoad->GetGroupMember(&BuildAreaFlag);
+
+	// データを取得
+	for (unsigned int x = 0; x < BuildAreaAngle.size()/2; x++)
 	{
 		D3DXVECTOR3 StartVec, EndVec;
-		StartVec.x = BuildAreaVec[x];
-		StartVec.y = BuildAreaVec[x + 1];
-		StartVec.z = BuildAreaVec[x + 2];
-		EndVec.x = BuildAreaVec[x + 3];
-		EndVec.y = BuildAreaVec[x + 4];
-		EndVec.z = BuildAreaVec[x + 5];
+		float StartAngle, EndAngle;
+		bool StartLink, EndLink;
+
+		// BuildAreaには6つの座標情報があるのでx*6でアクセスしてる
+		StartVec.x = BuildAreaVec[x * 6];
+		StartVec.y = BuildAreaVec[x * 6 + 1];
+		StartVec.z = BuildAreaVec[x * 6 + 2];
+
+		EndVec.x = BuildAreaVec[x * 6 + 3];
+		EndVec.y = BuildAreaVec[x * 6 + 4];
+		EndVec.z = BuildAreaVec[x * 6 + 5];
+		
 		m_pBuildAreaBuilder->StartPosSet(StartVec);
 		m_pBuildAreaBuilder->EndPosSet(EndVec);
 
+		StartAngle = BuildAreaAngle[x * 2];
+		EndAngle = BuildAreaAngle[x * 2 + 1];
 
-		//BuildArea* pArea = m_pBuildAreaBuilder->AreaBuild();
-		//m_pBuildArea.push_back(pArea);
+		m_pBuildAreaBuilder->SetRoadStartAngle(StartAngle);
+		m_pBuildAreaBuilder->SetRoadEndAngle(EndAngle);
+
+		if (BuildAreaFlag[x * 2])
+		{
+			StartLink = true;
+		}
+		else
+		{
+			StartLink = false;
+		}
+
+		if (BuildAreaFlag[x * 2 + 1])
+		{
+			EndLink = true;
+		}
+		else
+		{
+			EndLink = false;
+		}
+
+		m_pBuildAreaBuilder->StartPosLinkSet(StartLink);
+		m_pBuildAreaBuilder->EndPosLinkSet(EndLink);
+
+		
+		// 左側のビルドエリア生成
+		BuildArea* pArea = m_pBuildAreaBuilder->AreaBuild(true);
+		m_pBuildArea.push_back(pArea);
+
+		// 右側のビルドエリア生成
+		pArea = m_pBuildAreaBuilder->AreaBuild(false);
+		m_pBuildArea.push_back(pArea);
+
+		// 生成後は初期化しておく
+		m_pBuildAreaBuilder->InitStartPos();
+		m_pBuildAreaBuilder->InitEndPos();
 	}
 }
 
 void BuildAreaManager::Save(FileSaveLoad* _pFileSaveLoad)
 {
+	// セーブするデータを格納するvector
+	std::vector<float> BuildAreaVertexData;
+	std::vector<float> BuildAreaVertexAngleData;
+	std::vector<int> BuildAreaFlag;
 
+
+	// データを用意
+	for (unsigned int i = 0; i < m_pBuildArea.size(); i++)
+	{
+		m_pBuildArea[i]->GetBuildAreaData(&BuildAreaVertexData, &BuildAreaVertexAngleData, &BuildAreaFlag);
+	}
+
+	// セーブ
+	_pFileSaveLoad->CreateGroup("BuildAreaStartEndPos", &BuildAreaVertexData);
+	_pFileSaveLoad->CreateGroup("BuildAreaStartEndAngle", &BuildAreaVertexAngleData);
+	_pFileSaveLoad->CreateGroup("BuildAreaFlag", &BuildAreaFlag);
 }
 

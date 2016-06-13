@@ -171,9 +171,9 @@ SceneID Scene::Control()
 	//if( pKeyBoard->ChkKeyDown(DIK_Q) ||  pGamePad->ChkGamePadAction(InputGamepad::GamePadBtn_LB) == InputGamepad::KEY_PUSH){
 	//	m_keyStateOn |= KEY_Q;
 	//}
-	//if( pKeyBoard->ChkKeyDown(DIK_Z) ||  pGamePad->ChkGamePadAction(InputGamepad::GamePadBtn_BACK) == InputGamepad::KEY_PUSH){
-	//	m_keyStateOn |= KEY_Z;
-	//}
+	if( pKeyBoard->ChkKeyDown(DIK_Z) ||  pGamePad->ChkGamePadAction(InputGamepad::GamePadBtn_BACK) == InputGamepad::KEY_PUSH){
+		m_keyStateOn |= KEY_Z;
+	}
 	//if( pKeyBoard->ChkKeyAction(DIK_SPACE) || pGamePad->ChkGamePadAction(InputGamepad::GamePadBtn_START) == InputGamepad::KEY_PUSH){
 	//	m_keyStateOn |= KEY_SPACE;
 	//}
@@ -213,22 +213,14 @@ SceneID Scene::Control()
 	//if( pKeyBoard->ChkKeyAction(DIK_Q) ||  pGamePad->ChkGamePadAction(InputGamepad::GamePadBtn_LB) == InputGamepad::KEY_PUSH){
 	//	m_keyStatePush |= KEY_Q;
 	//}
-	//if( pKeyBoard->ChkKeyAction(DIK_Z) ||  pGamePad->ChkGamePadAction(InputGamepad::GamePadBtn_R3) == InputGamepad::KEY_PUSH){
-	//	m_keyStatePush |= KEY_Z;
-	//}
+	if( pKeyBoard->ChkKeyAction(DIK_Z) ||  pGamePad->ChkGamePadAction(InputGamepad::GamePadBtn_R3) == InputGamepad::KEY_PUSH){
+		m_keyStatePush |= KEY_Z;
+	}
 	//if( pKeyBoard->ChkKeyAction(DIK_SPACE) || pGamePad->ChkGamePadAction(InputGamepad::GamePadBtn_START) == InputGamepad::KEY_PUSH){
 	//	m_keyStatePush |= KEY_SPACE;
 	//}
 
-	//if( pKeyBoard->ChkKeyDown( DIK_R) ||  pGamePad->ChkGamePadAction(InputGamepad::GamePadBtn_RB) == InputGamepad::KEY_PUSH){
-	//	m_keyStatePush |= KEY_R;
-	//}
-	//if( pKeyBoard->ChkKeyDown( DIK_B ) ||  pGamePad->ChkGamePadAction(InputGamepad::GamePadBtn_B) == InputGamepad::KEY_PUSH){
-	//	m_keyStatePush |= KEY_B;
-	//}
-	//if( pKeyBoard->ChkKeyDown(DIK_Z) ){	// 決定キーが押されたら装備ウィンドウと装備/道具選択カーソルを移動させながら装備選択ウィンドウ/装備変更選択カーソルを出現させる
-	//	m_keyStatePush |= KEY_Z;
-	//}
+
 
 	//if( pKeyBoard->ChkKeyDown(DIK_T)){
 	//	Scene::m_keyStatePush |= KEY_T;

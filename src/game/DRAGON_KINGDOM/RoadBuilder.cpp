@@ -56,8 +56,20 @@ Road* RoadBuilder::RoadBuild()
 		(m_EndPos.z - m_StartPos.z) * (m_EndPos.z - m_StartPos.z)));
 
 	// ƒGƒŠƒA‚Ì”
-	int NumZ = int(length / ROAD_W_SIZE);
-	int VecLength = int(NumZ * ROAD_H_SIZE);
+	int NumZ = 0;
+	int VecLength = 0;
+
+	if (length % int(ROAD_H_SIZE) == int(ROAD_H_SIZE - 1))
+	{
+		NumZ = int(length / ROAD_W_SIZE) + 1;
+		VecLength = int(NumZ * ROAD_H_SIZE);
+	}
+	else
+	{
+		NumZ = int(length / ROAD_W_SIZE);
+		VecLength = int(NumZ * ROAD_H_SIZE);
+	}
+
 
 
 	// StartPos‚©‚çEndPos‚ÌŠp“x‚ğ‚Æ‚é

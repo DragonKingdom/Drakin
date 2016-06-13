@@ -157,14 +157,11 @@ void HouseManager::Load(FileSaveLoad* _pFileSaveLoad)
 
 	for (unsigned int i = 0; i < Angle.size(); i++)
 	{
-		for (unsigned int x = 0; x < Vertex.size(); x += 3)
-		{
-			D3DXVECTOR3 Vec;
-			Vec.x = Vertex[x];
-			Vec.y = Vertex[x + 1];
-			Vec.z = Vertex[x + 2];
-			m_pHouseBuilder->SetBuildPos(&Vec);
-		}
+		D3DXVECTOR3 Vec;
+		Vec.x = Vertex[i * 3];
+		Vec.y = Vertex[i * 3 + 1];
+		Vec.z = Vertex[i * 3 + 2];
+		m_pHouseBuilder->SetBuildPos(&Vec);
 
 		m_pHouseBuilder->SetBuildAngle(Angle[i]);
 
@@ -175,6 +172,18 @@ void HouseManager::Load(FileSaveLoad* _pFileSaveLoad)
 
 void HouseManager::Save(FileSaveLoad* _pFileSaveLoad)
 {
+	// セーブするデータを格納するvector
+	std::vector<float> HouseVertexData;
+	std::vector<float> HouseVertexAngleData;
 
+	// データを用意
+	for (int i = 0; i < m_pHouse.size(); i++)
+	{
+		m_pHouse[i]->GetHouseData(&HouseVertexData, &HouseVertexAngleData);
+	}
+
+	// セーブ
+	_pFileSaveLoad->CreateGroup("HouseVertex", &HouseVertexData);
+	_pFileSaveLoad->CreateGroup("HouseVertexAngle", &HouseVertexAngleData);
 }
 

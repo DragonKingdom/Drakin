@@ -80,3 +80,12 @@ void House::Draw()
 	m_pLSS->EndPass();
 	m_pLSS->End();
 }
+
+void House::GetHouseData(std::vector<float>* _pHouseVertexData, std::vector<float>* _pHouseAngleData)
+{
+	_pHouseVertexData->push_back(m_HousePos.x);
+	_pHouseVertexData->push_back(m_HousePos.y);
+	_pHouseVertexData->push_back(m_HousePos.z);
+
+	_pHouseAngleData->push_back(m_Angle);
+}

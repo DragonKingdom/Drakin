@@ -113,5 +113,17 @@ bool Road::GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos, flo
 	return false;
 }
 
+void Road::GetStartEndData(std::vector<float>* _pRoadVertexData)
+{
+	_pRoadVertexData->push_back(m_StartPos.x);
+	_pRoadVertexData->push_back(m_StartPos.y);
+	_pRoadVertexData->push_back(m_StartPos.z);
+
+	_pRoadVertexData->push_back(m_EndPos.x);
+	_pRoadVertexData->push_back(m_EndPos.y);
+	_pRoadVertexData->push_back(m_EndPos.z);
+}
+
+
 
 

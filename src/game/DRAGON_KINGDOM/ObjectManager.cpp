@@ -94,11 +94,14 @@ void ObjectManager::SetGameData()
 void ObjectManager::Load(FileSaveLoad* _pFileSaveLoad)
 {
 	m_pRoadManager->Load(_pFileSaveLoad);
+	m_pBuildAreaManager->Load(_pFileSaveLoad);
 	m_pHouseManager->Load(_pFileSaveLoad);
 }
 
 void ObjectManager::Save(FileSaveLoad* _pFileSaveLoad)
 {
-
+	m_pRoadManager->Save(_pFileSaveLoad);
+	m_pBuildAreaManager->Save(_pFileSaveLoad);
+	m_pHouseManager->Save(_pFileSaveLoad);
 }
 

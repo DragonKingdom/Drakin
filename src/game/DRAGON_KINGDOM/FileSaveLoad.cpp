@@ -370,6 +370,34 @@ bool FileSaveLoad::CreateGroup(char* _pGroupName, std::vector<int>* _pGroupMembe
 	return true;
 }
 
+bool FileSaveLoad::CreateGroup(char* _pGroupName, std::vector<float>* _pGroupMemberData)
+{
+	if (isFileSaveMode == false)
+	{
+		return false;
+	}
+
+	// データを格納する
+	char DataBuffer[30];
+
+	// グループを構成する
+	std::string Str = m_pBuffer;
+	Str = Str + _pGroupName + "{";
+
+	for (unsigned int i = 0; i < _pGroupMemberData->size(); i++)
+	{
+		sprintf_s(DataBuffer, sizeof(DataBuffer), "%f", (*_pGroupMemberData)[i]);
+		Str = Str + DataBuffer + ",";
+	}
+
+	Str = Str + "};\n";
+
+	strcpy_s(m_pBuffer, m_fileSize, Str.c_str());
+
+
+	return true;
+}
+
 bool FileSaveLoad::CreateGroup(char* _pGroupName, std::vector<std::string>* _pGroupMemberData)
 {
 	if (isFileSaveMode == false)

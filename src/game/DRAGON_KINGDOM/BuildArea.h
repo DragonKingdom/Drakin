@@ -11,6 +11,8 @@ public:
 	bool AreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle);
 	bool GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos, float* _outputAngleDegree, bool* _startPos);
 	float GetAngleDegree(){ return D3DXToDegree(m_angle); };
+	void GetBuildAreaData(std::vector<float>* _pBuildAreaVertexData, std::vector<float>* _pBuildAreaAngleData, std::vector<int>* _pBuildAreaFlag);
+
 private:
 	Vertex      m_Vertex;
 	Texture		m_Texture;
@@ -33,7 +35,10 @@ private:
 	int	  m_length;
 	int	  m_roadLength;
 	BYTE  m_AreaData;	/*ÉGÉäÉAÇÃè„Ç…âΩÇ©èÊÇ¡Ç©Ç¡ÇƒÇÈÇ©*/
-	
+	bool  m_StartLink;
+	bool  m_EndLink;
+
+
 	int m_Z;
 	Font m_Font;
 	int m_AreaCountX;
