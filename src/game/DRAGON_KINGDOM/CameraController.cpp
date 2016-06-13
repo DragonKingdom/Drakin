@@ -9,8 +9,8 @@ CameraController::CameraController(StateManager* pStateManager) :
 	m_moveSpeed(5.0f) , 
 	m_eyePos(EYE_POS) , 
 	m_lookAtPos(LOOK_AT_POS) , 
-	m_dragVal(0.f,0.f) , 
-	m_camLength(200.f), 
+	m_dragVal(0.f,-70.f) , 
+	m_camLength(30000.f), 
 	m_startPos(0.f,0.f)
 {
 	m_pCamera = new Camera();
@@ -32,7 +32,7 @@ void CameraController::Control(D3DXVECTOR2 _cursorPos)
 	// スクロールされたらカメラのZ軸を移動
 	if( Scene::m_mousePushState == Scene::MOUSE_KEYKIND::M_WHEEL_DOWN )
 	{
-		if (m_camLength < 20000)
+		if (m_camLength < 40000)
 		{
 			m_camLength += m_moveSpeed;
 		}

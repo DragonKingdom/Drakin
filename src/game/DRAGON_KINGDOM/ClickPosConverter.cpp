@@ -31,7 +31,7 @@ D3DXVECTOR3* ClickPosConverter::ConvertForLoad(D3DXVECTOR3* pout, int Sx, int Sy
 {
 	// view,projを用意
 	D3DXVECTOR3 upVec = D3DXVECTOR3(0,1,0);   // カメラの上方向を設定
-	float viewAngle = D3DXToRadian(90);       // 視野角
+	float viewAngle = D3DXToRadian(50);       // 視野角
 	float aspect = (float)1280.f/ 720.f;      // アスペクト比
 	float nearZ = 1.f;                        // 最近点
 	float farZ = 100000.f;                      // 最遠点

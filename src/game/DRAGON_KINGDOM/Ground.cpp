@@ -48,7 +48,7 @@ void Ground::Draw()
 	m_pLSS->SetAmbient(0.5f);
 
 	// フォグのパラメータを設定
-	m_pLSS->SetParameters(35000.0f, 0.7f);
+	m_pLSS->SetParameters(60000.0f, 0.5f);
 
 	// フォグの色を設定
 	m_pLSS->SetFogColor(1.0f);
