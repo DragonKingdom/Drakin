@@ -8,7 +8,7 @@
 #include"TimerWindow.h"
 #include "InputDeviceFacade.h"
 #include "StateManager.h"
-
+#include"Font.h"
 
 UI::UI(StateManager* pStateManager) :
 m_pWindow(NULL),
@@ -59,6 +59,17 @@ void UI::Draw()
 	// ƒAƒCƒRƒ“‚Ì•`‰æ
 	m_pMenuicon->Draw();
 
+	//Font‚Ì•`‰æ
+	std::string str;
+	std::string std;
+	std::string to_string(int);
+	int z = 0;
+	std = to_string(z);
+	std.c_str();
+	//to_string(z);
+	//str = "hoge";
+	m_Font.Draw(str.c_str(), D3DXVECTOR2(500, 500));
+	//m_Font.Draw(std, D3DXVECTOR2(500, 500));
 
 	if( m_pWindow != NULL )
 	{
