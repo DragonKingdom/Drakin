@@ -71,7 +71,7 @@ void Road::Draw()
 	GraphicsDevice::getInstance().GetDevice()->SetTransform(D3DTS_WORLD, &matWorld);
 	m_pLSS->SetAmbient(0.5f);
 	//フォグのパラメータを設定
-	m_pLSS->SetParameters(35000.0f, 1.0f);
+	m_pLSS->SetParameters(60000.0f, 0.5f);
 	//フォグの色を設定
 	m_pLSS->SetFogColor(1.0f);
 

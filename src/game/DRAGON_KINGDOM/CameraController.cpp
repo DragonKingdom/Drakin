@@ -133,6 +133,8 @@ void CameraController::Move(D3DXVECTOR2 _cursorPos)
 		vec.y = cos(D3DXToRadian(m_dragVal.x + 180));
 	}
 
+	m_lookAtPos.x += m_moveSpeed * vec.x;
+	m_lookAtPos.z += m_moveSpeed * vec.y;
 	if (m_lookAtPos.x > WORLD_END_PLUS)
 	{
 		m_lookAtPos.x = WORLD_END_PLUS;
@@ -152,9 +154,9 @@ void CameraController::Move(D3DXVECTOR2 _cursorPos)
 	}
 
 	// ÉJÉÅÉâÇÃà íuÇà⁄ìÆÇ≥ÇπÇÈ
-	m_lookAtPos = D3DXVECTOR3(m_lookAtPos.x += m_moveSpeed * vec.x,
+	m_lookAtPos = D3DXVECTOR3(m_lookAtPos.x,
 							  m_lookAtPos.y,
-							  m_lookAtPos.z += m_moveSpeed * vec.y);
+							  m_lookAtPos.z);
 
 	m_eyePos = D3DXVECTOR3(m_eyePos.x += m_moveSpeed * vec.x,
 						   m_eyePos.y,
