@@ -62,22 +62,18 @@ private:
 	StateManager*					m_pStateManager;
 	GameData*						m_pGameData;
 	InputDeviceFacade*				m_pInputDevice;
-
-	//StartPosで繋げられた道が始点か？
-	bool m_roadLinkStart_StartPos;
-	//EndPosで繋げられた道が始点か？
-	bool m_roadLinkEnd_StartPos;
+	bool							m_roadLinkStart_StartPos; //StartPosで繋げられた道が始点か？
+	bool							m_roadLinkEnd_StartPos; //EndPosで繋げられた道が始点か？
 
 	/**
 	* 道を繋げるために使う敷かれている道をチェックして近くに道があれば、そこのstartposまたはendposとangleを渡す
 	* @param[in] _checkPos チェックしたい座標
-	* @param[in] _pStartOrEndPos startposまたはendpos
-	* @param[in] _outputAngleDegree 見つけた道の角度
+	* @param[out] _pStartOrEndPos startposまたはendpos
+	* @param[out] _outputAngleDegree 見つけた道の角度
+	* @param[in] _startPos 繋げられる道の始点か？
 	* @return 周辺に道がなければfalseを返す
 	*/
 	bool BuildAreaCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pStartOrEndPos, float* _outputAngleDegree, bool* _startPos);
-
-	bool RoadAngleCheck(float _roadAngle);
 
 	/// @todo テスト用
 	ClickPosConverter* m_pClickPosConverter;
