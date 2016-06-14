@@ -15,6 +15,7 @@ DebugMode::~DebugMode()
 
 void DebugMode::DebugDisplay()
 {
+#ifdef _DEBUG
 	D3DXVECTOR3 ConvertPos;
 	D3DXVECTOR2 MousePos = InputDeviceFacade::GetInstance()->GetMousePos();
 	m_pClickPosConverter->ConvertForLoad(&ConvertPos, int(MousePos.x), int(MousePos.y));
@@ -27,6 +28,8 @@ void DebugMode::DebugDisplay()
 
 
 	m_Font.Draw(DebugStr.c_str(), D3DXVECTOR2(DEBUGDATA_POS_X, DEBUGDATA_POS_Y));
+
+#endif
 }
 
 
