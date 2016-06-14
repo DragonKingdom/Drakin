@@ -55,7 +55,9 @@ void BuildAreaManager::AreaBuildControl()
 				m_roadLinkEnd_StartPos = false;
 				MousePos = m_pInputDevice->GetMousePos();
 				m_pClickPosConverter->ConvertForLoad(&StartPos, int(MousePos.x), int(MousePos.y));
+				//StartPos‚ªŒq‚ª‚Á‚Ä‚¢‚é‚©‚ð”»’f‚µ‚ÄAŒq‚°‚ç‚ê‚é“¹‚ª‚ ‚Á‚½‚ç‚»‚ÌŒq‚°‚é“¹‚ÌŠp“x‚ÆÀ•W‚ðŽæ‚Á‚Ä‚«‚ÄA‚»‚Ì“¹‚ÌŽn“_‚©‚Ìƒtƒ‰ƒO‚ðŽæ‚Á‚Ä‚«‚Ä‚¢‚é
 				m_pBuildAreaBuilder->StartPosLinkSet(BuildAreaCheck(&StartPos, &StartPos, &roadStartAngle, &m_roadLinkStart_StartPos));
+				//“¹‚ðŒq‚°‚ç‚ê‚é‚©‚Ì”»’f‚ð‚·‚éŒq‚°‚é“¹‚ÌŠp“x‚ðƒZƒbƒg‚·‚é
 				m_pBuildAreaBuilder->SetRoadStartAngle(roadStartAngle);
 				m_pBuildAreaBuilder->StartPosSet(StartPos);
 				m_state = STATE::END_POS_SET;
@@ -66,7 +68,9 @@ void BuildAreaManager::AreaBuildControl()
 	case STATE::END_POS_SET:
 		MousePos = m_pInputDevice->GetMousePos();
 		m_pClickPosConverter->ConvertForLoad(&EndPos, int(MousePos.x), int(MousePos.y));
+		//EndPos‚ªŒq‚ª‚Á‚Ä‚¢‚é‚©‚ð”»’f‚µ‚ÄAŒq‚°‚ç‚ê‚é“¹‚ª‚ ‚Á‚½‚ç‚»‚ÌŒq‚°‚é“¹‚ÌŠp“x‚ÆÀ•W‚ðŽæ‚Á‚Ä‚«‚ÄA‚»‚Ì“¹‚ÌŽn“_‚©‚Ìƒtƒ‰ƒO‚ðŽæ‚Á‚Ä‚«‚Ä‚¢‚é
 		m_pBuildAreaBuilder->EndPosLinkSet(BuildAreaCheck(&EndPos, &EndPos, &roadEndAngle, &m_roadLinkEnd_StartPos));
+		//“¹‚ðŒq‚°‚ç‚ê‚é‚©‚Ì”»’f‚ð‚·‚éŒq‚°‚é“¹‚ÌŠp“x‚ðƒZƒbƒg‚·‚é
 		m_pBuildAreaBuilder->SetRoadEndAngle(roadEndAngle);
 		m_pBuildAreaBuilder->EndPosSet(EndPos);
 
@@ -172,18 +176,6 @@ bool BuildAreaManager::BuildAreaCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pSta
 		{
 			return true;
 		}
-	}
-	return false;
-}
-
-bool BuildAreaManager::RoadAngleCheck(float _roadAngle)
-{
-	if (_roadAngle > 270.f ||
-		_roadAngle < -270.f ||
-		_roadAngle > -90.f && _roadAngle < 0 ||
-		_roadAngle < 90.f && _roadAngle > 0)
-	{
-		return true;
 	}
 	return false;
 }
