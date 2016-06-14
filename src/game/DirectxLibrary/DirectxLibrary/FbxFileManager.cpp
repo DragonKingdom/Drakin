@@ -579,7 +579,6 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 
 	m_pFbxModel->m_pFbxModelData.push_back(ModelData);
 
-
 	//-------------------------------------------------------------------------
 	//								‰ğ•úˆ—
 	//-------------------------------------------------------------------------

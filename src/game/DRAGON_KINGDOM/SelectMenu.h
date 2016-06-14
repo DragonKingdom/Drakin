@@ -8,8 +8,8 @@
 
 #define MAX_SAVE_FILE 5			// セーブデータの最大数
 #define BUTTON_SPACE 100		// ボタンとボタンの間隔
-#define DEFAULT_CENTERPOS_Y 200	// セーブデータセレクトボタンのy座標基準値
-#define SAVEDATA_NAME_POS_X 450	// セーブデータセレクトボタンの名前のx座標位置
+#define DEFAULT_CENTERPOS_Y 200.f	// セーブデータセレクトボタンのy座標基準値
+#define SAVEDATA_NAME_POS_X 450.f	// セーブデータセレクトボタンの名前のx座標位置
 
 class FileSaveLoad;
 class SelectMenuButton;

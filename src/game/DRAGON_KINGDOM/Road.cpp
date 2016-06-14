@@ -6,7 +6,7 @@ m_EndPos(_endPos),
 m_angle(_angle),
 m_pLSS(new LSS())
 {
-	m_Texture.Load("../sourceimages//Road.bmp");
+	m_Texture.Load("../sourceimages/Road.bmp");
 	m_pLSS->Load("Resource\\image\\CLUTSky.jpg", "Resource\\image\\CLUTLight.jpg");
 
 	m_pRoad[0].x = m_StartPos.x + (ROAD_W_SIZE / 2) * sin(m_angle);

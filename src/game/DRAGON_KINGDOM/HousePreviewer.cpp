@@ -6,7 +6,7 @@
 HousePreviewer::HousePreviewer():
 m_pFbxModel(new FbxModel(GraphicsDevice::getInstance().GetDevice()))
 {
-	FbxFileManager::Get()->FileImport("fbx//house.fbx");
+	FbxFileManager::Get()->FileImport("fbx//house_red.fbx");
 	FbxFileManager::Get()->GetModelData(m_pFbxModel);
 }
 

@@ -10,7 +10,7 @@ m_Angle(_angle),
 m_pModel(new FbxModel(GraphicsDevice::getInstance().GetDevice())),
 m_pLSS(new LSS())
 {
-	FbxFileManager::Get()->FileImport("fbx//house.fbx");
+	FbxFileManager::Get()->FileImport("fbx//house_red.fbx");
 	FbxFileManager::Get()->GetModelData(m_pModel);
 	m_pLSS->Load("Resource\\image\\CLUTSky.jpg", "Resource\\image\\CLUTLight.jpg");
 

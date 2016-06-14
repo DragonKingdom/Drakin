@@ -3,7 +3,7 @@
 
 RoadPreviewer::RoadPreviewer()
 {
-	m_Texture.Load("../sourceimages//Road.bmp");
+	m_Texture.Load("../sourceimages/Road.bmp");
 }
 
 RoadPreviewer::~RoadPreviewer()
