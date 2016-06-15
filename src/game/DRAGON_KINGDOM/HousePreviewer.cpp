@@ -4,15 +4,15 @@
 #include "graphicsDevice.h"
 
 HousePreviewer::HousePreviewer():
-m_pFbxModel(new FbxModel(GraphicsDevice::getInstance().GetDevice()))
+m_pHouseModel(new FbxModel(GraphicsDevice::getInstance().GetDevice()))
 {
 	FbxFileManager::Get()->FileImport("fbx//house_red.fbx");
-	FbxFileManager::Get()->GetModelData(m_pFbxModel);
+	FbxFileManager::Get()->GetModelData(m_pHouseModel);
 }
 
 HousePreviewer::~HousePreviewer()
 {
-	delete m_pFbxModel;
+	delete m_pHouseModel;
 }
 
 void HousePreviewer::SetBuildPos(D3DXVECTOR3* _BuildPos)
@@ -38,5 +38,6 @@ void HousePreviewer::Draw()
 	D3DXMatrixMultiply(&World, &World, &PositionMatrix);
 
 	GraphicsDevice::getInstance().GetDevice()->SetTransform(D3DTS_WORLD, &World);
-	m_pFbxModel->Draw();
+
+	m_pHouseModel->NonTextureDraw();
 }

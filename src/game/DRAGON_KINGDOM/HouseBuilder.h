@@ -4,6 +4,14 @@
 class House;
 class HousePreviewer;
 
+enum HouseType
+{
+	RED_HOUSE,
+	BLUE_HOUSE,
+	YELLOW_HOUSE,
+	HOUSE_TYPE_MAX
+};
+
 class HouseBuilder
 {
 public:
