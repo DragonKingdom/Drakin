@@ -67,6 +67,7 @@ public:
 	KEY_D = 2048,
 	KEY_E = 4096,
 	KEY_SPACE = 8192,
+	KEY_ESC = 16384,
 	KEYMAX,
 	};
 protected:
