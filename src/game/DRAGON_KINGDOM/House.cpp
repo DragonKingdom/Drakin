@@ -4,19 +4,38 @@
 #include "graphicsDevice.h"
 #include "LightScatteringSimulation.h"
 
-House::House(D3DXVECTOR3 _housePos, float _angle):
+
+House::House(D3DXVECTOR3 _housePos, float _angle, HouseType _Type):
 m_HousePos(_housePos),
 m_Angle(_angle),
 m_pModel(new FbxModel(GraphicsDevice::getInstance().GetDevice())),
 m_pLSS(new LSS())
 {
-	FbxFileManager::Get()->FileImport("fbx//house_red.fbx");
+	// “n‚³‚ê‚½HouseType‚É‚æ‚Á‚Ä“Ç‚İ‚Ş‰Æ‚Ìí—Ş‚ğ•Ï‚¦‚é
+	switch (_Type)
+	{
+	case RED_HOUSE:
+		FbxFileManager::Get()->FileImport("fbx//house_red.fbx");
+
+		break;
+	case BLUE_HOUSE:
+		FbxFileManager::Get()->FileImport("fbx//house_blue.fbx");
+
+		break;
+	case YELLOW_HOUSE:
+		FbxFileManager::Get()->FileImport("fbx//house_yellow.fbx");
+
+		break;
+	}
+
 	FbxFileManager::Get()->GetModelData(m_pModel);
+
+
 	m_pLSS->Load("Resource\\image\\CLUTSky.jpg", "Resource\\image\\CLUTLight.jpg");
 
+	// ŒvZ—p‚Ìs—ñ
 	D3DXMATRIX RotationMatrix;
 	D3DXMATRIX PositionMatrix;
-
 
 	// ‰ñ“]
 	D3DXMatrixIdentity(&m_World);

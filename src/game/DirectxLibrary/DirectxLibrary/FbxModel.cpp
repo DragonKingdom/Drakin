@@ -40,7 +40,7 @@ FbxModel::~FbxModel()
 
 void FbxModel::Draw(int stage)
 {
-	// ‚»‚Ì‚¤‚¿Á‚·‚â‚ë‚È
+	///@todo fvf‚ÌÝ’è‚Í•ª‚¯‚Æ‚«‚½‚¢‚©‚È
 	m_pDevice->SetFVF(USERVERTEX_FVF);
 
 	for (unsigned int i = 0; i < m_pFbxModelData.size(); i++)
@@ -62,3 +62,27 @@ void FbxModel::Draw(int stage)
 		}
 	}
 }
+
+
+void FbxModel::NonTextureDraw()
+{
+	m_pDevice->SetFVF(USERVERTEX_FVF);
+
+	for (unsigned int i = 0; i < m_pFbxModelData.size(); i++)
+	{
+		m_pDevice->SetMaterial(&m_pFbxModelData[i]->Material);
+
+		m_pDevice->SetTexture(0, NULL);
+
+		if (m_Mode == FbxModel::NORMAL_MODE)
+		{
+			m_pDevice->DrawPrimitiveUP(
+				D3DPT_TRIANGLELIST,
+				m_pFbxModelData[i]->PrimitiveCount,
+				m_pFbxModelData[i]->pVertex,
+				sizeof(UserVertex));
+		}
+	}
+}
+
+

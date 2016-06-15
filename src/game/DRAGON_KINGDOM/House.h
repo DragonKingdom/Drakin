@@ -1,12 +1,14 @@
 #ifndef HOUSE_H
 #define HOUSE_H
 
+#include "HouseBuilder.h"
+
 class FbxModel;
 class LSS;
 class House
 {
 public:
-	House(D3DXVECTOR3 _housePos, float _angle);
+	House(D3DXVECTOR3 _housePos, float _angle, HouseType _Type);
 	~House();
 	void Draw();
 	void GetHouseData(std::vector<float>* _pHouseVertexData, std::vector<float>* _pHouseAngleData);

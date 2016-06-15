@@ -41,15 +41,15 @@ struct FbxModelData
 };
 
 /**
- * モデルデータを格納するクラス
- */
+* モデルデータを格納するクラス
+*/
 class FbxModel
 {
 public:
 	enum MODELMODE
 	{
 		NORMAL_MODE,
-		INDEX_MODE,	 
+		INDEX_MODE,
 	};
 
 	FbxModel(LPDIRECT3DDEVICE9 _pDevice);
@@ -57,6 +57,8 @@ public:
 	void      SetMode(MODELMODE _Mode){ m_Mode = _Mode; };
 	MODELMODE GetMode(){ return m_Mode; };
 	void	Draw(int stage = 0);
+	void	NonTextureDraw();
+
 
 	std::vector<FbxModelData*>	m_pFbxModelData;
 

@@ -21,7 +21,8 @@ private:
 	float		m_Angle;
 
 	/// ‰Æ‚Ìƒ‚ƒfƒ‹‚ðŠi”[‚µ‚Ä‚éƒNƒ‰ƒX
-	FbxModel*	m_pFbxModel;
+	FbxModel*	m_pHouseModel;
+
 
 };
 

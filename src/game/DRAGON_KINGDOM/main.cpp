@@ -9,6 +9,9 @@
 
 #include "SceneManager.h"
 
+
+#define FULLSCREEN 
+
 #define GAME_FPS (1000/60)
 
 LRESULT CALLBACK WindowProc(HWND hwnd,UINT message,WPARAM wparam,LPARAM lparam);
@@ -41,8 +44,19 @@ int WINAPI WinMain( HINSTANCE hInst,HINSTANCE hPrevInst,LPSTR szStr,INT iCmdShow
 
     RegisterClassEx (&wndclass) ;
 
-    hWnd = CreateWindow (szAppName,szAppName,WS_OVERLAPPEDWINDOW | WS_VISIBLE,  
+#ifndef FULLSCREEN
+
+	hWnd = CreateWindow (szAppName,szAppName,WS_OVERLAPPEDWINDOW | WS_VISIBLE,  
 		0, 0, 1280, 720, NULL, NULL, hInst, NULL);
+
+#else
+
+	hWnd = CreateWindow(szAppName, szAppName, WS_POPUP | WS_VISIBLE,
+		0, 0, 1280, 720, NULL, NULL, hInst, NULL);
+
+#endif
+
+ 
     ShowWindow (hWnd,SW_SHOW) ;
     UpdateWindow (hWnd) ;
 
@@ -50,13 +64,19 @@ int WINAPI WinMain( HINSTANCE hInst,HINSTANCE hPrevInst,LPSTR szStr,INT iCmdShow
 	
 	// ダイレクト3Dの初期化関数を呼ぶ
 	g_pGraphicsDevice = &GraphicsDevice::getInstance();
-	g_pGraphicsDevice->InitD3D(hWnd,true);
+
+#ifndef FULLSCREEN
+	g_pGraphicsDevice->InitD3D(hWnd, true);
+#else
+	g_pGraphicsDevice->InitD3D(hWnd, false);
+#endif
+
+
+	// シーンマネージャー生成
+	SceneManager* pSceneManager = new SceneManager(hWnd);
 
 	// fbxファイル読込クラス生成
 	FbxFileManager::Create(g_pGraphicsDevice->GetDevice());
-
-	// シーンマネージャー生成
-	SceneManager sceneManager(hWnd);
 
 	DWORD NowTime = timeGetTime();
 	DWORD OldTime = timeGetTime();
@@ -75,9 +95,9 @@ int WINAPI WinMain( HINSTANCE hInst,HINSTANCE hPrevInst,LPSTR szStr,INT iCmdShow
 			 NowTime = timeGetTime();
 			 if (NowTime - OldTime >= GAME_FPS)
 			 {
-				 if (sceneManager.Run())
+				 if (pSceneManager->Run())
 				 {
-					 return 0;
+					 break;
 				 }
 				 OldTime = timeGetTime();
 			 }
@@ -86,6 +106,9 @@ int WINAPI WinMain( HINSTANCE hInst,HINSTANCE hPrevInst,LPSTR szStr,INT iCmdShow
 
 	// インスタンス破棄
 	FbxFileManager::Release();
+
+	// SceneManagerの解放
+	delete pSceneManager;
 
      return (INT)msg.wParam ;
 }
@@ -100,14 +123,12 @@ LRESULT CALLBACK WindowProc(HWND hwnd,UINT message,WPARAM wparam,LPARAM lparam)
             return  0;
 			break;
 		case WM_KEYDOWN:
-			switch((CHAR)wparam)
+			switch ((CHAR)wparam)
 			{
-				case VK_ESCAPE:
-					PostQuitMessage(0);
-					return  0;
-				case VK_DELETE:
-					PostQuitMessage(0);
-					return  0;
+			case VK_ESCAPE:
+				PostQuitMessage(0);
+				return 0;
+				break;
 			}
 			break;
 		case WM_ACTIVATE:

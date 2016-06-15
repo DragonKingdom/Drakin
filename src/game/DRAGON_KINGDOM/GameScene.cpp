@@ -81,12 +81,20 @@ GameScene::~GameScene()
 
 SceneID GameScene::Control()
 {
+	SceneID nextScene = SceneID::SCENE_GAME;
+
+
 	// デバイスの入力情報を取得
 	Scene::Control();
 
 	if (Scene::m_keyStatePush &Scene::KEY_Z)
 	{
 		FileSave();
+	}
+
+	if (Scene::m_keyStatePush & Scene::KEY_ESC)
+	{
+		nextScene = SceneID::FIN;
 	}
 	
 	// ゲーム内データと状態を管理クラスから取得させる
@@ -118,7 +126,7 @@ SceneID GameScene::Control()
 	m_pObjectManager->SetState();
 	m_pObjectManager->SetGameData();
 
-	return SceneID::SCENE_GAME;
+	return nextScene;
 }
 
 void GameScene::Draw()
