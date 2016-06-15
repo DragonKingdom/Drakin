@@ -10,7 +10,7 @@
 #include "SceneManager.h"
 
 
-#define FULLSCREEN 
+//#define FULLSCREEN 
 
 #define GAME_FPS (1000/60)
 
