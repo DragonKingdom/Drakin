@@ -7,7 +7,7 @@
 const Vertex::FRECT Menuicon::UV = Vertex::FRECT(0,0,64,64);
 
 Menuicon::Menuicon() : 
-m_selectID(-1),m_ICON_POS(300, 640)
+m_selectID(-1),m_ICON_POS(300, CLIENT_HEIGHT - 115)
 {
 	m_Texture = TextureManager::getInstance().Get(TextureManager::GAME_SCENE_TEX::UI);
 }
