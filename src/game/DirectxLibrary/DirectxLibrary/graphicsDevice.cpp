@@ -54,17 +54,16 @@ BOOL GraphicsDevice::Create3DDeviceObject(HWND _hWnd,bool isWindow)
 
 	ZeroMemory( &m_d3dppFull, sizeof(m_d3dppFull) );   // 暗黙に D3DPRESENT_INTERVAL_DEFAULT = 0 が設定→モニタのリフレッシュレート = FPS
     // パラメータの設定
-    m_d3dppFull.BackBufferWidth    = nearW;    // 幅
-    m_d3dppFull.BackBufferHeight    = nearH;    // 高さ
+    m_d3dppFull.BackBufferWidth		= nearW;			// 幅
+    m_d3dppFull.BackBufferHeight    = nearH;			// 高さ
 	m_d3dppFull.BackBufferFormat    = d3ddm.Format;
-    m_d3dppFull.BackBufferCount    = 1;        // バックバッファの数
-    m_d3dppFull.SwapEffect        = D3DSWAPEFFECT_DISCARD;
-    m_d3dppFull.hDeviceWindow    = _hWnd;        // 表示目標ウィンドウ(貼り付け対象のウィンドウハンドルを入れてください)
-    m_d3dppFull.Windowed        = FALSE;    // フルスクリーンを指定
-   // m_d3dppFull.PresentationInterval    = D3DPRESENT_INTERVAL_DEFAULT;
-	//m_d3dppWnd.AutoDepthStencilFormat = D3DFMT_D24S8;		//Zバッファ24ビット、ステンシルバッファ8ビット なのでOK
-	   m_d3dppFull.EnableAutoDepthStencil = TRUE;
-	m_d3dppFull.AutoDepthStencilFormat = D3DFMT_D24S8;		//Zバッファ24ビット、ステンシルバッファ8ビット なのでOK
+    m_d3dppFull.BackBufferCount		= 1;				// バックバッファの数
+    m_d3dppFull.SwapEffect			= D3DSWAPEFFECT_DISCARD;
+    m_d3dppFull.hDeviceWindow		= _hWnd;			// 表示目標ウィンドウ(貼り付け対象のウィンドウハンドルを入れてください)
+    m_d3dppFull.Windowed			= FALSE;			// フルスクリーンを指定
+    m_d3dppFull.PresentationInterval    = D3DPRESENT_INTERVAL_DEFAULT;
+	m_d3dppFull.EnableAutoDepthStencil	= TRUE;
+	m_d3dppFull.AutoDepthStencilFormat	= D3DFMT_D24S8;	//Zバッファ24ビット、ステンシルバッファ8ビット なのでOK
 
 	m_d3dpp = m_windowed ?  m_d3dppWnd : m_d3dppFull;
 

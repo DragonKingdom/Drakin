@@ -10,7 +10,7 @@
 #include "SceneManager.h"
 
 
-//#define FULLSCREEN 
+#define FULLSCREEN 
 
 #define GAME_FPS (1000/60)
 
@@ -64,7 +64,13 @@ int WINAPI WinMain( HINSTANCE hInst,HINSTANCE hPrevInst,LPSTR szStr,INT iCmdShow
 	
 	// ダイレクト3Dの初期化関数を呼ぶ
 	g_pGraphicsDevice = &GraphicsDevice::getInstance();
-	g_pGraphicsDevice->InitD3D(hWnd,true);
+
+#ifndef FULLSCREEN
+	g_pGraphicsDevice->InitD3D(hWnd, true);
+#else
+	g_pGraphicsDevice->InitD3D(hWnd, false);
+#endif
+
 
 	// シーンマネージャー生成
 	SceneManager* pSceneManager = new SceneManager(hWnd);
@@ -117,7 +123,13 @@ LRESULT CALLBACK WindowProc(HWND hwnd,UINT message,WPARAM wparam,LPARAM lparam)
             return  0;
 			break;
 		case WM_KEYDOWN:
-			
+			switch ((CHAR)wparam)
+			{
+			case VK_ESCAPE:
+				PostQuitMessage(0);
+				return 0;
+				break;
+			}
 			break;
 		case WM_ACTIVATE:
 			switch ((CHAR)wparam)
