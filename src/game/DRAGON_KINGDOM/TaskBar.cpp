@@ -39,7 +39,7 @@ void TaskBar::Draw()
 	// ‰æ–Ê‰º•”•F‚Ìƒo[‚ğ•`‰æ
 	m_vertex.SetSizeX(1.21f);
 	m_vertex.DrawTextureLT(m_texture,
-						   D3DXVECTOR2(0,CLIENT_HEIGHT - m_uv[TYPE1].bottom + 10),
+						   D3DXVECTOR2(0,CLIENT_HEIGHT - 120),
 						   m_uv[TYPE1]);
 		
 	m_vertex.SetSizeX(1.0f);
