@@ -1,16 +1,10 @@
 #ifndef HOUSEBUILDER_H
 #define HOUSEBUILDER_H
 
+#include "HouseManager.h"
+
 class House;
 class HousePreviewer;
-
-enum HouseType
-{
-	RED_HOUSE,
-	BLUE_HOUSE,
-	YELLOW_HOUSE,
-	HOUSE_TYPE_MAX
-};
 
 class HouseBuilder
 {
@@ -21,7 +15,7 @@ public:
 	void SetBuildPos(D3DXVECTOR3* _BuildPos);
 	void SetBuildAngle(float _angle);
 	void SetDrawState(bool _isDraw);
-	House* HouseBuild();
+	House* HouseBuild(int _Type);
 
 private:
 	HousePreviewer* m_pHousePreviewer;

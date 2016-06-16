@@ -14,6 +14,8 @@
 #include "InputDeviceFacade.h"
 #include "FileSaveLoad.h"
 #include "ClickPosConverter.h"
+#include <time.h>
+
 
 using HOUSEMANAGER_ENUM::STATE;
 
@@ -91,8 +93,11 @@ void HouseManager::BuildControl()
 		// コスト計算
 		m_HouseCost = HOUSE_COST;
 
+		///@todo 家の種類はとりあえず時間使ってやってる
+		srand(unsigned int(time(NULL)));
+
 		// おうちの建設
-		House* pHouse = m_pHouseBuilder->HouseBuild();
+		House* pHouse = m_pHouseBuilder->HouseBuild(rand() % HOUSE_TYPE_MAX);
 		m_pHouse.push_back(pHouse);
 
 		// 状態をCreatePosSetに戻す
@@ -148,6 +153,7 @@ void HouseManager::Load(FileSaveLoad* _pFileSaveLoad)
 	// データを格納するvector
 	std::vector<float> Vertex;
 	std::vector<float> Angle;
+	std::vector<int> Status;
 
 	// グループを移ってデータを取得
 	_pFileSaveLoad->StepGroup("HouseVertex");
@@ -155,6 +161,9 @@ void HouseManager::Load(FileSaveLoad* _pFileSaveLoad)
 	
 	_pFileSaveLoad->StepGroup("HouseVertexAngle");
 	_pFileSaveLoad->GetGroupMember(&Angle);
+
+	_pFileSaveLoad->StepGroup("HouseStatus");
+	_pFileSaveLoad->GetGroupMember(&Status);
 
 	// データを取得
 	for (unsigned int i = 0; i < Angle.size(); i++)
@@ -167,8 +176,9 @@ void HouseManager::Load(FileSaveLoad* _pFileSaveLoad)
 
 		m_pHouseBuilder->SetBuildAngle(Angle[i]);
 
+
 		// 生成
-		House* pHouse = m_pHouseBuilder->HouseBuild();
+		House* pHouse = m_pHouseBuilder->HouseBuild(Status[i]);
 		m_pHouse.push_back(pHouse);
 	}
 }
@@ -178,15 +188,17 @@ void HouseManager::Save(FileSaveLoad* _pFileSaveLoad)
 	// セーブするデータを格納するvector
 	std::vector<float> HouseVertexData;
 	std::vector<float> HouseVertexAngleData;
+	std::vector<int> HouseStatus;
 
 	// データを用意
 	for (unsigned int i = 0; i < m_pHouse.size(); i++)
 	{
-		m_pHouse[i]->GetHouseData(&HouseVertexData, &HouseVertexAngleData);
+		m_pHouse[i]->GetHouseData(&HouseVertexData, &HouseVertexAngleData, &HouseStatus);
 	}
 
 	// セーブ
 	_pFileSaveLoad->CreateGroup("HouseVertex", &HouseVertexData);
 	_pFileSaveLoad->CreateGroup("HouseVertexAngle", &HouseVertexAngleData);
+	_pFileSaveLoad->CreateGroup("HouseStatus", &HouseStatus);
 }
 

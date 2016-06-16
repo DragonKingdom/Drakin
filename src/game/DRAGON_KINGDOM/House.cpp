@@ -8,11 +8,12 @@
 House::House(D3DXVECTOR3 _housePos, float _angle, HouseType _Type):
 m_HousePos(_housePos),
 m_Angle(_angle),
+m_Type(_Type),
 m_pModel(new FbxModel(GraphicsDevice::getInstance().GetDevice())),
 m_pLSS(new LSS())
 {
 	// 渡されたHouseTypeによって読み込む家の種類を変える
-	switch (_Type)
+	switch (m_Type)
 	{
 	case RED_HOUSE:
 		FbxFileManager::Get()->FileImport("fbx//house_red.fbx");
@@ -100,11 +101,16 @@ void House::Draw()
 	m_pLSS->End();
 }
 
-void House::GetHouseData(std::vector<float>* _pHouseVertexData, std::vector<float>* _pHouseAngleData)
+void House::GetHouseData(std::vector<float>* _pHouseVertexData, std::vector<float>* _pHouseAngleData, std::vector<int>* _pHouseStatus)
 {
+	// 座標情報
 	_pHouseVertexData->push_back(m_HousePos.x);
 	_pHouseVertexData->push_back(m_HousePos.y);
 	_pHouseVertexData->push_back(m_HousePos.z);
 
+	// 角度
 	_pHouseAngleData->push_back(m_Angle);
+
+	// 家のステータス
+	_pHouseStatus->push_back(m_Type);
 }

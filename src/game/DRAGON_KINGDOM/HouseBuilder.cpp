@@ -1,7 +1,6 @@
 #include "HouseBuilder.h"
 #include "HousePreviewer.h"
 #include "House.h"
-#include <time.h>
 
 HouseBuilder::HouseBuilder():
 m_pHousePreviewer(new HousePreviewer()),
@@ -40,15 +39,12 @@ void HouseBuilder::SetDrawState(bool _isDraw)
 }
 
 
-House* HouseBuilder::HouseBuild()
+House* HouseBuilder::HouseBuild(int _Type)
 {
 	// 生成する家へのポインタ
 	House* pHouse;
 
-	///@todo 家の色はとりあえずシステム時間渡してやってる
-	srand(unsigned int (time(NULL)));
-
-	switch (rand() % HOUSE_TYPE_MAX)
+	switch (_Type)
 	{
 	case RED_HOUSE:
 		pHouse = new House(m_BuildPos, m_Angle, RED_HOUSE);
