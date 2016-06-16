@@ -16,13 +16,13 @@
 namespace 
 {
 /// 統合ファイル内の「はじめから」ボタンの座標
-const Vertex::FRECT kTexMenuStartCoord(0.0f, 0.0f, 438.0f, 88.0f);
+const Vertex::FRECT kTexMenuStartCoord(0.0f, 0.0f, 438.0f, 80.0f);
 /// 統合ファイル内の「つづきから」ボタンの座標
-const Vertex::FRECT kTexMenuContinueCoord(0.0f, 88.0f, 438.0f, 175.0f);
+const Vertex::FRECT kTexMenuContinueCoord(0.0f, 80.0f, 438.0f, 160.0f);
 /// 統合ファイル内の「オプション」ボタンの座標
-const Vertex::FRECT kTexMenuOptionCoord(0.0f, 175.0f, 438.0f, 263.0f);
+const Vertex::FRECT kTexMenuOptionCoord(0.0f, 160.0f, 438.0f, 240.0f);
 /// 統合ファイル内の「ゲーム終了」ボタンの座標
-const Vertex::FRECT kTexMenuExitCoord(0.0f, 263.0f, 438.0f, 350.0f);
+const Vertex::FRECT kTexMenuExitCoord(0.0f, 240.0f, 438.0f, 320.0f);
 }
 //----------------------------------------------------------------------
 
@@ -32,10 +32,9 @@ m_pFileSaveLoad(_pFileSaveLoad),
 m_visible(false),
 m_isSelectMenu(false)
 {
-	/// @todo ボタンの位置は現物合わせで決め打ちしているが、仕様として欲しい
 	D3DXVECTOR2 center;
 	center.x = CLIENT_WIDTH / 2;
-	center.y = CLIENT_HEIGHT * 2 / 5 + 75;
+	center.y = CLIENT_HEIGHT * 2 / 5 + 55;
 
 	// 各ボタンのcenter.yの間隔
 	float space = kTexMenuStartCoord.bottom - kTexMenuStartCoord.top + 10;
