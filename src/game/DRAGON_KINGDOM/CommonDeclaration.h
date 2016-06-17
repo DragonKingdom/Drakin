@@ -82,8 +82,8 @@ namespace HOUSEMANAGER_ENUM
 {
 	enum STATE
 	{
-		CREATE_POS_SET,
-		CREATE
+		CREATE_POS_SET,		// ¶¬‚·‚é‰Æ‚ÌêŠ‚ðŒˆ’è‚·‚é
+		CREATE				// ‰Æ‚ð¶¬‚·‚é
 	};
 }
 

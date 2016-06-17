@@ -2,6 +2,7 @@
 #include "HousePreviewer.h"
 #include "House.h"
 
+
 HouseBuilder::HouseBuilder():
 m_pHousePreviewer(new HousePreviewer()),
 m_isDraw(false)
@@ -38,12 +39,12 @@ void HouseBuilder::SetDrawState(bool _isDraw)
 	m_isDraw = _isDraw;
 }
 
-
 House* HouseBuilder::HouseBuild(int _Type)
 {
 	// 生成する家へのポインタ
 	House* pHouse;
 
+	// 数値に応じて家を生成する
 	switch (_Type)
 	{
 	case RED_HOUSE:
@@ -56,6 +57,14 @@ House* HouseBuilder::HouseBuild(int _Type)
 		break;
 	case YELLOW_HOUSE:
 		pHouse = new House(m_BuildPos, m_Angle, YELLOW_HOUSE);
+
+		break;
+	case POOR_HOUSE:
+		pHouse = new House(m_BuildPos, m_Angle, POOR_HOUSE);
+
+		break;
+	case RICH_HOUSE:
+		pHouse = new House(m_BuildPos, m_Angle, RICH_HOUSE);
 
 		break;
 	}

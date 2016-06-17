@@ -27,6 +27,14 @@ m_pLSS(new LSS())
 		FbxFileManager::Get()->FileImport("fbx//house_yellow.fbx");
 
 		break;
+	case POOR_HOUSE:
+		FbxFileManager::Get()->FileImport("fbx//house_hinmin.fbx");
+
+		break;	
+	case RICH_HOUSE:
+		FbxFileManager::Get()->FileImport("fbx//house_seleb.fbx");
+
+		break;
 	}
 
 	FbxFileManager::Get()->GetModelData(m_pModel);

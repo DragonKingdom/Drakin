@@ -56,8 +56,7 @@ void HouseManager::BuildControl()
 		MousePosition = m_pInputDevice->GetMousePos();
 		m_pClickPosConverter->ConvertForLoad(&CreatePosition, int(MousePosition.x), int(MousePosition.y));
 
-		// エリアがそもそも存在するのかチェック
-		if (m_pBuildAreaChecker->GetAreaCenterPos(&CreatePosition, &CenterPosition, &Angle))
+		if (m_pBuildAreaChecker->GetAreaCenterPos(&CreatePosition, &CenterPosition, &Angle))		// エリアがそもそも存在するのかチェック
 		{
 			// エリアは存在するはずなので空いているかのチェック
 			if (m_pBuildAreaChecker->AreaCheck(&CenterPosition))
@@ -93,11 +92,37 @@ void HouseManager::BuildControl()
 		// コスト計算
 		m_HouseCost = HOUSE_COST;
 
-		///@todo 家の種類はとりあえず時間使ってやってる
+
+		// 乱数を利用して建設する家の種類を決めてる
+		// 乱数もrandとtimeをそのまま利用してるだけなので、修正しておく必要がある
+		///@todo とりあえずの実装なのでやり方が汚い(もう少しスムーズにやっとく)
 		srand(unsigned int(time(NULL)));
 
+		int HouseType = rand() % HOUSE_THRESHOLD_MAX;
+
+		if (HouseType < REDHOUSE_THRESHOLD)
+		{
+			HouseType = RED_HOUSE;
+		}
+		else if (HouseType < BLUEHOUSE_THRESHOLD)
+		{
+			HouseType = BLUE_HOUSE;
+		}
+		else if (HouseType < YELLOWHOUSE_THRESHOLD)
+		{
+			HouseType = YELLOW_HOUSE;
+		}
+		else if (HouseType < POORHOUSE_THRESHOLD)
+		{
+			HouseType = POOR_HOUSE;
+		}
+		else if (HouseType < RICHHOUSE_THRESHOLD)
+		{
+			HouseType = RICH_HOUSE;
+		}
+
 		// おうちの建設
-		House* pHouse = m_pHouseBuilder->HouseBuild(rand() % HOUSE_TYPE_MAX);
+		House* pHouse = m_pHouseBuilder->HouseBuild(HouseType);
 		m_pHouse.push_back(pHouse);
 
 		// 状態をCreatePosSetに戻す
@@ -175,7 +200,6 @@ void HouseManager::Load(FileSaveLoad* _pFileSaveLoad)
 		m_pHouseBuilder->SetBuildPos(&Vec);
 
 		m_pHouseBuilder->SetBuildAngle(Angle[i]);
-
 
 		// 生成
 		House* pHouse = m_pHouseBuilder->HouseBuild(Status[i]);

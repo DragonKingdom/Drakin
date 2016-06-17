@@ -10,11 +10,21 @@
 
 #define HOUSE_COST 100
 
+#define REDHOUSE_THRESHOLD 4		// 赤い家のしきい値
+#define BLUEHOUSE_THRESHOLD 8		// 青い家のしきい値
+#define YELLOWHOUSE_THRESHOLD 12	// 黄色い家のしきい値
+#define POORHOUSE_THRESHOLD 17		// 貧相な家のしきい値
+#define RICHHOUSE_THRESHOLD 20		// 高級な家のしきい値
+#define HOUSE_THRESHOLD_MAX 20		// しきい値の最大値
+
+
 enum HouseType
 {
 	RED_HOUSE,
 	BLUE_HOUSE,
 	YELLOW_HOUSE,
+	POOR_HOUSE,
+	RICH_HOUSE,
 	HOUSE_TYPE_MAX
 };
 
