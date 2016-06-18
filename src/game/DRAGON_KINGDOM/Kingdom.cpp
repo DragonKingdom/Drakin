@@ -50,7 +50,7 @@ void Kingdom::Draw()
 		"–ž‘«“x" + std::to_string(m_KingdomData.Satisfaction) + "\n"+
 		"Ž¡ˆÀ" + std::to_string(m_KingdomData.Security) + "\n";
 
-	m_font.Draw(Str.c_str(), D3DXVECTOR2(1100, 0));
+	m_font.Draw(Str.c_str(), D3DXVECTOR2(CLIENT_WIDTH - 160, 0));
 }
 
 void Kingdom::GetState()

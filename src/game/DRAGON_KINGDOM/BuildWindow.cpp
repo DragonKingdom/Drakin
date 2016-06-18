@@ -15,14 +15,14 @@ const Vertex::FRECT BuildWindow::UV[BuildWindow::TYPE_MAX] =
 const D3DXVECTOR2 BuildWindow::ICON_POS = D3DXVECTOR2(800, CLIENT_HEIGHT - 120);
 
 BuildWindow::BuildWindow(StateManager* _pStateManager) :
-	Window(D3DXVECTOR2(550,100),
-	D3DXVECTOR2(CLIENT_WIDTH - 550,CLIENT_HEIGHT),
-	D3DXVECTOR2(CLIENT_WIDTH - 550,CLIENT_HEIGHT - 140),
-	_pStateManager), 
-	m_selectID(-1),
-	m_buildState(BUILD_NONE),
-	m_roadManagerState(ROADMANAGER_ENUM::START_POS_SET),
-	m_buildAreaManagerState(BUILDAREAMANAGER_ENUM::START_POS_SET)
+Window(D3DXVECTOR2(870, 100),
+D3DXVECTOR2(CLIENT_WIDTH - 870, CLIENT_HEIGHT),
+D3DXVECTOR2(CLIENT_WIDTH - 870, CLIENT_HEIGHT - 140),
+_pStateManager),
+m_selectID(-1),
+m_buildState(BUILD_NONE),
+m_roadManagerState(ROADMANAGER_ENUM::START_POS_SET),
+m_buildAreaManagerState(BUILDAREAMANAGER_ENUM::START_POS_SET)
 {
 	m_texture = TextureManager::getInstance().Get(TextureManager::GAME_SCENE_TEX::UI);
 }

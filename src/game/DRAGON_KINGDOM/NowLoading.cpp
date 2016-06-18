@@ -101,15 +101,16 @@ DWORD WINAPI NowLoading::NowLoadingThread(LPVOID _pTexture)
 	ThreadData.pTexture = reinterpret_cast<Texture*> (_pTexture);
 
 	// í∏ì_ç¿ïWèâä˙âª
-	ThreadData.Vec[0].x = 910.f;
-	ThreadData.Vec[1].x = 1280.f;
-	ThreadData.Vec[2].x = 1280.f;
-	ThreadData.Vec[3].x = 910.f;
+	// åªç›ÇÕåàÇﬂÇ§Çø
+	ThreadData.Vec[0].x = CLIENT_WIDTH - 390.f;
+	ThreadData.Vec[1].x = CLIENT_WIDTH - 20.f;
+	ThreadData.Vec[2].x = CLIENT_WIDTH - 20.f;
+	ThreadData.Vec[3].x = CLIENT_WIDTH - 390.f;
 
-	ThreadData.Vec[0].y = 600.f;
-	ThreadData.Vec[1].y = 600.f;
-	ThreadData.Vec[2].y = 680.f;
-	ThreadData.Vec[3].y = 680.f;
+	ThreadData.Vec[0].y = CLIENT_HEIGHT - 160.f;
+	ThreadData.Vec[1].y = CLIENT_HEIGHT - 160.f;
+	ThreadData.Vec[2].y = CLIENT_HEIGHT - 80.f;
+	ThreadData.Vec[3].y = CLIENT_HEIGHT - 80.f;
 
 	ThreadData.Vec[0].z = 0.5f;
 	ThreadData.Vec[1].z = 0.5f;

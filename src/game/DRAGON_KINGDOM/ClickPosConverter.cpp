@@ -16,8 +16,10 @@ void ClickPosConverter::Convert(D3DXVECTOR3* pout, float _x, float _y, float fZ,
    D3DXMatrixInverse( &InvView, NULL, matView );
    D3DXMatrixInverse( &InvPrj, NULL, matProj );
    D3DXMatrixIdentity( &VP );
-   VP._11 = (float)1280.f/2.0f; VP._22 = -(float)720.f/2.0f;
-   VP._41 = (float)1280.f/2.0f; VP._42 = (float)720.f/2.0f;
+   VP._11 = (float)CLIENT_WIDTH / 2.0f;
+   VP._22 = -(float)CLIENT_HEIGHT / 2.0f;
+   VP._41 = (float)CLIENT_WIDTH / 2.0f;
+   VP._42 = (float)CLIENT_HEIGHT / 2.0f;
    D3DXMatrixInverse( &InvViewport, NULL, &VP );
 
    // 逆変換
@@ -32,7 +34,7 @@ D3DXVECTOR3* ClickPosConverter::ConvertForLoad(D3DXVECTOR3* pout, int Sx, int Sy
 	// view,projを用意
 	D3DXVECTOR3 upVec = D3DXVECTOR3(0,1,0);   // カメラの上方向を設定
 	float viewAngle = D3DXToRadian(50);       // 視野角
-	float aspect = (float)1280.f/ 720.f;      // アスペクト比
+	float aspect = (float)CLIENT_WIDTH / CLIENT_HEIGHT;      // アスペクト比
 	float nearZ = 1.f;                        // 最近点
 	float farZ = 100000.f;                      // 最遠点
 

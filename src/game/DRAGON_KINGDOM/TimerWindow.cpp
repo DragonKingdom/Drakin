@@ -5,7 +5,7 @@
 const D3DXVECTOR2 TimerWindow::TIMER_POSITION = D3DXVECTOR2(60, CLIENT_HEIGHT - 100);
 
 TimerWindow::TimerWindow(StateManager* _pStateManager) : 
-	Window(D3DXVECTOR2(CLIENT_WIDTH-520,100),
+	Window(D3DXVECTOR2(CLIENT_WIDTH-840,100),
 	       D3DXVECTOR2(0,CLIENT_HEIGHT - 140),
 		   D3DXVECTOR2(0,CLIENT_HEIGHT - 140),
 		   _pStateManager), 

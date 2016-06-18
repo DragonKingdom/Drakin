@@ -47,12 +47,12 @@ int WINAPI WinMain( HINSTANCE hInst,HINSTANCE hPrevInst,LPSTR szStr,INT iCmdShow
 #ifndef FULLSCREEN
 
 	hWnd = CreateWindow (szAppName,szAppName,WS_OVERLAPPEDWINDOW | WS_VISIBLE,  
-		0, 0, 1280, 720, NULL, NULL, hInst, NULL);
+		0, 0, CLIENT_WIDTH, CLIENT_HEIGHT, NULL, NULL, hInst, NULL);
 
 #else
 
 	hWnd = CreateWindow(szAppName, szAppName, WS_POPUP | WS_VISIBLE,
-		0, 0, 1280, 720, NULL, NULL, hInst, NULL);
+		0, 0, CLIENT_WIDTH, CLIENT_HEIGHT, NULL, NULL, hInst, NULL);
 
 #endif
 

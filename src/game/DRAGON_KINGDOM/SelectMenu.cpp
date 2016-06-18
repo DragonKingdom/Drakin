@@ -169,7 +169,7 @@ bool SelectMenu::Control()
 					return true;
 					break;
 				case SAVEDATA_5:
-					m_pFileSaveLoad->FileLoadInit("Save / SaveData5.save");
+					m_pFileSaveLoad->FileLoadInit("Save/SaveData5.save");
 					return true;
 					break;
 				default:
@@ -188,7 +188,7 @@ void SelectMenu::Draw()
 		m_pButtons[i]->Draw();
 		m_Font.Draw(
 			m_pButtonName[i].c_str(),
-			D3DXVECTOR2(SAVEDATA_NAME_POS_X, DEFAULT_CENTERPOS_Y + BUTTON_SPACE * i),
+			D3DXVECTOR2(CLIENT_WIDTH/2, DEFAULT_CENTERPOS_Y + BUTTON_SPACE * i),
 			D3DCOLOR_ARGB(255,0,0,0));
 	}
 

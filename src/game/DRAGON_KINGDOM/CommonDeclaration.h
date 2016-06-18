@@ -11,8 +11,8 @@
 /////////////////////////////////////////////////////////
 // define
 /////////////////////////////////////////////////////////
-#define CLIENT_WIDTH  1280
-#define CLIENT_HEIGHT  720
+#define CLIENT_WIDTH  1600
+#define CLIENT_HEIGHT  900
 
 /// コピーコンストラクタと=演算子関数を無効にするマクロ
 #define DISALLOW_COPY_AND_ASSIGN(TypeName) \

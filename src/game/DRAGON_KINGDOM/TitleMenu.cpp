@@ -34,10 +34,10 @@ m_isSelectMenu(false)
 {
 	D3DXVECTOR2 center;
 	center.x = CLIENT_WIDTH / 2;
-	center.y = CLIENT_HEIGHT * 2 / 5 + 55;
+	center.y = CLIENT_HEIGHT * 2 / 5 + 110;
 
 	// Šeƒ{ƒ^ƒ“‚Ìcenter.y‚ÌŠÔŠu
-	float space = kTexMenuStartCoord.bottom - kTexMenuStartCoord.top + 10;
+	float space = kTexMenuStartCoord.bottom - kTexMenuStartCoord.top + 20;
 
 	m_buttons.push_back(new TitleMenuButton(kTexMenuStartCoord, center));
 	center.y += space;
