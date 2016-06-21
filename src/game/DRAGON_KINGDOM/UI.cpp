@@ -69,18 +69,20 @@ void UI::WindowCreate()
 	{
 	case OPTION:
 		m_pWindow = new OptionWindow(m_pStateManager);
+		MessageBox(NULL, "–¢ŽÀ‘•‚Å‚·", "", MB_OK);
 		break;
 	case KINGDOM:
 		m_pWindow = new KingdomWindow(m_pStateManager);
+		MessageBox(NULL, "–¢ŽÀ‘•‚Å‚·", "", MB_OK);
 		break;
 	case ECONOMY:
-
+		MessageBox(NULL, "–¢ŽÀ‘•‚Å‚·", "", MB_OK);
 		break;
 	case QUEST:
-
+		MessageBox(NULL, "–¢ŽÀ‘•‚Å‚·", "", MB_OK);
 		break;
 	case HERO:
-
+		MessageBox(NULL, "–¢ŽÀ‘•‚Å‚·", "", MB_OK);
 		break;
 	case BUILD:
 		m_pWindow = new BuildWindow(m_pStateManager);
