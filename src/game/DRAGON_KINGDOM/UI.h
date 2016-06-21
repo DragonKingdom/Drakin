@@ -6,6 +6,8 @@
 #ifndef UI_H_
 #define UI_H_
 
+#include"Font.h"
+
 class Window;
 class TaskBar;
 class Menuicon;
@@ -49,6 +51,7 @@ private:
 	Window* m_pWindow;
 	InputDeviceFacade* m_pIdf;
 	StateManager* m_pStateManager;
+	Font m_Font;
 
 
 public:
