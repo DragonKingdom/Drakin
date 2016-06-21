@@ -14,6 +14,8 @@ namespace
 	const Vertex::FRECT SaveData4Coord(0.0f, 240.0f, 438.0f, 320.0f);
 
 	const Vertex::FRECT SaveData5Coord(0.0f, 320.0f, 438.0f, 400.0f);
+
+	const Vertex::FRECT SaveDataBackGeound(0.0f, 0.0f, 1038.0f, 420.0f);
 }
 
 
@@ -21,7 +23,10 @@ SelectMenu::SelectMenu(FileSaveLoad* _pFileSaveLoad):
 m_pFileSaveLoad(_pFileSaveLoad),
 m_pfile(NULL)
 {
-	for (int i = 0; i < MAX_SAVE_FILE; i++)
+	// ファイル読み込み
+	m_texture.Load("Resource/image/SaveDataWindowBackGround.png");
+
+	for (int i = 0; i < SAVEDATA_MAX; i++)
 	{
 		m_isFile[i] = false;
 	}
@@ -111,7 +116,7 @@ m_pfile(NULL)
 
 
 	D3DXVECTOR2 center;
-	center.x = CLIENT_WIDTH / 2;
+	center.x = DEFAULT_CENTERPOS_X;
 	center.y = DEFAULT_CENTERPOS_Y;
 
 
@@ -133,15 +138,17 @@ m_pfile(NULL)
 
 SelectMenu::~SelectMenu()
 {
-	for (int i = 0; i < MAX_SAVE_FILE; ++i)
+	for (int i = 0; i < SAVEDATA_MAX; ++i)
 	{
 		delete m_pButtons[i];
 	}
+
+	m_texture.Release();
 }
 
 bool SelectMenu::Control()
 {
-	for (int i = 0; i < MAX_SAVE_FILE; ++i)
+	for (int i = 0; i < SAVEDATA_MAX; ++i)
 	{
 		// ボタンが押されたらtrueが返る
 		if (m_pButtons[i]->Control() == true)
@@ -183,12 +190,18 @@ bool SelectMenu::Control()
 
 void SelectMenu::Draw()
 {
-	for (int i = 0; i < MAX_SAVE_FILE; ++i)
+	m_vertex.DrawTextureCC(
+		m_texture,
+		D3DXVECTOR2(SAVEDATA_BACKGROUND_X, SAVEDATA_BACKGROUND_Y),
+		SaveDataBackGeound, 
+		D3DCOLOR_ARGB(0xff, 0xff, 0xff, 0xff));
+
+	for (int i = 0; i < SAVEDATA_MAX; ++i)
 	{
 		m_pButtons[i]->Draw();
 		m_Font.Draw(
 			m_pButtonName[i].c_str(),
-			D3DXVECTOR2(CLIENT_WIDTH/2, DEFAULT_CENTERPOS_Y + BUTTON_SPACE * i),
+			D3DXVECTOR2(DEFAULT_CENTERPOS_X, DEFAULT_CENTERPOS_Y + BUTTON_SPACE * i),
 			D3DCOLOR_ARGB(255,0,0,0));
 	}
 

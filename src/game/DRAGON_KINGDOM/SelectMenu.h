@@ -6,10 +6,14 @@
 #include "TitleMenuButton.h"
 #include "Font.h"
 
-#define MAX_SAVE_FILE 5			// セーブデータの最大数
-#define BUTTON_SPACE 100		// ボタンとボタンの間隔
-#define DEFAULT_CENTERPOS_Y 200.f	// セーブデータセレクトボタンのy座標基準値
+#define BUTTON_SPACE 85			// ボタンとボタンの間隔
+#define DEFAULT_CENTERPOS_X 500.f	// セーブデータセレクトボタンのx座標基準値
+#define DEFAULT_CENTERPOS_Y 470.f	// セーブデータセレクトボタンのy座標基準値
 #define SAVEDATA_NAME_POS_X 450.f	// セーブデータセレクトボタンの名前のx座標位置
+
+#define SAVEDATA_BACKGROUND_X 800	// セーブデータスロットの背景位置
+#define SAVEDATA_BACKGROUND_Y 640	// セーブデータスロットの背景位置
+
 
 class FileSaveLoad;
 class SelectMenuButton;
@@ -39,8 +43,14 @@ private:
 	// ファイルを読み書きするクラス
 	FileSaveLoad* m_pFileSaveLoad;
 	
+	// 頂点描画クラス
+	Vertex m_vertex;
+
+	// テクスチャ格納クラス
+	Texture m_texture;
+
 	// ファイルが存在するかのフラグ
-	bool m_isFile[MAX_SAVE_FILE];
+	bool m_isFile[SAVEDATA_MAX];
 
 	// セーブデータを表示するボタン
 	std::vector<SelectMenuButton*> m_pButtons;
