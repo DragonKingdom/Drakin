@@ -8,6 +8,7 @@
 #include"TimerWindow.h"
 #include "InputDeviceFacade.h"
 #include "StateManager.h"
+#include<string>
 
 UI::UI(StateManager* pStateManager) :
 m_pWindow(NULL),
@@ -59,12 +60,13 @@ void UI::Draw()
 	m_pMenuicon->Draw();
 
 	//Font‚Ì•`‰æ
-	std::string gold;
-	std::string population;
+	//gemeData‚©‚çlŒû‚ÆG‚Ìî•ñ‚ğ‚¤‚¯‚Æ‚é
+	std::string gold=
+		"G "+std::to_string(1);
+	std::string population=
+		"lŒû"+std::to_string(22);
 
-	//to_string(z);
-	gold = "G";
-	population = "lŒû";
+	
 	m_Font.Draw(gold.c_str(), D3DXVECTOR2(300,815));
 	m_Font.Draw(population.c_str(), D3DXVECTOR2(150, 815));
 

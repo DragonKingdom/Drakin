@@ -2,7 +2,8 @@
 #include "Menuicon.h"
 #include "textureManager.h"
 #include "Collision.h"
-
+#include"Font.h"
+#include<string>
 
 //Hy変更
 #define MENUICON 12
@@ -11,7 +12,7 @@
 
 //left top right bottomの順
 const Vertex::FRECT Menuicon::UV = Vertex::FRECT(0,0,64,64);
-
+Font m_font;
 Menuicon::Menuicon() : 
 m_selectID(-1),m_ICON_POS(400, 770)
 {
@@ -26,7 +27,6 @@ void Menuicon::Control()
 {
 	InputDeviceFacade* p_id = InputDeviceFacade::GetInstance();
 	const D3DXVECTOR2 mvec = p_id->GetMousePos();
-
 	
 	// マウス座標がアイコンからあまりに離れている場合は判定しない
 	if (mvec.x >= m_ICON_POS.x && mvec.y >= m_ICON_POS.y)
@@ -46,6 +46,7 @@ void Menuicon::Control()
 				return;
 			}
 		}
+	
 
 	}
 	if (mvec.x >= m_ICON_POS.x + OPICON_X && mvec.y >= m_ICON_POS.y)
@@ -54,9 +55,9 @@ void Menuicon::Control()
 		for (int opicon = 0; opicon < OPICON; opicon++)
 		{
 			Vertex::FRECT rect = Vertex::FRECT(m_ICON_POS.x + OPICON_X + (opicon*UV.left + opicon * 5),
-				m_ICON_POS.y,
-				m_ICON_POS.x + OPICON_X + (opicon * UV.right + opicon * 5) + UV.right,
-				m_ICON_POS.y + UV.bottom);
+											   m_ICON_POS.y,
+											   m_ICON_POS.x + OPICON_X + (opicon * UV.right + opicon * 5) + UV.right,
+											   m_ICON_POS.y + UV.bottom);
 
 			if (tdCollision::PointToSquare(mvec, rect))
 			{
@@ -66,7 +67,8 @@ void Menuicon::Control()
 			}
 		}
 	}
-	m_selectID = -1;
+	//これがないとどこかバグるような気がする
+	//m_selectID = -1;
 }
 
 void Menuicon::Draw()
