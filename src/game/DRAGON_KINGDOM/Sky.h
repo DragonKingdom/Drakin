@@ -17,6 +17,8 @@ private:
 	LSS* m_pLSS;
 	Sun*			m_pSun;
 	Model*			m_pSkyModel;
+	Texture m_TextureCloud;
+	Texture m_TextureStar;
 
 	/// @todo シェーダー使いたいから置く(シェーダーもLibraryにしたい)
 	LPDIRECT3DDEVICE9	m_pDevice;

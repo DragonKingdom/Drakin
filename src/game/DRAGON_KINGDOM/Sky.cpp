@@ -8,6 +8,9 @@ Sky::Sky(Sun* pSun) :
 	m_pDevice(GraphicsDevice::getInstance().GetDevice()),
 	m_pSun(pSun)
 {
+	//m_TextureCloud.Load("Resource\\Xfile\\Sky_L.png");
+	m_TextureStar.Load("Resource\\Xfile\\star.png");
+
 	m_pSkyModel = new Model("Resource\\Xfile\\doom.x");
 	m_pSkyModel->SetScale(D3DXVECTOR3(13000, 13000, 13000));
 	m_pLSS = new LSS();
@@ -41,7 +44,9 @@ void Sky::Draw()
 	m_pLSS->SetParameters(35.0f, 0.5f);
 	//フォグの色を設定
 	m_pLSS->SetFogColor(1.0f);
-	m_pLSS->BeginPass(0,1);
+	GraphicsDevice::getInstance().GetDevice()->SetTexture(0,m_TextureCloud.Get());
+	GraphicsDevice::getInstance().GetDevice()->SetTexture(2, m_TextureStar.Get());
+	m_pLSS->BeginPass(0, 1);
 	m_pSkyModel->Draw();
 	m_pLSS->EndPass();
 	m_pLSS->End();
