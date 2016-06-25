@@ -94,14 +94,14 @@ void Model::SetState()
 D3DMATRIX Model::SetWorldMatrix(D3DXVECTOR3 _position, D3DXMATRIX _attitude)
 {
 	D3DXMATRIX matWorld = _attitude;
-	D3DXMATRIX matTrans, matScale, matAngle;
+	D3DXMATRIX matTrans, matScale, RotationMatrix;
 	D3DXMatrixScaling(&matScale, m_vecScale.x, m_vecScale.y, m_vecScale.z);
-	D3DXMatrixRotationY(&matAngle, D3DXToRadian(90.f));
+	//D3DXMatrixRotationY(&RotationMatrix, D3DXToRadian(10000.f));
 	//移動のためのマトリックス
 	D3DXMatrixTranslation(&matTrans, _position.x, _position.y, _position.z);
 	// ワールドマトリックスの設定
 	D3DXMatrixIdentity(&matWorld);
-	matWorld = matScale * _attitude * matAngle * matTrans;
+	matWorld = matScale * _attitude * matTrans;
 
 	// ワールド行列を登録
 	m_pDevice->SetTransform(D3DTS_WORLD, &matWorld);
