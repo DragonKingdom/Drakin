@@ -6,7 +6,6 @@
  */
 
 #include "LogoScene.h"
-#include "TextureManager.h"
 #include "InputDeviceFacade.h"
 
 LogoScene::LogoScene() :

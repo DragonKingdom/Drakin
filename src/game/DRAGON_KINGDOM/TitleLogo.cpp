@@ -6,7 +6,6 @@
  */
 
 #include "TitleLogo.h"
-#include "TextureManager.h"
 
 //----------------------------------------------------------------------
 namespace 
@@ -23,10 +22,12 @@ const Vertex::FRECT kTexCoord(0.0f, 350.0f, 1200.f, 735.f);
 TitleLogo::TitleLogo()
 	: m_fadeIn(0x00)
 {
+	m_Texture.Load("Resource\\image\\Title_Menu.png");
 }
 
 TitleLogo::~TitleLogo()
 {
+	m_Texture.Release();
 }
 
 void TitleLogo::Draw()
@@ -47,6 +48,5 @@ void TitleLogo::Draw()
 
 	// •`‰æ
 	Vertex vertex;
-	const Texture texture = TextureManager::getInstance().Get(TextureManager::TITLE_SCENE_TEX::MENU);
-	vertex.DrawTextureCC(texture, center, kTexCoord, color);
+	vertex.DrawTextureCC(m_Texture, center, kTexCoord, color);
 }

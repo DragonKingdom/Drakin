@@ -1,5 +1,4 @@
 #include "TaskBar.h"
-#include "textureManager.h"
 
 Vertex::FRECT TaskBar::m_uv[TYPE_MAX] = 
 {
@@ -17,7 +16,7 @@ TaskBar::TaskBar(StateManager* _pStateManager):
 m_pStateManager(_pStateManager)
 {
 	// テクスチャを取得
-	m_texture = TextureManager::getInstance().Get(TextureManager::GAME_SCENE_TEX::TELOP);
+	m_texture.Load("Resource\\image\\telop.png");
 
 	m_pWindow[WINDOW_TIMER] = new TimerWindow(m_pStateManager);
 }
@@ -28,6 +27,7 @@ TaskBar::~TaskBar()
 	{
 		delete m_pWindow[i];
 	}
+	m_texture.Release();
 }
 
 void TaskBar::Control()

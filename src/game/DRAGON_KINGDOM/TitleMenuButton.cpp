@@ -6,7 +6,6 @@
  */
 
 #include "TitleMenuButton.h"
-#include "TextureManager.h"
 #include "Scene.h"
 #include "Collision.h"   //2/26 追加
 
@@ -26,7 +25,7 @@ TitleMenuButton::TitleMenuButton(const Vertex::FRECT& _coord, const D3DXVECTOR2&
 	  m_coord(_coord),
 	  m_scale(1.0f)
 {
-	m_texture = TextureManager::getInstance().Get(TextureManager::TITLE_SCENE_TEX::MENU);
+	m_texture.Load("Resource\\image\\Title_Menu.png");
 	m_pCol = new Collision();
 	// ボタンの矩形の各座標を設定する
 	float width = m_coord.right - m_coord.left;;
@@ -36,6 +35,7 @@ TitleMenuButton::TitleMenuButton(const Vertex::FRECT& _coord, const D3DXVECTOR2&
 
 TitleMenuButton::~TitleMenuButton()
 {
+	m_texture.Release();
 	delete m_pCol;
 }
 

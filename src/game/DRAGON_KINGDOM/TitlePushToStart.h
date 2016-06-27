@@ -24,6 +24,7 @@ protected:
 
 private:
 	DISALLOW_COPY_AND_ASSIGN(TitlePushToStart);
+	Texture m_Texture;
 };
 
 #endif // TITLEPUSHTOSTART_H

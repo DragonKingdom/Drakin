@@ -6,7 +6,6 @@
  */
 
 #include "TitlePushToStart.h"
-#include "TextureManager.h"
 
 //----------------------------------------------------------------------
 namespace 
@@ -20,10 +19,12 @@ Vertex::FRECT kTexCoord(493.0f, 0.0f, 1552.0f, 75.0f);
 TitlePushToStart::TitlePushToStart()
 	: m_visible(true)
 {
+	m_Texture.Load("Resource\\image\\Title.png");
 }
 
 TitlePushToStart::~TitlePushToStart()
 {
+	m_Texture.Release();
 }
 
 void TitlePushToStart::Control()
@@ -39,7 +40,6 @@ void TitlePushToStart::Draw()
 		leftTop.y = CLIENT_HEIGHT * 2 / 3;
 
 		Vertex vertex;
-		const Texture& texture = TextureManager::getInstance().Get(TextureManager::TITLE_SCENE_TEX::TITLE);
-		vertex.DrawTextureLT(texture, leftTop, kTexCoord);
+		vertex.DrawTextureLT(m_Texture, leftTop, kTexCoord);
 	}
 }

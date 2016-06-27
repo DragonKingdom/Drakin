@@ -24,7 +24,7 @@ public:
 private:
 	FadeInOut	m_fadeIn;
 	bool		m_IsFadeIn;
-
+	Texture m_Texture;
 	DISALLOW_COPY_AND_ASSIGN(TeamLogo);
 
 

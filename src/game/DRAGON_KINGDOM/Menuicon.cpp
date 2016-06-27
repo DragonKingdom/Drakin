@@ -1,6 +1,5 @@
 #include "InputDeviceFacade.h"
 #include "Menuicon.h"
-#include "textureManager.h"
 #include "Collision.h"
 
 //left top right bottomÇÃèá
@@ -9,11 +8,12 @@ const Vertex::FRECT Menuicon::UV = Vertex::FRECT(0,0,64,64);
 Menuicon::Menuicon() : 
 m_selectID(-1),m_ICON_POS(300, CLIENT_HEIGHT - 115)
 {
-	m_Texture = TextureManager::getInstance().Get(TextureManager::GAME_SCENE_TEX::UI);
+	m_Texture.Load("Resource\\image\\UI.png");
 }
 
 Menuicon::~Menuicon()
 {
+	m_Texture.Release();
 }
 
 void Menuicon::Control()

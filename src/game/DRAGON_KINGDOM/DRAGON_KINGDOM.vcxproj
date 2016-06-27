@@ -151,7 +151,6 @@
     <ClCompile Include="Sun.cpp" />
     <ClCompile Include="TaskBar.cpp" />
     <ClCompile Include="TeamLogo.cpp" />
-    <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="TimerWindow.cpp" />
     <ClCompile Include="TitleBackground.cpp" />
@@ -211,7 +210,6 @@
     <ClInclude Include="Sun.h" />
     <ClInclude Include="TaskBar.h" />
     <ClInclude Include="TeamLogo.h" />
-    <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="TimerWindow.h" />
     <ClInclude Include="TitleBackground.h" />

@@ -10,7 +10,6 @@ MenuWindow::MenuWindow(StateManager* _pStateManager) :
 		   D3DXVECTOR2(400,CLIENT_HEIGHT - 270),
 		   _pStateManager)
 {
-	//m_texture = TextureManager::getInstance().Get();
 }
 
 MenuWindow::~MenuWindow()

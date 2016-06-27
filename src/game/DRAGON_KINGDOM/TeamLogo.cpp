@@ -6,7 +6,6 @@
 */
 
 #include "TeamLogo.h"
-#include "TextureManager.h"
 
 namespace
 {
@@ -24,11 +23,12 @@ TeamLogo::TeamLogo():
 m_fadeIn(0x00),
 m_IsFadeIn(true)
 {
-
+	m_Texture.Load("Resource\\image\\LogoScene\\Logo.png");
 }
 
 TeamLogo::~TeamLogo()
 {
+	m_Texture.Release();
 }
 
 SceneID TeamLogo::Control()
@@ -72,6 +72,5 @@ void TeamLogo::Draw()
 
 	// •`‰æ
 	Vertex vertex;
-	const Texture texture = TextureManager::getInstance().Get(TextureManager::LOGO_SCENE_TEX::TEAM_LOGO);
-	vertex.DrawTextureCC(texture, center, kTexCoord, color);
+	vertex.DrawTextureCC(m_Texture, center, kTexCoord, color);
 }
