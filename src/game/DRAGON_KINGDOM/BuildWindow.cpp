@@ -1,7 +1,6 @@
 #include "Window.h"
 #include "BuildWindow.h"
 #include "Scene.h"
-#include "TextureManager.h"
 #include "StateManager.h"
 #include "InputDeviceFacade.h"
 
@@ -24,11 +23,12 @@ m_buildState(BUILD_NONE),
 m_roadManagerState(ROADMANAGER_ENUM::START_POS_SET),
 m_buildAreaManagerState(BUILDAREAMANAGER_ENUM::START_POS_SET)
 {
-	m_texture = TextureManager::getInstance().Get(TextureManager::GAME_SCENE_TEX::UI);
+	m_texture.Load("Resource\\image\\UI.png");
 }
 
 BuildWindow::~BuildWindow()
 {
+	m_texture.Release();
 }
 
 bool BuildWindow::Control()

@@ -56,9 +56,6 @@
     <Filter Include="main\Button2D">
       <UniqueIdentifier>{c72e5f09-d3a4-4470-909b-3d2464848cef}</UniqueIdentifier>
     </Filter>
-    <Filter Include="main\TextureManager">
-      <UniqueIdentifier>{a6c6c40c-ad6c-4bf3-80cf-c9f280105574}</UniqueIdentifier>
-    </Filter>
     <Filter Include="main\SceneManager\SceneFactory">
       <UniqueIdentifier>{d36ef0ff-2fc2-46c4-b6cf-1d0f234aabd4}</UniqueIdentifier>
     </Filter>
@@ -253,9 +250,6 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>stdafx</Filter>
     </ClCompile>
-    <ClCompile Include="TextureManager.cpp">
-      <Filter>main\TextureManager</Filter>
-    </ClCompile>
     <ClCompile Include="Timer.cpp">
       <Filter>main\SceneManager\Scene\GameScene\Timer</Filter>
     </ClCompile>
@@ -426,9 +420,6 @@
     </ClInclude>
     <ClInclude Include="stdafx.h">
       <Filter>stdafx</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureManager.h">
-      <Filter>main\TextureManager</Filter>
     </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>main\SceneManager\Scene\GameScene\Timer</Filter>

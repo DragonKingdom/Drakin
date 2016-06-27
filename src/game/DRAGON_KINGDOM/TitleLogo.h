@@ -25,7 +25,7 @@ protected:
 
 private:
 	FadeInOut m_fadeIn;
-
+	Texture m_Texture;
 	DISALLOW_COPY_AND_ASSIGN(TitleLogo);
 };
 

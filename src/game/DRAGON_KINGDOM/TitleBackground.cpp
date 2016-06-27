@@ -6,7 +6,6 @@
  */
 
 #include "TitleBackground.h"
-#include "TextureManager.h"
 
 //----------------------------------------------------------------------
 // ’è”
@@ -21,10 +20,12 @@ const int kFadeInTime = 1;
 TitleBackground::TitleBackground()
 	: m_fadeIn(0x00)
 {
+	m_Texture.Load("Resource\\image\\Title_BG.png");
 }
 
 TitleBackground::~TitleBackground()
 {
+	m_Texture.Release();
 }
 
 void TitleBackground::Draw()
@@ -42,7 +43,5 @@ void TitleBackground::Draw()
 	}
  	D3DCOLOR color = D3DCOLOR_ARGB(alpha, 0xff, 0xff, 0xff);
 
-	// ƒ^ƒCƒgƒ‹‰æ–Ê‚Ì”wŒi‚ğ•`‰æ
-	const Texture& texture = TextureManager::getInstance().Get(TextureManager::TITLE_SCENE_TEX::BG);
-	vertex.DrawTextureLT(texture, 0.0f, 0.0f, color);
+	vertex.DrawTextureLT(m_Texture, 0.0f, 0.0f, color);
 }

@@ -6,7 +6,6 @@
  */
 
 #include "Scene.h"
-#include "TextureManager.h"
 
 #include <dinput.h>
 #include <Windows.h>
@@ -31,14 +30,12 @@ Scene::Scene(SceneID _sceneID) :
 m_sceneID(_sceneID)
 {
 	// このシーンで使用するテクスチャのロード
-	TextureManager::getInstance().Load(_sceneID);
 }
 
 // デストラクタ
 Scene::~Scene()
 {
 	// テクスチャの開放
-	TextureManager::getInstance().Release();
 }
 
 SceneID Scene::Control()

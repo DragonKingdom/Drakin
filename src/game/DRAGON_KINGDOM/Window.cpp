@@ -1,5 +1,4 @@
 #include "Window.h"
-#include "textureManager.h"
 #include "InputDeviceFacade.h"
 
 const D3DXVECTOR2 Window::PARTS_SIZE = D3DXVECTOR2(135,135);
@@ -24,7 +23,7 @@ Window::Window(D3DXVECTOR2 _windowSize, D3DXVECTOR2 _position, D3DXVECTOR2 _targ
 	m_pStateManager(_pStateManager),
 	m_pInputDevice(InputDeviceFacade::GetInstance())
 {	
-	m_texture = TextureManager::getInstance().Get(TextureManager::GAME_SCENE_TEX::WINDOW);
+	m_texture.Load("Resource\\image\\window.png");
 	// ウインドウが被ってしまう為、ウインドウの最小サイズより小さくならないようにしておく
 	if( m_windowSize.x < PARTS_SIZE.x * 2 )
 	{
@@ -64,6 +63,7 @@ Window::Window(D3DXVECTOR2 _windowSize, D3DXVECTOR2 _position, D3DXVECTOR2 _targ
 
 Window::~Window()
 {
+	m_texture.Release();
 }
 
 bool Window::Control()
