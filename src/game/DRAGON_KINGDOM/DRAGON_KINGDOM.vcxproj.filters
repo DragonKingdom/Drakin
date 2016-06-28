@@ -529,5 +529,8 @@
     <FxCompile Include="Effect\SkyEffect.fx">
       <Filter>Effect</Filter>
     </FxCompile>
+    <FxCompile Include="Effect\GroundEffect.fx">
+      <Filter>Effect</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
