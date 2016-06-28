@@ -14,6 +14,7 @@ Sky::Sky(Sun* pSun) :
 	//m_TextureCloud.Load("Resource\\Xfile\\Sky_L.png");
 	//m_TextureStar.Load("Resource\\Xfile\\star.png");
 	FbxFileManager::Get()->FileImport("fbx//sky.fbx");
+	FbxFileManager::Get()->GetModelData(m_pModel);
 
 	m_pSkyModel = new Model("Resource\\Xfile\\doom.x");
 	m_skyAngle = 0.f;
@@ -48,10 +49,10 @@ void Sky::Draw()
 	D3DXMatrixIdentity(&matWorld);
 	D3DXMatrixIdentity(&RotationMatrix);
 
-	D3DXMatrixScaling(&matScale, 13000, 13000, 13000);
+	//D3DXMatrixScaling(&matScale, 13000, 13000, 13000);
 	D3DXMatrixRotationZ(&RotationMatrix, D3DXToRadian(m_skyAngle));
 	D3DXMatrixMultiply(&matWorld, &matWorld, &RotationMatrix);
-	D3DXMatrixMultiply(&matWorld, &matWorld, &matScale);
+	//D3DXMatrixMultiply(&matWorld, &matWorld, &matScale);
 
 	// ƒ[ƒ‹ƒhs—ñ‚ğ“o˜^
 	m_pLSS->SetMatrix(&matWorld, &LightDir);
@@ -65,7 +66,7 @@ void Sky::Draw()
 	GraphicsDevice::getInstance().GetDevice()->SetRenderState(D3DRS_ZENABLE, TRUE);
 
 	m_pLSS->BeginPass(0, 1);
-	m_pSkyModel->Draw();
+	//m_pSkyModel->Draw();
 	m_pModel->Draw();
 	m_pLSS->EndPass();
 	m_pLSS->End();
