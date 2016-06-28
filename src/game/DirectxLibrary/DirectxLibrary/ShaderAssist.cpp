@@ -3,14 +3,14 @@
 #include "graphicsDevice.h"
 
 
-ShaderAssist::ShaderAssist(char* _pFxFileName)
-	:m_pDevice(GraphicsDevice::getInstance().GetDevice()),
-	pFxFileName(_pFxFileName)
+ShaderAssist::ShaderAssist()
+	:m_pDevice(GraphicsDevice::getInstance().GetDevice())
 {
 }
 
 ShaderAssist::~ShaderAssist()
 {
+	m_pEffect->Release();
 }
 
 D3DXHANDLE ShaderAssist::GetParameterHandle(const char* _paramName)
@@ -19,35 +19,32 @@ D3DXHANDLE ShaderAssist::GetParameterHandle(const char* _paramName)
 	return m_pEffect->GetParameterByName(NULL, _paramName);
 }
 
-void ShaderAssist::Begin()
+
+
+void ShaderAssist::SetParameter(D3DXHANDLE _ParamHandle, D3DXVECTOR4 _vector4)
 {
 	if (m_pEffect)
 	{
-		m_pDevice->GetTransform(D3DTS_VIEW, &m_matView);
-		m_pDevice->GetTransform(D3DTS_PROJECTION, &m_matProj);
-
-		m_pEffect->Begin(NULL, 0);
+		m_pEffect->SetVector(_ParamHandle, &_vector4);
 	}
 }
-
-void ShaderAssist::BeginPass(UINT Pass)
+void ShaderAssist::SetParameter(D3DXHANDLE _ParamHandle, float _float)
 {
 	if (m_pEffect)
 	{
-		m_pDevice->GetTransform(D3DTS_VIEW, &m_matView);
-		m_pDevice->GetTransform(D3DTS_PROJECTION, &m_matProj);
-
-		m_pEffect->Begin(NULL, 0);
+		m_pEffect->SetFloat(_ParamHandle, _float);
+	}
+}
+void ShaderAssist::SetParameter(D3DXHANDLE _ParamHandle, D3DXMATRIX _matrix)
+{
+	if (m_pEffect)
+	{
+		m_pEffect->SetMatrix(_ParamHandle, &_matrix);
 	}
 }
 
-void ShaderAssist::SetMatrix(D3DXMATRIX* pMatWorld)
-{
-	D3DXMATRIX matrix;
-	matrix = (*pMatWorld) * m_matView * m_matProj;
-}
 
-HRESULT ShaderAssist::LoadTechnique(const char* _entryPoint)
+HRESULT ShaderAssist::LoadTechnique(char* _pFxFileName, const char* _entryPoint, const char* _worldViewProjection)
 {
 	D3DCAPS9 caps;
 
@@ -56,13 +53,14 @@ HRESULT ShaderAssist::LoadTechnique(const char* _entryPoint)
 	if (caps.VertexShaderVersion >= D3DVS_VERSION(1, 1) && caps.PixelShaderVersion >= D3DPS_VERSION(2, 0))
 	{
 		LPD3DXBUFFER pErr = NULL;
-		if (FAILED(D3DXCreateEffectFromFile(m_pDevice, pFxFileName, NULL, NULL, 0, NULL, &m_pEffect, &pErr)))
+		if (FAILED(D3DXCreateEffectFromFile(m_pDevice, _pFxFileName, NULL, NULL, 0, NULL, &m_pEffect, &pErr)))
 		{
 			MessageBox(NULL, "fxファイルの読み込みに失敗しました。", "エラー", MB_OK);
 			return -1;
 		}
-		m_pTechnique = m_pEffect->GetTechniqueByName("TShader");
+		m_pTechnique = m_pEffect->GetTechniqueByName(_entryPoint);
 		m_pEffect->SetTechnique(m_pTechnique);
+		m_pWVPP = m_pEffect->GetParameterByName(NULL, _worldViewProjection);
 	}
 	else
 	{
@@ -71,3 +69,35 @@ HRESULT ShaderAssist::LoadTechnique(const char* _entryPoint)
 	}
 	return S_OK;
 }
+
+void ShaderAssist::Begin(UINT Pass)
+{
+	if (m_pEffect)
+	{
+		//ビュー行列と射影行列を取ってきている
+		m_pDevice->GetTransform(D3DTS_VIEW, &m_matView);
+		m_pDevice->GetTransform(D3DTS_PROJECTION, &m_matProj);
+
+		m_pEffect->Begin(NULL, 0);
+		m_pEffect->BeginPass(Pass);
+	}
+}
+
+void ShaderAssist::SetMatrix(D3DXMATRIX* pMatWorld)
+{
+	if (m_pEffect)
+	{
+		D3DXMATRIX matrix;
+		matrix = (*pMatWorld) * m_matView * m_matProj;
+		m_pEffect->SetMatrix(m_pWVPP, &matrix);
+	}
+}
+
+void ShaderAssist::End()
+{
+	if (m_pEffect)
+	{
+		m_pEffect->EndPass();
+	}
+}
+
