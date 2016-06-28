@@ -69,6 +69,9 @@
     <Filter Include="FbxFileManager\FbxModel">
       <UniqueIdentifier>{b260fca2-f6e0-42ba-a19e-a296a8cbbfd4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ShaderAssist">
+      <UniqueIdentifier>{0e85b8c6-df6f-4a45-aa06-467e430f2245}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -137,6 +140,9 @@
     <ClCompile Include="FbxFileManager.cpp">
       <Filter>FbxFileManager</Filter>
     </ClCompile>
+    <ClCompile Include="ShaderAssist.cpp">
+      <Filter>ShaderAssist</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3DModel.h">
@@ -198,6 +204,9 @@
     </ClInclude>
     <ClInclude Include="FbxFileManager.h">
       <Filter>FbxFileManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderAssist.h">
+      <Filter>ShaderAssist</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
