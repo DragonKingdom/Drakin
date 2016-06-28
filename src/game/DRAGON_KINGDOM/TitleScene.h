@@ -33,6 +33,7 @@ private:
 	TitlePushToStart m_pushToStart;
 	TitleMenu m_menu;
 	FileSaveLoad*	m_pFileSaveLoad;
+	InputDeviceFacade* m_pInputDevice;
 
 	DISALLOW_COPY_AND_ASSIGN(TitleScene);
 };
