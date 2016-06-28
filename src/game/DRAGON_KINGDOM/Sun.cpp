@@ -15,7 +15,7 @@ Sun::~Sun()
 
 void Sun::Control()
 {
-	//SunRotation -= 0.1f;
+	SunRotation -= 0.1f;
 	//太陽の位置を計算
 	m_SunPos = D3DXVECTOR4(0.0f, SunRadius * sinf(D3DXToRadian(SunRotation)), SunRadius * cosf(D3DXToRadian(SunRotation)), 0.0f);
 	//太陽の方向ベクトルを計算

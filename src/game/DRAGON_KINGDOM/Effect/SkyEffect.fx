@@ -3,7 +3,6 @@ float  m_CLUTTU;                //太陽の方向ベクトルと上方向ベクトル[0.0f, 1.0f,
 
 sampler tex0 : register(s0);    //雲　　　　　　　　
 sampler tex1 : register(s1);    //空用のCLUTテーブル
-
 //Pass0:空のレンダリング
 struct VS_OUTPUT
 {
@@ -19,7 +18,6 @@ VS_OUTPUT vertexShader(float4 Pos    : POSITION,
 
 	Out.Pos = mul(Pos, m_WVPP);
 	Out.Tex = Tex;
-
 	return Out;
 }
 
@@ -36,7 +34,6 @@ float4 pixelShader(VS_OUTPUT In) : COLOR0
 
 	return Out;
 }
-
 technique TShader
 {
 	pass P0
