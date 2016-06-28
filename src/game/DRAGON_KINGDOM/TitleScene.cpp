@@ -7,11 +7,13 @@
 
 #include "TitleScene.h"
 #include "FileSaveLoad.h"
+#include "InputDeviceFacade.h"
 
 TitleScene::TitleScene(FileSaveLoad* _pFileSaveLoad): 
 Scene(SceneID::SCENE_TITLE),
 m_pFileSaveLoad(_pFileSaveLoad),
-m_menu(_pFileSaveLoad)
+m_menu(_pFileSaveLoad),
+m_pInputDevice(InputDeviceFacade::GetInstance())
 {
 }
 
@@ -34,13 +36,13 @@ SceneID TitleScene::Control()
 	// マウスがクリックされたら「PushToStart」を消し、メニューを表示する
 	if(!m_menu.m_visible) 
 	{
-		if(m_mousePushState & MOUSE_KEYKIND::M_LEFT_PUSH) 
+		if(m_pInputDevice->MouseLeftPush())
 		{
 			m_menu.m_visible = true;
 			m_pushToStart.m_visible = false;
 		}
 	} 
-	else 
+	else
 	{
 		// メニューが表示されていたら、メニューのControl()を呼ぶ
 		nextScene = m_menu.Control();
