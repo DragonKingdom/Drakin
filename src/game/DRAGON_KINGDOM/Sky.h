@@ -3,6 +3,7 @@
 
 class Sun;
 class LSS;
+class FbxModel;
 
 class Sky
 {
@@ -14,13 +15,14 @@ public:
 
 
 private:
-	LSS* m_pLSS;
-	Sun*			m_pSun;
-	Model*			m_pSkyModel;
-
+	LSS*				m_pLSS;
+	Sun*				m_pSun;
+	Model*				m_pSkyModel;
+	float				m_skyAngle;
 	/// @todo シェーダー使いたいから置く(シェーダーもLibraryにしたい)
 	LPDIRECT3DDEVICE9	m_pDevice;
-	
+	FbxModel*   m_pModel;
+
 
 };
 

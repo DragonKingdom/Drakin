@@ -54,6 +54,7 @@ HRESULT LSS::Load(char* pCLUTSkyFileName, char* pCLUTLightPowerFileName)
 		m_pFogColor = m_pEffect->GetParameterByName(NULL, "m_FogColor");
 		m_pParam1 = m_pEffect->GetParameterByName(NULL, "m_Param1");
 		m_pParam2 = m_pEffect->GetParameterByName(NULL, "m_Param2");
+		m_pCloudMove = m_pEffect->GetParameterByName(NULL, "m_CloudMove");
 
 		m_pEffect->SetTechnique(m_pTechnique);
 
@@ -210,6 +211,13 @@ void LSS::SetFogColor(float FogColor)
 		D3DXVECTOR4 A;
 		A = D3DXVECTOR4(FogColor, FogColor, FogColor, 1.0f);
 		m_pEffect->SetVector(m_pFogColor, &A);
+	}
+}
+void LSS::CloudMove(float _move)
+{
+	if (m_pEffect)
+	{
+		m_pEffect->SetFloat(m_pCloudMove, _move);
 	}
 }
 

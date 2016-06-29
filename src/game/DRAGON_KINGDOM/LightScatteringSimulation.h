@@ -7,12 +7,11 @@ class LSS
 {
 private:
 	LPD3DXEFFECT m_pEffect;
-	D3DXHANDLE m_pTechnique, m_pWVPP, m_pLightDir, m_pAmbient, m_pCLUTTU, m_pFogColor, m_pParam1, m_pParam2;
+	D3DXHANDLE m_pTechnique, m_pWVPP, m_pLightDir, m_pAmbient, m_pCLUTTU, m_pFogColor, m_pParam1, m_pParam2,m_pCloudMove;
 	D3DXMATRIX m_matView, m_matProj;
 	LPDIRECT3DDEVICE9 m_pDevice;
 
 	LPDIRECT3DTEXTURE9 m_pCLUTTexture[2];
-
 public:
 	LSS();
 	~LSS();
@@ -27,6 +26,8 @@ public:
 	void SetMatrix(D3DXMATRIX* pMatWorld, D3DXVECTOR4* pLightDir);
 	void EndPass();
 	void End();
+
+	void CloudMove(float _move);
 	//フォグの色を設定
 	void SetFogColor(D3DXVECTOR4* pFogColor);
 	void SetFogColor(float FogColor);
