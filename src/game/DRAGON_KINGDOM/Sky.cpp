@@ -31,7 +31,7 @@ Sky::~Sky()
 
 void Sky::Control()
 {
-	m_skyAngle+= 0.2;
+	m_skyAngle+= 0.125;
 }
 
 void Sky::Draw()
@@ -50,7 +50,7 @@ void Sky::Draw()
 	D3DXMatrixIdentity(&RotationMatrix);
 
 	//D3DXMatrixScaling(&matScale, 13000, 13000, 13000);
-	D3DXMatrixRotationZ(&RotationMatrix, D3DXToRadian(m_skyAngle));
+	D3DXMatrixRotationY(&RotationMatrix, D3DXToRadian(m_skyAngle));
 	D3DXMatrixMultiply(&matWorld, &matWorld, &RotationMatrix);
 	//D3DXMatrixMultiply(&matWorld, &matWorld, &matScale);
 
