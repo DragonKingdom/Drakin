@@ -48,6 +48,7 @@ private:
 
 	// テクスチャ格納クラス
 	Texture m_texture;
+	Texture m_textureImage;
 
 	// ファイルが存在するかのフラグ
 	bool m_isFile[SAVEDATA_MAX];

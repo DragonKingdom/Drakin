@@ -30,10 +30,12 @@ bool SelectMenuButton::Control()
 	if (IsMouseOver())
 	{
 		m_scale = 1.05f;
+		isSelect = true;
 	}
 	else
 	{
 		m_scale = 1.0f;
+		isSelect = false;
 	}
 
 	if (IsLeftClicked())
