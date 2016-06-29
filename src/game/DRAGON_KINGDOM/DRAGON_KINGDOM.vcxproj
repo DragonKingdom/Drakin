@@ -124,7 +124,6 @@
     <ClCompile Include="InputDeviceFacade.cpp" />
     <ClCompile Include="Kingdom.cpp" />
     <ClCompile Include="KingdomWindow.cpp" />
-    <ClCompile Include="LightScatteringSimulation.cpp" />
     <ClCompile Include="LogoScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -187,7 +186,6 @@
     <ClInclude Include="InputDeviceFacade.h" />
     <ClInclude Include="Kingdom.h" />
     <ClInclude Include="KingdomWindow.h" />
-    <ClInclude Include="LightScatteringSimulation.h" />
     <ClInclude Include="LogoScene.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Menuicon.h" />

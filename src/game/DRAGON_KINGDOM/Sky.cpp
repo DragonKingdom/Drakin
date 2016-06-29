@@ -1,7 +1,6 @@
 #include "Sky.h"
 #include "SunChecker.h"
 #include "Sun.h"
-#include "LightScatteringSimulation.h"
 #include "FbxFileManager.h"
 #include "FbxModel.h"
 #include "ShaderAssist.h"
@@ -28,7 +27,7 @@ Sky::~Sky()
 
 void Sky::Control()
 {
-	m_skyAngle+= 0.2;
+	m_skyAngle+= 0.125;
 }
 
 void Sky::Draw()

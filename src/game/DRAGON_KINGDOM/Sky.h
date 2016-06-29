@@ -2,7 +2,6 @@
 #define SKY_H
 
 class Sun;
-class LSS;
 class FbxModel;
 class ShaderAssist;
 class Sky
@@ -15,7 +14,6 @@ public:
 
 
 private:
-	LSS*				m_pLSS;
 	Sun*				m_pSun;
 	Model*				m_pSkyModel;
 	ShaderAssist*		m_pShaderAssist;
