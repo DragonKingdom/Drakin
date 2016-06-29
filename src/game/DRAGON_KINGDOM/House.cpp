@@ -13,7 +13,7 @@ m_pModel(new FbxModel(GraphicsDevice::getInstance().GetDevice())),
 m_pShaderAssist(new ShaderAssist())
 {
 	// 渡されたHouseTypeによって読み込む家の種類を変える
-	switch (m_Type)
+	/*switch (m_Type)
 	{
 	case RED_HOUSE:
 		FbxFileManager::Get()->FileImport("fbx//house_red.fbx");
@@ -35,7 +35,11 @@ m_pShaderAssist(new ShaderAssist())
 		FbxFileManager::Get()->FileImport("fbx//house_seleb.fbx");
 
 		break;
-	}
+	}*/
+
+	/// @todo とりあえずテストのためにNormalだけ出す
+
+	FbxFileManager::Get()->FileImport("fbx//house_red.fbx");
 
 	FbxFileManager::Get()->GetModelData(m_pModel);
 
@@ -124,7 +128,7 @@ void House::Draw()
 	// フォグの色を設定
 	ambient = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	m_pShaderAssist->SetParameter(m_FogColor, ambient);
-	GraphicsDevice::getInstance().GetDevice()->SetTexture(1, m_Texture.Get());
+	GraphicsDevice::getInstance().GetDevice()->SetTexture(2, m_Texture.Get());
 	m_pShaderAssist->BeginPass(0);
 	// 描画
 	m_pModel->Draw();

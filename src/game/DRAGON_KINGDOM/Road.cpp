@@ -9,7 +9,7 @@ m_pShaderAssist(new ShaderAssist())
 {
 	m_Texture.Load("../sourceimages/Road.bmp");
 	m_FogTexture.Load("Resource\\image\\CLUTLight.jpg");
-	m_pShaderAssist->LoadTechnique("Effect\\HouseEffect.fx", "TShader", "m_WVPP");
+	m_pShaderAssist->LoadTechnique("Effect\\RoadEffect.fx", "TShader", "m_WVPP");
 	m_LightDir = m_pShaderAssist->GetParameterHandle("m_LightDir");
 	m_Ambient = m_pShaderAssist->GetParameterHandle("m_Ambient");
 	m_CLUTTU = m_pShaderAssist->GetParameterHandle("m_CLUTTU");
