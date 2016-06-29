@@ -1,14 +1,14 @@
 #include "Ground.h"
-#include "LightScatteringSimulation.h"
 #include "Sun.h"
 #include "FbxModel.h"
 #include "FbxFileManager.h"
-Ground::Ground(Sun* pSun) :m_pDevice(GraphicsDevice::getInstance().GetDevice()), m_pSun(pSun)
+#include "ShaderAssist.h"
+
+Ground::Ground(Sun* pSun) :m_pDevice(GraphicsDevice::getInstance().GetDevice()), 
+m_pSun(pSun),
+m_pShaderAssist(new ShaderAssist())
 {
 	m_pVertex = new Vertex();
-	m_pLSS = new LSS();
-	m_pLSS->Load("Resource\\image\\CLUTSky.jpg", "Resource\\image\\CLUTLight.jpg");
-
 	// グラウンドのモデル情報を読み込む
 	m_pGroundModel = new FbxModel(m_pDevice);
 	FbxFileManager::Get()->FileImport("fbx//map.fbx");
@@ -18,14 +18,24 @@ Ground::Ground(Sun* pSun) :m_pDevice(GraphicsDevice::getInstance().GetDevice()),
 	m_pMountainModel = new FbxModel(m_pDevice);
 	FbxFileManager::Get()->FileImport("fbx//mountain.fbx");
 	FbxFileManager::Get()->GetModelData(m_pMountainModel);
+	m_pShaderAssist->LoadTechnique("Effect\\GroundEffect.fx", "TShader", "m_WVPP");
+	
+	m_LightDir = m_pShaderAssist->GetParameterHandle("m_LightDir");
+	m_Ambient = m_pShaderAssist->GetParameterHandle("m_Ambient");
+	m_CLUTTU = m_pShaderAssist->GetParameterHandle("m_CLUTTU");
+	m_FogColor = m_pShaderAssist->GetParameterHandle("m_FogColor");
+	m_Param1 = m_pShaderAssist->GetParameterHandle("m_Param1");
+	m_Param2 = m_pShaderAssist->GetParameterHandle("m_Param2");
+	m_Texture.Load("Resource\\image\\CLUTLight.jpg");
 }
 
 Ground::~Ground()
 {
+	m_Texture.Release();
 	delete m_pMountainModel;
 	delete m_pGroundModel;
 	delete m_pVertex;
-	delete m_pLSS;
+	delete m_pShaderAssist;
 }
 
 void Ground::Control()
@@ -35,35 +45,43 @@ void Ground::Control()
 
 void Ground::Draw()
 {
-	D3DXMATRIX matWorld;
-	D3DXMatrixIdentity(&matWorld);
+	m_pShaderAssist->Begin();
+	D3DXMATRIX matWorld, matInverse;
+	D3DXVECTOR4 v;
 
-	m_pLSS->Begin();
+	D3DXMatrixIdentity(&matWorld);
 
 	// 太陽の位置を取得
 	D3DXVECTOR4 LightDir = m_pSun->GetDirectionalVec();
+	m_pShaderAssist->SetMatrix(&matWorld);
+	D3DXMatrixInverse(&matInverse, NULL, &matWorld);
+	D3DXVec4Transform(&v, &LightDir, &matInverse);
+	D3DXVec4Normalize(&v, &v);
+	m_pShaderAssist->SetParameter(m_LightDir, v);
 
-	m_pLSS->SetMatrix(&matWorld, &LightDir);
-	m_pDevice->SetTransform(D3DTS_WORLD, &matWorld);
-	m_pLSS->SetAmbient(0.5f);
+	//太陽光の方向ベクトルの逆ベクトルと上方向ベクトルとの内積を計算
+	//この値がカラールックアップテーブルの TU 方向の参照位置となる
+	LightDir *= -1.0f;
+	D3DXVECTOR3 Up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+	float dot = D3DXVec3Dot((D3DXVECTOR3*)&LightDir, &Up);
+	//負の数にならないように調整
+	dot = (1.0f + dot) * 0.5f;
+	m_pShaderAssist->SetParameter(m_CLUTTU, dot);
 
-	// フォグのパラメータを設定
-	m_pLSS->SetParameters(60000.0f, 0.5f);
+	D3DXVECTOR4 ambient = D3DXVECTOR4(0.5f, 0.5f, 0.5f, 1.0f);
+	m_pShaderAssist->SetParameter(m_Ambient,ambient);
 
+	// フォグの計算式の数値を設定
+	m_pShaderAssist->SetParameter(m_Param1, 60000.0f);
+	m_pShaderAssist->SetParameter(m_Param2, 0.5f);
 	// フォグの色を設定
-	m_pLSS->SetFogColor(1.0f);
-
-	m_pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
-	m_pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-	m_pDevice->SetRenderState( D3DRS_ZENABLE, TRUE );
-
-	m_pLSS->BeginPass(1,1);
-	//m_pLSS->BeginPass(1,0);
-
+	ambient = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
+	m_pShaderAssist->SetParameter(m_FogColor, ambient);
+	m_pShaderAssist->BeginPass(0);
+	GraphicsDevice::getInstance().GetDevice()->SetTexture(1,m_Texture.Get());
 	// 描画
 	m_pGroundModel->Draw(0);
 	m_pMountainModel->Draw(0);
-
-	m_pLSS->EndPass();
-	m_pLSS->End();
+	m_pShaderAssist->EndPass();
+	m_pShaderAssist->End();
 }
