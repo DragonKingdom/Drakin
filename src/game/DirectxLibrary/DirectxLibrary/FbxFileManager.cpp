@@ -150,8 +150,8 @@ void FbxFileManager::GetTextureName(
 			fbxsdk::FbxFileTexture* fbxTexture = FbxCast<fbxsdk::FbxFileTexture>(Property.GetSrcObject<fbxsdk::FbxFileTexture>(i));
 			pOutUvSetName->push_back(fbxTexture->UVSet.Get());
 			pOutFileName->push_back(fbxTexture->GetRelativeFileName());
-			// GetRelativeFileNameは相対パス取得
-			// GetNameは絶対パス取得(こいつなんかおかしい)
+			// GetNameは絶対パス取得やけど、絶対パスってのは、モデルを作成した場所への絶対パスらしいから、モデルを作成した人に依存するっぽい(つまり使えない)
+			// GetRelativeFileNameは相対パス取得(相対パスがたまにおかしいのもモデルを作成した人依存だから)
 		}
 	}
 	else
@@ -454,7 +454,6 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 			GetTextureName(lambert, fbxsdk::FbxSurfaceMaterial::sDiffuse, &TextureFileName, &TextureUvSetName, &TextureFileCount);
 
 			// エミッシブ
-			/// @todo Emissiveは1に
 			MaterialData.Emissive.r = (float)lambert->Emissive.Get().mData[0] * (float)lambert->EmissiveFactor.Get();
 			MaterialData.Emissive.g = (float)lambert->Emissive.Get().mData[1] * (float)lambert->EmissiveFactor.Get();
 			MaterialData.Emissive.b = (float)lambert->Emissive.Get().mData[2] * (float)lambert->EmissiveFactor.Get();
@@ -466,6 +465,8 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 			MaterialData.Emissive.a = (float)lambert->TransparentColor.Get().mData[2];
 			GetTextureName(lambert, fbxsdk::FbxSurfaceMaterial::sTransparentColor, &TextureFileName, &TextureUvSetName, &TextureFileCount);
 
+
+			GetTextureName(lambert, fbxsdk::FbxSurfaceMaterial::sNormalMap, &TextureFileName, &TextureUvSetName, &TextureFileCount);
 		}
 		else if (Material->GetClassId().Is(fbxsdk::FbxSurfacePhong::ClassId))
 		{

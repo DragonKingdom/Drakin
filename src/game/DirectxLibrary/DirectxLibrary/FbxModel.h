@@ -56,7 +56,7 @@ public:
 	~FbxModel();
 	void      SetMode(MODELMODE _Mode){ m_Mode = _Mode; };
 	MODELMODE GetMode(){ return m_Mode; };
-	void	Draw(int stage = 0);
+	void	Draw();
 	void	NonTextureDraw();
 
 
