@@ -70,7 +70,7 @@ HRESULT ShaderAssist::LoadTechnique(char* _pFxFileName, const char* _entryPoint,
 	return S_OK;
 }
 
-void ShaderAssist::Begin(UINT Pass)
+void ShaderAssist::Begin()
 {
 	if (m_pEffect)
 	{
@@ -79,6 +79,13 @@ void ShaderAssist::Begin(UINT Pass)
 		m_pDevice->GetTransform(D3DTS_PROJECTION, &m_matProj);
 
 		m_pEffect->Begin(NULL, 0);
+	}
+}
+
+void ShaderAssist::BeginPass(UINT Pass)
+{
+	if (m_pEffect)
+	{
 		m_pEffect->BeginPass(Pass);
 	}
 }
@@ -97,7 +104,14 @@ void ShaderAssist::End()
 {
 	if (m_pEffect)
 	{
-		m_pEffect->EndPass();
+		m_pEffect->End();
 	}
 }
 
+void ShaderAssist::EndPass()
+{
+	if (m_pEffect)
+	{
+		m_pEffect->EndPass();
+	}
+}

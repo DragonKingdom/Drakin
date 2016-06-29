@@ -40,8 +40,10 @@ public:
 	* @return ê¨å˜Ç∑ÇÍÇŒS_OKÇï‘Ç∑
 	*/
 	HRESULT LoadTechnique(char* _pFxFileName,const char* _entryPoint, const char* _worldViewProjection);
-	void Begin(UINT _Pass);
+	void Begin();
+	void BeginPass(UINT _Pass);
 	void SetMatrix(D3DXMATRIX* _pMatWorld);
+	void EndPass();
 	void End();
 
 };
