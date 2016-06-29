@@ -4,7 +4,8 @@
 #include "HouseBuilder.h"
 
 class FbxModel;
-class LSS;
+class ShaderAssist;
+
 class House
 {
 public:
@@ -19,7 +20,11 @@ private:
 	float		m_Angle;
 	D3DXMATRIX	m_World;
 	HouseType	m_Type;
-	LSS* m_pLSS;
+	ShaderAssist*		m_pShaderAssist;
+	//フォグの色に使うテクスチャ
+	Texture m_Texture;
+
+	D3DXHANDLE m_LightDir, m_Ambient, m_CLUTTU, m_FogColor, m_Param1, m_Param2;
 };
 
 #endif

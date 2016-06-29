@@ -41,7 +41,6 @@ private:
 	float		m_angle;
 	Vertex		m_vertex;
 	Texture     m_Texture;
-
 };
 
 
