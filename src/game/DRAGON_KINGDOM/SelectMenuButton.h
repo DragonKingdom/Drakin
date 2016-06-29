@@ -12,7 +12,7 @@ public:
 	~SelectMenuButton();
 	bool Control();
 	void Draw();
-
+	bool isSelect;
 private:
 	Texture m_texture;
 	const Vertex::FRECT& m_coord;
