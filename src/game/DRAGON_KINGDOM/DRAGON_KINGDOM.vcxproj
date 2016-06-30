@@ -124,7 +124,6 @@
     <ClCompile Include="InputDeviceFacade.cpp" />
     <ClCompile Include="Kingdom.cpp" />
     <ClCompile Include="KingdomWindow.cpp" />
-    <ClCompile Include="LightScatteringSimulation.cpp" />
     <ClCompile Include="LogoScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -187,7 +186,6 @@
     <ClInclude Include="InputDeviceFacade.h" />
     <ClInclude Include="Kingdom.h" />
     <ClInclude Include="KingdomWindow.h" />
-    <ClInclude Include="LightScatteringSimulation.h" />
     <ClInclude Include="LogoScene.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Menuicon.h" />
@@ -225,6 +223,13 @@
     <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="Effect\GroundEffect.fx">
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Effect\HouseEffect.fx" />
+    <FxCompile Include="Effect\RoadEffect.fx">
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
+    </FxCompile>
     <FxCompile Include="Effect\SkyEffect.fx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>

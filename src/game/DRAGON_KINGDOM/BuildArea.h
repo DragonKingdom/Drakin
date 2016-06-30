@@ -1,7 +1,6 @@
 #ifndef BUILDAREA_H
 #define BUILDAREA_H
 
-class LSS;
 class BuildArea
 {
 public:
@@ -47,18 +46,6 @@ private:
 	float MousePosZ;
 
 	bool RoadAngleCheck(float _roadAngle);
-	//シェーダーを適用するクラス
-	LSS* m_pLSS;
-
-	//無理やりここで太陽の位置を出しているので今後消す予定
-	D3DXVECTOR4 m_DirectionalVec;
-	D3DXVECTOR4 m_UpVec;
-	D3DXVECTOR4 m_SunPos;
-	//太陽の角度
-	float SunRotation;
-	//太陽の半径
-	float SunRadius;
-	//----------------------------------------------
 
 };
 

@@ -6,7 +6,6 @@
 #include "RoadManager.h"
 #include "StateManager.h"
 #include "FileSaveLoad.h"
-#include "LightScatteringSimulation.h"
 
 ObjectManager::ObjectManager(StateManager* _pStateManager, GameData* _pGameData, ClickPosConverter* _pClickPosConverter) :
 m_pStateManager(_pStateManager),

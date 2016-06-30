@@ -1,7 +1,6 @@
 #ifndef ROAD_H
 #define ROAD_H
-class LSS;
-
+class ShaderAssist;
 class Road
 {
 public:
@@ -15,13 +14,14 @@ public:
 private:
 	Vertex      m_Vertex;
 	Texture		m_Texture;
+	Texture     m_FogTexture;
 	D3DXVECTOR3 m_pRoad[4];
 	D3DXVECTOR3 m_StartPos;
 	D3DXVECTOR3 m_EndPos;
 	float		m_angle;
+	ShaderAssist*		m_pShaderAssist;
 
-	LSS* m_pLSS;
-
+	D3DXHANDLE m_LightDir, m_Ambient, m_CLUTTU, m_FogColor, m_Param1, m_Param2;
 };
 
 
