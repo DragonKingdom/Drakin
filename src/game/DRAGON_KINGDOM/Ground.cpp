@@ -16,14 +16,14 @@ m_pShaderAssist(new ShaderAssist())
 	m_pMountainModel = new FbxModel(m_pDevice);
 	FbxFileManager::Get()->FileImport("fbx//mountain.fbx");
 	FbxFileManager::Get()->GetModelData(m_pMountainModel);
-	m_pShaderAssist->LoadTechnique("Effect\\GroundEffect.fx", "TShader", "m_WVPP");
+	m_pShaderAssist->LoadTechnique("Effect\\GroundEffect.fx", "TShader", "WVPP");
 	
-	m_LightDir = m_pShaderAssist->GetParameterHandle("m_LightDir");
-	m_Ambient = m_pShaderAssist->GetParameterHandle("m_Ambient");
-	m_CLUTTU = m_pShaderAssist->GetParameterHandle("m_CLUTTU");
-	m_FogColor = m_pShaderAssist->GetParameterHandle("m_FogColor");
-	m_Param1 = m_pShaderAssist->GetParameterHandle("m_Param1");
-	m_Param2 = m_pShaderAssist->GetParameterHandle("m_Param2");
+	m_LightDir = m_pShaderAssist->GetParameterHandle("LightDir");
+	m_Ambient = m_pShaderAssist->GetParameterHandle("Ambient");
+	m_CLUTTU = m_pShaderAssist->GetParameterHandle("CLUTTU");
+	m_FogColor = m_pShaderAssist->GetParameterHandle("FogColor");
+	m_Param1 = m_pShaderAssist->GetParameterHandle("Param1");
+	m_Param2 = m_pShaderAssist->GetParameterHandle("Param2");
 	m_Texture.Load("Resource\\image\\CLUTLight.jpg");
 }
 

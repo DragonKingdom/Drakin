@@ -9,13 +9,13 @@ m_pShaderAssist(new ShaderAssist())
 {
 	m_Texture.Load("../sourceimages/Road.bmp");
 	m_FogTexture.Load("Resource\\image\\CLUTLight.jpg");
-	m_pShaderAssist->LoadTechnique("Effect\\RoadEffect.fx", "TShader", "m_WVPP");
-	m_LightDir = m_pShaderAssist->GetParameterHandle("m_LightDir");
-	m_Ambient = m_pShaderAssist->GetParameterHandle("m_Ambient");
-	m_CLUTTU = m_pShaderAssist->GetParameterHandle("m_CLUTTU");
-	m_FogColor = m_pShaderAssist->GetParameterHandle("m_FogColor");
-	m_Param1 = m_pShaderAssist->GetParameterHandle("m_Param1");
-	m_Param2 = m_pShaderAssist->GetParameterHandle("m_Param2");
+	m_pShaderAssist->LoadTechnique("Effect\\RoadEffect.fx", "TShader", "WVPP");
+	m_LightDir = m_pShaderAssist->GetParameterHandle("LightDir");
+	m_Ambient = m_pShaderAssist->GetParameterHandle("Ambient");
+	m_CLUTTU = m_pShaderAssist->GetParameterHandle("CLUTTU");
+	m_FogColor = m_pShaderAssist->GetParameterHandle("FogColor");
+	m_Param1 = m_pShaderAssist->GetParameterHandle("Param1");
+	m_Param2 = m_pShaderAssist->GetParameterHandle("Param2");
 
 	m_pRoad[0].x = m_StartPos.x + (ROAD_W_SIZE / 2) * sin(m_angle);
 	m_pRoad[0].y = 20.f;

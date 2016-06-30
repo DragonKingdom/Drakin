@@ -12,8 +12,8 @@ Sky::Sky() :
 {
 	FbxFileManager::Get()->FileImport("fbx//sky.fbx");
 	FbxFileManager::Get()->GetModelData(m_pModel);
-	m_pShaderAssist->LoadTechnique("Effect\\SkyEffect.fx","TShader","m_WVPP");
-	m_CLUTTU = m_pShaderAssist->GetParameterHandle("m_CLUTTU");
+	m_pShaderAssist->LoadTechnique("Effect\\SkyEffect.fx","TShader","WVPP");
+	m_CLUTTU = m_pShaderAssist->GetParameterHandle("CLUTTU");
 	m_skyAngle = 0.f;
 	m_Texture.Load("Resource\\image\\CLUTSky.jpg");
 }

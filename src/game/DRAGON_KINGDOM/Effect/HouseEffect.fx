@@ -1,12 +1,12 @@
 //地面と道に空の色のフォグを適用する。青空の時は白
 
-float4x4 m_WVPP;                //ワールド × ビュー × 射影
-float4 m_LightDir;              //平行光源の方向ベクトル
-float4 m_Ambient = 1.0f;        //環境光
-float  m_CLUTTU;                //太陽の方向ベクトルと上方向ベクトル[0.0f, 1.0f, 0.0f]との内積
-float4 m_FogColor;              //フォグカラー
-float  m_Param1;                //フォグの計算式のパラメータ１
-float  m_Param2;                //フォグの計算式のパラメータ２
+float4x4 WVPP;                //ワールド × ビュー × 射影
+float4 LightDir;              //平行光源の方向ベクトル
+float4 Ambient = 1.0f;        //環境光
+float  CLUTTU;                //太陽の方向ベクトルと上方向ベクトル[0.0f, 1.0f, 0.0f]との内積
+float4 FogColor;              //フォグカラー
+float  Param1;                //フォグの計算式のパラメータ１
+float  Param2;                //フォグの計算式のパラメータ２
 
 sampler ColorTexture : register(s0);    // Pass1:デカールマップ
 sampler NormalTexture : register(s1);	// Pass1:ノーマルマップ
@@ -51,9 +51,9 @@ VS_OUTPUT vertexShader(VS_INPUT In)
 	};
 
 	float4x4 invTangentMat = transpose(mat);  // 変換のために逆行列にする
-	Out.LightDir = mul(float4(-m_LightDir.xyz, 1.0), invTangentMat);	// 逆行列をかけることでライトを接空間に持ってくる
+	Out.LightDir = mul(float4(-LightDir.xyz, 1.0), invTangentMat);	// 逆行列をかけることでライトを接空間に持ってくる
 
-	Out.Pos = mul(In.Pos, m_WVPP);
+	Out.Pos = mul(In.Pos, WVPP);
 	Out.Tex = In.Tex;
 	Out.LocalPos = Out.Pos;
 
@@ -76,16 +76,16 @@ float4 pixelShader(PS_INPUT In) : COLOR0
 	float4 diffuseColor = tex2D(ColorTexture, In.Tex);		// 普通にカラーテクスチャから色を拾ってくる
 
 	// マテリアルのアンビエントも計算に入れとく
-	float4 Col = max(m_Ambient, float4(bright, 1.0f));
+	float4 Col = max(Ambient, float4(bright, 1.0f));
 
 	//ライトの色をカラールックアップテーブルから取得
-	float4 LightColor = tex2D(LightTexture, float2(m_CLUTTU, 0.0f));
+	float4 LightColor = tex2D(LightTexture, float2(CLUTTU, 0.0f));
 
 	//フォグの指数計算により「重み」を計算
-	float f = pow(1.0f - pow(In.LocalPos.z / In.LocalPos.w, m_Param1), m_Param2);
+	float f = pow(1.0f - pow(In.LocalPos.z / In.LocalPos.w, Param1), Param2);
 
 	//フォグを適応する
-	OutColor = float4(bright * diffuseColor.xyz, 1.0f) * Col * f + m_FogColor * (1.0f - f);
+	OutColor = float4(bright * diffuseColor.xyz, 1.0f) * Col * f + FogColor * (1.0f - f);
 
 	//ライトの色を適応する
 	OutColor *= LightColor;
