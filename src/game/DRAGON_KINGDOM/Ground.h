@@ -3,13 +3,12 @@
 
 class FbxModel;
 class FbxFileManager;
-class Sun;
 class ShaderAssist;
 
 class Ground
 {
 public:
-	Ground(Sun* pSun);
+	Ground();
 	~Ground();
 	void Control();
 	void Draw();
@@ -29,7 +28,5 @@ private:
 	//フォグの色に使うテクスチャ
 	Texture m_Texture;
 	FbxFileManager* m_pFbxModelManager;
-	Sun*			m_pSun;
-
 };
 #endif

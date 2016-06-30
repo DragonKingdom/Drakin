@@ -6,8 +6,8 @@
 
 Map::Map(StateManager* _pStateManager, GameData* _pGameData) :
 m_pSun(new Sun()),
-m_pSky(new Sky(m_pSun)),
-m_pGround(new Ground(m_pSun))
+m_pSky(new Sky()),
+m_pGround(new Ground())
 {
 }
 

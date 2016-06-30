@@ -2,6 +2,7 @@
 #include "ShaderAssist.h"
 #include "graphicsDevice.h"
 
+const D3DXVECTOR4* ShaderAssist::m_pLightDirection = NULL;
 
 ShaderAssist::ShaderAssist()
 	:m_pDevice(GraphicsDevice::getInstance().GetDevice())

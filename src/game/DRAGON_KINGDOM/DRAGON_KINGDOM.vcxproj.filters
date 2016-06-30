@@ -334,7 +334,6 @@
     <ClCompile Include="DebugMode.cpp">
       <Filter>main\SceneManager\Scene\GameScene\DebugMode</Filter>
     </ClCompile>
-    <ClCompile Include="LightScatteringSimulation.cpp" />
     <ClCompile Include="Kingdom.cpp">
       <Filter>main\SceneManager\Scene\GameScene\Kingdom</Filter>
     </ClCompile>
@@ -505,7 +504,6 @@
     <ClInclude Include="DebugMode.h">
       <Filter>main\SceneManager\Scene\GameScene\DebugMode</Filter>
     </ClInclude>
-    <ClInclude Include="LightScatteringSimulation.h" />
     <ClInclude Include="Kingdom.h">
       <Filter>main\SceneManager\Scene\GameScene\Kingdom</Filter>
     </ClInclude>

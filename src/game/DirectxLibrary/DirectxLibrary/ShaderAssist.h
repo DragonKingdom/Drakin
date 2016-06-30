@@ -8,7 +8,8 @@ private:
 	LPD3DXEFFECT		m_pEffect;
 
 	// @todo 今はまだ使ってないがシェーダーでカメラの座標を使うことが多いので作っている
-	const D3DXVECTOR4*  m_pCameraPos;
+	static const D3DXVECTOR4*  m_pCameraPos;
+	static const D3DXVECTOR4*  m_pLightDirection;
 	D3DXHANDLE			m_pTechnique;
 	//変換済み行列を格納する場所
 	D3DXHANDLE			m_pWVPP;
@@ -32,6 +33,7 @@ public:
 	void SetParameter(D3DXHANDLE _ParamHandle, float _float);
 	void SetParameter(D3DXHANDLE _ParamHandle, D3DXMATRIX _matrix);
 
+	void SetLightDir(D3DXVECTOR4* _pLightDirection){ m_pLightDirection = _pLightDirection; };
 	/**
 	* シェーダーのパラメータのハンドルを取得する
 	* @param[in] _pFxFileName fxファイルのパス
