@@ -1,5 +1,5 @@
-float4x4 m_WVPP;                //ワールド × ビュー × 射影
-float  m_CLUTTU;                //太陽の方向ベクトルと上方向ベクトル[0.0f, 1.0f, 0.0f]との内積
+float4x4 WVPP;                //ワールド × ビュー × 射影
+float  CLUTTU;                //太陽の方向ベクトルと上方向ベクトル[0.0f, 1.0f, 0.0f]との内積
 
 sampler tex0 : register(s0);    //雲　　　　　　　　
 sampler tex1 : register(s1);    //空用のCLUTテーブル
@@ -16,7 +16,7 @@ VS_OUTPUT vertexShader(float4 Pos    : POSITION,
 {
 	VS_OUTPUT Out;
 
-	Out.Pos = mul(Pos, m_WVPP);
+	Out.Pos = mul(Pos, WVPP);
 	Out.Tex = Tex;
 	return Out;
 }
@@ -26,7 +26,7 @@ float4 pixelShader(VS_OUTPUT In) : COLOR0
 	float4 Out;
 
 	//空の色をCLUTテーブルから取得
-	Out = tex2D(tex1, float2(m_CLUTTU, 0.0f));
+	Out = tex2D(tex1, float2(CLUTTU, 0.0f));
 	//雲テクスチャーを取得
 	float4 Cloud = tex2D(tex0, float2(In.Tex.x, In.Tex.y));
 	//加算合成

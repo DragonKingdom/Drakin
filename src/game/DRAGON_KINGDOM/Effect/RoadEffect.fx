@@ -1,5 +1,3 @@
-//地面と道に空の色のフォグを適用する。青空の時は白
-
 float4x4 WVPP;                //ワールド × ビュー × 射影
 float4 LightDir;              //平行光源の方向ベクトル
 float4 Ambient = 1.0f;       //環境光

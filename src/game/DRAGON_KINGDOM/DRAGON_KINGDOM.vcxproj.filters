@@ -533,5 +533,8 @@
     <FxCompile Include="Effect\HouseEffect.fx">
       <Filter>Effect</Filter>
     </FxCompile>
+    <FxCompile Include="Effect\RoadEffect.fx">
+      <Filter>Effect</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
