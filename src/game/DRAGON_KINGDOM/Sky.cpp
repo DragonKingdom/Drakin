@@ -36,7 +36,7 @@ void Sky::Draw()
 
 	m_pShaderAssist->Begin();
 	D3DXMATRIX matWorld;
-	D3DXMATRIX matScale, RotationMatrix;
+	D3DXMATRIX RotationMatrix;
 
 	//移動のためのマトリックス
 	// ワールドマトリックスの設定

@@ -52,8 +52,8 @@ void RoadPreviewer::Draw()
 	Road[3].y = 20.f;
 	Road[3].z = Vec.z + (ROAD_W_SIZE / 2) * -cos(m_angle);
 
+	GraphicsDevice::getInstance().GetDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);
 	m_vertex.VertexDraw(m_Texture, Road);
-
 }
 
 void RoadPreviewer::StartPosSet(D3DXVECTOR3 _startPos)

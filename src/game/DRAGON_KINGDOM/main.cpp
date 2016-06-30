@@ -47,7 +47,9 @@ int WINAPI WinMain( HINSTANCE hInst,HINSTANCE hPrevInst,LPSTR szStr,INT iCmdShow
 #ifndef FULLSCREEN
 
 	hWnd = CreateWindow (szAppName,szAppName,WS_OVERLAPPEDWINDOW | WS_VISIBLE,  
-		0, 0, CLIENT_WIDTH, CLIENT_HEIGHT, NULL, NULL, hInst, NULL);
+		GetSystemMetrics(SM_CXSCREEN) / 2 - CLIENT_WIDTH / 2, 
+		GetSystemMetrics(SM_CYSCREEN) / 2 - CLIENT_HEIGHT / 2, 
+		CLIENT_WIDTH, CLIENT_HEIGHT, NULL, NULL, hInst, NULL);
 
 #else
 

@@ -21,14 +21,16 @@ BOOL GraphicsDevice::Create3DDeviceObject(HWND _hWnd,bool isWindow)
 	
 	UINT d3ddmCnt = m_pD3d->GetAdapterModeCount( D3DADAPTER_DEFAULT,D3DFMT_X8R8G8B8 );
 
-	UINT windowSizeW = 1280;
-	UINT windowSizeH = 720;
+	UINT windowSizeW = 1600;
+	UINT windowSizeH = 900;
 	UINT nearW = -1;
 	UINT nearH = -1;
 
-	for( int i = d3ddmCnt-1; i >= 0; i-- ){
+	for( int i = d3ddmCnt-1; i >= 0; i-- )
+	{
 		m_pD3d->EnumAdapterModes(D3DADAPTER_DEFAULT,D3DFMT_X8R8G8B8,i,&d3ddm);
-		if( d3ddm.RefreshRate == 60 ) {
+		if( d3ddm.RefreshRate == 60 ) 
+		{
 			if( nearW == -1 && nearH == -1 ) 
 			{ 
 			  nearW = d3ddm.Width;
@@ -94,10 +96,14 @@ BOOL GraphicsDevice::Create3DDeviceObject(HWND _hWnd,bool isWindow)
 HRESULT GraphicsDevice::ChangeWindoeSize()
 {
 	HRESULT hr = m_pDevice->Reset(&m_d3dpp);
-	if(FAILED(hr)) {
-		if( hr == D3DERR_DEVICELOST ){
+	if(FAILED(hr)) 
+	{
+		if( hr == D3DERR_DEVICELOST )
+		{
 			m_deviceLost = true;
-		}else{
+		}
+		else
+		{
 			DestroyWindow( m_hWnd );
 			return E_FAIL;
 		}
@@ -110,7 +116,8 @@ HRESULT GraphicsDevice::ChangeWindoeSize()
 	vp.Height = m_d3dpp.BackBufferHeight;
 	vp.MinZ = 0.f;
 	vp.MaxZ = 1.f;
-	if( FAILED( m_pDevice->SetViewport(&vp) ) ){
+	if( FAILED( m_pDevice->SetViewport(&vp) ) )
+	{
 		DestroyWindow( m_hWnd );
 		return FALSE;
 	}
@@ -126,25 +133,33 @@ void GraphicsDevice::ChangeDisplayMode()
 
 	HRESULT hr = m_pDevice->Reset(&m_d3dpp);
 	if(FAILED(hr)){
-		if( hr == D3DERR_DEVICELOST ){
+		if( hr == D3DERR_DEVICELOST )
+		{
 			m_deviceLost = true;
-		}else{
+		}
+		else
+		{
 //			m_pDevice->Reset(&m_d3dpp);
 			DestroyWindow(m_hWnd);
 			return;
 		}
 	}
-	if(  m_windowed ) {
+	if(  m_windowed ) 
+	{
 		SetWindowLong(m_hWnd,GWL_STYLE,WS_OVERLAPPEDWINDOW | WS_VISIBLE);
 
-		if( m_hMenu != NULL ){
+		if( m_hMenu != NULL )
+		{
 			SetMenu( m_hWnd,m_hMenu );
 			m_hMenu = NULL;
 		}
 		SetWindowPos( m_hWnd,HWND_NOTOPMOST,m_windowRect.left,m_windowRect.top,m_windowRect.right - m_windowRect.left,m_windowRect.bottom - m_windowRect.top,SWP_SHOWWINDOW);
-	}else{
+	}
+	else
+	{
 		SetWindowLong(m_hWnd,GWL_STYLE,WS_POPUP | WS_VISIBLE );
-		if( m_hMenu == NULL ){
+		if( m_hMenu == NULL )
+		{
 			m_hMenu = GetMenu(m_hWnd);
 			SetMenu(m_hWnd,NULL);
 		}
@@ -159,22 +174,28 @@ bool GraphicsDevice::Idling()
 
 	HRESULT hr;
 
-	if( m_deviceLost ) {
+	if( m_deviceLost ) 
+	{
 		Sleep(100);
 
 		hr = m_pDevice->TestCooperativeLevel();
 
-		if(FAILED(hr) ){
+		if(FAILED(hr) )
+		{
 			if( hr == D3DERR_DEVICELOST ) return true;
 
 			if( hr != D3DERR_DEVICENOTRESET ) return false;
 
 			hr = m_pDevice->Reset(&m_d3dpp);
 
-			if(FAILED(hr)){
-				if(hr == D3DERR_DEVICELOST){
+			if(FAILED(hr))
+			{
+				if(hr == D3DERR_DEVICELOST)
+				{
 					return true;
-				}else{
+				}
+				else
+				{
 					return false;
 				}
 			}
@@ -182,8 +203,14 @@ bool GraphicsDevice::Idling()
 		m_deviceLost = false;
 		BeginScene(255,255,255);
 		hr = EndScene();
-		if (hr == D3DERR_DEVICELOST) { m_deviceLost = true; }
-		else if (FAILED(hr)) { return false; }
+		if (hr == D3DERR_DEVICELOST) 
+		{ 
+			m_deviceLost = true; 
+		}
+		else if (FAILED(hr)) 
+		{ 
+			return false; 
+		}
 	}
 	return true;
 
@@ -248,7 +275,8 @@ BOOL GraphicsDevice::InitD3D(HWND _hWnd,bool _windowed)
 -------------------------------------------------------------*/
 void GraphicsDevice::BeginScene(int _r, int _g, int _b)
 {
-	if( flag == false ){
+	if( flag == false )
+	{
 		m_pDevice->Clear( 0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER , D3DCOLOR_XRGB(_r,_g,_b), 1.f, 0);
 		m_pDevice->BeginScene();
 		flag = true;
@@ -264,7 +292,8 @@ void GraphicsDevice::BeginScene(int _r, int _g, int _b)
 -------------------------------------------------------------*/
 HRESULT GraphicsDevice::EndScene()
 {
-	if(FAILED(m_pDevice->EndScene() ) ){
+	if(FAILED(m_pDevice->EndScene() ) )
+	{
 		return E_FAIL;
 	}
 	if ( m_pDevice->Present(NULL, NULL, NULL, NULL) == D3DERR_DEVICELOST )
@@ -341,6 +370,7 @@ void GraphicsDevice::ReleaseGraphics()
 	SAFE_RELEASE(m_pDevice);
 	SAFE_RELEASE(m_pD3d);
 }
+
 D3DPRESENT_PARAMETERS GraphicsDevice::GetParam()
 {
 	return m_d3dpp;
