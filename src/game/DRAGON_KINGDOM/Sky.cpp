@@ -5,9 +5,8 @@
 #include "FbxModel.h"
 #include "ShaderAssist.h"
 
-Sky::Sky(Sun* pSun) :
+Sky::Sky() :
 	m_pDevice(GraphicsDevice::getInstance().GetDevice()),
-	m_pSun(pSun),
 	m_pModel(new FbxModel(GraphicsDevice::getInstance().GetDevice())),
 	m_pShaderAssist(new ShaderAssist())
 {
@@ -33,7 +32,7 @@ void Sky::Control()
 void Sky::Draw()
 {
 	// •`‰æˆ—
-	D3DXVECTOR4 LightDir = m_pSun->GetDirectionalVec();
+	D3DXVECTOR4 LightDir = m_pShaderAssist->GetLightDir();
 
 	m_pShaderAssist->Begin();
 	D3DXMATRIX matWorld;

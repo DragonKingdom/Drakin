@@ -51,29 +51,9 @@ void Road::Draw()
 	D3DXMATRIX matWorld;
 	D3DXMatrixIdentity(&matWorld);
 
-	D3DXVECTOR4 m_DirectionalVec;
-	D3DXVECTOR4 m_UpVec;
-	D3DXVECTOR4 m_SunPos;
-	//‘¾—z‚ÌŠp“x
-	float SunRotation;
-	//‘¾—z‚Ì”¼Œa
-	float SunRadius;
-
-	SunRotation = 45.0f;
-	SunRadius = 350.0f;
-	m_SunPos = D3DXVECTOR4(0.0f, SunRadius * sinf(D3DXToRadian(SunRotation)), SunRadius * cosf(D3DXToRadian(SunRotation)), 0.0f);
-	m_DirectionalVec = D3DXVECTOR4(-m_SunPos.x, -m_SunPos.y, -m_SunPos.z, m_SunPos.w);
-
-	//‘¾—z‚ÌˆÊ’u‚ðŒvŽZ
-	m_SunPos = D3DXVECTOR4(0.0f, SunRadius * sinf(D3DXToRadian(SunRotation)), SunRadius * cosf(D3DXToRadian(SunRotation)), 0.0f);
-	//‘¾—z‚Ì•ûŒüƒxƒNƒgƒ‹‚ðŒvŽZ
-	m_DirectionalVec = D3DXVECTOR4(-m_SunPos.x, -m_SunPos.y, -m_SunPos.z, m_SunPos.w);
-	//‘¾—z‚Ì•ûŒüƒxƒNƒgƒ‹‚ð³‹K‰»
-	D3DXVec3Normalize((D3DXVECTOR3*)&m_DirectionalVec, (D3DXVECTOR3*)&m_DirectionalVec);
-
 	m_pShaderAssist->Begin();
 	//‘¾—z‚ÌˆÊ’u‚ðŽæ“¾
-	D3DXVECTOR4 LightDir = m_DirectionalVec;
+	D3DXVECTOR4 LightDir = m_pShaderAssist->GetLightDir();
 	D3DXMATRIX matInverse;
 	D3DXVECTOR4 v;
 

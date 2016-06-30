@@ -1,11 +1,9 @@
 #include "Ground.h"
-#include "Sun.h"
 #include "FbxModel.h"
 #include "FbxFileManager.h"
 #include "ShaderAssist.h"
 
-Ground::Ground(Sun* pSun) :m_pDevice(GraphicsDevice::getInstance().GetDevice()), 
-m_pSun(pSun),
+Ground::Ground():m_pDevice(GraphicsDevice::getInstance().GetDevice()), 
 m_pShaderAssist(new ShaderAssist())
 {
 	m_pVertex = new Vertex();
@@ -52,7 +50,7 @@ void Ground::Draw()
 	D3DXMatrixIdentity(&matWorld);
 
 	// ‘¾—z‚ÌˆÊ’u‚ðŽæ“¾
-	D3DXVECTOR4 LightDir = m_pSun->GetDirectionalVec();
+	D3DXVECTOR4 LightDir = m_pShaderAssist->GetLightDir();
 	m_pShaderAssist->SetMatrix(&matWorld);
 	D3DXMatrixInverse(&matInverse, NULL, &matWorld);
 	D3DXVec4Transform(&v, &LightDir, &matInverse);
