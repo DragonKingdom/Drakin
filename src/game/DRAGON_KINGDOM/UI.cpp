@@ -8,6 +8,7 @@
 #include"TimerWindow.h"
 #include "InputDeviceFacade.h"
 #include "StateManager.h"
+#include"GameData.h"
 #include<string>
 
 UI::UI(StateManager* pStateManager) :

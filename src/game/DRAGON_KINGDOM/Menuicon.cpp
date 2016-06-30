@@ -5,6 +5,7 @@
 #include"Font.h"
 #include<string>
 
+
 //Hy•ÏX
 #define MENUICON 12
 #define OPICON 5

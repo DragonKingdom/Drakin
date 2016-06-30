@@ -13,6 +13,7 @@ class TaskBar;
 class Menuicon;
 class StateManager;
 class InputDeviceFacade;
+class GameData;
 
 /**
  * UI‚ğŠÇ—‚·‚éƒNƒ‰ƒX
@@ -51,6 +52,7 @@ private:
 	Window* m_pWindow;
 	InputDeviceFacade* m_pIdf;
 	StateManager* m_pStateManager;
+	GameData* m_pGameData;
 	Font m_Font;
 
 
