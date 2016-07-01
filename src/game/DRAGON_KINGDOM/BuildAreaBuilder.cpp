@@ -128,8 +128,7 @@ bool BuildAreaBuilder::BuildCheck(bool _roadLinkStart_StartPos, bool _roadLinkEn
 		{
 			roadAngle = 360.f + roadAngle;
 		}
-
-		m_roadStartAngle = roadAngle - m_roadStartAngle;
+		m_roadStartAngle = m_roadStartAngle - roadAngle;
 	}
 
 	if (m_EndPosLink)
