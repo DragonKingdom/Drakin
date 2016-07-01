@@ -25,6 +25,7 @@ enum HouseType
 	YELLOW_HOUSE,
 	POOR_HOUSE,
 	RICH_HOUSE,
+	NORMAL_HOUSE,
 	HOUSE_TYPE_MAX
 };
 
@@ -43,7 +44,7 @@ public:
 	HouseManager(BuildAreaChecker* pBuildAreaChecker, StateManager* _pStateManager, GameData* _pGameData, ClickPosConverter* _pClickPosConverter);
 	~HouseManager();
 
-	void BuildControl();
+	void BuildControl(bool _isNormal);
 	void Draw();
 	void GetState();
 	void SetState();

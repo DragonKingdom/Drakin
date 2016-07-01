@@ -5,7 +5,7 @@
 #include "ShaderAssist.h"
 
 
-House::House(D3DXVECTOR3 _housePos, float _angle, HouseType _Type):
+House::House(D3DXVECTOR3 _housePos, float _angle, HouseType _Type) :
 m_HousePos(_housePos),
 m_Angle(_angle),
 m_Type(_Type),
@@ -13,38 +13,44 @@ m_pModel(new FbxModel(GraphicsDevice::getInstance().GetDevice())),
 m_pShaderAssist(new ShaderAssist())
 {
 	// 渡されたHouseTypeによって読み込む家の種類を変える
-	/*switch (m_Type)
+	switch (m_Type)
 	{
 	case RED_HOUSE:
 		FbxFileManager::Get()->FileImport("fbx//house_red.fbx");
+		m_pShaderAssist->LoadTechnique("Effect\\HouseEffect.fx", "TShader", "WVPP");
 
 		break;
 	case BLUE_HOUSE:
 		FbxFileManager::Get()->FileImport("fbx//house_blue.fbx");
+		m_pShaderAssist->LoadTechnique("Effect\\HouseEffect.fx", "TShader", "WVPP");
 
 		break;
 	case YELLOW_HOUSE:
 		FbxFileManager::Get()->FileImport("fbx//house_yellow.fbx");
+		m_pShaderAssist->LoadTechnique("Effect\\HouseEffect.fx", "TShader", "WVPP");
 
 		break;
 	case POOR_HOUSE:
 		FbxFileManager::Get()->FileImport("fbx//house_hinmin.fbx");
-
-		break;	
-	case RICH_HOUSE:
-		FbxFileManager::Get()->FileImport("fbx//house_seleb.fbx");
+		m_pShaderAssist->LoadTechnique("Effect\\HouseEffect.fx", "TShader", "WVPP");
 
 		break;
-	}*/
+	case RICH_HOUSE:
+		FbxFileManager::Get()->FileImport("fbx//house_seleb.fbx");
+		m_pShaderAssist->LoadTechnique("Effect\\HouseEffect.fx", "TShader", "WVPP");
 
-	/// @todo とりあえずテストのためにNormalだけ出す
+		break;
+	case NORMAL_HOUSE:
+		FbxFileManager::Get()->FileImport("fbx//house_normal_red.fbx");
+		m_pShaderAssist->LoadTechnique("Effect\\NormalHouseEffect.fx", "TShader", "WVPP");
 
-	FbxFileManager::Get()->FileImport("fbx//house_red.fbx");
+		break;
+	}
+
 
 	FbxFileManager::Get()->GetModelData(m_pModel);
 
 
-	m_pShaderAssist->LoadTechnique("Effect\\HouseEffect.fx", "TShader", "WVPP");
 	m_Texture.Load("Resource\\image\\CLUTLight.jpg");
 	m_LightDir = m_pShaderAssist->GetParameterHandle("LightDir");
 	m_Ambient = m_pShaderAssist->GetParameterHandle("Ambient");
