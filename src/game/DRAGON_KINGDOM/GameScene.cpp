@@ -1,6 +1,7 @@
 #include "GameScene.h"
 #include "GameData.h"
 #include "FileSaveLoad.h"
+#include "InputDeviceFacade.h"
 #include <d3dx9.h>
 #include <tchar.h>
 
@@ -71,7 +72,7 @@ GameScene::~GameScene()
 
 	delete m_pStateManager;
 	
-	delete m_pGameData;
+	GameData::Release();
 
 	delete m_pNowLoading;
 

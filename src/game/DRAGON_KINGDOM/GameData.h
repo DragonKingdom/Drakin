@@ -37,8 +37,8 @@ public:
 	~GameData();
 
 	/**
-     * インスタンスの取得
-     */
+	* インスタンスの取得関数
+	*/
 	static GameData* getInstance()
 	{
 		if (m_pGameData == NULL)
@@ -46,7 +46,17 @@ public:
 			m_pGameData = new GameData();
 		}
 		return m_pGameData;
-	};
+	}
+
+	/**
+	* インスタンスの解放関数
+	*/
+	static void Release()
+	{
+		delete m_pGameData;
+		m_pGameData = NULL;
+	}
+
 
 	/// @todo ファイル入出力はこいつがやる感じでいいのかな
 	void Load(FileSaveLoad* _pFileSaveLoad);

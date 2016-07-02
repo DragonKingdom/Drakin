@@ -22,6 +22,7 @@ Sky::~Sky()
 {
 	m_Texture.Release();
 	delete m_pShaderAssist;
+	delete m_pModel;
 }
 
 void Sky::Control()
