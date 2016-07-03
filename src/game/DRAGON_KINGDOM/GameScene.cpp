@@ -96,10 +96,7 @@ SceneID GameScene::Control()
 	{
 		nextScene = SceneID::FIN;
 	}
-	if (Scene::m_keyStatePush & Scene::KEY_T)
-	{
-		nextScene = SceneID::SCENE_TITLE;
-	}
+
 
 	// ゲーム内データと状態を管理クラスから取得させる
 	m_ptimer->GetState();
