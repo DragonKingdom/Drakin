@@ -225,9 +225,9 @@ SceneID Scene::Control()
 
 
 
-	//if( pKeyBoard->ChkKeyDown(DIK_T)){
-	//	Scene::m_keyStatePush |= KEY_T;
-	//}
+	if( pKeyBoard->ChkKeyDown(DIK_T)){
+		Scene::m_keyStatePush |= KEY_T;
+	}
 	//if( pKeyBoard->ChkKeyDown('E') | pGamePad->ChkGamePadDownKEY_E
 	//	Scene::m_keyStateOn |= KEY_E;
 	//}

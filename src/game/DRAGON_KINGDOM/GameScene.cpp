@@ -1,6 +1,7 @@
 #include "GameScene.h"
 #include "GameData.h"
 #include "FileSaveLoad.h"
+#include "InputDeviceFacade.h"
 #include <d3dx9.h>
 #include <tchar.h>
 
@@ -71,7 +72,7 @@ GameScene::~GameScene()
 
 	delete m_pStateManager;
 	
-	delete m_pGameData;
+	GameData::Release();
 
 	delete m_pNowLoading;
 
@@ -95,7 +96,11 @@ SceneID GameScene::Control()
 	{
 		nextScene = SceneID::FIN;
 	}
-	
+	if (Scene::m_keyStatePush & Scene::KEY_T)
+	{
+		nextScene = SceneID::SCENE_TITLE;
+	}
+
 	// ゲーム内データと状態を管理クラスから取得させる
 	m_ptimer->GetState();
 	m_ptimer->GetGameData();
