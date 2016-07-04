@@ -33,7 +33,7 @@
 #include "Model.h"
 #include "texture.h"
 #include "vertex.h"
-#include "XAudio.h"
+#include "DSoundManager.h"
 
 // ゲーム側共通ヘッダファイル
 #include "CommonDeclaration.h"

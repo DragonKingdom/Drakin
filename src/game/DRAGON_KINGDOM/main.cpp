@@ -6,11 +6,11 @@
 #include <graphicsDevice.h>
 
 #include "FbxFileManager.h"
-
+#include "DSoundManager.h"
 #include "SceneManager.h"
 
 
-//#define FULLSCREEN 
+#define FULLSCREEN 
 
 #define GAME_FPS (1000/60)
 
@@ -74,11 +74,12 @@ int WINAPI WinMain( HINSTANCE hInst,HINSTANCE hPrevInst,LPSTR szStr,INT iCmdShow
 #endif
 
 
-	// シーンマネージャー生成
-	SceneManager* pSceneManager = new SceneManager(hWnd);
-
 	// fbxファイル読込クラス生成
 	FbxFileManager::Create(g_pGraphicsDevice->GetDevice());
+	DSoundManager::Create(hWnd);
+
+	// シーンマネージャー生成
+	SceneManager* pSceneManager = new SceneManager(hWnd);
 
 	DWORD NowTime = timeGetTime();
 	DWORD OldTime = timeGetTime();
@@ -106,11 +107,12 @@ int WINAPI WinMain( HINSTANCE hInst,HINSTANCE hPrevInst,LPSTR szStr,INT iCmdShow
 		 }
 	 }
 
-	// インスタンス破棄
-	FbxFileManager::Release();
-
 	// SceneManagerの解放
 	delete pSceneManager;
+
+	// インスタンス破棄
+	DSoundManager::Release();
+	FbxFileManager::Release();
 
      return (INT)msg.wParam ;
 }

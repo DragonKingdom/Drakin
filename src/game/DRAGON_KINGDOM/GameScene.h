@@ -23,6 +23,12 @@
 
 class FileSaveLoad;
 
+enum GAME_BGM_KEY
+{
+	GAME_BACK_BGM,
+	GAME_BGM_KEY_MAX
+};
+
 /**
  * ゲームシーンを管理するクラス
  */
@@ -58,11 +64,12 @@ private:
 	/// オブジェクトの管理クラス
 	ObjectManager* m_pObjectManager;
 
-	XAudio m_XAudio;
-
 	DebugMode* m_pDebugMode;
 
 	FileSaveLoad*	m_pFileSaveLoad;
+
+	// ゲーム内の音声データ
+	LPDIRECTSOUNDBUFFER8 m_SoundBuffer;
 
 	/**
 	 * セーブファイルを読み込む関数

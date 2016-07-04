@@ -106,6 +106,7 @@ xcopy /D /K /I /Y $(SolutionDir)$(Configuration)\DirectxLibrary.lib $(SolutionDi
     <ClCompile Include="animVertex.cpp" />
     <ClCompile Include="BillBoard.cpp" />
     <ClCompile Include="DirectxLibrary.cpp" />
+    <ClCompile Include="DSoundManager.cpp" />
     <ClCompile Include="FbxFileManager.cpp" />
     <ClCompile Include="FbxModel.cpp" />
     <ClCompile Include="Font.cpp" />
@@ -123,7 +124,6 @@ xcopy /D /K /I /Y $(SolutionDir)$(Configuration)\DirectxLibrary.lib $(SolutionDi
     </ClCompile>
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="vertex.cpp" />
-    <ClCompile Include="XAudio.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3DModel.h" />
@@ -135,6 +135,7 @@ xcopy /D /K /I /Y $(SolutionDir)$(Configuration)\DirectxLibrary.lib $(SolutionDi
     <ClInclude Include="camera.h" />
     <ClInclude Include="define.h" />
     <ClInclude Include="DirectxLibrary.h" />
+    <ClInclude Include="DSoundManager.h" />
     <ClInclude Include="FbxFileManager.h" />
     <ClInclude Include="FbxModel.h" />
     <ClInclude Include="Font.h" />
@@ -146,7 +147,6 @@ xcopy /D /K /I /Y $(SolutionDir)$(Configuration)\DirectxLibrary.lib $(SolutionDi
     <ClInclude Include="targetver.h" />
     <ClInclude Include="texture.h" />
     <ClInclude Include="vertex.h" />
-    <ClInclude Include="XAudio.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
