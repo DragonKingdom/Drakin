@@ -101,7 +101,7 @@ SceneID GameScene::Control()
 		nextScene = SceneID::FIN;
 	}
 
-	if (Scene::m_keyStatePush & Scene::KEY_A)
+	if (Scene::m_keyStatePush & Scene::KEY_Q)
 	{
 		nextScene = SceneID::SCENE_TITLE;
 	}
