@@ -27,7 +27,7 @@ Sky::~Sky()
 
 void Sky::Control()
 {
-	m_skyAngle+= 0.125;
+	m_skyAngle+= 0.005;
 }
 
 void Sky::Draw()

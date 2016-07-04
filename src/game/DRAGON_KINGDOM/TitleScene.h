@@ -34,6 +34,7 @@ private:
 	TitleMenu m_menu;
 	FileSaveLoad*	m_pFileSaveLoad;
 	InputDeviceFacade* m_pInputDevice;
+	XAudio m_XAudio;
 
 	DISALLOW_COPY_AND_ASSIGN(TitleScene);
 };

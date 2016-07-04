@@ -17,7 +17,7 @@ namespace
 
 	const Vertex::FRECT SaveDataBackGeound(0.0f, 0.0f, 1038.0f, 420.0f);
 
-	const Vertex::FRECT SaveDataImage(0.0f, 0.0f, 538.0f, 320.0f);
+	const Vertex::FRECT SaveDataImage(0.0f, 0.0f, 538.0f, 290.0f);
 }
 
 

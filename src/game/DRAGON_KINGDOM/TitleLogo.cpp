@@ -14,7 +14,7 @@ namespace
 const int kFadeInTime = 1;
 
 /// 統合ファイル内のテクスチャの座標a
-const Vertex::FRECT kTexCoord(0.0f, 350.0f, 1200.f, 735.f);
+const Vertex::FRECT kTexCoord(0.0f, 0.0f, 1020.f, 143.f);
 }
 //----------------------------------------------------------------------
 
@@ -22,7 +22,7 @@ const Vertex::FRECT kTexCoord(0.0f, 350.0f, 1200.f, 735.f);
 TitleLogo::TitleLogo()
 	: m_fadeIn(0x00)
 {
-	m_Texture.Load("Resource\\image\\Title_Menu.png");
+	m_Texture.Load("Resource\\image\\Title_Logo.png");
 }
 
 TitleLogo::~TitleLogo()
@@ -44,7 +44,7 @@ void TitleLogo::Draw()
 	/// @todo ロゴの位置は現物合わせで決め打ちしているが、仕様として欲しい
 	D3DXVECTOR2 center;
 	center.x = CLIENT_WIDTH / 2;
-	center.y = CLIENT_HEIGHT / 3.5f;
+	center.y = CLIENT_HEIGHT / 4.f;
 
 	// 描画
 	Vertex vertex;

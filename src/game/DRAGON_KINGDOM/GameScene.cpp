@@ -50,7 +50,8 @@ GameScene::GameScene(FileSaveLoad* _pFileSaveLoad, bool _isContinue) :
 
 	NowLosdingTexture.Release();
 
-	
+	m_XAudio.LoadSoundFile("Resource\\sounds\\main.wav");
+	m_XAudio.SetVolume(0, 2000.f);
 	m_XAudio.SoundPlay(0,true);
 }
 
@@ -96,10 +97,7 @@ SceneID GameScene::Control()
 	{
 		nextScene = SceneID::FIN;
 	}
-	if (Scene::m_keyStatePush & Scene::KEY_T)
-	{
-		nextScene = SceneID::SCENE_TITLE;
-	}
+
 
 	// ゲーム内データと状態を管理クラスから取得させる
 	m_ptimer->GetState();

@@ -8,8 +8,7 @@ class XAudio {
 public:
 	XAudio( ) { 
 		InitXAudio2();
-		LoadSoundFile("Resource\\sounds\\bgm.wav");
-		SetVolume(0,2000.f);
+
 	};
 
 	virtual ~XAudio( )

@@ -15,10 +15,14 @@ m_pFileSaveLoad(_pFileSaveLoad),
 m_menu(_pFileSaveLoad),
 m_pInputDevice(InputDeviceFacade::GetInstance())
 {
+	m_XAudio.LoadSoundFile("Resource\\sounds\\Title.wav");
+	m_XAudio.SetVolume(0, 2000.f);
+	m_XAudio.SoundPlay(0, true);
 }
 
 TitleScene::~TitleScene()
 {
+	m_XAudio.SoundStop(0);
 }
 
 SceneID TitleScene::Control()
