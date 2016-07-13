@@ -5,7 +5,7 @@
 #include "ShaderAssist.h"
 
 
-House::House(D3DXVECTOR3 _housePos, float _angle, HouseType _Type):
+House::House(D3DXVECTOR3 _housePos, float _angle, HouseType _Type) :
 m_HousePos(_housePos),
 m_Angle(_angle),
 m_Type(_Type),
@@ -17,30 +17,40 @@ m_pShaderAssist(new ShaderAssist())
 	{
 	case RED_HOUSE:
 		FbxFileManager::Get()->FileImport("fbx//house_red.fbx");
+		m_pShaderAssist->LoadTechnique("Effect\\HouseEffect.fx", "TShader", "WVPP");
 
 		break;
 	case BLUE_HOUSE:
 		FbxFileManager::Get()->FileImport("fbx//house_blue.fbx");
+		m_pShaderAssist->LoadTechnique("Effect\\HouseEffect.fx", "TShader", "WVPP");
 
 		break;
 	case YELLOW_HOUSE:
 		FbxFileManager::Get()->FileImport("fbx//house_yellow.fbx");
+		m_pShaderAssist->LoadTechnique("Effect\\HouseEffect.fx", "TShader", "WVPP");
 
 		break;
 	case POOR_HOUSE:
 		FbxFileManager::Get()->FileImport("fbx//house_hinmin.fbx");
+		m_pShaderAssist->LoadTechnique("Effect\\HouseEffect.fx", "TShader", "WVPP");
 
-		break;	
+		break;
 	case RICH_HOUSE:
 		FbxFileManager::Get()->FileImport("fbx//house_seleb.fbx");
+		m_pShaderAssist->LoadTechnique("Effect\\HouseEffect.fx", "TShader", "WVPP");
+
+		break;
+	case NORMAL_HOUSE:
+		FbxFileManager::Get()->FileImport("fbx//house_normal_red.fbx");
+		m_pShaderAssist->LoadTechnique("Effect\\NormalHouseEffect.fx", "TShader", "WVPP");
 
 		break;
 	}
 
+
 	FbxFileManager::Get()->GetModelData(m_pModel);
 
 
-	m_pShaderAssist->LoadTechnique("Effect\\HouseEffect.fx", "TShader", "WVPP");
 	m_Texture.Load("Resource\\image\\CLUTLight.jpg");
 	m_LightDir = m_pShaderAssist->GetParameterHandle("LightDir");
 	m_Ambient = m_pShaderAssist->GetParameterHandle("Ambient");
@@ -103,7 +113,7 @@ void House::Draw()
 	// フォグの色を設定
 	ambient = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	m_pShaderAssist->SetParameter(m_FogColor, ambient);
-	GraphicsDevice::getInstance().GetDevice()->SetTexture(1, m_Texture.Get());
+	GraphicsDevice::getInstance().GetDevice()->SetTexture(2, m_Texture.Get());
 	m_pShaderAssist->BeginPass(0);
 	// 描画
 	m_pModel->Draw();

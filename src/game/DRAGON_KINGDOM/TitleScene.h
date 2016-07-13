@@ -16,6 +16,12 @@
 
 class FileSaveLoad;
 
+enum TITLE_BGM_KEY
+{
+	TITLE_BACK_BGM,
+	TITLE_BGM_KEY_MAX
+};
+
 /// タイトルシーンクラス
 class TitleScene : public Scene {
 public:
@@ -34,6 +40,8 @@ private:
 	TitleMenu m_menu;
 	FileSaveLoad*	m_pFileSaveLoad;
 	InputDeviceFacade* m_pInputDevice;
+	// ゲーム内の音声データ
+	LPDIRECTSOUNDBUFFER8 m_SoundBuffer;
 
 	DISALLOW_COPY_AND_ASSIGN(TitleScene);
 };

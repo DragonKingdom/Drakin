@@ -8,7 +8,7 @@ float4 FogColor;              //フォグカラー
 float  Param1;                //フォグの計算式のパラメータ１
 float  Param2;                //フォグの計算式のパラメータ２
 
-sampler tex1 : register(s1);    //Pass1:ライト用CLUTテーブル
+sampler tex1 : register(s2);    //Pass1:ライト用CLUTテーブル
 sampler tex0 : register(s0);    //Pass1:デカールマップ
 
 struct VS_OUTPUT

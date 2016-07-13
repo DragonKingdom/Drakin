@@ -51,9 +51,6 @@
     <Filter Include="ソース ファイル\texture">
       <UniqueIdentifier>{725a70cd-11cb-4943-b467-b222a9e84cf1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\XAudio">
-      <UniqueIdentifier>{1b830f8d-e0a6-4a31-92e1-9a4916df8929}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\3DModel">
       <UniqueIdentifier>{da9c2cd9-f5af-42e6-802a-a50e6735ac80}</UniqueIdentifier>
     </Filter>
@@ -71,6 +68,9 @@
     </Filter>
     <Filter Include="ShaderAssist">
       <UniqueIdentifier>{0e85b8c6-df6f-4a45-aa06-467e430f2245}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DSoundManager">
+      <UniqueIdentifier>{6a9feca6-04ca-4c18-9a1d-d06740cf0a2e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -128,9 +128,6 @@
     <ClCompile Include="vertex.cpp">
       <Filter>ソース ファイル\vertex</Filter>
     </ClCompile>
-    <ClCompile Include="XAudio.cpp">
-      <Filter>ソース ファイル\XAudio</Filter>
-    </ClCompile>
     <ClCompile Include="3DModel.cpp">
       <Filter>ソース ファイル\3DModel</Filter>
     </ClCompile>
@@ -142,6 +139,9 @@
     </ClCompile>
     <ClCompile Include="ShaderAssist.cpp">
       <Filter>ShaderAssist</Filter>
+    </ClCompile>
+    <ClCompile Include="DSoundManager.cpp">
+      <Filter>DSoundManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -190,9 +190,6 @@
     <ClInclude Include="vertex.h">
       <Filter>ソース ファイル\vertex</Filter>
     </ClInclude>
-    <ClInclude Include="XAudio.h">
-      <Filter>ソース ファイル\XAudio</Filter>
-    </ClInclude>
     <ClInclude Include="stdafx.h">
       <Filter>ソース ファイル\stdafx</Filter>
     </ClInclude>
@@ -207,6 +204,9 @@
     </ClInclude>
     <ClInclude Include="ShaderAssist.h">
       <Filter>ShaderAssist</Filter>
+    </ClInclude>
+    <ClInclude Include="DSoundManager.h">
+      <Filter>DSoundManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

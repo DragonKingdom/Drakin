@@ -16,6 +16,8 @@ namespace
 	const Vertex::FRECT SaveData5Coord(0.0f, 320.0f, 438.0f, 400.0f);
 
 	const Vertex::FRECT SaveDataBackGeound(0.0f, 0.0f, 1038.0f, 420.0f);
+
+	const Vertex::FRECT SaveDataImage(0.0f, 0.0f, 538.0f, 290.0f);
 }
 
 
@@ -25,7 +27,7 @@ m_pfile(NULL)
 {
 	// ÉtÉ@ÉCÉãì«Ç›çûÇ›
 	m_texture.Load("Resource/image/SaveDataWindowBackGround.png");
-
+	m_textureImage.Load("Resource/image/DragonKingdom_Sample.png");
 	for (int i = 0; i < SAVEDATA_MAX; i++)
 	{
 		m_isFile[i] = false;
@@ -142,7 +144,7 @@ SelectMenu::~SelectMenu()
 	{
 		delete m_pButtons[i];
 	}
-
+	m_textureImage.Release();
 	m_texture.Release();
 }
 
@@ -195,6 +197,15 @@ void SelectMenu::Draw()
 		D3DXVECTOR2(SAVEDATA_BACKGROUND_X, SAVEDATA_BACKGROUND_Y),
 		SaveDataBackGeound, 
 		D3DCOLOR_ARGB(0xff, 0xff, 0xff, 0xff));
+
+	if (m_pButtons[0]->isSelect)
+	{
+		m_vertex.DrawTextureCC(
+			m_textureImage,
+			D3DXVECTOR2(SAVEDATA_BACKGROUND_X + 220.f, SAVEDATA_BACKGROUND_Y - 20.f),
+			SaveDataImage,
+			D3DCOLOR_ARGB(0xff, 0xff, 0xff, 0xff));
+	}
 
 	for (int i = 0; i < SAVEDATA_MAX; ++i)
 	{

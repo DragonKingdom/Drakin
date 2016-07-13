@@ -9,6 +9,7 @@ const Vertex::FRECT BuildWindow::UV[BuildWindow::TYPE_MAX] =
 	//数値は統合ファイル内での座標
 	Vertex::FRECT(0,64,64,128), 
 	Vertex::FRECT(64,64,128,128),
+	Vertex::FRECT(0, 64, 64, 128),
 };
 
 const D3DXVECTOR2 BuildWindow::ICON_POS = D3DXVECTOR2(800, CLIENT_HEIGHT - 120);
@@ -102,6 +103,9 @@ void BuildWindow::OnClick()
 		case HOUSE:
 			m_buildState = BUILD_HOUSE;
 			break;
+		case HOUSE_NORMAL:
+			m_buildState = BUILD_HOUSE_NORMAL;
+			break;
 		case ROAD:
 			m_buildState = BUILD_ROAD;
 			break;
@@ -116,6 +120,9 @@ void BuildWindow::OnClick()
 		case BUILD_NONE:
 			break;
 		case BUILD_HOUSE:
+			m_buildState = BUILD_NONE;
+			break;
+		case BUILD_HOUSE_NORMAL:
 			m_buildState = BUILD_NONE;
 			break;
 		case BUILD_ROAD:

@@ -26,5 +26,4 @@
 #define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>	//dinput8.lib dxguid.lib‚ÌƒŠƒ“ƒN‚à•K—v
 #include <XInput.h>
-#include <XAudio2.h>
 #include "define.h"

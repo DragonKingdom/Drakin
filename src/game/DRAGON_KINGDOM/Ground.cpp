@@ -78,8 +78,8 @@ void Ground::Draw()
 	m_pShaderAssist->BeginPass(0);
 	GraphicsDevice::getInstance().GetDevice()->SetTexture(1,m_Texture.Get());
 	// •`‰æ
-	m_pGroundModel->Draw(0);
-	m_pMountainModel->Draw(0);
+	m_pGroundModel->Draw();
+	m_pMountainModel->Draw();
 	m_pShaderAssist->EndPass();
 	m_pShaderAssist->End();
 }

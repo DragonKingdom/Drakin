@@ -8,6 +8,8 @@
 #include "TitleScene.h"
 #include "FileSaveLoad.h"
 #include "InputDeviceFacade.h"
+#include "DSoundManager.h"
+
 
 TitleScene::TitleScene(FileSaveLoad* _pFileSaveLoad): 
 Scene(SceneID::SCENE_TITLE),
@@ -15,10 +17,15 @@ m_pFileSaveLoad(_pFileSaveLoad),
 m_menu(_pFileSaveLoad),
 m_pInputDevice(InputDeviceFacade::GetInstance())
 {
+	DSoundManager::getInstance()->SoundLoad(TITLE_BACK_BGM, "Resource\\sounds\\Title.wav");
+	DSoundManager::getInstance()->SoundOperation(TITLE_BACK_BGM, SOUND_LOOP);
 }
+
 
 TitleScene::~TitleScene()
 {
+	DSoundManager::getInstance()->SoundOperation(TITLE_BACK_BGM, SOUND_STOP);
+	DSoundManager::getInstance()->ReleaseSound(TITLE_BACK_BGM);
 }
 
 SceneID TitleScene::Control()

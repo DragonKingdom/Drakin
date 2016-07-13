@@ -41,7 +41,7 @@ HouseManager::~HouseManager()
 	delete m_pHouseBuilder;
 }
 
-void HouseManager::BuildControl()
+void HouseManager::BuildControl(bool _isNormal)
 {
 	switch (m_state)
 	{
@@ -91,38 +91,45 @@ void HouseManager::BuildControl()
 	{
 		// コスト計算
 		m_HouseCost = HOUSE_COST;
+		int houseType;
 
+		if (_isNormal)
+		{
+			houseType = NORMAL_HOUSE;
+		}
+		else
+		{
+			// 乱数を利用して建設する家の種類を決めてる
+			// 乱数もrandとtimeをそのまま利用してるだけなので、修正しておく必要がある
+			srand(unsigned int(time(NULL)));
 
-		// 乱数を利用して建設する家の種類を決めてる
-		// 乱数もrandとtimeをそのまま利用してるだけなので、修正しておく必要がある
-		///@todo とりあえずの実装なのでやり方が汚い(もう少しスムーズにやっとく)
-		srand(unsigned int(time(NULL)));
+			houseType = rand() % HOUSE_THRESHOLD_MAX;
 
-		int HouseType = rand() % HOUSE_THRESHOLD_MAX;
-
-		if (HouseType < REDHOUSE_THRESHOLD)
-		{
-			HouseType = RED_HOUSE;
+			if (houseType < REDHOUSE_THRESHOLD)
+			{
+				houseType = RED_HOUSE;
+			}
+			else if (houseType < BLUEHOUSE_THRESHOLD)
+			{
+				houseType = BLUE_HOUSE;
+			}
+			else if (houseType < YELLOWHOUSE_THRESHOLD)
+			{
+				houseType = YELLOW_HOUSE;
+			}
+			else if (houseType < POORHOUSE_THRESHOLD)
+			{
+				houseType = POOR_HOUSE;
+			}
+			else if (houseType < RICHHOUSE_THRESHOLD)
+			{
+				houseType = RICH_HOUSE;
+			}
 		}
-		else if (HouseType < BLUEHOUSE_THRESHOLD)
-		{
-			HouseType = BLUE_HOUSE;
-		}
-		else if (HouseType < YELLOWHOUSE_THRESHOLD)
-		{
-			HouseType = YELLOW_HOUSE;
-		}
-		else if (HouseType < POORHOUSE_THRESHOLD)
-		{
-			HouseType = POOR_HOUSE;
-		}
-		else if (HouseType < RICHHOUSE_THRESHOLD)
-		{
-			HouseType = RICH_HOUSE;
-		}
+	
 
 		// おうちの建設
-		House* pHouse = m_pHouseBuilder->HouseBuild(HouseType);
+		House* pHouse = m_pHouseBuilder->HouseBuild(houseType);
 		m_pHouse.push_back(pHouse);
 
 		// 状態をCreatePosSetに戻す
@@ -144,7 +151,7 @@ void HouseManager::Draw()
 		m_pHouse[i]->Draw();
 	}
 
-	if (m_buildState == BUILD_HOUSE)
+	if (m_buildState == BUILD_HOUSE || m_buildState == BUILD_HOUSE_NORMAL)
 	{
 		m_pHouseBuilder->PreviewerDraw();
 	}

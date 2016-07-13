@@ -24,6 +24,7 @@ public:
 	{
 		HOUSE,
 		ROAD,
+		HOUSE_NORMAL,
 		TYPE_MAX,
 	};
 

@@ -67,6 +67,10 @@ House* HouseBuilder::HouseBuild(int _Type)
 		pHouse = new House(m_BuildPos, m_Angle, RICH_HOUSE);
 
 		break;
+	case NORMAL_HOUSE:
+		pHouse = new House(m_BuildPos, m_Angle, NORMAL_HOUSE);
+
+		break;
 	}
 
 

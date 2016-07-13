@@ -2,6 +2,7 @@
 #include "GameData.h"
 #include "FileSaveLoad.h"
 #include "InputDeviceFacade.h"
+#include "DSoundManager.h"
 #include <d3dx9.h>
 #include <tchar.h>
 
@@ -47,15 +48,19 @@ GameScene::GameScene(FileSaveLoad* _pFileSaveLoad, bool _isContinue) :
 
 	// ƒXƒŒƒbƒh—Ž‚Æ‚·
 	m_pNowLoading->ThreadDestroy();
-
+	
 	NowLosdingTexture.Release();
 
-	
-	m_XAudio.SoundPlay(0,true);
+
+	DSoundManager::getInstance()->SoundLoad(GAME_BACK_BGM, "Resource\\sounds\\main.wav");
+	DSoundManager::getInstance()->SoundOperation(GAME_BACK_BGM, SOUND_LOOP);
 }
 
 GameScene::~GameScene()
 {
+	DSoundManager::getInstance()->SoundOperation(GAME_BACK_BGM, SOUND_STOP);
+	DSoundManager::getInstance()->ReleaseSound(GAME_BACK_BGM);
+
 	delete m_pDebugMode;
 
 	delete m_pObjectManager;
@@ -76,7 +81,6 @@ GameScene::~GameScene()
 
 	delete m_pNowLoading;
 
-	m_XAudio.SoundStop(0);
 }
 
 SceneID GameScene::Control()
@@ -95,6 +99,11 @@ SceneID GameScene::Control()
 	if (Scene::m_keyStatePush & Scene::KEY_ESC)
 	{
 		nextScene = SceneID::FIN;
+	}
+
+	if (Scene::m_keyStatePush & Scene::KEY_Q)
+	{
+		nextScene = SceneID::SCENE_TITLE;
 	}
 
 
