@@ -38,7 +38,7 @@ m_pFbxModel(NULL)
 	if (m_pFbxImporter == NULL){ MessageBox(NULL, TEXT("FbxImporterクラスの生成に失敗"), TEXT("エラー"), MB_OK); }
 
 	// FbxIOSettingsクラスの生成
-	// こいつは入出力のオプションを設定するためのクラスかな？(IOはInput Output なきがする)
+	// こいつは入出力のオプションを設定するためのクラスかな？
 	// 第一引数はFbxManagerのアドレス
 	// 第二引数は名前を付けれるらしい
 	m_pFbxIOSettings = fbxsdk::FbxIOSettings::Create(m_pFbxManager, IOSROOT);
@@ -488,6 +488,39 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 	}
 
 
+	//-------------------------------------------------------------------------
+	//							
+	//-------------------------------------------------------------------------
+
+	// スキンの数を取得
+	int skinCount = pFbxMesh->GetDeformerCount(FbxDeformer::eSkin);
+	AnimationData animationData;
+	animationData.SkinNum = skinCount;
+	animationData.pSkinData = new SkinData[skinCount];
+
+	for (int i = 0; i < skinCount; i++)
+	{
+		// i番目のスキンを取得
+		FbxSkin* skin = (FbxSkin*)pFbxMesh->GetDeformer(i, FbxDeformer::eSkin);
+
+		// クラスターの数を取得
+		animationData.pSkinData[i].ClusterNum = skin->GetClusterCount();
+		animationData.pSkinData[i].pCluster = new Cluster[animationData.pSkinData[i].ClusterNum];
+
+		for (int j = 0; j < animationData.pSkinData[i].ClusterNum; j++)
+		{
+			// j番目のクラスタを取得
+			FbxCluster* cluster = skin->GetCluster(j);
+
+			animationData.pSkinData[i].pCluster[j].PointNum = cluster->GetControlPointIndicesCount();
+			animationData.pSkinData[i].pCluster[j].PointAry = cluster->GetControlPointIndices();
+			animationData.pSkinData[i].pCluster[j].WeightAry = cluster->GetControlPointWeights();
+
+			FbxAMatrix initMat;
+			cluster->GetTransformLinkMatrix(initMat);
+		}
+	}
+
 
 	//-------------------------------------------------------------------------
 	//							取得したデータを詰める
@@ -584,7 +617,14 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 	//								解放処理
 	//-------------------------------------------------------------------------
 
-
+	if (animationData.SkinNum != 0)
+	{
+		for (int i = 0; i < animationData.SkinNum; i++)
+		{
+			delete[] animationData.pSkinData[i].pCluster;
+		}
+		delete[] animationData.pSkinData;
+	}
 
 	delete[] pNormalVec;
 

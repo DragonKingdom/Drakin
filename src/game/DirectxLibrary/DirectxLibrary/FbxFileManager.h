@@ -61,6 +61,28 @@ public:
 
 
 private:
+	struct Cluster
+	{
+		int PointNum;		// 対応する頂点数
+		int* PointAry;		// 対応する頂点インデックス
+		double* WeightAry;	// 対応する頂点の重み
+	};
+
+	struct SkinData
+	{
+		Cluster* pCluster;
+		int ClusterNum;
+	};
+
+	struct AnimationData
+	{
+		SkinData* pSkinData;
+		int SkinNum;
+	};
+
+	
+	
+
 	FbxFileManager(LPDIRECT3DDEVICE9 _pDevice);
 
 	/**
