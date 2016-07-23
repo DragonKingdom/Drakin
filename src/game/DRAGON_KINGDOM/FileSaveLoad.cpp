@@ -29,7 +29,7 @@ bool FileSaveLoad::FileLoadInit(char* _pFileName)
 
 	// ファイルのサイズを取得する
 	fseek(m_pFile, 0, SEEK_END);
-	m_fileSize = ftell(m_pFile);
+	m_fileSize = ftell(m_pFile)+1;
 	fseek(m_pFile, 0, SEEK_SET);
 
 	// ファイル内の文字の長さ分確保
@@ -42,6 +42,7 @@ bool FileSaveLoad::FileLoadInit(char* _pFileName)
 
 	// 読み込み
 	fread(m_pBuffer, m_fileSize, 1, m_pFile);
+	m_pBuffer[m_fileSize - 1] = '\0';
 
 	// ファイル読み込み状態のフラグを立てる
 	isFileLoadMode = true;
