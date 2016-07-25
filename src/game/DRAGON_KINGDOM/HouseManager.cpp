@@ -76,9 +76,14 @@ void HouseManager::BuildControl(bool _isNormal)
 					}
 					else
 					{
+						m_pBuildAreaChecker->SetBuilding(&CenterPosition);
 						m_state = STATE::CREATE;
 					}
 				}
+			}
+			else
+			{
+				m_pHouseBuilder->SetDrawState(false);
 			}
 		}
 		else

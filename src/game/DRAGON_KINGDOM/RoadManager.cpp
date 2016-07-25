@@ -44,22 +44,19 @@ void RoadManager::BuildControl()
 	case STATE::START_POS_SET:
 		if (m_pInputDevice->MouseLeftPush())
 		{
-			if (m_pBuildAreaChecker->AreaCheck(NULL/*¡‚Ì‚Æ‚±‚ë‚ÍNULL‚Å*/))
-			{
-				/// @todo ƒ}ƒEƒX‚ÌˆÊ’u‚ªUI‚Æ‚©‚Ô‚Á‚Ä‚½ê‡‚Ìˆ—‚àl‚¦‚Æ‚­
+			/// @todo ƒ}ƒEƒX‚ÌˆÊ’u‚ªUI‚Æ‚©‚Ô‚Á‚Ä‚½ê‡‚Ìˆ—‚àl‚¦‚Æ‚­
 
-				// Žæ“¾‚µ‚½ƒ}ƒEƒX‚ÌÀ•W‚ð3d‹óŠÔã‚ÌÀ•W‚É•ÏŠ·‚µ‚Ä“n‚·
-				m_roadLinkStart_StartPos = false;
-				m_roadLinkEnd_StartPos = false;
-				MousePos = m_pInputDevice->GetMousePos();
-				m_pClickPosConverter->ConvertForLoad(&StartPos, int(MousePos.x), int(MousePos.y));
-				//StartPos‚ªŒq‚ª‚Á‚Ä‚¢‚é‚©‚ð”»’f‚µ‚ÄAŒq‚°‚ç‚ê‚é“¹‚ª‚ ‚Á‚½‚ç‚»‚ÌŒq‚°‚é“¹‚ÌŠp“x‚ðŽæ‚Á‚Ä‚«‚ÄA‚»‚Ì“¹‚ÌŽn“_‚©‚Ìƒtƒ‰ƒO‚ðŽæ‚Á‚Ä‚«‚Ä‚¢‚é
-				m_pRoadBuilder->StartPosLinkSet(RoadCheck(&StartPos, &StartPos, &roadStartAngle, &m_roadLinkStart_StartPos));
-				//“¹‚ðŒq‚°‚ç‚ê‚é‚©‚Ì”»’f‚ð‚·‚éŒq‚°‚é“¹‚ÌŠp“x‚ðƒZƒbƒg‚·‚é
-				m_pRoadBuilder->SetRoadStartAngle(roadStartAngle);
-				m_pRoadBuilder->StartPosSet(StartPos);
-				m_state = STATE::END_POS_SET;
-			}
+			// Žæ“¾‚µ‚½ƒ}ƒEƒX‚ÌÀ•W‚ð3d‹óŠÔã‚ÌÀ•W‚É•ÏŠ·‚µ‚Ä“n‚·
+			m_roadLinkStart_StartPos = false;
+			m_roadLinkEnd_StartPos = false;
+			MousePos = m_pInputDevice->GetMousePos();
+			m_pClickPosConverter->ConvertForLoad(&StartPos, int(MousePos.x), int(MousePos.y));
+			//StartPos‚ªŒq‚ª‚Á‚Ä‚¢‚é‚©‚ð”»’f‚µ‚ÄAŒq‚°‚ç‚ê‚é“¹‚ª‚ ‚Á‚½‚ç‚»‚ÌŒq‚°‚é“¹‚ÌŠp“x‚ðŽæ‚Á‚Ä‚«‚ÄA‚»‚Ì“¹‚ÌŽn“_‚©‚Ìƒtƒ‰ƒO‚ðŽæ‚Á‚Ä‚«‚Ä‚¢‚é
+			m_pRoadBuilder->StartPosLinkSet(RoadCheck(&StartPos, &StartPos, &roadStartAngle, &m_roadLinkStart_StartPos));
+			//“¹‚ðŒq‚°‚ç‚ê‚é‚©‚Ì”»’f‚ð‚·‚éŒq‚°‚é“¹‚ÌŠp“x‚ðƒZƒbƒg‚·‚é
+			m_pRoadBuilder->SetRoadStartAngle(roadStartAngle);
+			m_pRoadBuilder->StartPosSet(StartPos);
+			m_state = STATE::END_POS_SET;
 		}
 
 		break;
@@ -75,10 +72,8 @@ void RoadManager::BuildControl()
 
 		if (m_pInputDevice->MouseLeftPush())
 		{
-			if (m_pBuildAreaChecker->AreaCheck(NULL/*¡‚Ì‚Æ‚±‚ë‚ÍNULL*/))
-			{
-				m_state = STATE::CREATE;
-			}
+			m_state = STATE::CREATE;
+
 		}
 
 		if (m_pInputDevice->MouseRightPush())
