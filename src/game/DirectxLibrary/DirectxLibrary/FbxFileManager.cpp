@@ -489,7 +489,7 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 
 
 	//-------------------------------------------------------------------------
-	//							
+	//							アニメーションデータ関連
 	//-------------------------------------------------------------------------
 
 	// スキンの数を取得
@@ -518,6 +518,27 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 
 			FbxAMatrix initMat;
 			cluster->GetTransformLinkMatrix(initMat);
+
+			animationData.pSkinData[i].pCluster[j].InitMatrix._11 = static_cast<float>(initMat.mData[0].mData[0]);
+			animationData.pSkinData[i].pCluster[j].InitMatrix._12 = static_cast<float>(initMat.mData[0].mData[1]);
+			animationData.pSkinData[i].pCluster[j].InitMatrix._13 = static_cast<float>(initMat.mData[0].mData[2]);
+			animationData.pSkinData[i].pCluster[j].InitMatrix._14 = static_cast<float>(initMat.mData[0].mData[3]);
+
+			animationData.pSkinData[i].pCluster[j].InitMatrix._21 = static_cast<float>(initMat.mData[1].mData[0]);
+			animationData.pSkinData[i].pCluster[j].InitMatrix._22 = static_cast<float>(initMat.mData[1].mData[1]);
+			animationData.pSkinData[i].pCluster[j].InitMatrix._23 = static_cast<float>(initMat.mData[1].mData[2]);
+			animationData.pSkinData[i].pCluster[j].InitMatrix._24 = static_cast<float>(initMat.mData[1].mData[3]);
+
+			animationData.pSkinData[i].pCluster[j].InitMatrix._31 = static_cast<float>(initMat.mData[2].mData[0]);
+			animationData.pSkinData[i].pCluster[j].InitMatrix._32 = static_cast<float>(initMat.mData[2].mData[1]);
+			animationData.pSkinData[i].pCluster[j].InitMatrix._33 = static_cast<float>(initMat.mData[2].mData[2]);
+			animationData.pSkinData[i].pCluster[j].InitMatrix._34 = static_cast<float>(initMat.mData[2].mData[3]);
+
+			animationData.pSkinData[i].pCluster[j].InitMatrix._41 = static_cast<float>(initMat.mData[3].mData[0]);
+			animationData.pSkinData[i].pCluster[j].InitMatrix._42 = static_cast<float>(initMat.mData[3].mData[1]);
+			animationData.pSkinData[i].pCluster[j].InitMatrix._43 = static_cast<float>(initMat.mData[3].mData[2]);
+			animationData.pSkinData[i].pCluster[j].InitMatrix._44 = static_cast<float>(initMat.mData[3].mData[3]);
+
 		}
 	}
 
