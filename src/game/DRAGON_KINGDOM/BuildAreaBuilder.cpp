@@ -44,11 +44,15 @@ BuildArea* BuildAreaBuilder::AreaBuild(bool _isLeft)
 	// EndPosを原点に戻して、正規化、スケーリングして、もう一度同じ場所に戻す
 	D3DXVECTOR3 Vec = m_EndPos - m_StartPos;
 	D3DXVec3Normalize(&Vec, &Vec);
-	D3DXVec3Scale(&Vec, &Vec, static_cast<float>(VecLength));
+	D3DXVec3Scale(&Vec, &Vec, static_cast<float>(length));
 	Vec = Vec + m_StartPos;
 
-	angle = atan2(Vec.z - m_StartPos.z, Vec.x - m_StartPos.x);
-
+	//float angle = atan2(Vec.z - m_StartPos.z, Vec.x - m_StartPos.x);
+	
+	Vec = m_EndPos - m_StartPos;
+	D3DXVec3Normalize(&Vec, &Vec);
+	D3DXVec3Scale(&Vec, &Vec, static_cast<float>(VecLength));
+	Vec = Vec + m_StartPos;
 	
 	BuildArea* pBuildArea = new BuildArea(_isLeft, m_StartPos, Vec, angle, m_roadStartAngle, m_roadEndAngle, m_StartPosLink, m_EndPosLink);
 
