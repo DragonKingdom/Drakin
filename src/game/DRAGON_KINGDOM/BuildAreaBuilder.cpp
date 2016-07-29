@@ -48,7 +48,7 @@ BuildArea* BuildAreaBuilder::AreaBuild(bool _isLeft)
 	Vec = Vec + m_StartPos;
 
 	//float angle = atan2(Vec.z - m_StartPos.z, Vec.x - m_StartPos.x);
-	
+	//@todo ‚±‚±‚ª‚¸‚ê‚Ä‚éŒ´ˆö‚Æ•ª‚©‚Á‚½‚Ì‚Å’¼‚·
 	Vec = m_EndPos - m_StartPos;
 	D3DXVec3Normalize(&Vec, &Vec);
 	D3DXVec3Scale(&Vec, &Vec, static_cast<float>(VecLength));
