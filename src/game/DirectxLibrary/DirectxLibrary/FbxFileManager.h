@@ -28,7 +28,7 @@ public:
 	/**
 	 * 
 	 */
-	bool GetModelData( FbxModel* _pFbxModel );
+	bool GetModelData(std::vector<FbxModel*>* _pFbxModel);
 
 
 	/**
@@ -116,7 +116,7 @@ private:
 
 	static FbxFileManager*	m_pFbxFileManager;
 	LPDIRECT3DDEVICE9		m_pDevice;
-	FbxModel*				m_pFbxModel;
+	std::vector<FbxModel*>*	m_pFbxModel;
 	fbxsdk::FbxManager*		m_pFbxManager;
 	fbxsdk::FbxScene*		m_pFbxScene;
 	fbxsdk::FbxImporter*	m_pFbxImporter;

@@ -7,11 +7,10 @@
 
 Sky::Sky() :
 	m_pDevice(GraphicsDevice::getInstance().GetDevice()),
-	m_pModel(new FbxModel(GraphicsDevice::getInstance().GetDevice())),
 	m_pShaderAssist(new ShaderAssist())
 {
 	FbxFileManager::Get()->FileImport("fbx//sky.fbx");
-	FbxFileManager::Get()->GetModelData(m_pModel);
+	FbxFileManager::Get()->GetModelData(&m_Model);
 	m_pShaderAssist->LoadTechnique("Effect\\SkyEffect.fx","TShader","WVPP");
 	m_CLUTTU = m_pShaderAssist->GetParameterHandle("CLUTTU");
 	m_skyAngle = 0.f;
@@ -22,12 +21,16 @@ Sky::~Sky()
 {
 	m_Texture.Release();
 	delete m_pShaderAssist;
-	delete m_pModel;
+
+	for (unsigned int i = 0; i <m_Model.size(); i++)
+	{
+		delete m_Model[i];
+	}
 }
 
 void Sky::Control()
 {
-	m_skyAngle+= 0.005;
+	m_skyAngle+= 0.005f;
 }
 
 void Sky::Draw()
@@ -58,7 +61,12 @@ void Sky::Draw()
 	m_pShaderAssist->SetParameter(m_CLUTTU,dot);
 	GraphicsDevice::getInstance().GetDevice()->SetTexture(1,m_Texture.Get());
 	m_pShaderAssist->BeginPass(0);
-	m_pModel->Draw();
+	
+	for (unsigned int i = 0; i <m_Model.size(); i++)
+	{
+		m_Model[i]->Draw();
+	}
+	
 	m_pShaderAssist->EndPass();
 	m_pShaderAssist->End();
 }

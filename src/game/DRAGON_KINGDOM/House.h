@@ -15,7 +15,7 @@ public:
 	void GetHouseData(std::vector<float>* _pHouseVertexData, std::vector<float>* _pHouseAngleData, std::vector<int>* _pHouseStatus);
 
 private:
-	FbxModel*   m_pModel;
+	std::vector<FbxModel*>	m_Model;
 	D3DXVECTOR3 m_HousePos;
 	float		m_Angle;
 	D3DXMATRIX	m_World;

@@ -87,7 +87,7 @@ bool FbxFileManager::FileImport(char* _FileName)
 }
 
 
-bool FbxFileManager::GetModelData(FbxModel* _pFbxModel)
+bool FbxFileManager::GetModelData(std::vector<FbxModel*>* _pFbxModel)
 {
 	m_pFbxModel = _pFbxModel;
 
@@ -166,10 +166,10 @@ void FbxFileManager::GetTextureName(
 // メッシュ内の情報取得
 void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 {
-
-	FbxModelData* ModelData = new FbxModelData;
-	ModelData->pVertex = NULL;
-	ModelData->pIndex.IndexAry = NULL;
+	FbxModel*		Model = new FbxModel(m_pDevice);
+	FbxModelData*	pModelData = new FbxModelData;
+	pModelData->pVertex = NULL;
+	pModelData->pIndex.IndexAry = NULL;
 
 	// ダウンキャスト
 	fbxsdk::FbxMesh* pFbxMesh = (fbxsdk::FbxMesh*)_pAttribute;
@@ -492,55 +492,55 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 	//							アニメーションデータ関連
 	//-------------------------------------------------------------------------
 
-	// スキンの数を取得
-	int skinCount = pFbxMesh->GetDeformerCount(FbxDeformer::eSkin);
-	AnimationData animationData;
-	animationData.SkinNum = skinCount;
-	animationData.pSkinData = new SkinData[skinCount];
+	//// スキンの数を取得
+	//int skinCount = pFbxMesh->GetDeformerCount(FbxDeformer::eSkin);
+	//AnimationData animationData;
+	//animationData.SkinNum = skinCount;
+	//animationData.pSkinData = new SkinData[skinCount];
 
-	for (int i = 0; i < skinCount; i++)
-	{
-		// i番目のスキンを取得
-		FbxSkin* skin = (FbxSkin*)pFbxMesh->GetDeformer(i, FbxDeformer::eSkin);
+	//for (int i = 0; i < skinCount; i++)
+	//{
+	//	// i番目のスキンを取得
+	//	FbxSkin* skin = (FbxSkin*)pFbxMesh->GetDeformer(i, FbxDeformer::eSkin);
 
-		// クラスターの数を取得
-		animationData.pSkinData[i].ClusterNum = skin->GetClusterCount();
-		animationData.pSkinData[i].pCluster = new Cluster[animationData.pSkinData[i].ClusterNum];
+	//	// クラスターの数を取得
+	//	animationData.pSkinData[i].ClusterNum = skin->GetClusterCount();
+	//	animationData.pSkinData[i].pCluster = new Cluster[animationData.pSkinData[i].ClusterNum];
 
-		for (int j = 0; j < animationData.pSkinData[i].ClusterNum; j++)
-		{
-			// j番目のクラスタを取得
-			FbxCluster* cluster = skin->GetCluster(j);
+	//	for (int j = 0; j < animationData.pSkinData[i].ClusterNum; j++)
+	//	{
+	//		// j番目のクラスタを取得
+	//		FbxCluster* cluster = skin->GetCluster(j);
 
-			animationData.pSkinData[i].pCluster[j].PointNum = cluster->GetControlPointIndicesCount();
-			animationData.pSkinData[i].pCluster[j].PointAry = cluster->GetControlPointIndices();
-			animationData.pSkinData[i].pCluster[j].WeightAry = cluster->GetControlPointWeights();
+	//		animationData.pSkinData[i].pCluster[j].PointNum = cluster->GetControlPointIndicesCount();
+	//		animationData.pSkinData[i].pCluster[j].PointAry = cluster->GetControlPointIndices();
+	//		animationData.pSkinData[i].pCluster[j].WeightAry = cluster->GetControlPointWeights();
 
-			FbxAMatrix initMat;
-			cluster->GetTransformLinkMatrix(initMat);
+	//		FbxAMatrix initMat;
+	//		cluster->GetTransformLinkMatrix(initMat);
 
-			animationData.pSkinData[i].pCluster[j].InitMatrix._11 = static_cast<float>(initMat.mData[0].mData[0]);
-			animationData.pSkinData[i].pCluster[j].InitMatrix._12 = static_cast<float>(initMat.mData[0].mData[1]);
-			animationData.pSkinData[i].pCluster[j].InitMatrix._13 = static_cast<float>(initMat.mData[0].mData[2]);
-			animationData.pSkinData[i].pCluster[j].InitMatrix._14 = static_cast<float>(initMat.mData[0].mData[3]);
+	//		animationData.pSkinData[i].pCluster[j].InitMatrix._11 = static_cast<float>(initMat.mData[0].mData[0]);
+	//		animationData.pSkinData[i].pCluster[j].InitMatrix._12 = static_cast<float>(initMat.mData[0].mData[1]);
+	//		animationData.pSkinData[i].pCluster[j].InitMatrix._13 = static_cast<float>(initMat.mData[0].mData[2]);
+	//		animationData.pSkinData[i].pCluster[j].InitMatrix._14 = static_cast<float>(initMat.mData[0].mData[3]);
 
-			animationData.pSkinData[i].pCluster[j].InitMatrix._21 = static_cast<float>(initMat.mData[1].mData[0]);
-			animationData.pSkinData[i].pCluster[j].InitMatrix._22 = static_cast<float>(initMat.mData[1].mData[1]);
-			animationData.pSkinData[i].pCluster[j].InitMatrix._23 = static_cast<float>(initMat.mData[1].mData[2]);
-			animationData.pSkinData[i].pCluster[j].InitMatrix._24 = static_cast<float>(initMat.mData[1].mData[3]);
+	//		animationData.pSkinData[i].pCluster[j].InitMatrix._21 = static_cast<float>(initMat.mData[1].mData[0]);
+	//		animationData.pSkinData[i].pCluster[j].InitMatrix._22 = static_cast<float>(initMat.mData[1].mData[1]);
+	//		animationData.pSkinData[i].pCluster[j].InitMatrix._23 = static_cast<float>(initMat.mData[1].mData[2]);
+	//		animationData.pSkinData[i].pCluster[j].InitMatrix._24 = static_cast<float>(initMat.mData[1].mData[3]);
 
-			animationData.pSkinData[i].pCluster[j].InitMatrix._31 = static_cast<float>(initMat.mData[2].mData[0]);
-			animationData.pSkinData[i].pCluster[j].InitMatrix._32 = static_cast<float>(initMat.mData[2].mData[1]);
-			animationData.pSkinData[i].pCluster[j].InitMatrix._33 = static_cast<float>(initMat.mData[2].mData[2]);
-			animationData.pSkinData[i].pCluster[j].InitMatrix._34 = static_cast<float>(initMat.mData[2].mData[3]);
+	//		animationData.pSkinData[i].pCluster[j].InitMatrix._31 = static_cast<float>(initMat.mData[2].mData[0]);
+	//		animationData.pSkinData[i].pCluster[j].InitMatrix._32 = static_cast<float>(initMat.mData[2].mData[1]);
+	//		animationData.pSkinData[i].pCluster[j].InitMatrix._33 = static_cast<float>(initMat.mData[2].mData[2]);
+	//		animationData.pSkinData[i].pCluster[j].InitMatrix._34 = static_cast<float>(initMat.mData[2].mData[3]);
 
-			animationData.pSkinData[i].pCluster[j].InitMatrix._41 = static_cast<float>(initMat.mData[3].mData[0]);
-			animationData.pSkinData[i].pCluster[j].InitMatrix._42 = static_cast<float>(initMat.mData[3].mData[1]);
-			animationData.pSkinData[i].pCluster[j].InitMatrix._43 = static_cast<float>(initMat.mData[3].mData[2]);
-			animationData.pSkinData[i].pCluster[j].InitMatrix._44 = static_cast<float>(initMat.mData[3].mData[3]);
+	//		animationData.pSkinData[i].pCluster[j].InitMatrix._41 = static_cast<float>(initMat.mData[3].mData[0]);
+	//		animationData.pSkinData[i].pCluster[j].InitMatrix._42 = static_cast<float>(initMat.mData[3].mData[1]);
+	//		animationData.pSkinData[i].pCluster[j].InitMatrix._43 = static_cast<float>(initMat.mData[3].mData[2]);
+	//		animationData.pSkinData[i].pCluster[j].InitMatrix._44 = static_cast<float>(initMat.mData[3].mData[3]);
 
-		}
-	}
+	//	}
+	//}
 
 
 	//-------------------------------------------------------------------------
@@ -551,19 +551,19 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 	// インデックス描画と分けたい
 
 	// データセット
-	ModelData->PolygonCount = PolygonCount;
-	ModelData->PrimitiveCount = PrimitiveCount;
-	ModelData->pVertex = new UserVertex[VertexCount];		// 現在はすべての頂点ぶん確保
-	ModelData->pIndex.IndexAry = IndexAry;
-	ModelData->pIndex.IndexCount = VertexCount;
+	pModelData->PolygonCount = PolygonCount;
+	pModelData->PrimitiveCount = PrimitiveCount;
+	pModelData->pVertex = new UserVertex[VertexCount];		// 現在はすべての頂点ぶん確保
+	pModelData->pIndex.IndexAry = IndexAry;
+	pModelData->pIndex.IndexCount = VertexCount;
 
 
 	// 頂点情報をセット
 	for (int i = 0; i < VertexCount; i++)
 	{
-		ModelData->pVertex[i].Vec.x = pVertex[IndexAry[i]].x;	// x座標
-		ModelData->pVertex[i].Vec.y = pVertex[IndexAry[i]].y;	// y座標
-		ModelData->pVertex[i].Vec.z = pVertex[IndexAry[i]].z;	// z座標
+		pModelData->pVertex[i].Vec.x = pVertex[IndexAry[i]].x;	// x座標
+		pModelData->pVertex[i].Vec.y = pVertex[IndexAry[i]].y;	// y座標
+		pModelData->pVertex[i].Vec.z = pVertex[IndexAry[i]].z;	// z座標
 	}
 
 	// 法線あるならつめる
@@ -571,18 +571,18 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 	{
 		for (int i = 0; i < VertexCount; i++)
 		{
-			ModelData->pVertex[i].Normal.x = pNormalVec[i].x;	// 法線のxベクトル
-			ModelData->pVertex[i].Normal.y = pNormalVec[i].y;	// 法線のyベクトル
-			ModelData->pVertex[i].Normal.z = pNormalVec[i].z;	// 法線のzベクトル
+			pModelData->pVertex[i].Normal.x = pNormalVec[i].x;	// 法線のxベクトル
+			pModelData->pVertex[i].Normal.y = pNormalVec[i].y;	// 法線のyベクトル
+			pModelData->pVertex[i].Normal.z = pNormalVec[i].z;	// 法線のzベクトル
 		}
 	}
 	else
 	{
 		for (int i = 0; i < VertexCount; i++)
 		{
-			ModelData->pVertex[i].Normal.x = 0;		// 法線のxベクトル
-			ModelData->pVertex[i].Normal.y = 0;		// 法線のyベクトル
-			ModelData->pVertex[i].Normal.z = 0;		// 法線のzベクトル
+			pModelData->pVertex[i].Normal.x = 0;		// 法線のxベクトル
+			pModelData->pVertex[i].Normal.y = 0;		// 法線のyベクトル
+			pModelData->pVertex[i].Normal.z = 0;		// 法線のzベクトル
 		}
 	}
 
@@ -591,16 +591,16 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 	{
 		for (int i = 0; i < VertexCount; i++)
 		{
-			ModelData->pVertex[i].tu = TextureUv[0][i].x;	// テクスチャのx座標
-			ModelData->pVertex[i].tv = TextureUv[0][i].y;	// テクスチャのy座標
+			pModelData->pVertex[i].tu = TextureUv[0][i].x;	// テクスチャのx座標
+			pModelData->pVertex[i].tv = TextureUv[0][i].y;	// テクスチャのy座標
 		}
 	}
 	else
 	{
 		for (int i = 0; i < VertexCount; i++)
 		{
-			ModelData->pVertex[i].tu = 0;	// テクスチャのx座標
-			ModelData->pVertex[i].tv = 0;	// テクスチャのy座標
+			pModelData->pVertex[i].tu = 0;	// テクスチャのx座標
+			pModelData->pVertex[i].tv = 0;	// テクスチャのy座標
 		}
 
 	}
@@ -608,7 +608,7 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 	// マテリアルのでーたがあるなら詰める
 	if (MaterialCount != 0)
 	{
-		ModelData->Material = MaterialData;
+		pModelData->Material = MaterialData;
 	}
 
 	for (int i = 0; i < TextureFileCount; i++)
@@ -619,33 +619,34 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 			if (TextureUvSetName[i] == UvSetName[n])
 			{
 				// 名前があってたら追加
-				ModelData->pTextureData.push_back(new UserTexture);
-				ModelData->pTextureData[i]->TextureName = TextureFileName[i];
+				pModelData->pTextureData.push_back(new UserTexture);
+				pModelData->pTextureData[i]->TextureName = TextureFileName[i];
 				if (FAILED(D3DXCreateTextureFromFile(
 					m_pDevice,
-					ModelData->pTextureData[i]->TextureName,
-					&ModelData->pTextureData[i]->pTexture)))
+					pModelData->pTextureData[i]->TextureName,
+					&pModelData->pTextureData[i]->pTexture)))
 				{
-					ModelData->pTextureData[i]->pTexture = NULL;
+					pModelData->pTextureData[i]->pTexture = NULL;
 				}
 			}
 		}
 	}
 
-	m_pFbxModel->m_pFbxModelData.push_back(ModelData);
+	Model->m_pFbxModelData.push_back(pModelData);
+	m_pFbxModel->push_back(Model);
 
 	//-------------------------------------------------------------------------
 	//								解放処理
 	//-------------------------------------------------------------------------
 
-	if (animationData.SkinNum != 0)
-	{
-		for (int i = 0; i < animationData.SkinNum; i++)
-		{
-			delete[] animationData.pSkinData[i].pCluster;
-		}
-		delete[] animationData.pSkinData;
-	}
+	//if (animationData.SkinNum != 0)
+	//{
+	//	for (int i = 0; i < animationData.SkinNum; i++)
+	//	{
+	//		delete[] animationData.pSkinData[i].pCluster;
+	//	}
+	//	delete[] animationData.pSkinData;
+	//}
 
 	delete[] pNormalVec;
 

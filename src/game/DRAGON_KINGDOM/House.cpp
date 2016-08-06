@@ -9,7 +9,6 @@ House::House(D3DXVECTOR3 _housePos, float _angle, HouseType _Type) :
 m_HousePos(_housePos),
 m_Angle(_angle),
 m_Type(_Type),
-m_pModel(new FbxModel(GraphicsDevice::getInstance().GetDevice())),
 m_pShaderAssist(new ShaderAssist())
 {
 	// “n‚³‚ê‚½HouseType‚É‚æ‚Á‚Ä“Ç‚Ýž‚Þ‰Æ‚ÌŽí—Þ‚ð•Ï‚¦‚é
@@ -41,14 +40,14 @@ m_pShaderAssist(new ShaderAssist())
 
 		break;
 	case NORMAL_HOUSE:
-		FbxFileManager::Get()->FileImport("fbx//house_normal_red.fbx");
-		m_pShaderAssist->LoadTechnique("Effect\\NormalHouseEffect.fx", "TShader", "WVPP");
+		FbxFileManager::Get()->FileImport("fbx//murabito.fbx");
+		m_pShaderAssist->LoadTechnique("Effect\\HouseEffect.fx", "TShader", "WVPP");
 
 		break;
 	}
 
 
-	FbxFileManager::Get()->GetModelData(m_pModel);
+	FbxFileManager::Get()->GetModelData(&m_Model);
 
 
 	m_Texture.Load("Resource\\image\\CLUTLight.jpg");
@@ -78,7 +77,11 @@ House::~House()
 {
 	m_Texture.Release();
 	delete m_pShaderAssist;
-	delete m_pModel;
+
+	for (unsigned int i = 0; i < m_Model.size(); i++)
+	{
+		delete m_Model[i];
+	}
 }
 
 void House::Draw()
@@ -115,8 +118,13 @@ void House::Draw()
 	m_pShaderAssist->SetParameter(m_FogColor, ambient);
 	GraphicsDevice::getInstance().GetDevice()->SetTexture(2, m_Texture.Get());
 	m_pShaderAssist->BeginPass(0);
+
 	// •`‰æ
-	m_pModel->Draw();
+	for (unsigned int i = 0; i <m_Model.size(); i++)
+	{
+		m_Model[i]->Draw();
+	}
+
 	m_pShaderAssist->EndPass();
 	m_pShaderAssist->End();
 
