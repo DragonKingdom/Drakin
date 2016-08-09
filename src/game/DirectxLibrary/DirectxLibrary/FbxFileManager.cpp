@@ -511,6 +511,9 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 
 			animationData.pSkinData[i].pCluster = new Cluster[animationData.pSkinData[i].ClusterNum];
 
+			fbxsdk::FbxArray<FbxString*> animation_names;
+			m_pFbxScene->FillAnimStackNameArray(animation_names);
+
 			for (int j = 0; j < animationData.pSkinData[i].ClusterNum; j++)
 			{
 				// j番目のクラスタを取得
@@ -543,20 +546,12 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 				animationData.pSkinData[i].pCluster[j].InitMatrix._43 = static_cast<float>(initMat.mData[3].mData[2]);
 				animationData.pSkinData[i].pCluster[j].InitMatrix._44 = static_cast<float>(initMat.mData[3].mData[3]);
 
-				int* m4 = new int[6];
-
-				FbxArray<FbxString*> animation_names;
-				m_pFbxScene->FillAnimStackNameArray(animation_names);
 				FbxTakeInfo* take_info = m_pFbxScene->GetTakeInfo(animation_names[0]->Buffer());
-
 				FbxTime start_time = take_info->mLocalTimeSpan.GetStart();
 				FbxTime end_time = take_info->mLocalTimeSpan.GetStop();
-
-
+				
 				animationData.pSkinData[i].FrameNum = 30;	// @todo いまのとこ適当にやってる
 				animationData.pSkinData[i].pCluster[j].pMat = new D3DXMATRIX[animationData.pSkinData[i].FrameNum];
-
-				int* m5 = new int[5];
 
 
 				for (int n = 0; n < animationData.pSkinData[i].FrameNum; n++)
@@ -585,6 +580,12 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 					animationData.pSkinData[i].pCluster[j].pMat[n]._44 = static_cast<float>(mat.mData[3].mData[3]);
 				}
 			}
+
+			for (int i = 0; i < animation_names.Size(); i++)
+			{
+				FbxDelete(animation_names[i]);
+			}
+			animation_names.Clear();
 		}
 	}
 
