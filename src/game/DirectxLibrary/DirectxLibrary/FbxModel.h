@@ -28,6 +28,28 @@ struct UserTexture
 	LPDIRECT3DTEXTURE9 pTexture;
 };
 
+struct Cluster
+{
+	int PointNum;			// 対応する頂点数
+	int* PointAry;			// 対応する頂点インデックス
+	double* WeightAry;		// 対応する頂点の重み
+	D3DXMATRIX InitMatrix;	// 初期姿勢
+	D3DXMATRIX* pMat;
+};
+
+struct SkinData
+{
+	Cluster* pCluster;
+	int FrameNum;
+	int ClusterNum;
+};
+
+struct AnimationData
+{
+	SkinData* pSkinData;
+	int SkinNum;
+};
+
 // Mesh情報が格納される構造体
 struct FbxModelData
 {
@@ -38,6 +60,7 @@ struct FbxModelData
 	UserIndex					pIndex;				// インデックス系データ
 	std::vector<UserTexture*>	pTextureData;		// テクスチャ情報
 	D3DMATERIAL9				Material;			// マテリアル情報
+	AnimationData				Animation;
 };
 
 /**

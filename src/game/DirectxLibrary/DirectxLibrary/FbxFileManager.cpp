@@ -402,7 +402,6 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 	}
 
 
-
 	//-------------------------------------------------------------------------
 	//							マテリアルとテクスチャ
 	//-------------------------------------------------------------------------
@@ -492,56 +491,102 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 	//							アニメーションデータ関連
 	//-------------------------------------------------------------------------
 
-	//// スキンの数を取得
-	//int skinCount = pFbxMesh->GetDeformerCount(FbxDeformer::eSkin);
-	//AnimationData animationData;
-	//animationData.SkinNum = skinCount;
-	//animationData.pSkinData = new SkinData[skinCount];
+	// スキンの数を取得
+	int skinCount = pFbxMesh->GetDeformerCount(FbxDeformer::eSkin);
+	AnimationData animationData;
+	animationData.SkinNum = skinCount;
 
-	//for (int i = 0; i < skinCount; i++)
-	//{
-	//	// i番目のスキンを取得
-	//	FbxSkin* skin = (FbxSkin*)pFbxMesh->GetDeformer(i, FbxDeformer::eSkin);
+	if (skinCount != 0)
+	{
+		animationData.pSkinData = new SkinData[skinCount];
 
-	//	// クラスターの数を取得
-	//	animationData.pSkinData[i].ClusterNum = skin->GetClusterCount();
-	//	animationData.pSkinData[i].pCluster = new Cluster[animationData.pSkinData[i].ClusterNum];
+		for (int i = 0; i < skinCount; i++)
+		{
 
-	//	for (int j = 0; j < animationData.pSkinData[i].ClusterNum; j++)
-	//	{
-	//		// j番目のクラスタを取得
-	//		FbxCluster* cluster = skin->GetCluster(j);
+			// i番目のスキンを取得
+			FbxSkin* skin = (FbxSkin*)pFbxMesh->GetDeformer(i, FbxDeformer::eSkin);
 
-	//		animationData.pSkinData[i].pCluster[j].PointNum = cluster->GetControlPointIndicesCount();
-	//		animationData.pSkinData[i].pCluster[j].PointAry = cluster->GetControlPointIndices();
-	//		animationData.pSkinData[i].pCluster[j].WeightAry = cluster->GetControlPointWeights();
+			// クラスターの数を取得
+			animationData.pSkinData[i].ClusterNum = skin->GetClusterCount();
 
-	//		FbxAMatrix initMat;
-	//		cluster->GetTransformLinkMatrix(initMat);
+			animationData.pSkinData[i].pCluster = new Cluster[animationData.pSkinData[i].ClusterNum];
 
-	//		animationData.pSkinData[i].pCluster[j].InitMatrix._11 = static_cast<float>(initMat.mData[0].mData[0]);
-	//		animationData.pSkinData[i].pCluster[j].InitMatrix._12 = static_cast<float>(initMat.mData[0].mData[1]);
-	//		animationData.pSkinData[i].pCluster[j].InitMatrix._13 = static_cast<float>(initMat.mData[0].mData[2]);
-	//		animationData.pSkinData[i].pCluster[j].InitMatrix._14 = static_cast<float>(initMat.mData[0].mData[3]);
+			for (int j = 0; j < animationData.pSkinData[i].ClusterNum; j++)
+			{
+				// j番目のクラスタを取得
+				FbxCluster* cluster = skin->GetCluster(j);
 
-	//		animationData.pSkinData[i].pCluster[j].InitMatrix._21 = static_cast<float>(initMat.mData[1].mData[0]);
-	//		animationData.pSkinData[i].pCluster[j].InitMatrix._22 = static_cast<float>(initMat.mData[1].mData[1]);
-	//		animationData.pSkinData[i].pCluster[j].InitMatrix._23 = static_cast<float>(initMat.mData[1].mData[2]);
-	//		animationData.pSkinData[i].pCluster[j].InitMatrix._24 = static_cast<float>(initMat.mData[1].mData[3]);
+				animationData.pSkinData[i].pCluster[j].PointNum = cluster->GetControlPointIndicesCount();
+				animationData.pSkinData[i].pCluster[j].PointAry = cluster->GetControlPointIndices();
+				animationData.pSkinData[i].pCluster[j].WeightAry = cluster->GetControlPointWeights();
 
-	//		animationData.pSkinData[i].pCluster[j].InitMatrix._31 = static_cast<float>(initMat.mData[2].mData[0]);
-	//		animationData.pSkinData[i].pCluster[j].InitMatrix._32 = static_cast<float>(initMat.mData[2].mData[1]);
-	//		animationData.pSkinData[i].pCluster[j].InitMatrix._33 = static_cast<float>(initMat.mData[2].mData[2]);
-	//		animationData.pSkinData[i].pCluster[j].InitMatrix._34 = static_cast<float>(initMat.mData[2].mData[3]);
+				FbxAMatrix initMat;
+				cluster->GetTransformLinkMatrix(initMat);
 
-	//		animationData.pSkinData[i].pCluster[j].InitMatrix._41 = static_cast<float>(initMat.mData[3].mData[0]);
-	//		animationData.pSkinData[i].pCluster[j].InitMatrix._42 = static_cast<float>(initMat.mData[3].mData[1]);
-	//		animationData.pSkinData[i].pCluster[j].InitMatrix._43 = static_cast<float>(initMat.mData[3].mData[2]);
-	//		animationData.pSkinData[i].pCluster[j].InitMatrix._44 = static_cast<float>(initMat.mData[3].mData[3]);
+				animationData.pSkinData[i].pCluster[j].InitMatrix._11 = static_cast<float>(initMat.mData[0].mData[0]);
+				animationData.pSkinData[i].pCluster[j].InitMatrix._12 = static_cast<float>(initMat.mData[0].mData[1]);
+				animationData.pSkinData[i].pCluster[j].InitMatrix._13 = static_cast<float>(initMat.mData[0].mData[2]);
+				animationData.pSkinData[i].pCluster[j].InitMatrix._14 = static_cast<float>(initMat.mData[0].mData[3]);
 
-	//	}
-	//}
+				animationData.pSkinData[i].pCluster[j].InitMatrix._21 = static_cast<float>(initMat.mData[1].mData[0]);
+				animationData.pSkinData[i].pCluster[j].InitMatrix._22 = static_cast<float>(initMat.mData[1].mData[1]);
+				animationData.pSkinData[i].pCluster[j].InitMatrix._23 = static_cast<float>(initMat.mData[1].mData[2]);
+				animationData.pSkinData[i].pCluster[j].InitMatrix._24 = static_cast<float>(initMat.mData[1].mData[3]);
 
+				animationData.pSkinData[i].pCluster[j].InitMatrix._31 = static_cast<float>(initMat.mData[2].mData[0]);
+				animationData.pSkinData[i].pCluster[j].InitMatrix._32 = static_cast<float>(initMat.mData[2].mData[1]);
+				animationData.pSkinData[i].pCluster[j].InitMatrix._33 = static_cast<float>(initMat.mData[2].mData[2]);
+				animationData.pSkinData[i].pCluster[j].InitMatrix._34 = static_cast<float>(initMat.mData[2].mData[3]);
+
+				animationData.pSkinData[i].pCluster[j].InitMatrix._41 = static_cast<float>(initMat.mData[3].mData[0]);
+				animationData.pSkinData[i].pCluster[j].InitMatrix._42 = static_cast<float>(initMat.mData[3].mData[1]);
+				animationData.pSkinData[i].pCluster[j].InitMatrix._43 = static_cast<float>(initMat.mData[3].mData[2]);
+				animationData.pSkinData[i].pCluster[j].InitMatrix._44 = static_cast<float>(initMat.mData[3].mData[3]);
+
+				int* m4 = new int[6];
+
+				FbxArray<FbxString*> animation_names;
+				m_pFbxScene->FillAnimStackNameArray(animation_names);
+				FbxTakeInfo* take_info = m_pFbxScene->GetTakeInfo(animation_names[0]->Buffer());
+
+				FbxTime start_time = take_info->mLocalTimeSpan.GetStart();
+				FbxTime end_time = take_info->mLocalTimeSpan.GetStop();
+
+
+				animationData.pSkinData[i].FrameNum = 30;	// @todo いまのとこ適当にやってる
+				animationData.pSkinData[i].pCluster[j].pMat = new D3DXMATRIX[animationData.pSkinData[i].FrameNum];
+
+				int* m5 = new int[5];
+
+
+				for (int n = 0; n < animationData.pSkinData[i].FrameNum; n++)
+				{
+					FbxTime time = start_time + end_time * n;
+					FbxMatrix mat = cluster->GetLink()->EvaluateGlobalTransform(time);
+
+					animationData.pSkinData[i].pCluster[j].pMat[n]._11 = static_cast<float>(mat.mData[0].mData[0]);
+					animationData.pSkinData[i].pCluster[j].pMat[n]._12 = static_cast<float>(mat.mData[0].mData[1]);
+					animationData.pSkinData[i].pCluster[j].pMat[n]._13 = static_cast<float>(mat.mData[0].mData[2]);
+					animationData.pSkinData[i].pCluster[j].pMat[n]._14 = static_cast<float>(mat.mData[0].mData[3]);
+
+					animationData.pSkinData[i].pCluster[j].pMat[n]._21 = static_cast<float>(mat.mData[1].mData[0]);
+					animationData.pSkinData[i].pCluster[j].pMat[n]._22 = static_cast<float>(mat.mData[1].mData[1]);
+					animationData.pSkinData[i].pCluster[j].pMat[n]._23 = static_cast<float>(mat.mData[1].mData[2]);
+					animationData.pSkinData[i].pCluster[j].pMat[n]._24 = static_cast<float>(mat.mData[1].mData[3]);
+
+					animationData.pSkinData[i].pCluster[j].pMat[n]._31 = static_cast<float>(mat.mData[2].mData[0]);
+					animationData.pSkinData[i].pCluster[j].pMat[n]._32 = static_cast<float>(mat.mData[2].mData[1]);
+					animationData.pSkinData[i].pCluster[j].pMat[n]._33 = static_cast<float>(mat.mData[2].mData[2]);
+					animationData.pSkinData[i].pCluster[j].pMat[n]._34 = static_cast<float>(mat.mData[2].mData[3]);
+
+					animationData.pSkinData[i].pCluster[j].pMat[n]._41 = static_cast<float>(mat.mData[3].mData[0]);
+					animationData.pSkinData[i].pCluster[j].pMat[n]._42 = static_cast<float>(mat.mData[3].mData[1]);
+					animationData.pSkinData[i].pCluster[j].pMat[n]._43 = static_cast<float>(mat.mData[3].mData[2]);
+					animationData.pSkinData[i].pCluster[j].pMat[n]._44 = static_cast<float>(mat.mData[3].mData[3]);
+				}
+			}
+		}
+	}
 
 	//-------------------------------------------------------------------------
 	//							取得したデータを詰める
@@ -556,6 +601,7 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 	pModelData->pVertex = new UserVertex[VertexCount];		// 現在はすべての頂点ぶん確保
 	pModelData->pIndex.IndexAry = IndexAry;
 	pModelData->pIndex.IndexCount = VertexCount;
+
 
 
 	// 頂点情報をセット
@@ -632,21 +678,23 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 		}
 	}
 
+
+	pModelData->Animation.SkinNum = animationData.SkinNum;
+
+
+	if (skinCount != 0)
+	{
+		pModelData->Animation.pSkinData = animationData.pSkinData;
+	}
+
+
+
 	Model->m_pFbxModelData.push_back(pModelData);
 	m_pFbxModel->push_back(Model);
 
 	//-------------------------------------------------------------------------
 	//								解放処理
 	//-------------------------------------------------------------------------
-
-	//if (animationData.SkinNum != 0)
-	//{
-	//	for (int i = 0; i < animationData.SkinNum; i++)
-	//	{
-	//		delete[] animationData.pSkinData[i].pCluster;
-	//	}
-	//	delete[] animationData.pSkinData;
-	//}
 
 	delete[] pNormalVec;
 

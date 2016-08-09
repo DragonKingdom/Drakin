@@ -5,8 +5,8 @@
 #include <string>
 #include <vector>
 #include <fbxsdk.h>
+#include "FbxModel.h"
 
-class FbxModel;
 
 /**
  * Singletonクラス(アプリケーション内でたった一つしかできない)
@@ -61,25 +61,7 @@ public:
 
 
 private:
-	struct Cluster
-	{
-		int PointNum;			// 対応する頂点数
-		int* PointAry;			// 対応する頂点インデックス
-		double* WeightAry;		// 対応する頂点の重み
-		D3DXMATRIX InitMatrix;	// 初期姿勢
-	};
-
-	struct SkinData
-	{
-		Cluster* pCluster;
-		int ClusterNum;
-	};
-
-	struct AnimationData
-	{
-		SkinData* pSkinData;
-		int SkinNum;
-	};
+	
 
 	
 	

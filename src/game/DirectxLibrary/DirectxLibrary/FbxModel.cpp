@@ -12,11 +12,24 @@ FbxModel::~FbxModel()
 {
 	for (unsigned int i = 0; i < m_pFbxModelData.size(); i++)
 	{
+		if (m_pFbxModelData[i]->Animation.SkinNum != 0)
+		{
+			for (int n = 0; n < m_pFbxModelData[i]->Animation.SkinNum; n++)
+			{
+				for (int j = 0; j < m_pFbxModelData[i]->Animation.pSkinData[n].ClusterNum; j++)
+				{
+					delete[] m_pFbxModelData[i]->Animation.pSkinData[n].pCluster[j].pMat;
+				}
+				delete[] m_pFbxModelData[i]->Animation.pSkinData[n].pCluster;
+			}
+			delete[] m_pFbxModelData[i]->Animation.pSkinData;
+		}
+
 		for (unsigned int n = 0; n < m_pFbxModelData[i]->pTextureData.size(); n++)
 		{
 			if (m_pFbxModelData[i]->pTextureData[n]->pTexture == NULL)
 			{
-
+				delete m_pFbxModelData[i]->pTextureData[n];
 			}
 			else
 			{
