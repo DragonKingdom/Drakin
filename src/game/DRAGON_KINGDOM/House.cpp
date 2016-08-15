@@ -42,13 +42,12 @@ m_pShaderAssist(new ShaderAssist())
 	case NORMAL_HOUSE:
 		FbxFileManager::Get()->FileImport("fbx//murabito.fbx");
 		m_pShaderAssist->LoadTechnique("Effect\\HouseEffect.fx", "TShader", "WVPP");
-
 		break;
 	}
 
 
 	FbxFileManager::Get()->GetModelData(&m_Model);
-
+	m_Model[1]->InitAnimation();
 
 	m_Texture.Load("Resource\\image\\CLUTLight.jpg");
 	m_LightDir = m_pShaderAssist->GetParameterHandle("LightDir");
@@ -75,6 +74,8 @@ m_pShaderAssist(new ShaderAssist())
 
 House::~House()
 {
+	m_Model[1]->ReleaseAnimation();
+
 	m_Texture.Release();
 	delete m_pShaderAssist;
 
@@ -120,10 +121,9 @@ void House::Draw()
 	m_pShaderAssist->BeginPass(0);
 
 	// •`‰æ
-	for (unsigned int i = 0; i <m_Model.size(); i++)
-	{
-		m_Model[i]->Draw();
-	}
+	
+	m_Model[1]->AnimationDraw();
+
 
 	m_pShaderAssist->EndPass();
 	m_pShaderAssist->End();

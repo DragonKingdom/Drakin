@@ -502,7 +502,6 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 
 		for (int i = 0; i < skinCount; i++)
 		{
-
 			// i番目のスキンを取得
 			FbxSkin* skin = (FbxSkin*)pFbxMesh->GetDeformer(i, FbxDeformer::eSkin);
 
@@ -526,64 +525,41 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 				FbxAMatrix initMat;
 				cluster->GetTransformLinkMatrix(initMat);
 
-				animationData.pSkinData[i].pCluster[j].InitMatrix._11 = static_cast<float>(initMat.mData[0].mData[0]);
-				animationData.pSkinData[i].pCluster[j].InitMatrix._12 = static_cast<float>(initMat.mData[0].mData[1]);
-				animationData.pSkinData[i].pCluster[j].InitMatrix._13 = static_cast<float>(initMat.mData[0].mData[2]);
-				animationData.pSkinData[i].pCluster[j].InitMatrix._14 = static_cast<float>(initMat.mData[0].mData[3]);
 
-				animationData.pSkinData[i].pCluster[j].InitMatrix._21 = static_cast<float>(initMat.mData[1].mData[0]);
-				animationData.pSkinData[i].pCluster[j].InitMatrix._22 = static_cast<float>(initMat.mData[1].mData[1]);
-				animationData.pSkinData[i].pCluster[j].InitMatrix._23 = static_cast<float>(initMat.mData[1].mData[2]);
-				animationData.pSkinData[i].pCluster[j].InitMatrix._24 = static_cast<float>(initMat.mData[1].mData[3]);
+				for (int x = 0; x < 4; x++) 
+				{
+					for (int y = 0; y < 4; y++) 
+					{
+						animationData.pSkinData[i].pCluster[j].InitMatrix.m[x][y] = static_cast<float>(initMat.mData[x][y]);
+					}
+				}
 
-				animationData.pSkinData[i].pCluster[j].InitMatrix._31 = static_cast<float>(initMat.mData[2].mData[0]);
-				animationData.pSkinData[i].pCluster[j].InitMatrix._32 = static_cast<float>(initMat.mData[2].mData[1]);
-				animationData.pSkinData[i].pCluster[j].InitMatrix._33 = static_cast<float>(initMat.mData[2].mData[2]);
-				animationData.pSkinData[i].pCluster[j].InitMatrix._34 = static_cast<float>(initMat.mData[2].mData[3]);
-
-				animationData.pSkinData[i].pCluster[j].InitMatrix._41 = static_cast<float>(initMat.mData[3].mData[0]);
-				animationData.pSkinData[i].pCluster[j].InitMatrix._42 = static_cast<float>(initMat.mData[3].mData[1]);
-				animationData.pSkinData[i].pCluster[j].InitMatrix._43 = static_cast<float>(initMat.mData[3].mData[2]);
-				animationData.pSkinData[i].pCluster[j].InitMatrix._44 = static_cast<float>(initMat.mData[3].mData[3]);
-
-				FbxTakeInfo* take_info = m_pFbxScene->GetTakeInfo(animation_names[0]->Buffer());
-				FbxTime start_time = take_info->mLocalTimeSpan.GetStart();
-				FbxTime end_time = take_info->mLocalTimeSpan.GetStop();
 				
-				animationData.pSkinData[i].FrameNum = 30;	// @todo いまのとこ適当にやってる
+				animationData.pSkinData[i].FrameNum = 60;	// @todo いまのとこ適当にやってる
 				animationData.pSkinData[i].pCluster[j].pMat = new D3DXMATRIX[animationData.pSkinData[i].FrameNum];
 
 
 				for (int n = 0; n < animationData.pSkinData[i].FrameNum; n++)
 				{
-					FbxTime time = start_time + end_time * n;
-					FbxMatrix mat = cluster->GetLink()->EvaluateGlobalTransform(time);
+					FbxTime time;
+					time.Set(FbxTime::GetOneFrameValue(FbxTime::eFrames60) * n);
 
-					animationData.pSkinData[i].pCluster[j].pMat[n]._11 = static_cast<float>(mat.mData[0].mData[0]);
-					animationData.pSkinData[i].pCluster[j].pMat[n]._12 = static_cast<float>(mat.mData[0].mData[1]);
-					animationData.pSkinData[i].pCluster[j].pMat[n]._13 = static_cast<float>(mat.mData[0].mData[2]);
-					animationData.pSkinData[i].pCluster[j].pMat[n]._14 = static_cast<float>(mat.mData[0].mData[3]);
+					FbxAMatrix mat = cluster->GetLink()->EvaluateGlobalTransform(time);
 
-					animationData.pSkinData[i].pCluster[j].pMat[n]._21 = static_cast<float>(mat.mData[1].mData[0]);
-					animationData.pSkinData[i].pCluster[j].pMat[n]._22 = static_cast<float>(mat.mData[1].mData[1]);
-					animationData.pSkinData[i].pCluster[j].pMat[n]._23 = static_cast<float>(mat.mData[1].mData[2]);
-					animationData.pSkinData[i].pCluster[j].pMat[n]._24 = static_cast<float>(mat.mData[1].mData[3]);
-
-					animationData.pSkinData[i].pCluster[j].pMat[n]._31 = static_cast<float>(mat.mData[2].mData[0]);
-					animationData.pSkinData[i].pCluster[j].pMat[n]._32 = static_cast<float>(mat.mData[2].mData[1]);
-					animationData.pSkinData[i].pCluster[j].pMat[n]._33 = static_cast<float>(mat.mData[2].mData[2]);
-					animationData.pSkinData[i].pCluster[j].pMat[n]._34 = static_cast<float>(mat.mData[2].mData[3]);
-
-					animationData.pSkinData[i].pCluster[j].pMat[n]._41 = static_cast<float>(mat.mData[3].mData[0]);
-					animationData.pSkinData[i].pCluster[j].pMat[n]._42 = static_cast<float>(mat.mData[3].mData[1]);
-					animationData.pSkinData[i].pCluster[j].pMat[n]._43 = static_cast<float>(mat.mData[3].mData[2]);
-					animationData.pSkinData[i].pCluster[j].pMat[n]._44 = static_cast<float>(mat.mData[3].mData[3]);
+					for (int x = 0; x < 4; x++)
+					{
+						for (int y = 0; y < 4; y++)
+						{
+							animationData.pSkinData[i].pCluster[j].pMat[n].m[x][y] = static_cast<float>(mat.mData[x][y]);
+						}
+					}
 				}
 			}
 
+			// 取得したアニメーション名を解放
 			for (int i = 0; i < animation_names.Size(); i++)
 			{
-				FbxDelete(animation_names[i]);
+				fbxsdk::FbxDelete(animation_names[i]);
 			}
 			animation_names.Clear();
 		}
@@ -597,11 +573,20 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 	// インデックス描画と分けたい
 
 	// データセット
+	pModelData->ControlPointCount = ControlPointCount;
+	
 	pModelData->PolygonCount = PolygonCount;
 	pModelData->PrimitiveCount = PrimitiveCount;
 	pModelData->pVertex = new UserVertex[VertexCount];		// 現在はすべての頂点ぶん確保
+
 	pModelData->pIndex.IndexAry = IndexAry;
 	pModelData->pIndex.IndexCount = VertexCount;
+	pModelData->pIndex.pVertex = new D3DXVECTOR3[ControlPointCount];
+
+	for (int i = 0; i < ControlPointCount; i++)
+	{
+		pModelData->pIndex.pVertex[i] = pVertex[i];
+	}
 
 
 
@@ -649,7 +634,6 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 			pModelData->pVertex[i].tu = 0;	// テクスチャのx座標
 			pModelData->pVertex[i].tv = 0;	// テクスチャのy座標
 		}
-
 	}
 
 	// マテリアルのでーたがあるなら詰める
@@ -690,7 +674,7 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 
 
 
-	Model->m_pFbxModelData.push_back(pModelData);
+	Model->m_pFbxModelData = pModelData;
 	m_pFbxModel->push_back(Model);
 
 	//-------------------------------------------------------------------------

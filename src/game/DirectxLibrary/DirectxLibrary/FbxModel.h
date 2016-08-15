@@ -18,8 +18,9 @@ struct UserVertex
 // インデックスを格納する構造体
 struct UserIndex
 {
-	int	IndexCount;		// インデックス数
-	WORD* IndexAry;		// インデックスデータ
+	int			IndexCount;	// インデックス数
+	WORD*		IndexAry;	// インデックスデータ
+	D3DXVECTOR3*	pVertex;	// インデックス頂点データ
 };
 
 struct UserTexture
@@ -81,14 +82,19 @@ public:
 	MODELMODE GetMode(){ return m_Mode; };
 	void	Draw();
 	void	NonTextureDraw();
+	void	AnimationDraw();
+	void	InitAnimation();
+	void	ReleaseAnimation();
 
-
-	std::vector<FbxModelData*>	m_pFbxModelData;
+	FbxModelData*	m_pFbxModelData;
 
 private:
 	LPDIRECT3DDEVICE9	m_pDevice;
 	MODELMODE			m_Mode;
-
+	int					m_FrameCount;
+	UserVertex*			m_pVertex;
+	UserVertex*			m_pTmpVertex;
+	UserVertex*			m_pDrawVertex;
 
 };
 
