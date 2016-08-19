@@ -22,8 +22,8 @@ private:
 	Vertex* m_pVertex;
 	LPDIRECT3DDEVICE9 m_pDevice;
 	D3DXHANDLE m_LightDir, m_Ambient, m_CLUTTU, m_FogColor, m_Param1, m_Param2;
-	FbxModel* m_pGroundModel;
-	FbxModel* m_pMountainModel;
+	std::vector<FbxModel*> m_GroundModel;
+	std::vector<FbxModel*> m_MountainModel;
 	ShaderAssist*		m_pShaderAssist;
 	//フォグの色に使うテクスチャ
 	Texture m_Texture;

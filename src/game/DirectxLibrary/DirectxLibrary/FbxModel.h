@@ -18,14 +18,37 @@ struct UserVertex
 // インデックスを格納する構造体
 struct UserIndex
 {
-	int	IndexCount;		// インデックス数
-	WORD* IndexAry;		// インデックスデータ
+	int			IndexCount;	// インデックス数
+	WORD*		IndexAry;	// インデックスデータ
+	D3DXVECTOR3*	pVertex;	// インデックス頂点データ
 };
 
 struct UserTexture
 {
 	const char* TextureName;
 	LPDIRECT3DTEXTURE9 pTexture;
+};
+
+struct Cluster
+{
+	int PointNum;			// 対応する頂点数
+	int* PointAry;			// 対応する頂点インデックス
+	double* WeightAry;		// 対応する頂点の重み
+	D3DXMATRIX InitMatrix;	// 初期姿勢
+	D3DXMATRIX* pMat;
+};
+
+struct SkinData
+{
+	Cluster* pCluster;
+	int FrameNum;
+	int ClusterNum;
+};
+
+struct AnimationData
+{
+	SkinData* pSkinData;
+	int SkinNum;
 };
 
 // Mesh情報が格納される構造体
@@ -38,6 +61,7 @@ struct FbxModelData
 	UserIndex					pIndex;				// インデックス系データ
 	std::vector<UserTexture*>	pTextureData;		// テクスチャ情報
 	D3DMATERIAL9				Material;			// マテリアル情報
+	AnimationData				Animation;
 };
 
 /**
@@ -58,14 +82,19 @@ public:
 	MODELMODE GetMode(){ return m_Mode; };
 	void	Draw();
 	void	NonTextureDraw();
+	void	AnimationDraw();
+	void	InitAnimation();
+	void	ReleaseAnimation();
 
-
-	std::vector<FbxModelData*>	m_pFbxModelData;
+	FbxModelData*	m_pFbxModelData;
 
 private:
 	LPDIRECT3DDEVICE9	m_pDevice;
 	MODELMODE			m_Mode;
-
+	int					m_FrameCount;
+	UserVertex*			m_pVertex;
+	UserVertex*			m_pTmpVertex;
+	UserVertex*			m_pDrawVertex;
 
 };
 

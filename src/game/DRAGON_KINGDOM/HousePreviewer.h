@@ -21,7 +21,7 @@ private:
 	float		m_Angle;
 
 	/// ‰Æ‚Ìƒ‚ƒfƒ‹‚ðŠi”[‚µ‚Ä‚éƒNƒ‰ƒX
-	FbxModel*	m_pFbxModel;
+	std::vector<FbxModel*>   m_FbxModel;
 
 
 };
