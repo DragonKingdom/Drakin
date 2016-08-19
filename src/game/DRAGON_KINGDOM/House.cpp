@@ -40,17 +40,14 @@ m_pShaderAssist(new ShaderAssist())
 
 		break;
 	case NORMAL_HOUSE:
-		FbxFileManager::Get()->FileImport("fbx//unitychan_JUMP00.fbx");
+		FbxFileManager::Get()->FileImport("fbx//house_normal_red.fbx");
 		m_pShaderAssist->LoadTechnique("Effect\\HouseEffect.fx", "TShader", "WVPP");
 		break;
 	}
 
 
 	FbxFileManager::Get()->GetModelData(&m_Model);
-	for (unsigned int i = 0; i < m_Model.size(); i++)
-	{
-		m_Model[i]->InitAnimation();
-	}
+
 	m_Texture.Load("Resource\\image\\CLUTLight.jpg");
 	m_LightDir = m_pShaderAssist->GetParameterHandle("LightDir");
 	m_Ambient = m_pShaderAssist->GetParameterHandle("Ambient");
@@ -76,10 +73,6 @@ m_pShaderAssist(new ShaderAssist())
 
 House::~House()
 {
-	for (unsigned int i = 0; i < m_Model.size(); i++)
-	{
-		m_Model[i]->ReleaseAnimation();
-	}
 	m_Texture.Release();
 	delete m_pShaderAssist;
 
@@ -128,7 +121,7 @@ void House::Draw()
 	
 	for (unsigned int i = 0; i < m_Model.size(); i++)
 	{
-		m_Model[i]->AnimationDraw();
+		m_Model[i]->Draw();
 	}
 
 
