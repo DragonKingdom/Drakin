@@ -109,6 +109,10 @@ void FbxModel::Draw()
 			m_pFbxModelData->pVertex,
 			sizeof(UserVertex));
 	}
+	else if (m_Mode == FbxModel::INDEX_MODE)
+	{
+
+	}
 }
 
 
@@ -128,12 +132,17 @@ void FbxModel::NonTextureDraw()
 			m_pFbxModelData->pVertex,
 			sizeof(UserVertex));
 	}
+	else if (m_Mode == FbxModel::INDEX_MODE)
+	{
+
+	}
 }
 
 void FbxModel::InitAnimation()
 {
 	if (m_pFbxModelData->Animation.SkinNum != 0)
 	{
+		// アニメーションはインデックス描画じゃないとめんどくさすぎるので変更
 		m_Mode = FbxModel::INDEX_MODE;
 	
 		m_pVertex = new UserVertex[m_pFbxModelData->ControlPointCount];
@@ -165,21 +174,23 @@ void FbxModel::ReleaseAnimation()
 
 void FbxModel::AnimationDraw()
 {
-	///@todo fvfの設定は分けときたいかな
-	m_pDevice->SetFVF(USERVERTEX_FVF);
-
-	m_pDevice->SetMaterial(&m_pFbxModelData->Material);
-
-	for (unsigned int n = 0; n < m_pFbxModelData->pTextureData.size(); n++)
-	{
-		m_pDevice->SetTexture(n, m_pFbxModelData->pTextureData[n]->pTexture);
-	}
-
-
-	//-------- アニメーション処理 --------//
-
 	if (m_pFbxModelData->Animation.SkinNum != 0)
 	{
+
+		///@todo fvfの設定は分けときたいかな
+		m_pDevice->SetFVF(USERVERTEX_FVF);
+
+		m_pDevice->SetMaterial(&m_pFbxModelData->Material);
+
+		//for (unsigned int n = 0; n < m_pFbxModelData->pTextureData.size(); n++)
+		//{
+		//	m_pDevice->SetTexture(n, m_pFbxModelData->pTextureData[n]->pTexture);
+		//}
+		m_pDevice->SetTexture(0, NULL);
+		m_pDevice->SetTexture(1, NULL);
+
+
+		//-------- アニメーション処理 --------//
 
 		for (int i = 0; i < m_pFbxModelData->ControlPointCount; i++)
 		{
@@ -214,26 +225,26 @@ void FbxModel::AnimationDraw()
 				m_pDrawVertex[m_pFbxModelData->Animation.pSkinData[0].pCluster[i].PointAry[j]].Vec.z += m_pTmpVertex[m_pFbxModelData->Animation.pSkinData[0].pCluster[i].PointAry[j]].Vec.z;
 			}
 		}
-	}
 
 
-	if (m_FrameCount == 59)
-	{
-		m_FrameCount = 0;
-	}
-	else
-	{
-		m_FrameCount++;
-	}
+		if (m_FrameCount == 49)
+		{
+			m_FrameCount = 0;
+		}
+		else
+		{
+			m_FrameCount++;
+		}
 
-	m_pDevice->DrawIndexedPrimitiveUP(
-		D3DPT_TRIANGLELIST,
-		0,
-		m_pFbxModelData->pIndex.IndexCount,
-		m_pFbxModelData->pIndex.IndexCount / 3,
-		m_pFbxModelData->pIndex.IndexAry,
-		D3DFMT_INDEX16,
-		m_pDrawVertex,
-		sizeof(UserVertex));
+		m_pDevice->DrawIndexedPrimitiveUP(
+			D3DPT_TRIANGLELIST,
+			0,
+			m_pFbxModelData->pIndex.IndexCount,
+			m_pFbxModelData->pIndex.IndexCount / 3,
+			m_pFbxModelData->pIndex.IndexAry,
+			D3DFMT_INDEX16,
+			m_pDrawVertex,
+			sizeof(UserVertex));
+	}
 }
 

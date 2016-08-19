@@ -9,6 +9,9 @@
 // 謎のMaterialの対応
 // 
 
+FbxAMatrix GetGeometry(FbxNode* pNode);
+
+
 FbxFileManager* FbxFileManager::m_pFbxFileManager = NULL;
 
 FbxFileManager::FbxFileManager(LPDIRECT3DDEVICE9 _pDevice) :
@@ -479,11 +482,33 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 		else
 		{
 			/// @todo Unityちゃんなどのパターンは考慮しない
+			// Unityちゃんなどのモデルからはどうやってテクスチャをよみこめばいいのかがわからない…
 			
-			// 現状はほかのパターンはおいておく
-			MessageBox(NULL, TEXT("Materialが不明です"), TEXT("エラー"), MB_OK);
-		}
 
+			const FbxImplementation *pImplementation = GetImplementation(Material, FBXSDK_IMPLEMENTATION_CGFX);
+
+			const FbxBindingTable*  pRootTable = pImplementation->GetRootTable();
+			size_t entryCount = pRootTable->GetEntryCount();
+
+			const FbxBindingTableEntry& entry = pRootTable->GetEntry(i);
+
+			const char* entryName = entry.GetSource();
+
+			FbxProperty Property = Material->RootProperty.FindHierarchical(entryName);
+
+			int fileTextureCount = Property.GetSrcObjectCount<FbxFileTexture>();
+
+			for (int i = 0; i < fileTextureCount; i++)
+			{
+				FbxFileTexture* pFileTexture = FbxCast<fbxsdk::FbxFileTexture>(Property.GetSrcObject<FbxFileTexture>(i));
+				if (pFileTexture != NULL)
+				{
+					TextureFileCount++;
+					TextureFileName.push_back(pFileTexture->GetRelativeFileName());
+					TextureUvSetName.push_back(pFileTexture->UVSet.Get());
+				}
+			}
+		}
 	}
 
 
@@ -523,7 +548,11 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 				animationData.pSkinData[i].pCluster[j].WeightAry = cluster->GetControlPointWeights();
 
 				FbxAMatrix initMat;
-				cluster->GetTransformLinkMatrix(initMat);
+				//initMat = cluster->GetLink()->EvaluateGlobalTransform();
+				 initMat = cluster->GetTransformLinkMatrix(initMat);
+
+				FbxAMatrix GeometryMat = GetGeometry(cluster->GetLink());
+				initMat *= GeometryMat;
 
 
 				for (int x = 0; x < 4; x++) 
@@ -535,7 +564,7 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 				}
 
 				
-				animationData.pSkinData[i].FrameNum = 60;	// @todo いまのとこ適当にやってる
+				animationData.pSkinData[i].FrameNum = 50;	// @todo いまのとこ適当にやってる
 				animationData.pSkinData[i].pCluster[j].pMat = new D3DXMATRIX[animationData.pSkinData[i].FrameNum];
 
 
@@ -695,3 +724,13 @@ void FbxFileManager::GetCamera(fbxsdk::FbxNodeAttribute* _pAttribute)
 {
 
 }
+
+FbxAMatrix GetGeometry(FbxNode* pNode)
+{
+	FbxVector4 lT = pNode->GetGeometricTranslation(FbxNode::eSourcePivot);
+	FbxVector4 lR = pNode->GetGeometricRotation(FbxNode::eSourcePivot);
+	FbxVector4 lS = pNode->GetGeometricScaling(FbxNode::eSourcePivot);
+
+	return FbxAMatrix(lT, lR, lS);
+}
+
