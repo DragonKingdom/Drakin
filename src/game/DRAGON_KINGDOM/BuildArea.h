@@ -23,6 +23,14 @@ public:
 	 */
 	bool SetBuilding(D3DXVECTOR3* _setPos);
 
+	/**
+	 * Œš•¨‚ªŒš’z‚³‚ê‚½‚±‚Æ‚ğ“`‚¦‚éŠÖ”
+	 * @param[in] _setPos Œšİ‚³‚ê‚½êŠ‚Ì’†S
+	 * @param[in] _Range ”¼Œa
+	 * @return ¬Œ÷‚µ‚½‚çtrue
+	 */
+	bool SetBuilding(D3DXVECTOR3* _setPos, float _Range);
+
 	bool GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos, float* _outputAngleDegree, bool* _startPos);
 	float GetAngleDegree(){ return D3DXToDegree(m_angle); };
 	void GetBuildAreaData(std::vector<float>* _pBuildAreaVertexData, std::vector<float>* _pBuildAreaAngleData, std::vector<int>* _pBuildAreaFlag);

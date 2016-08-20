@@ -43,14 +43,14 @@ void ObjectManager::BuildControl()
 	switch (m_BuildState)
 	{
 	case BUILD_HOUSE:
-		m_pHouseManager->BuildControl(false);
+		m_pHouseManager->BuildControl(m_BuildState);
 		break;
 	case BUILD_ROAD:
 		m_pRoadManager->BuildControl();
 		m_pBuildAreaManager->AreaBuildControl();
 		break;
-	case BUILD_HOUSE_NORMAL:
-		m_pHouseManager->BuildControl(true);
+	case BUILD_BLACKSMITH:
+		m_pHouseManager->BuildControl(m_BuildState);
 		break;
 	default:
 		

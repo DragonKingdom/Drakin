@@ -14,6 +14,10 @@
 #include "InputDeviceFacade.h"
 #include "FileSaveLoad.h"
 #include "ClickPosConverter.h"
+#include "ShaderAssist.h"
+#include "FbxFileManager.h"
+#include "FbxModel.h"
+
 #include <time.h>
 
 
@@ -28,8 +32,12 @@ m_pClickPosConverter(_pClickPosConverter),
 m_pInputDevice(InputDeviceFacade::GetInstance()),
 m_state(STATE::CREATE_POS_SET),
 m_buildState(BUILD_NONE),
+m_CreatePos(D3DXVECTOR3(0,0,0)),
 m_HouseCost(0)
 {
+	m_pShaderAssist = new ShaderAssist();
+	FbxFileManager::Get()->FileImport("fbx//Plane.fbx");
+	FbxFileManager::Get()->GetModelData(&m_Plane);
 }
 
 HouseManager::~HouseManager()
@@ -38,10 +46,18 @@ HouseManager::~HouseManager()
 	{
 		delete m_pHouse[i];
 	}
+
+	for (unsigned int i = 0; i < m_Plane.size(); i++)
+	{
+		delete m_Plane[i];
+	}
+
+	delete m_pShaderAssist;
+
 	delete m_pHouseBuilder;
 }
 
-void HouseManager::BuildControl(bool _isNormal)
+void HouseManager::BuildControl(BUILD_STATE _buildState)
 {
 	switch (m_state)
 	{
@@ -69,16 +85,8 @@ void HouseManager::BuildControl(bool _isNormal)
 				// 空いていたらマウスチェック
 				if (m_pInputDevice->MouseLeftPush())
 				{
-					// コストが足りるかチェック
-					if (m_Money < HOUSE_COST)
-					{
-						// コストが足りないのでスルー
-					}
-					else
-					{
-						m_pBuildAreaChecker->SetBuilding(&CenterPosition);
-						m_state = STATE::CREATE;
-					}
+					m_CreatePos = CenterPosition;
+					m_state = STATE::CREATE;
 				}
 			}
 			else
@@ -94,51 +102,67 @@ void HouseManager::BuildControl(bool _isNormal)
 	break;
 	case STATE::CREATE:
 	{
-		// コスト計算
-		m_HouseCost = HOUSE_COST;
-		int houseType;
-
-		if (_isNormal)
+		switch (_buildState)
 		{
-			houseType = NORMAL_HOUSE;
+		case BUILD_HOUSE:
+			
+			m_state = STATE::CREATE_POS_SET;
+			break;
+		case BUILD_BLACKSMITH:
+
+
+			if (m_Money < BLACKSMITH_COST)
+			{
+				// コストが足りないのでスルー
+			}
+			else
+			{
+				m_HouseCost = BLACKSMITH_COST;
+
+				// 乱数もrandとtimeをそのまま利用してるだけなので、修正しておく必要がある
+				srand(unsigned int(time(NULL)));
+
+				int houseType = rand() % HOUSE_THRESHOLD_MAX;
+
+				if (houseType < REDHOUSE_THRESHOLD)
+				{
+					houseType = RED_HOUSE;
+				}
+				else if (houseType < BLUEHOUSE_THRESHOLD)
+				{
+					houseType = BLUE_HOUSE;
+				}
+				else if (houseType < YELLOWHOUSE_THRESHOLD)
+				{
+					houseType = YELLOW_HOUSE;
+				}
+				else if (houseType < POORHOUSE_THRESHOLD)
+				{
+					houseType = POOR_HOUSE;
+				}
+				else if (houseType < RICHHOUSE_THRESHOLD)
+				{
+					houseType = RICH_HOUSE;
+				}
+				else
+				{
+					houseType = NORMAL_HOUSE;
+				}
+
+				// 建設
+				House* pHouse = m_pHouseBuilder->HouseBuild(houseType);
+				m_pHouse.push_back(pHouse);
+
+				// 建設を通知
+				m_pBuildAreaChecker->SetBuilding(&m_CreatePos);
+			}
+
+			m_state = STATE::CREATE_POS_SET;
+
+			break;
 		}
-		else
-		{
-			// 乱数を利用して建設する家の種類を決めてる
-			// 乱数もrandとtimeをそのまま利用してるだけなので、修正しておく必要がある
-			srand(unsigned int(time(NULL)));
 
-			houseType = rand() % HOUSE_THRESHOLD_MAX;
 
-			if (houseType < REDHOUSE_THRESHOLD)
-			{
-				houseType = RED_HOUSE;
-			}
-			else if (houseType < BLUEHOUSE_THRESHOLD)
-			{
-				houseType = BLUE_HOUSE;
-			}
-			else if (houseType < YELLOWHOUSE_THRESHOLD)
-			{
-				houseType = YELLOW_HOUSE;
-			}
-			else if (houseType < POORHOUSE_THRESHOLD)
-			{
-				houseType = POOR_HOUSE;
-			}
-			else if (houseType < RICHHOUSE_THRESHOLD)
-			{
-				houseType = RICH_HOUSE;
-			}
-		}
-	
-
-		// おうちの建設
-		House* pHouse = m_pHouseBuilder->HouseBuild(houseType);
-		m_pHouse.push_back(pHouse);
-
-		// 状態をCreatePosSetに戻す
-		m_state = STATE::CREATE_POS_SET;
 	}
 	break;
 	default:
@@ -156,7 +180,7 @@ void HouseManager::Draw()
 		m_pHouse[i]->Draw();
 	}
 
-	if (m_buildState == BUILD_HOUSE || m_buildState == BUILD_HOUSE_NORMAL)
+	if (m_buildState == BUILD_HOUSE || m_buildState == BUILD_BLACKSMITH)
 	{
 		m_pHouseBuilder->PreviewerDraw();
 	}

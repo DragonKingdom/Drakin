@@ -1,7 +1,6 @@
 #include "HouseBuilder.h"
 #include "HousePreviewer.h"
-#include "House.h"
-
+#include "Blacksmith.h"
 
 HouseBuilder::HouseBuilder():
 m_pHousePreviewer(new HousePreviewer()),
@@ -48,27 +47,27 @@ House* HouseBuilder::HouseBuild(int _Type)
 	switch (_Type)
 	{
 	case RED_HOUSE:
-		pHouse = new House(m_BuildPos, m_Angle, RED_HOUSE);
+		pHouse = new Blacksmith(m_BuildPos, m_Angle, RED_HOUSE);
 
 		break;
 	case BLUE_HOUSE:
-		pHouse = new House(m_BuildPos, m_Angle, BLUE_HOUSE);
+		pHouse = new Blacksmith(m_BuildPos, m_Angle, BLUE_HOUSE);
 
 		break;
 	case YELLOW_HOUSE:
-		pHouse = new House(m_BuildPos, m_Angle, YELLOW_HOUSE);
+		pHouse = new Blacksmith(m_BuildPos, m_Angle, YELLOW_HOUSE);
 
 		break;
 	case POOR_HOUSE:
-		pHouse = new House(m_BuildPos, m_Angle, POOR_HOUSE);
+		pHouse = new Blacksmith(m_BuildPos, m_Angle, POOR_HOUSE);
 
 		break;
 	case RICH_HOUSE:
-		pHouse = new House(m_BuildPos, m_Angle, RICH_HOUSE);
+		pHouse = new Blacksmith(m_BuildPos, m_Angle, RICH_HOUSE);
 
 		break;
 	case NORMAL_HOUSE:
-		pHouse = new House(m_BuildPos, m_Angle, NORMAL_HOUSE);
+		pHouse = new Blacksmith(m_BuildPos, m_Angle, NORMAL_HOUSE);
 
 		break;
 	}

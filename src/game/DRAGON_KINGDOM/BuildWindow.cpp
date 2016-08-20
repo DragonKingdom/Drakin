@@ -104,7 +104,7 @@ void BuildWindow::OnClick()
 			m_buildState = BUILD_HOUSE;
 			break;
 		case HOUSE_NORMAL:
-			m_buildState = BUILD_HOUSE_NORMAL;
+			m_buildState = BUILD_BLACKSMITH;
 			break;
 		case ROAD:
 			m_buildState = BUILD_ROAD;
@@ -122,7 +122,7 @@ void BuildWindow::OnClick()
 		case BUILD_HOUSE:
 			m_buildState = BUILD_NONE;
 			break;
-		case BUILD_HOUSE_NORMAL:
+		case BUILD_BLACKSMITH:
 			m_buildState = BUILD_NONE;
 			break;
 		case BUILD_ROAD:

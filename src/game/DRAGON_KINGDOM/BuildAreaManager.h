@@ -39,11 +39,19 @@ public:
 	bool AreaCheck(D3DXVECTOR3* _checkPos);	
 
 	/**
-	* Œš•¨‚ªŒš’z‚³‚ê‚½‚±‚Æ‚ğ“`‚¦‚éŠÖ”
-	* @param[in] Œš’z‚³‚ê‚½êŠ
-	* @return ¬Œ÷‚µ‚½‚çtrue
-	*/
+	 * Œš•¨‚ªŒš’z‚³‚ê‚½‚±‚Æ‚ğ“`‚¦‚éŠÖ”
+	 * @param[in] _setPos Œš’z‚³‚ê‚½êŠ
+	 * @return ¬Œ÷‚µ‚½‚çtrue
+	 */
 	bool SetBuilding(D3DXVECTOR3* _setPos);
+
+	/**
+	 * Œš•¨‚ªŒš’z‚³‚ê‚½‚±‚Æ‚ğ“`‚¦‚éŠÖ”
+	 * @param[in] _setPos Œšİ‚³‚ê‚½êŠ‚Ì’†S
+	 * @param[in] _Range ”¼Œa
+	 * @return ¬Œ÷‚µ‚½‚çtrue
+	 */
+	bool SetBuilding(D3DXVECTOR3* _setPos, float _Range);
 
 	/**
 	* ƒrƒ‹ƒhƒGƒŠƒA‚Ì‘¶İ‚Æ’†SÀ•W‚ğæ“¾‚·‚éŠÖ”
