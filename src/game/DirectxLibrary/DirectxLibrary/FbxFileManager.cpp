@@ -9,6 +9,9 @@
 // 謎のMaterialの対応
 // 
 
+FbxAMatrix GetGeometry(FbxNode* pNode);
+
+
 FbxFileManager* FbxFileManager::m_pFbxFileManager = NULL;
 
 FbxFileManager::FbxFileManager(LPDIRECT3DDEVICE9 _pDevice) :
@@ -38,7 +41,7 @@ m_pFbxModel(NULL)
 	if (m_pFbxImporter == NULL){ MessageBox(NULL, TEXT("FbxImporterクラスの生成に失敗"), TEXT("エラー"), MB_OK); }
 
 	// FbxIOSettingsクラスの生成
-	// こいつは入出力のオプションを設定するためのクラスかな？(IOはInput Output なきがする)
+	// こいつは入出力のオプションを設定するためのクラスかな？
 	// 第一引数はFbxManagerのアドレス
 	// 第二引数は名前を付けれるらしい
 	m_pFbxIOSettings = fbxsdk::FbxIOSettings::Create(m_pFbxManager, IOSROOT);
@@ -87,7 +90,7 @@ bool FbxFileManager::FileImport(char* _FileName)
 }
 
 
-bool FbxFileManager::GetModelData(FbxModel* _pFbxModel)
+bool FbxFileManager::GetModelData(std::vector<FbxModel*>* _pFbxModel)
 {
 	m_pFbxModel = _pFbxModel;
 
@@ -166,10 +169,10 @@ void FbxFileManager::GetTextureName(
 // メッシュ内の情報取得
 void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 {
-
-	FbxModelData* ModelData = new FbxModelData;
-	ModelData->pVertex = NULL;
-	ModelData->pIndex.IndexAry = NULL;
+	FbxModel*		Model = new FbxModel(m_pDevice);
+	FbxModelData*	pModelData = new FbxModelData;
+	pModelData->pVertex = NULL;
+	pModelData->pIndex.IndexAry = NULL;
 
 	// ダウンキャスト
 	fbxsdk::FbxMesh* pFbxMesh = (fbxsdk::FbxMesh*)_pAttribute;
@@ -402,7 +405,6 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 	}
 
 
-
 	//-------------------------------------------------------------------------
 	//							マテリアルとテクスチャ
 	//-------------------------------------------------------------------------
@@ -425,8 +427,15 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 	{
 		if (MaterialCount > 1)
 		{
-			MessageBox(NULL, TEXT("複数のマテリアルはわりあてられません"), TEXT("エラー"), MB_OK);
-			break;
+			if (i > 0)
+			{
+				break;
+			}
+			else
+			{
+				MessageBox(NULL, TEXT("複数のマテリアルはわりあてられません\n最初のマテリアルだけ適応します"), TEXT("エラー"), MB_OK);
+			}
+			
 		}
 
 
@@ -480,14 +489,117 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 		else
 		{
 			/// @todo Unityちゃんなどのパターンは考慮しない
+			// Unityちゃんなどのモデルからはどうやってテクスチャをよみこめばいいのかがわからない…
 			
-			// 現状はほかのパターンはおいておく
-			MessageBox(NULL, TEXT("Materialが不明です"), TEXT("エラー"), MB_OK);
-		}
 
+			const FbxImplementation *pImplementation = GetImplementation(Material, FBXSDK_IMPLEMENTATION_CGFX);
+
+			const FbxBindingTable*  pRootTable = pImplementation->GetRootTable();
+			size_t entryCount = pRootTable->GetEntryCount();
+
+			const FbxBindingTableEntry& entry = pRootTable->GetEntry(i);
+
+			const char* entryName = entry.GetSource();
+
+			FbxProperty Property = Material->RootProperty.FindHierarchical(entryName);
+
+			int fileTextureCount = Property.GetSrcObjectCount<FbxFileTexture>();
+
+			for (int i = 0; i < fileTextureCount; i++)
+			{
+				FbxFileTexture* pFileTexture = FbxCast<fbxsdk::FbxFileTexture>(Property.GetSrcObject<FbxFileTexture>(i));
+				if (pFileTexture != NULL)
+				{
+					TextureFileCount++;
+					TextureFileName.push_back(pFileTexture->GetRelativeFileName());
+					TextureUvSetName.push_back(pFileTexture->UVSet.Get());
+				}
+			}
+		}
 	}
 
 
+	//-------------------------------------------------------------------------
+	//							アニメーションデータ関連
+	//-------------------------------------------------------------------------
+
+	// スキンの数を取得
+	int skinCount = pFbxMesh->GetDeformerCount(FbxDeformer::eSkin);
+	AnimationData animationData;
+	animationData.SkinNum = skinCount;
+
+	if (skinCount != 0)
+	{
+		animationData.pSkinData = new SkinData[skinCount];
+
+		for (int i = 0; i < skinCount; i++)
+		{
+			// i番目のスキンを取得
+			FbxSkin* skin = (FbxSkin*)pFbxMesh->GetDeformer(i, FbxDeformer::eSkin);
+
+			// クラスターの数を取得
+			animationData.pSkinData[i].ClusterNum = skin->GetClusterCount();
+
+			animationData.pSkinData[i].pCluster = new Cluster[animationData.pSkinData[i].ClusterNum];
+
+			fbxsdk::FbxArray<FbxString*> animation_names;
+			m_pFbxScene->FillAnimStackNameArray(animation_names);
+
+			for (int j = 0; j < animationData.pSkinData[i].ClusterNum; j++)
+			{
+				// j番目のクラスタを取得
+				FbxCluster* cluster = skin->GetCluster(j);
+
+				animationData.pSkinData[i].pCluster[j].PointNum = cluster->GetControlPointIndicesCount();
+				animationData.pSkinData[i].pCluster[j].PointAry = cluster->GetControlPointIndices();
+				animationData.pSkinData[i].pCluster[j].WeightAry = cluster->GetControlPointWeights();
+
+				FbxAMatrix initMat;
+				//initMat = cluster->GetLink()->EvaluateGlobalTransform();
+				 initMat = cluster->GetTransformLinkMatrix(initMat);
+
+				FbxAMatrix GeometryMat = GetGeometry(cluster->GetLink());
+				initMat *= GeometryMat;
+
+
+				for (int x = 0; x < 4; x++) 
+				{
+					for (int y = 0; y < 4; y++) 
+					{
+						animationData.pSkinData[i].pCluster[j].InitMatrix.m[x][y] = static_cast<float>(initMat.mData[x][y]);
+					}
+				}
+
+				
+				animationData.pSkinData[i].FrameNum = 80;	// @todo いまのとこ適当にやってる
+				animationData.pSkinData[i].pCluster[j].pMat = new D3DXMATRIX[animationData.pSkinData[i].FrameNum];
+
+
+				for (int n = 0; n < animationData.pSkinData[i].FrameNum; n++)
+				{
+					FbxTime time;
+					time.Set(FbxTime::GetOneFrameValue(FbxTime::eFrames60) * n);
+
+					FbxAMatrix mat = cluster->GetLink()->EvaluateGlobalTransform(time);
+
+					for (int x = 0; x < 4; x++)
+					{
+						for (int y = 0; y < 4; y++)
+						{
+							animationData.pSkinData[i].pCluster[j].pMat[n].m[x][y] = static_cast<float>(mat.mData[x][y]);
+						}
+					}
+				}
+			}
+
+			// 取得したアニメーション名を解放
+			for (int i = 0; i < animation_names.Size(); i++)
+			{
+				fbxsdk::FbxDelete(animation_names[i]);
+			}
+			animation_names.Clear();
+		}
+	}
 
 	//-------------------------------------------------------------------------
 	//							取得したデータを詰める
@@ -497,19 +609,29 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 	// インデックス描画と分けたい
 
 	// データセット
-	ModelData->PolygonCount = PolygonCount;
-	ModelData->PrimitiveCount = PrimitiveCount;
-	ModelData->pVertex = new UserVertex[VertexCount];		// 現在はすべての頂点ぶん確保
-	ModelData->pIndex.IndexAry = IndexAry;
-	ModelData->pIndex.IndexCount = VertexCount;
+	pModelData->ControlPointCount = ControlPointCount;
+	
+	pModelData->PolygonCount = PolygonCount;
+	pModelData->PrimitiveCount = PrimitiveCount;
+	pModelData->pVertex = new UserVertex[VertexCount];		// 現在はすべての頂点ぶん確保
+
+	pModelData->pIndex.IndexAry = IndexAry;
+	pModelData->pIndex.IndexCount = VertexCount;
+	pModelData->pIndex.pVertex = new D3DXVECTOR3[ControlPointCount];
+
+	for (int i = 0; i < ControlPointCount; i++)
+	{
+		pModelData->pIndex.pVertex[i] = pVertex[i];
+	}
+
 
 
 	// 頂点情報をセット
 	for (int i = 0; i < VertexCount; i++)
 	{
-		ModelData->pVertex[i].Vec.x = pVertex[IndexAry[i]].x;	// x座標
-		ModelData->pVertex[i].Vec.y = pVertex[IndexAry[i]].y;	// y座標
-		ModelData->pVertex[i].Vec.z = pVertex[IndexAry[i]].z;	// z座標
+		pModelData->pVertex[i].Vec.x = pVertex[IndexAry[i]].x;	// x座標
+		pModelData->pVertex[i].Vec.y = pVertex[IndexAry[i]].y;	// y座標
+		pModelData->pVertex[i].Vec.z = pVertex[IndexAry[i]].z;	// z座標
 	}
 
 	// 法線あるならつめる
@@ -517,44 +639,43 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 	{
 		for (int i = 0; i < VertexCount; i++)
 		{
-			ModelData->pVertex[i].Normal.x = pNormalVec[i].x;	// 法線のxベクトル
-			ModelData->pVertex[i].Normal.y = pNormalVec[i].y;	// 法線のyベクトル
-			ModelData->pVertex[i].Normal.z = pNormalVec[i].z;	// 法線のzベクトル
+			pModelData->pVertex[i].Normal.x = pNormalVec[i].x;	// 法線のxベクトル
+			pModelData->pVertex[i].Normal.y = pNormalVec[i].y;	// 法線のyベクトル
+			pModelData->pVertex[i].Normal.z = pNormalVec[i].z;	// 法線のzベクトル
 		}
 	}
 	else
 	{
 		for (int i = 0; i < VertexCount; i++)
 		{
-			ModelData->pVertex[i].Normal.x = 0;		// 法線のxベクトル
-			ModelData->pVertex[i].Normal.y = 0;		// 法線のyベクトル
-			ModelData->pVertex[i].Normal.z = 0;		// 法線のzベクトル
+			pModelData->pVertex[i].Normal.x = 0;		// 法線のxベクトル
+			pModelData->pVertex[i].Normal.y = 0;		// 法線のyベクトル
+			pModelData->pVertex[i].Normal.z = 0;		// 法線のzベクトル
 		}
 	}
 
 	// Uvあるなら詰める
-	if (TextureUv[0] != NULL)
+	if (TextureUv.size() != 0)
 	{
 		for (int i = 0; i < VertexCount; i++)
 		{
-			ModelData->pVertex[i].tu = TextureUv[0][i].x;	// テクスチャのx座標
-			ModelData->pVertex[i].tv = TextureUv[0][i].y;	// テクスチャのy座標
+			pModelData->pVertex[i].tu = TextureUv[0][i].x;	// テクスチャのx座標
+			pModelData->pVertex[i].tv = TextureUv[0][i].y;	// テクスチャのy座標
 		}
 	}
 	else
 	{
 		for (int i = 0; i < VertexCount; i++)
 		{
-			ModelData->pVertex[i].tu = 0;	// テクスチャのx座標
-			ModelData->pVertex[i].tv = 0;	// テクスチャのy座標
+			pModelData->pVertex[i].tu = 0;	// テクスチャのx座標
+			pModelData->pVertex[i].tv = 0;	// テクスチャのy座標
 		}
-
 	}
 
 	// マテリアルのでーたがあるなら詰める
 	if (MaterialCount != 0)
 	{
-		ModelData->Material = MaterialData;
+		pModelData->Material = MaterialData;
 	}
 
 	for (int i = 0; i < TextureFileCount; i++)
@@ -565,26 +686,36 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 			if (TextureUvSetName[i] == UvSetName[n])
 			{
 				// 名前があってたら追加
-				ModelData->pTextureData.push_back(new UserTexture);
-				ModelData->pTextureData[i]->TextureName = TextureFileName[i];
+				pModelData->pTextureData.push_back(new UserTexture);
+				pModelData->pTextureData[i]->TextureName = TextureFileName[i];
 				if (FAILED(D3DXCreateTextureFromFile(
 					m_pDevice,
-					ModelData->pTextureData[i]->TextureName,
-					&ModelData->pTextureData[i]->pTexture)))
+					pModelData->pTextureData[i]->TextureName,
+					&pModelData->pTextureData[i]->pTexture)))
 				{
-					ModelData->pTextureData[i]->pTexture = NULL;
+					pModelData->pTextureData[i]->pTexture = NULL;
 				}
 			}
 		}
 	}
 
-	m_pFbxModel->m_pFbxModelData.push_back(ModelData);
+
+	pModelData->Animation.SkinNum = animationData.SkinNum;
+
+
+	if (skinCount != 0)
+	{
+		pModelData->Animation.pSkinData = animationData.pSkinData;
+	}
+
+
+
+	Model->m_pFbxModelData = pModelData;
+	m_pFbxModel->push_back(Model);
 
 	//-------------------------------------------------------------------------
 	//								解放処理
 	//-------------------------------------------------------------------------
-
-
 
 	delete[] pNormalVec;
 
@@ -600,3 +731,13 @@ void FbxFileManager::GetCamera(fbxsdk::FbxNodeAttribute* _pAttribute)
 {
 
 }
+
+FbxAMatrix GetGeometry(FbxNode* pNode)
+{
+	FbxVector4 lT = pNode->GetGeometricTranslation(FbxNode::eSourcePivot);
+	FbxVector4 lR = pNode->GetGeometricRotation(FbxNode::eSourcePivot);
+	FbxVector4 lS = pNode->GetGeometricScaling(FbxNode::eSourcePivot);
+
+	return FbxAMatrix(lT, lR, lS);
+}
+
