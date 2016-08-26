@@ -24,6 +24,13 @@ public:
 	bool AreaCheck(D3DXVECTOR3* _checkPos);
 
 	/**
+	 * 建物が建築されたことを伝える関数
+	 * @param[in] 建築された場所
+	 * @return 成功したらtrue
+	 */
+	bool SetBuilding(D3DXVECTOR3* _setPos);
+
+	/**
 	 * ビルドエリアの中心座標を取得する関数
 	 * @param[in] _checkPos チェックしたいエリアの座標
 	 * @param[out] _centerPos エリアの中心位置が入るポインタ 

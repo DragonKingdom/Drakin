@@ -6,6 +6,9 @@
 #include <d3dx9.h>
 #include <tchar.h>
 
+#include "FbxFileManager.h"
+#include "FbxModel.h"
+
 GameScene::GameScene(FileSaveLoad* _pFileSaveLoad, bool _isContinue) :
 	Scene(SceneID::SCENE_GAME),
 	m_pFileSaveLoad(_pFileSaveLoad)

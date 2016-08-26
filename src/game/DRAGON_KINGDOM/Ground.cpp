@@ -8,14 +8,12 @@ m_pShaderAssist(new ShaderAssist())
 {
 	m_pVertex = new Vertex();
 	// グラウンドのモデル情報を読み込む
-	m_pGroundModel = new FbxModel(m_pDevice);
 	FbxFileManager::Get()->FileImport("fbx//map.fbx");
-	FbxFileManager::Get()->GetModelData(m_pGroundModel);
+	FbxFileManager::Get()->GetModelData(&m_GroundModel);
 
 	// マウンテンのモデル情報を読み込む
-	m_pMountainModel = new FbxModel(m_pDevice);
 	FbxFileManager::Get()->FileImport("fbx//mountain.fbx");
-	FbxFileManager::Get()->GetModelData(m_pMountainModel);
+	FbxFileManager::Get()->GetModelData(&m_MountainModel);
 	m_pShaderAssist->LoadTechnique("Effect\\GroundEffect.fx", "TShader", "WVPP");
 	
 	m_LightDir = m_pShaderAssist->GetParameterHandle("LightDir");
@@ -30,10 +28,19 @@ m_pShaderAssist(new ShaderAssist())
 Ground::~Ground()
 {
 	m_Texture.Release();
-	delete m_pMountainModel;
-	delete m_pGroundModel;
+
 	delete m_pVertex;
 	delete m_pShaderAssist;
+
+	for (unsigned int i = 0; i < m_MountainModel.size(); i++)
+	{
+		delete m_MountainModel[i];
+	}
+
+	for (unsigned int i = 0; i < m_GroundModel.size(); i++)
+	{
+		delete m_GroundModel[i];
+	}
 }
 
 void Ground::Control()
@@ -77,9 +84,17 @@ void Ground::Draw()
 	m_pShaderAssist->SetParameter(m_FogColor, ambient);
 	m_pShaderAssist->BeginPass(0);
 	GraphicsDevice::getInstance().GetDevice()->SetTexture(1,m_Texture.Get());
+
 	// 描画
-	m_pGroundModel->Draw();
-	m_pMountainModel->Draw();
+	for (unsigned int i = 0; i < m_GroundModel.size(); i++)
+	{
+		m_GroundModel[i]->Draw();
+	}
+	for (unsigned int i = 0; i < m_MountainModel.size(); i++)
+	{
+		m_MountainModel[i]->Draw();
+	}
+
 	m_pShaderAssist->EndPass();
 	m_pShaderAssist->End();
 }

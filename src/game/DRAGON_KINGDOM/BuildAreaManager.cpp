@@ -49,19 +49,16 @@ void BuildAreaManager::AreaBuildControl()
 	case STATE::START_POS_SET:
 		if (m_pInputDevice->MouseLeftPush())
 		{
-			if (AreaCheck(NULL/*‚¢‚Ü‚Ì‚Æ‚±‚ë‚ÍNULL*/))
-			{
-				m_roadLinkStart_StartPos = false;
-				m_roadLinkEnd_StartPos = false;
-				MousePos = m_pInputDevice->GetMousePos();
-				m_pClickPosConverter->ConvertForLoad(&StartPos, int(MousePos.x), int(MousePos.y));
-				//StartPos‚ªŒq‚ª‚Á‚Ä‚¢‚é‚©‚ğ”»’f‚µ‚ÄAŒq‚°‚ç‚ê‚é“¹‚ª‚ ‚Á‚½‚ç‚»‚ÌŒq‚°‚é“¹‚ÌŠp“x‚ÆÀ•W‚ğæ‚Á‚Ä‚«‚ÄA‚»‚Ì“¹‚Ìn“_‚©‚Ìƒtƒ‰ƒO‚ğæ‚Á‚Ä‚«‚Ä‚¢‚é
-				m_pBuildAreaBuilder->StartPosLinkSet(BuildAreaCheck(&StartPos, &StartPos, &roadStartAngle, &m_roadLinkStart_StartPos));
-				//“¹‚ğŒq‚°‚ç‚ê‚é‚©‚Ì”»’f‚ğ‚·‚éŒq‚°‚é“¹‚ÌŠp“x‚ğƒZƒbƒg‚·‚é
-				m_pBuildAreaBuilder->SetRoadStartAngle(roadStartAngle);
-				m_pBuildAreaBuilder->StartPosSet(StartPos);
-				m_state = STATE::END_POS_SET;
-			}
+			m_roadLinkStart_StartPos = false;
+			m_roadLinkEnd_StartPos = false;
+			MousePos = m_pInputDevice->GetMousePos();
+			m_pClickPosConverter->ConvertForLoad(&StartPos, int(MousePos.x), int(MousePos.y));
+			//StartPos‚ªŒq‚ª‚Á‚Ä‚¢‚é‚©‚ğ”»’f‚µ‚ÄAŒq‚°‚ç‚ê‚é“¹‚ª‚ ‚Á‚½‚ç‚»‚ÌŒq‚°‚é“¹‚ÌŠp“x‚ÆÀ•W‚ğæ‚Á‚Ä‚«‚ÄA‚»‚Ì“¹‚Ìn“_‚©‚Ìƒtƒ‰ƒO‚ğæ‚Á‚Ä‚«‚Ä‚¢‚é
+			m_pBuildAreaBuilder->StartPosLinkSet(BuildAreaCheck(&StartPos, &StartPos, &roadStartAngle, &m_roadLinkStart_StartPos));
+			//“¹‚ğŒq‚°‚ç‚ê‚é‚©‚Ì”»’f‚ğ‚·‚éŒq‚°‚é“¹‚ÌŠp“x‚ğƒZƒbƒg‚·‚é
+			m_pBuildAreaBuilder->SetRoadStartAngle(roadStartAngle);
+			m_pBuildAreaBuilder->StartPosSet(StartPos);
+			m_state = STATE::END_POS_SET;
 		}
 
 		break;
@@ -76,10 +73,8 @@ void BuildAreaManager::AreaBuildControl()
 
 		if (m_pInputDevice->MouseLeftPush())
 		{
-			if (AreaCheck(NULL/*‚¢‚Ü‚Ì‚Æ‚±‚ë‚ÍNULL*/))
-			{
-				m_state = STATE::CREATE;
-			}
+			m_state = STATE::CREATE;
+
 		}
 
 		if (m_pInputDevice->MouseRightPush())
@@ -135,10 +130,38 @@ bool BuildAreaManager::AreaCheck(D3DXVECTOR3* _checkPos)
 	}
 	else
 	{
-		
+		///@todo ”ÍˆÍw’è‚È‚Ç‚ğ‚·‚é
+		for (unsigned int i = 0; i < m_pBuildArea.size(); i++)
+		{
+			if (m_pBuildArea[i]->AreaCheck(_checkPos) == false)
+			{
+				return true;
+			}
+		}
 	}
 
-	return true;	
+	return false;	
+}
+
+bool BuildAreaManager::SetBuilding(D3DXVECTOR3* _setPos)
+{
+	if (_setPos == NULL)
+	{
+		//	NULL‚ª“ü‚Á‚Ä‚½ê‡‚Ìˆ—
+	}
+	else
+	{
+		///@todo ”ÍˆÍw’è‚È‚Ç‚ğ‚·‚é
+		for (unsigned int i = 0; i < m_pBuildArea.size(); i++)
+		{
+			if (m_pBuildArea[i]->SetBuilding(_setPos))
+			{
+				return true;
+			}
+		}
+	}
+
+	return false;
 }
 
 bool BuildAreaManager::GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle)

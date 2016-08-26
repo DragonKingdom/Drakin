@@ -427,15 +427,8 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 	{
 		if (MaterialCount > 1)
 		{
-			if (i > 0)
-			{
-				break;
-			}
-			else
-			{
-				MessageBox(NULL, TEXT("複数のマテリアルはわりあてられません\n最初のマテリアルだけ適応します"), TEXT("エラー"), MB_OK);
-			}
-			
+			MessageBox(NULL, TEXT("複数のマテリアルはわりあてられません"), TEXT("エラー"), MB_OK);
+			break;
 		}
 
 
@@ -571,7 +564,7 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 				}
 
 				
-				animationData.pSkinData[i].FrameNum = 80;	// @todo いまのとこ適当にやってる
+				animationData.pSkinData[i].FrameNum = 50;	// @todo いまのとこ適当にやってる
 				animationData.pSkinData[i].pCluster[j].pMat = new D3DXMATRIX[animationData.pSkinData[i].FrameNum];
 
 
@@ -655,7 +648,7 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 	}
 
 	// Uvあるなら詰める
-	if (TextureUv.size() != 0)
+	if (TextureUv[0] != NULL)
 	{
 		for (int i = 0; i < VertexCount; i++)
 		{

@@ -3,6 +3,7 @@
 
 class FbxModel;
 class ShaderAssist;
+
 class Sky
 {
 public:
@@ -13,12 +14,11 @@ public:
 
 
 private:
-	Model*				m_pSkyModel;
-	ShaderAssist*		m_pShaderAssist;
-	float				m_skyAngle;
-	/// @todo シェーダー使いたいから置く(シェーダーもLibraryにしたい)
-	LPDIRECT3DDEVICE9	m_pDevice;
-	FbxModel*   m_pModel;
+	Model*					m_pSkyModel;
+	ShaderAssist*			m_pShaderAssist;
+	float					m_skyAngle;
+	LPDIRECT3DDEVICE9		m_pDevice;
+	std::vector<FbxModel*>	m_Model;
 	D3DXHANDLE m_CLUTTU;
 	Texture m_Texture;
 };
