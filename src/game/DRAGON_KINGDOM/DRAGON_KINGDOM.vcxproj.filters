@@ -179,6 +179,12 @@
     <Filter Include="main\SceneManager\Scene\TitleScene\TitleMenu\SelectMenu\SelectMenuButton">
       <UniqueIdentifier>{6890121a-0f66-4603-8045-45d7493551d1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\HouseManager\House\Blacksmith">
+      <UniqueIdentifier>{5dbb5e72-daa9-4d52-ad07-9783673c6482}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\HouseManager\House\PrivateHouse">
+      <UniqueIdentifier>{5e2a0a4c-871f-4290-8207-d2b54483a5bd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scene.cpp">
@@ -349,6 +355,12 @@
     <ClCompile Include="SelectMenuButton.cpp">
       <Filter>main\SceneManager\Scene\TitleScene\TitleMenu\SelectMenu\SelectMenuButton</Filter>
     </ClCompile>
+    <ClCompile Include="Blacksmith.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\HouseManager\House\Blacksmith</Filter>
+    </ClCompile>
+    <ClCompile Include="PrivateHouse.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\HouseManager\House\PrivateHouse</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -518,6 +530,12 @@
     </ClInclude>
     <ClInclude Include="SelectMenuButton.h">
       <Filter>main\SceneManager\Scene\TitleScene\TitleMenu\SelectMenu\SelectMenuButton</Filter>
+    </ClInclude>
+    <ClInclude Include="Blacksmith.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\HouseManager\House\Blacksmith</Filter>
+    </ClInclude>
+    <ClInclude Include="PrivateHouse.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\HouseManager\House\PrivateHouse</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,9 +1,18 @@
 #include "HouseBuilder.h"
 #include "HousePreviewer.h"
-#include "House.h"
+#include "Blacksmith.h"
+#include "PrivateHouse.h"
+#include <time.h>
+
+#define REDHOUSE_THRESHOLD 4		// 赤い家のしきい値
+#define BLUEHOUSE_THRESHOLD 8		// 青い家のしきい値
+#define YELLOWHOUSE_THRESHOLD 12	// 黄色い家のしきい値
+#define POORHOUSE_THRESHOLD 17		// 貧相な家のしきい値
+#define RICHHOUSE_THRESHOLD 20		// 高級な家のしきい値
+#define HOUSE_THRESHOLD_MAX 20		// しきい値の最大値
 
 
-HouseBuilder::HouseBuilder():
+HouseBuilder::HouseBuilder() :
 m_pHousePreviewer(new HousePreviewer()),
 m_isDraw(false)
 {
@@ -41,39 +50,111 @@ void HouseBuilder::SetDrawState(bool _isDraw)
 
 House* HouseBuilder::HouseBuild(int _Type)
 {
-	// 生成する家へのポインタ
-	House* pHouse;
+	House* pHouse = NULL;
 
-	// 数値に応じて家を生成する
 	switch (_Type)
 	{
-	case RED_HOUSE:
-		pHouse = new House(m_BuildPos, m_Angle, RED_HOUSE);
+	case BUILD_PRIVATEHOUSE_RANDOM:
+	{
+		srand(unsigned int(time(NULL)));
 
-		break;
-	case BLUE_HOUSE:
-		pHouse = new House(m_BuildPos, m_Angle, BLUE_HOUSE);
+		int Type = rand() % HOUSE_THRESHOLD_MAX;
 
-		break;
-	case YELLOW_HOUSE:
-		pHouse = new House(m_BuildPos, m_Angle, YELLOW_HOUSE);
 
-		break;
-	case POOR_HOUSE:
-		pHouse = new House(m_BuildPos, m_Angle, POOR_HOUSE);
+		if (Type < REDHOUSE_THRESHOLD)
+		{
+			Type = BUILD_PRIVATEHOUSE_RED;
+		}
+		else if (Type < BLUEHOUSE_THRESHOLD)
+		{
+			Type = BUILD_PRIVATEHOUSE_BLUE;
+		}
+		else if (Type < YELLOWHOUSE_THRESHOLD)
+		{
+			Type = BUILD_PRIVATEHOUSE_YELLOW;
+		}
+		else if (Type < POORHOUSE_THRESHOLD)
+		{
+			Type = BUILD_PRIVATEHOUSE_POOR;
+		}
+		else if (Type < RICHHOUSE_THRESHOLD)
+		{
+			Type = BUILD_PRIVATEHOUSE_RICH;
+		}
 
-		break;
-	case RICH_HOUSE:
-		pHouse = new House(m_BuildPos, m_Angle, RICH_HOUSE);
-
-		break;
-	case NORMAL_HOUSE:
-		pHouse = new House(m_BuildPos, m_Angle, NORMAL_HOUSE);
-
-		break;
+		pHouse = new PrivateHouse(m_BuildPos, m_Angle, Type);
 	}
-
+	break;
+	case BUILD_PRIVATEHOUSE_RED:
+	{
+		pHouse = new PrivateHouse(m_BuildPos, m_Angle, BUILD_PRIVATEHOUSE_RED);
+	}
+	break;
+	case BUILD_PRIVATEHOUSE_BLUE:
+	{
+		pHouse = new PrivateHouse(m_BuildPos, m_Angle, BUILD_PRIVATEHOUSE_BLUE);
+	}
+	break;
+	case BUILD_PRIVATEHOUSE_YELLOW:
+	{	
+		pHouse = new PrivateHouse(m_BuildPos, m_Angle, BUILD_PRIVATEHOUSE_YELLOW);
+	}
+	break;
+	case BUILD_PRIVATEHOUSE_POOR:
+	{	
+		pHouse = new PrivateHouse(m_BuildPos, m_Angle, BUILD_PRIVATEHOUSE_POOR);
+	}
+	break;
+	case BUILD_PRIVATEHOUSE_RICH:
+	{	
+		pHouse = new PrivateHouse(m_BuildPos, m_Angle, BUILD_PRIVATEHOUSE_RICH);
+	}
+	break;
+	case BUILD_BLACKSMITH:
+	{	
+		pHouse = new Blacksmith(m_BuildPos, m_Angle, BUILD_BLACKSMITH);
+	}
+	break;
+	}
 
 	return pHouse;
 }
 
+int HouseBuilder:: GetHouseCost(int _Type)
+{
+	int BuildingCost = 0;
+
+	switch (_Type)
+	{
+	case BUILD_PRIVATEHOUSE_RANDOM:
+		BuildingCost = PRIVATEHOUSE_COST;
+
+		break;
+	case BUILD_PRIVATEHOUSE_RED:
+		BuildingCost = PRIVATEHOUSE_COST;
+
+		break;
+	case BUILD_PRIVATEHOUSE_BLUE:
+		BuildingCost = PRIVATEHOUSE_COST;
+
+		break;
+	case BUILD_PRIVATEHOUSE_YELLOW:
+		BuildingCost = PRIVATEHOUSE_COST;
+
+		break;
+	case BUILD_PRIVATEHOUSE_POOR:
+		BuildingCost = PRIVATEHOUSE_COST;
+
+		break;
+	case BUILD_PRIVATEHOUSE_RICH:
+		BuildingCost = PRIVATEHOUSE_COST;
+
+		break;
+	case BUILD_BLACKSMITH:
+		BuildingCost = BLACKSMITH_COST;
+
+		break;
+	}
+
+	return BuildingCost;
+}

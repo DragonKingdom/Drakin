@@ -101,6 +101,7 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Blacksmith.cpp" />
     <ClCompile Include="BuildArea.cpp" />
     <ClCompile Include="BuildAreaBuilder.cpp" />
     <ClCompile Include="BuildAreaChecker.cpp" />
@@ -132,6 +133,7 @@
     <ClCompile Include="NowLoading.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="OptionWindow.cpp" />
+    <ClCompile Include="PrivateHouse.cpp" />
     <ClCompile Include="Road.cpp" />
     <ClCompile Include="RoadBuilder.cpp" />
     <ClCompile Include="RoadManager.cpp" />
@@ -162,6 +164,7 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Blacksmith.h" />
     <ClInclude Include="BuildArea.h" />
     <ClInclude Include="BuildAreaBuilder.h" />
     <ClInclude Include="BuildAreaChecker.h" />
@@ -193,6 +196,7 @@
     <ClInclude Include="NowLoading.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="OptionWindow.h" />
+    <ClInclude Include="PrivateHouse.h" />
     <ClInclude Include="Road.h" />
     <ClInclude Include="RoadBuilder.h" />
     <ClInclude Include="RoadManager.h" />

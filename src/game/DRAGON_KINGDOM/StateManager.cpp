@@ -4,8 +4,7 @@ StateManager::StateManager():
 m_gameSceneState(GAMESCENE_NORMAL),
 m_buildState(BUILD_NONE),
 m_roadManagerState(ROADMANAGER_ENUM::START_POS_SET),
-m_buildAreaManagerState(BUILDAREAMANAGER_ENUM::START_POS_SET),
-m_houseManagerState(HOUSEMANAGER_ENUM::CREATE_POS_SET)
+m_buildAreaManagerState(BUILDAREAMANAGER_ENUM::START_POS_SET)
 {
 }
 
@@ -33,11 +32,6 @@ BUILDAREAMANAGER_ENUM::STATE StateManager::GetBuildAreaManagerState()
 	return m_buildAreaManagerState;
 }
 
-HOUSEMANAGER_ENUM::STATE StateManager::GetHouseManagerState()
-{
-	return m_houseManagerState;
-}
-
 void StateManager::SetGameSceneState(GAMESCENE_STATE _gameSceneState)
 {
 	m_gameSceneState = _gameSceneState;
@@ -58,7 +52,3 @@ void StateManager::SetBuildAreaManagerState(BUILDAREAMANAGER_ENUM::STATE _buildA
 	m_buildAreaManagerState = _buildAreaManager;
 }
 
-void StateManager::SetHouseManagerState(HOUSEMANAGER_ENUM::STATE _houseManagerState)
-{
-	m_houseManagerState = _houseManagerState;
-}

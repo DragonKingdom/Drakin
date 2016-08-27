@@ -29,11 +29,6 @@ public:
 	BUILDAREAMANAGER_ENUM::STATE GetBuildAreaManagerState();
 
 	/**
-	* HouseManagerの状態を取得する
-	*/
-	HOUSEMANAGER_ENUM::STATE GetHouseManagerState();
-
-	/**
 	 * ゲームシーンの状態をセットする
 	 */
 	void SetGameSceneState(GAMESCENE_STATE _gameSceneState);
@@ -53,11 +48,6 @@ public:
 	 */
 	void SetBuildAreaManagerState(BUILDAREAMANAGER_ENUM::STATE _buildAreaManager);
 
-	/**
-	 * HouseManagerの状態をセットする
-	 */
-	void SetHouseManagerState(HOUSEMANAGER_ENUM::STATE _houseManagerState);
-
 private:
 	StateManager(const StateManager &other){}
 	StateManager &operator = (const StateManager &other){}
@@ -66,7 +56,6 @@ private:
 	BUILD_STATE						m_buildState; 
 	ROADMANAGER_ENUM::STATE			m_roadManagerState;
 	BUILDAREAMANAGER_ENUM::STATE	m_buildAreaManagerState;
-	HOUSEMANAGER_ENUM::STATE		m_houseManagerState;
 
 };
 

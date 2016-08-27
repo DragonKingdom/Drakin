@@ -101,10 +101,10 @@ void BuildWindow::OnClick()
 		switch (m_selectID)
 		{
 		case HOUSE:
-			m_buildState = BUILD_HOUSE;
+			m_buildState = BUILD_PRIVATEHOUSE_RANDOM;
 			break;
 		case HOUSE_NORMAL:
-			m_buildState = BUILD_HOUSE_NORMAL;
+			m_buildState = BUILD_BLACKSMITH;
 			break;
 		case ROAD:
 			m_buildState = BUILD_ROAD;
@@ -119,10 +119,10 @@ void BuildWindow::OnClick()
 		{
 		case BUILD_NONE:
 			break;
-		case BUILD_HOUSE:
+		case BUILD_PRIVATEHOUSE_RANDOM:
 			m_buildState = BUILD_NONE;
 			break;
-		case BUILD_HOUSE_NORMAL:
+		case BUILD_BLACKSMITH:
 			m_buildState = BUILD_NONE;
 			break;
 		case BUILD_ROAD:

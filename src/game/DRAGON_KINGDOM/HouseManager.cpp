@@ -14,10 +14,8 @@
 #include "InputDeviceFacade.h"
 #include "FileSaveLoad.h"
 #include "ClickPosConverter.h"
-#include <time.h>
 
 
-using HOUSEMANAGER_ENUM::STATE;
 
 HouseManager::HouseManager(BuildAreaChecker* pBuildAreaChecker, StateManager* _pStateManager, GameData* _pGameData, ClickPosConverter* _pClickPosConverter) :
 m_pBuildAreaChecker(pBuildAreaChecker),
@@ -26,7 +24,6 @@ m_pGameData(_pGameData),
 m_pHouseBuilder(new HouseBuilder()),
 m_pClickPosConverter(_pClickPosConverter),
 m_pInputDevice(InputDeviceFacade::GetInstance()),
-m_state(STATE::CREATE_POS_SET),
 m_buildState(BUILD_NONE),
 m_HouseCost(0)
 {
@@ -41,112 +38,55 @@ HouseManager::~HouseManager()
 	delete m_pHouseBuilder;
 }
 
-void HouseManager::BuildControl(bool _isNormal)
+void HouseManager::Control()
 {
-	switch (m_state)
-	{
-	case STATE::CREATE_POS_SET:
-	{
-		D3DXVECTOR3 CenterPosition;
-		D3DXVECTOR3 CreatePosition;
-		D3DXVECTOR2 MousePosition;
-		float Angle;
 
-		// マウス座標を3Dに変換
-		MousePosition = m_pInputDevice->GetMousePos();
-		m_pClickPosConverter->ConvertForLoad(&CreatePosition, int(MousePosition.x), int(MousePosition.y));
+	if (m_buildState == BUILD_PRIVATEHOUSE_RANDOM ||
+		m_buildState == BUILD_BLACKSMITH)
+	{
+		BuildControl();
+	}
+}
 
-		if (m_pBuildAreaChecker->GetAreaCenterPos(&CreatePosition, &CenterPosition, &Angle))		// エリアがそもそも存在するのかチェック
+void HouseManager::BuildControl()
+{
+	D3DXVECTOR3 CreatePosition;
+	D3DXVECTOR2 MousePosition;
+
+	// マウス座標を取得して3Dに変換
+	MousePosition = m_pInputDevice->GetMousePos();
+	m_pClickPosConverter->ConvertForLoad(&CreatePosition, int(MousePosition.x), int(MousePosition.y));
+
+	if (m_pBuildAreaChecker->GetAreaCenterPos(&CreatePosition, &m_BuildPos, &m_BuildAngle) &&	// エリアがそもそも存在するのかチェック
+		m_pBuildAreaChecker->AreaCheck(&m_BuildPos))											// エリアが空いているかのチェック
+	{
+		m_pHouseBuilder->SetBuildPos(&m_BuildPos);
+		m_pHouseBuilder->SetBuildAngle(m_BuildAngle);
+		m_pHouseBuilder->SetDrawState(true);
+
+		if (m_pInputDevice->MouseLeftPush())
 		{
-			// エリアは存在するはずなので空いているかのチェック
-			if (m_pBuildAreaChecker->AreaCheck(&CenterPosition))
+			// 所持金とコストを比較して建設するか判断
+			if (m_Money > m_pHouseBuilder->GetHouseCost(m_buildState))
 			{
-				// セットする座標と角度を渡す
-				m_pHouseBuilder->SetBuildPos(&CenterPosition);
-				m_pHouseBuilder->SetBuildAngle(Angle);
-				m_pHouseBuilder->SetDrawState(true);
-
-				// 空いていたらマウスチェック
-				if (m_pInputDevice->MouseLeftPush())
-				{
-					// コストが足りるかチェック
-					if (m_Money < HOUSE_COST)
-					{
-						// コストが足りないのでスルー
-					}
-					else
-					{
-						m_pBuildAreaChecker->SetBuilding(&CenterPosition);
-						m_state = STATE::CREATE;
-					}
-				}
-			}
-			else
-			{
-				m_pHouseBuilder->SetDrawState(false);
+				HouseBuild();
 			}
 		}
-		else
-		{
-			m_pHouseBuilder->SetDrawState(false);
-		}
 	}
-	break;
-	case STATE::CREATE:
+	else
 	{
-		// コスト計算
-		m_HouseCost = HOUSE_COST;
-		int houseType;
-
-		if (_isNormal)
-		{
-			houseType = NORMAL_HOUSE;
-		}
-		else
-		{
-			// 乱数を利用して建設する家の種類を決めてる
-			// 乱数もrandとtimeをそのまま利用してるだけなので、修正しておく必要がある
-			srand(unsigned int(time(NULL)));
-
-			houseType = rand() % HOUSE_THRESHOLD_MAX;
-
-			if (houseType < REDHOUSE_THRESHOLD)
-			{
-				houseType = RED_HOUSE;
-			}
-			else if (houseType < BLUEHOUSE_THRESHOLD)
-			{
-				houseType = BLUE_HOUSE;
-			}
-			else if (houseType < YELLOWHOUSE_THRESHOLD)
-			{
-				houseType = YELLOW_HOUSE;
-			}
-			else if (houseType < POORHOUSE_THRESHOLD)
-			{
-				houseType = POOR_HOUSE;
-			}
-			else if (houseType < RICHHOUSE_THRESHOLD)
-			{
-				houseType = RICH_HOUSE;
-			}
-		}
-	
-
-		// おうちの建設
-		House* pHouse = m_pHouseBuilder->HouseBuild(houseType);
-		m_pHouse.push_back(pHouse);
-
-		// 状態をCreatePosSetに戻す
-		m_state = STATE::CREATE_POS_SET;
+		m_pHouseBuilder->SetDrawState(false);
 	}
-	break;
-	default:
-	{
+}
 
-	}
-	break;
-	}
+void HouseManager::HouseBuild()
+{
+	House* pHouse = m_pHouseBuilder->HouseBuild(m_buildState);
+	m_pHouse.push_back(pHouse);
+
+	// 建設された場所をビルドエリアに通知しておく
+
+	m_pBuildAreaChecker->SetBuilding(&m_BuildPos);
 }
 
 void HouseManager::Draw()
@@ -156,7 +96,7 @@ void HouseManager::Draw()
 		m_pHouse[i]->Draw();
 	}
 
-	if (m_buildState == BUILD_HOUSE || m_buildState == BUILD_HOUSE_NORMAL)
+	if (m_buildState == BUILD_PRIVATEHOUSE_RANDOM)
 	{
 		m_pHouseBuilder->PreviewerDraw();
 	}
@@ -169,7 +109,7 @@ void HouseManager::GetState()
 
 void HouseManager::SetState()
 {
-	m_pStateManager->SetHouseManagerState(m_state);
+
 }
 
 void HouseManager::GetGameData()
