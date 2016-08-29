@@ -112,6 +112,7 @@
     <ClCompile Include="CameraController.cpp" />
     <ClCompile Include="ClickPosConverter.cpp" />
     <ClCompile Include="Collision.cpp" />
+    <ClCompile Include="CurveRoad.cpp" />
     <ClCompile Include="DebugMode.cpp" />
     <ClCompile Include="FadeInOut.cpp" />
     <ClCompile Include="FileSaveLoad.cpp" />
@@ -130,6 +131,7 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Menuicon.cpp" />
     <ClCompile Include="MenuWindow.cpp" />
+    <ClCompile Include="NormalRoad.cpp" />
     <ClCompile Include="NowLoading.cpp" />
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="OptionWindow.cpp" />
@@ -176,6 +178,7 @@
     <ClInclude Include="ClickPosConverter.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="CommonDeclaration.h" />
+    <ClInclude Include="CurveRoad.h" />
     <ClInclude Include="DebugMode.h" />
     <ClInclude Include="FadeInOut.h" />
     <ClInclude Include="FileSaveLoad.h" />
@@ -193,6 +196,7 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="Menuicon.h" />
     <ClInclude Include="MenuWindow.h" />
+    <ClInclude Include="NormalRoad.h" />
     <ClInclude Include="NowLoading.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="OptionWindow.h" />

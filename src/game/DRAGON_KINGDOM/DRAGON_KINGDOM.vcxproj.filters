@@ -185,6 +185,12 @@
     <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\HouseManager\House\PrivateHouse">
       <UniqueIdentifier>{5e2a0a4c-871f-4290-8207-d2b54483a5bd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\Road\NormalRoad">
+      <UniqueIdentifier>{f8e65a81-e3c7-4d25-bee9-c0225ded9cd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\Road\CurveRoad">
+      <UniqueIdentifier>{fe79306c-c9af-429e-8b10-d810d8cc49c6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scene.cpp">
@@ -361,6 +367,12 @@
     <ClCompile Include="PrivateHouse.cpp">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\HouseManager\House\PrivateHouse</Filter>
     </ClCompile>
+    <ClCompile Include="CurveRoad.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\Road\CurveRoad</Filter>
+    </ClCompile>
+    <ClCompile Include="NormalRoad.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\Road\NormalRoad</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -536,6 +548,12 @@
     </ClInclude>
     <ClInclude Include="PrivateHouse.h">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\HouseManager\House\PrivateHouse</Filter>
+    </ClInclude>
+    <ClInclude Include="CurveRoad.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\Road\CurveRoad</Filter>
+    </ClInclude>
+    <ClInclude Include="NormalRoad.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\Road\NormalRoad</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

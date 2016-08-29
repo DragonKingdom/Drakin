@@ -12,9 +12,10 @@ public:
 	~RoadBuilder();
 	void StartPosSet(const D3DXVECTOR3 _startPos);
 	void EndPosSet(const D3DXVECTOR3 _endPos);
+	void CenterPosSet(const D3DXVECTOR3 _centerPos){ m_CenterPos = _centerPos; }
 	void InitStartPos();
 	void InitEndPos();
-	Road* RoadBuild();
+	Road* RoadBuild(ROADMANAGER_ENUM::BUILD_TYPE _buildType);
 	void  PreviewerDraw();
 	void StartPosLinkSet(bool _startLink);
 	void EndPosLinkSet(bool _endLink);
@@ -24,15 +25,16 @@ public:
 	void SetRoadEndAngle(float _roadEndAngle){ m_roadEndAngle = _roadEndAngle; }
 
 private:
-	RoadPreviewer*	m_pRoadPreviewer;
-	D3DXVECTOR3		m_StartPos;
-	D3DXVECTOR3		m_EndPos;
-	float			m_roadStartAngle;
-	float			m_roadEndAngle;
-	bool			m_StartPosLink;
-	bool			m_EndPosLink;
-	bool			m_isStartPointSet;
-	bool			m_isEndPointSet;
+	RoadPreviewer*				 m_pRoadPreviewer;
+	D3DXVECTOR3					 m_StartPos;
+	D3DXVECTOR3					 m_CenterPos;
+	D3DXVECTOR3					 m_EndPos;
+	float						 m_roadStartAngle;
+	float						 m_roadEndAngle;
+	bool						 m_StartPosLink;
+	bool						 m_EndPosLink;
+	bool						 m_isStartPointSet;
+	bool						 m_isEndPointSet;
 
 };
 

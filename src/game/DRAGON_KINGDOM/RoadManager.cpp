@@ -5,11 +5,13 @@
 #include "StateManager.h"
 #include "FileSaveLoad.h"
 #include "InputDeviceFacade.h"
+#include "Scene.h"
 
 /// @todo テスト用
 #include "ClickPosConverter.h"
 
 using ROADMANAGER_ENUM::STATE;
+using ROADMANAGER_ENUM::BUILD_TYPE;
 
 RoadManager::RoadManager(BuildAreaChecker* _pBuildAreaChecker, StateManager* _pStateManager, GameData* _pGameData, ClickPosConverter* _pClickPosConverter) :
 m_pStateManager(_pStateManager),
@@ -19,7 +21,8 @@ m_pClickPosConverter(_pClickPosConverter),
 m_pRoadBuilder(new RoadBuilder()),
 m_pInputDevice(InputDeviceFacade::GetInstance()),
 m_state(STATE::START_POS_SET),
-m_buildState(BUILD_ROAD)
+m_buildState(BUILD_ROAD),
+m_buildType(BUILD_TYPE::NORMAL)
 {
 }
 
@@ -70,10 +73,16 @@ void RoadManager::BuildControl()
 		m_pRoadBuilder->SetRoadEndAngle(roadEndAngle);
 		m_pRoadBuilder->EndPosSet(EndPos);
 
+		//曲線を引く時の制御点を指定する。
+		if (Scene::m_keyStateOn & Scene::KEY_E)
+		{
+			m_buildType = BUILD_TYPE::CURVE;
+			m_pRoadBuilder->CenterPosSet(EndPos);
+		}
+
 		if (m_pInputDevice->MouseLeftPush())
 		{
 			m_state = STATE::CREATE;
-
 		}
 
 		if (m_pInputDevice->MouseRightPush())
@@ -82,24 +91,37 @@ void RoadManager::BuildControl()
 			m_pRoadBuilder->InitStartPos();
 			m_pRoadBuilder->InitEndPos();
 			m_state = STATE::START_POS_SET;
+			m_buildType = BUILD_TYPE::NORMAL;
 		}
-
 		break;
 	case STATE::CREATE:
 		/// @todo 道の長さ0でも作れてしまう気がする
 		// 道を生成する
-
 		//道が90度以上の急な道は作れない
-		if (m_pRoadBuilder->BuildCheck(m_roadLinkStart_StartPos, m_roadLinkEnd_StartPos))
+		bool buildOk = m_pRoadBuilder->BuildCheck(m_roadLinkStart_StartPos, m_roadLinkEnd_StartPos);
+		switch (m_buildType)
 		{
-			Road* pRoad = m_pRoadBuilder->RoadBuild();
-			m_pRoad.push_back(pRoad);
+		case BUILD_TYPE::NORMAL:
+			if (buildOk)
+			{
+				Road* pRoad = m_pRoadBuilder->RoadBuild(m_buildType);
+				m_pRoad.push_back(pRoad);
+			}
+			break;
+		case BUILD_TYPE::CURVE:
+			if (buildOk)
+			{
+				Road* pRoad = m_pRoadBuilder->RoadBuild(m_buildType);
+				m_pRoad.push_back(pRoad);
+			}
+			break;
 		}
-
+		
 		// 次の道作成のための初期化処理
 		m_pRoadBuilder->InitStartPos();
 		m_pRoadBuilder->InitEndPos();
 		m_state = STATE::START_POS_SET;
+		m_buildType = BUILD_TYPE::NORMAL;
 		break;
 	}
 }
@@ -164,8 +186,8 @@ void RoadManager::Load(FileSaveLoad* _pFileSaveLoad)
 		m_pRoadBuilder->EndPosSet(EndVec);
 
 		// 道の生成
-		Road* pRoad = m_pRoadBuilder->RoadBuild();
-		m_pRoad.push_back(pRoad);
+		//Road* pRoad = m_pRoadBuilder->RoadBuild();
+		//m_pRoad.push_back(pRoad);
 
 		// 生成後は初期化しておく
 		m_pRoadBuilder->InitStartPos();

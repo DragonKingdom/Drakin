@@ -35,6 +35,7 @@ private:
 	RoadBuilder*			m_pRoadBuilder;
 	std::vector<Road*>		m_pRoad;
 	ROADMANAGER_ENUM::STATE	m_state;
+	ROADMANAGER_ENUM::BUILD_TYPE m_buildType;
 	BUILD_STATE				m_buildState;
 	StateManager*			m_pStateManager;
 	GameData*				m_pGameData;

@@ -82,6 +82,12 @@ namespace ROADMANAGER_ENUM
 		END_POS_SET,
 		CREATE
 	};
+
+	enum BUILD_TYPE
+	{
+		NORMAL,
+		CURVE
+	};
 }
 
 #endif // COMMONDECLARATION_H

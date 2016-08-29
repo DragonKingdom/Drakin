@@ -1,7 +1,8 @@
 #include "RoadBuilder.h"
 #include "RoadPreviewer.h"
 #include "Road.h"
-
+#include "NormalRoad.h"
+#include "CurveRoad.h"
 RoadBuilder::RoadBuilder() :
 m_pRoadPreviewer(new RoadPreviewer()),
 m_StartPos(D3DXVECTOR3(0, 0, 0)),
@@ -47,7 +48,7 @@ void RoadBuilder::InitEndPos()
 	m_EndPos = D3DXVECTOR3(0, 0, 0);
 }
 
-Road* RoadBuilder::RoadBuild()
+Road* RoadBuilder::RoadBuild(ROADMANAGER_ENUM::BUILD_TYPE _buildType)
 {
 	// ‚à‚Æ‚à‚Æ‚ÌStartPos‚©‚çEndPos‚Ì’·‚³
 	int length = static_cast<int>(sqrt(
@@ -81,8 +82,16 @@ Road* RoadBuilder::RoadBuild()
 	D3DXVec3Scale(&Vec, &Vec, float(VecLength));
 	Vec = Vec + m_StartPos;
 
-
-	Road* pRoad = new Road(m_StartPos, Vec, angle);
+	Road* pRoad = NULL;
+	switch (_buildType)
+	{
+	case ROADMANAGER_ENUM::NORMAL:
+		pRoad = new NormalRoad(m_StartPos, Vec, angle);
+		break;
+	case ROADMANAGER_ENUM::CURVE:
+		pRoad = new CurveRoad(m_StartPos, m_CenterPos, Vec, angle);
+		break;
+	}
 
 	return pRoad;
 }

@@ -15,7 +15,6 @@ Map::~Map()
 {
 	delete m_pSky;
 	delete m_pGround;
-	//delete m_pSunChecker;
 	delete m_pSun;
 }
 

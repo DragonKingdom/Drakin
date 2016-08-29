@@ -37,6 +37,7 @@ public:
 
 	bool MouseLeftPush();
 	bool MouseRightPush();
+	bool MouseCenterPush();
 
 
 };
