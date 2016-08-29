@@ -38,7 +38,7 @@ m_pShaderAssist(new ShaderAssist())
 	// 適当にステータス初期化
 	m_Status.Comfort = 10;
 	m_Status.Landscape = 10;
-	m_Status.Influence = 100;
+	m_Status.Influence = 1000;
 	m_Status.Age = 0;
 }
 

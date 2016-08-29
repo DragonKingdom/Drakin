@@ -56,19 +56,25 @@ void HouseManager::HouseControl()
 		m_pHouse[i]->Control();
 
 		House::Status MainStatus = m_pHouse[i]->GetHouseStatus();
+		House::Status HouseStatus = m_pHouse[i]->GetMainStatus();
 		if (MainStatus.Age != m_HouseAge[i])
 		{
 			m_HouseAge[i] = MainStatus.Age;
 			for (unsigned int n = 0; n < m_pHouse.size(); n++)
 			{
-				if (m_HousePos[n].x < m_HousePos[i].x + 100 &&
-					m_HousePos[n].x > m_HousePos[i].x - 100 &&
-					m_HousePos[n].z < m_HousePos[i].z + 100 &&
-					m_HousePos[n].z > m_HousePos[i].z - 100)
+				if (n != i)
 				{
-					House::Status Status = m_pHouse[n]->GetHouseStatus();
-					MainStatus.Landscape += Status.Landscape / 10;
-					m_pHouse[i]->SetHouseStatus(MainStatus);
+					if (m_HousePos[n].x < m_HousePos[i].x + 1000 &&
+						m_HousePos[n].x > m_HousePos[i].x - 1000 &&
+						m_HousePos[n].z < m_HousePos[i].z + 1000 &&
+						m_HousePos[n].z > m_HousePos[i].z - 1000)
+					{
+						House::Status Status = m_pHouse[n]->GetMainStatus();
+						HouseStatus.Landscape += Status.Landscape / 5;
+						HouseStatus.Comfort += Status.Comfort / 10;
+						HouseStatus.Age = MainStatus.Age;
+						m_pHouse[i]->SetHouseStatus(HouseStatus);
+					}
 				}
 			}
 		}
@@ -96,6 +102,7 @@ void HouseManager::BuildControl()
 			// ŠŽ‹à‚ÆƒRƒXƒg‚ð”äŠr‚µ‚ÄŒšÝ‚·‚é‚©”»’f
 			if (m_Money > m_pHouseBuilder->GetHouseCost(m_buildState))
 			{
+				m_HouseCost = m_pHouseBuilder->GetHouseCost(m_buildState);
 				HouseBuild();
 			}
 		}
@@ -119,9 +126,44 @@ void HouseManager::HouseBuild()
 
 void HouseManager::Draw()
 {
+
 	for (unsigned int i = 0; i < m_pHouse.size(); i++)
 	{
+
 		m_pHouse[i]->Draw();
+
+
+		House::Status Status = m_pHouse[i]->GetHouseStatus();
+
+
+		if (i == 0)
+		{
+			std::string Str =
+				"Age" + std::to_string(Status.Age) + "\n" +
+				"Comfort" + std::to_string(Status.Comfort) + "\n"
+				"Influence" + std::to_string(Status.Influence) + "\n"
+				"Landscape" + std::to_string(Status.Landscape) + "\n";
+			font1.Draw(Str.c_str(), D3DXVECTOR2(0, 650));
+		}
+		else if (i == 1)
+		{
+			std::string Str =
+				"Age" + std::to_string(Status.Age) + "\n" +
+				"Comfort" + std::to_string(Status.Comfort) + "\n"
+				"Influence" + std::to_string(Status.Influence) + "\n"
+				"Landscape" + std::to_string(Status.Landscape) + "\n";
+			font2.Draw(Str.c_str(), D3DXVECTOR2(200, 650));
+		}
+		else if (i == 2)
+		{
+			std::string Str =
+				"Age" + std::to_string(Status.Age) + "\n" +
+				"Comfort" + std::to_string(Status.Comfort) + "\n"
+				"Influence" + std::to_string(Status.Influence) + "\n"
+				"Landscape" + std::to_string(Status.Landscape) + "\n";
+			font3.Draw(Str.c_str(), D3DXVECTOR2(400, 650));
+		}
+		
 	}
 
 	if (m_buildState == BUILD_PRIVATEHOUSE_RANDOM)

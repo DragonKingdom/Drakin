@@ -8,6 +8,7 @@
 #ifndef HOUSEMANAGER_H
 #define HOUSEMANAGER_H
 
+#include "Font.h"
 
 class HouseBuilder;
 class BuildAreaChecker;
@@ -45,6 +46,9 @@ private:
 	std::vector<D3DXVECTOR3>	m_HousePos;			// 家のステータス計算用に置いてる
 	std::vector<int>			m_HouseAge;			// 家のステータス計算用に置いてる
 
+	Font font1;
+	Font font2;
+	Font font3;
 
 	BUILD_STATE					m_buildState;
 	StateManager*				m_pStateManager;

@@ -11,6 +11,7 @@ public:
 	PrivateHouse(D3DXVECTOR3 _housePos, float _angle, int _Type);
 	virtual ~PrivateHouse();
 	virtual void Draw();
+	virtual Status	GetMainStatus(){ return Status{ 10.f, 10.f, 1000.f, 0 }; };
 
 private:
 
