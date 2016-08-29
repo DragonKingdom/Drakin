@@ -7,13 +7,13 @@
 
 #include "HouseManager.h"
 #include "HouseBuilder.h"
-#include "House.h"
 #include "BuildAreaChecker.h"
 #include "StateManager.h"
 #include "GameData.h"
 #include "InputDeviceFacade.h"
 #include "FileSaveLoad.h"
 #include "ClickPosConverter.h"
+#include "House.h"
 
 
 
@@ -40,11 +40,38 @@ HouseManager::~HouseManager()
 
 void HouseManager::Control()
 {
+	HouseControl();
 
 	if (m_buildState == BUILD_PRIVATEHOUSE_RANDOM ||
 		m_buildState == BUILD_BLACKSMITH)
 	{
 		BuildControl();
+	}
+}
+
+void HouseManager::HouseControl()
+{
+	for (unsigned int i = 0; i < m_pHouse.size(); i++)
+	{
+		m_pHouse[i]->Control();
+
+		House::Status MainStatus = m_pHouse[i]->GetHouseStatus();
+		if (MainStatus.Age != m_HouseAge[i])
+		{
+			m_HouseAge[i] = MainStatus.Age;
+			for (unsigned int n = 0; n < m_pHouse.size(); n++)
+			{
+				if (m_HousePos[n].x < m_HousePos[i].x + 100 &&
+					m_HousePos[n].x > m_HousePos[i].x - 100 &&
+					m_HousePos[n].z < m_HousePos[i].z + 100 &&
+					m_HousePos[n].z > m_HousePos[i].z - 100)
+				{
+					House::Status Status = m_pHouse[n]->GetHouseStatus();
+					MainStatus.Landscape += Status.Landscape / 10;
+					m_pHouse[i]->SetHouseStatus(MainStatus);
+				}
+			}
+		}
 	}
 }
 
@@ -83,9 +110,10 @@ void HouseManager::HouseBuild()
 {
 	House* pHouse = m_pHouseBuilder->HouseBuild(m_buildState);
 	m_pHouse.push_back(pHouse);
+	m_HousePos.push_back(pHouse->GetHousePos());
+	m_HouseAge.push_back(pHouse->GetHouseStatus().Age);
 
 	// 建設された場所をビルドエリアに通知しておく
-
 	m_pBuildAreaChecker->SetBuilding(&m_BuildPos);
 }
 

@@ -8,17 +8,15 @@
 #ifndef HOUSEMANAGER_H
 #define HOUSEMANAGER_H
 
-#define HOUSE_COST 100
-
 
 class HouseBuilder;
-class House;
 class BuildAreaChecker;
 class StateManager;
 class GameData;
 class InputDeviceFacade;
 class FileSaveLoad;
 class ClickPosConverter;
+class House;
 
 class HouseManager
 {
@@ -37,12 +35,17 @@ public:
 	void Save(FileSaveLoad* _pFileSaveLoad);
 
 private:
+	void HouseControl();
 	void BuildControl();
 	void HouseBuild();
 
 	BuildAreaChecker*			m_pBuildAreaChecker;
 	HouseBuilder*				m_pHouseBuilder;
 	std::vector<House*>			m_pHouse;
+	std::vector<D3DXVECTOR3>	m_HousePos;			// 家のステータス計算用に置いてる
+	std::vector<int>			m_HouseAge;			// 家のステータス計算用に置いてる
+
+
 	BUILD_STATE					m_buildState;
 	StateManager*				m_pStateManager;
 	GameData*					m_pGameData;
