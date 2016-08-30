@@ -77,7 +77,7 @@ void RoadManager::BuildControl()
 		if (Scene::m_keyStateOn & Scene::KEY_E)
 		{
 			m_buildType = BUILD_TYPE::CURVE;
-			m_pRoadBuilder->CenterPosSet(EndPos);
+			m_pRoadBuilder->ControlPosSet(EndPos);
 		}
 
 		if (m_pInputDevice->MouseLeftPush())
