@@ -54,6 +54,7 @@ private:
 	bool					RoadCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pStartOrEndPos, float* _outputAngleDegree, bool* _startPos);
 	/// @todo テスト用
 	ClickPosConverter*		m_pClickPosConverter;
+	Font m_Font;
 
 };
 
