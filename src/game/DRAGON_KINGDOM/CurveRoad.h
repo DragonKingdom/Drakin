@@ -13,5 +13,7 @@ private:
 	D3DXVECTOR3* m_pBezierLine;
 	D3DXVECTOR3  m_ControlPos;
 	void BezierLineCreate();
+	float CalculateBezierLength();
+	D3DXVECTOR3 QuadraticBezPoint(float _t);
 };
 

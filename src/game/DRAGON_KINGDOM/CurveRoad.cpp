@@ -15,6 +15,23 @@ CurveRoad::~CurveRoad()
 
 void CurveRoad::BezierLineCreate()
 {
+	float length = CalculateBezierLength();
+	int RoadNum = length / ROAD_H_SIZE;
+
+	float angle = atan2(m_EndPos.z - m_StartPos.z, m_EndPos.x - m_StartPos.x);
+	
+	D3DXVECTOR3* centerLine = new D3DXVECTOR3[RoadNum];
+
+	for (int i = 0; i < RoadNum; i++)
+	{
+		QuadraticBezPoint(i * 1.f / (float)(RoadNum - 1));
+	}
+
+	delete centerLine;
+}
+
+float CurveRoad::CalculateBezierLength()
+{
 	float length = 0.f;
 	// ベジェ曲線の長さを求める
 	float t2 = 1;
@@ -32,7 +49,7 @@ void CurveRoad::BezierLineCreate()
 
 	float a = xa*xa + ya*ya;
 	float b = 2 * (xa*xb + ya*yb);
-	float c = xb*xb + yb*yb; 
+	float c = xb*xb + yb*yb;
 	float D = b*b - 4 * a*c;
 
 	float var = log(8);
@@ -51,6 +68,27 @@ void CurveRoad::BezierLineCreate()
 	{
 		length = sqrt(c)*(t2 - t1);
 	}
+	return length;
+}
+
+D3DXVECTOR3 CurveRoad::QuadraticBezPoint(float _t)
+{
+	D3DXVECTOR3 vertex = D3DXVECTOR3(0, 20.f, 0);
+	//数値の一時保存変数
+	float valueTemp = (1.f - _t) * (1.f - _t);
+	
+	vertex.x += valueTemp * m_StartPos.x;
+	vertex.z += valueTemp * m_StartPos.y;
+
+	valueTemp = 2 * _t * (1 - _t);
+	vertex.x += valueTemp * m_ControlPos.x;
+	vertex.z += valueTemp * m_ControlPos.y;
+
+	valueTemp = _t * _t;
+	vertex.x += valueTemp * m_EndPos.x;
+	vertex.z += valueTemp * m_EndPos.y;
+
+	return vertex;
 }
 
 void CurveRoad::Control()
