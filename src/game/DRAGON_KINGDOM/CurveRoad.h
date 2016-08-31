@@ -27,7 +27,6 @@ private:
 	float CalculateBezierLength();
 	D3DXVECTOR3 QuadraticBezPoint(float _t);
 	
-	Font m_Font;
 
 };
 

@@ -137,6 +137,16 @@ void RoadManager::Draw()
 	{
 		m_pRoadBuilder->PreviewerDraw();
 	}
+	switch (m_buildType)
+	{
+	case BUILD_TYPE::CURVE:
+		m_Font.Draw("RoadDrawMode : CurveMode", D3DXVECTOR2(0, 730));
+		break;
+	case BUILD_TYPE::NORMAL:
+		m_Font.Draw("RoadDrawMode : StraightMode", D3DXVECTOR2(0, 730));
+		break;
+	}
+
 }
 
 void RoadManager::GetState()
