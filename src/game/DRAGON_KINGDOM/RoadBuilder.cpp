@@ -23,6 +23,17 @@ void RoadBuilder::StartPosSet(const D3DXVECTOR3 _startPos)
 	m_StartPos = _startPos;
 	m_pRoadPreviewer->StartPosSet(m_StartPos);
 }
+void RoadBuilder::ControlPosSet(const D3DXVECTOR3 _controlPos)
+{
+	m_ControlPos = _controlPos;
+	m_pRoadPreviewer->ControlPosSet(_controlPos);
+	m_pRoadPreviewer->BuildModeSet(ROADMANAGER_ENUM::BUILD_TYPE::CURVE);
+}
+
+void RoadBuilder::BuildModeSet(ROADMANAGER_ENUM::BUILD_TYPE _buildType)
+{
+	m_pRoadPreviewer->BuildModeSet(_buildType);
+}
 
 void RoadBuilder::EndPosSet(const D3DXVECTOR3 _endPos)
 {
@@ -38,6 +49,13 @@ void RoadBuilder::InitStartPos()
 	m_StartPosLink = false;
 	m_pRoadPreviewer->InitStartPos();
 	m_StartPos = D3DXVECTOR3(0, 0, 0);
+}
+
+void RoadBuilder::InitControlPos()
+{
+	m_pRoadPreviewer->BuildModeSet(ROADMANAGER_ENUM::BUILD_TYPE::NORMAL);
+	m_ControlPos = D3DXVECTOR3(0, 0, 0);
+	m_pRoadPreviewer->ControlPosSet(D3DXVECTOR3(0, 0, 0));
 }
 
 void RoadBuilder::InitEndPos()

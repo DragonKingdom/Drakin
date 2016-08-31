@@ -11,10 +11,12 @@ public:
 	RoadBuilder();
 	~RoadBuilder();
 	void StartPosSet(const D3DXVECTOR3 _startPos);
+	void ControlPosSet(const D3DXVECTOR3 _controlPos);
 	void EndPosSet(const D3DXVECTOR3 _endPos);
-	void ControlPosSet(const D3DXVECTOR3 _controlPos){ m_ControlPos = _controlPos; }
+	void BuildModeSet(ROADMANAGER_ENUM::BUILD_TYPE _buildType);
 	void InitStartPos();
 	void InitEndPos();
+	void InitControlPos();
 	Road* RoadBuild(ROADMANAGER_ENUM::BUILD_TYPE _buildType);
 	void  PreviewerDraw();
 	void StartPosLinkSet(bool _startLink);

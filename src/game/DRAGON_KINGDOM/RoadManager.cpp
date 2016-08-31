@@ -89,6 +89,7 @@ void RoadManager::BuildControl()
 		{
 			// 右クリックされたら戻るため初期化
 			m_pRoadBuilder->InitStartPos();
+			m_pRoadBuilder->InitControlPos();
 			m_pRoadBuilder->InitEndPos();
 			m_state = STATE::START_POS_SET;
 			m_buildType = BUILD_TYPE::NORMAL;
@@ -119,6 +120,7 @@ void RoadManager::BuildControl()
 		
 		// 次の道作成のための初期化処理
 		m_pRoadBuilder->InitStartPos();
+		m_pRoadBuilder->InitControlPos();
 		m_pRoadBuilder->InitEndPos();
 		m_state = STATE::START_POS_SET;
 		m_buildType = BUILD_TYPE::NORMAL;

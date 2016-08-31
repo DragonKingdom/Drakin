@@ -11,19 +11,17 @@ Road(_startPos, _endPos, _angle)
 
 CurveRoad::~CurveRoad()
 {
-	delete m_pVertex;
-	delete m_pAngle;
-	delete m_pRightLinePos;
-	delete m_pLeftLinePos;
+	delete[] m_pVertex;
+	delete[] m_pAngle;
+	delete[] m_pRightLinePos;
+	delete[] m_pLeftLinePos;
 }
 
 void CurveRoad::BezierLineCreate()
 {
 	float length = CalculateBezierLength();
-	int RoadNum = length / ROAD_H_SIZE;
+	int RoadNum = static_cast<int>(length / ROAD_H_SIZE + 1);
 
-	float angle = atan2(m_EndPos.z - m_StartPos.z, m_EndPos.x - m_StartPos.x);
-	
 	m_pLeftLinePos   = new D3DXVECTOR3[RoadNum];
 	m_pRightLinePos  = new D3DXVECTOR3[RoadNum];
 	m_pAngle		 = new float[RoadNum];
@@ -39,7 +37,7 @@ void CurveRoad::BezierLineCreate()
 			atan2(m_CenterLinePos[i + 1].z - m_CenterLinePos[i].z,
 			m_CenterLinePos[i + 1].x - m_CenterLinePos[i].x);
 	}
-	m_pAngle[RoadNum] =
+	m_pAngle[RoadNum - 1] =
 		atan2(m_CenterLinePos[RoadNum - 1].z - m_CenterLinePos[RoadNum - 2].z,
 		m_CenterLinePos[RoadNum - 1].x - m_CenterLinePos[RoadNum - 2].x);
 
@@ -63,8 +61,8 @@ void CurveRoad::BezierLineCreate()
 	for (int i = 0; i < RoadNum; i++)
 	{
 		m_pVertex[i * 2].pos = m_pLeftLinePos[i];
-		m_pVertex[i * 2].tu = 1.f;
-		m_pVertex[i * 2].tv = 1.f;
+		m_pVertex[i * 2].tu = 0.f;
+		m_pVertex[i * 2].tv = 0.f;
 		m_pVertex[i * 2 + 1].pos = m_pRightLinePos[i];
 		m_pVertex[i * 2 + 1].tu = 1.f;
 		m_pVertex[i * 2 + 1].tv = 1.f;
