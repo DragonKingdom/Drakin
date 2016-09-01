@@ -11,13 +11,14 @@
 #define RICHHOUSE_THRESHOLD 20		// 高級な家のしきい値
 #define HOUSE_THRESHOLD_MAX 20		// しきい値の最大値
 
-
+//コンストラクタ
 HouseBuilder::HouseBuilder() :
 m_pHousePreviewer(new HousePreviewer()),
 m_isDraw(false)
 {
 }
 
+//デストラクタ
 HouseBuilder::~HouseBuilder()
 {
 	delete m_pHousePreviewer;
@@ -25,29 +26,34 @@ HouseBuilder::~HouseBuilder()
 
 void HouseBuilder::PreviewerDraw()
 {
+	//trueならプレビューを描画
 	if (m_isDraw == true)
 	{
 		m_pHousePreviewer->Draw();
 	}
 }
 
+//建物の座標をセット
 void HouseBuilder::SetBuildPos(D3DXVECTOR3* _BuildPos)
 {
 	m_BuildPos = (*_BuildPos);
 	m_pHousePreviewer->SetBuildPos(&m_BuildPos);
 }
 
+//角度をセット
 void HouseBuilder::SetBuildAngle(float _angle)
 {
 	m_Angle = _angle;
 	m_pHousePreviewer->SetAngle(&_angle);
 }
 
+//描画の可否をセット
 void HouseBuilder::SetDrawState(bool _isDraw)
 {
 	m_isDraw = _isDraw;
 }
 
+//建物タイプにあわせて生成する
 House* HouseBuilder::HouseBuild(int _Type)
 {
 	House* pHouse = NULL;
@@ -120,6 +126,7 @@ House* HouseBuilder::HouseBuild(int _Type)
 	return pHouse;
 }
 
+//建物にあわせてコストをかえす
 int HouseBuilder:: GetHouseCost(int _Type)
 {
 	int BuildingCost = 0;

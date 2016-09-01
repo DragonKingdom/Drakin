@@ -16,7 +16,7 @@
 #include "House.h"
 
 
-
+/*コンストラクタ*/
 HouseManager::HouseManager(BuildAreaChecker* pBuildAreaChecker, StateManager* _pStateManager, GameData* _pGameData, ClickPosConverter* _pClickPosConverter) :
 m_pBuildAreaChecker(pBuildAreaChecker),
 m_pStateManager(_pStateManager),
@@ -29,6 +29,7 @@ m_HouseCost(0)
 {
 }
 
+//デストラクタ
 HouseManager::~HouseManager()
 {
 	for (unsigned int i = 0; i < m_pHouse.size(); i++)
@@ -63,7 +64,7 @@ void HouseManager::HouseControl()
 		//家の基本ステータスを取得
 		House::Status HouseStatus = m_pHouse[i]->GetMainStatus();
 
-
+		//ステータスの年齢が異なれば変更する
 		if (MainStatus.Age != m_HouseAge[i])
 		{
 			m_HouseAge[i] = MainStatus.Age;
@@ -76,6 +77,7 @@ void HouseManager::HouseControl()
 						m_HousePos[n].z < m_HousePos[i].z + 1000 &&
 						m_HousePos[n].z > m_HousePos[i].z - 1000)
 					{
+						//ステータスを修正する
 						House::Status Status = m_pHouse[n]->GetMainStatus();
 						HouseStatus.Landscape += Status.Landscape / 5;
 						HouseStatus.Comfort += Status.Comfort / 10;
@@ -96,9 +98,8 @@ void HouseManager::BuildControl()
 	//マウス座標を格納する変数
 	D3DXVECTOR2 MousePosition;
 
-	// マウス座標を取得
+	// マウス座標を取得し、3D座標に変換
 	MousePosition = m_pInputDevice->GetMousePos();
-	//上記で取得したマウス座標を3D座標に変換
 	m_pClickPosConverter->ConvertForLoad(&CreatePosition, int(MousePosition.x), int(MousePosition.y));
 
 	//建物をつくれるのであればエリアにPreviewerを表示する
@@ -127,7 +128,7 @@ void HouseManager::BuildControl()
 	}
 }
 
-
+//家を作成する
 void HouseManager::HouseBuild()
 {
 	//家の種類を取得
