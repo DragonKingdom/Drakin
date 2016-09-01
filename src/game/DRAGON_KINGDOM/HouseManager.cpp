@@ -42,6 +42,7 @@ void HouseManager::Control()
 {
 	HouseControl();
 
+	//m_buildStateに建物の種類が入っていたらBuildControlを呼ぶ
 	if (m_buildState == BUILD_PRIVATEHOUSE_RANDOM ||
 		m_buildState == BUILD_BLACKSMITH)
 	{
@@ -51,12 +52,18 @@ void HouseManager::Control()
 
 void HouseManager::HouseControl()
 {
+
+	//家の数分まわす
 	for (unsigned int i = 0; i < m_pHouse.size(); i++)
 	{
 		m_pHouse[i]->Control();
 
+		//今のステータスを取得
 		House::Status MainStatus = m_pHouse[i]->GetHouseStatus();
+		//家の基本ステータスを取得
 		House::Status HouseStatus = m_pHouse[i]->GetMainStatus();
+
+
 		if (MainStatus.Age != m_HouseAge[i])
 		{
 			m_HouseAge[i] = MainStatus.Age;
@@ -81,15 +88,20 @@ void HouseManager::HouseControl()
 	}
 }
 
+//建物をつくるかを判断し、建物をつくる関数を呼ぶ関数)
 void HouseManager::BuildControl()
 {
+	//マウス座標を3D座標に変換したものを格納する変数
 	D3DXVECTOR3 CreatePosition;
+	//マウス座標を格納する変数
 	D3DXVECTOR2 MousePosition;
 
-	// マウス座標を取得して3Dに変換
+	// マウス座標を取得
 	MousePosition = m_pInputDevice->GetMousePos();
+	//上記で取得したマウス座標を3D座標に変換
 	m_pClickPosConverter->ConvertForLoad(&CreatePosition, int(MousePosition.x), int(MousePosition.y));
 
+	//建物をつくれるのであればエリアにPreviewerを表示する
 	if (m_pBuildAreaChecker->GetAreaCenterPos(&CreatePosition, &m_BuildPos, &m_BuildAngle) &&	// エリアがそもそも存在するのかチェック
 		m_pBuildAreaChecker->AreaCheck(&m_BuildPos))											// エリアが空いているかのチェック
 	{
@@ -102,7 +114,9 @@ void HouseManager::BuildControl()
 			// 所持金とコストを比較して建設するか判断
 			if (m_Money > m_pHouseBuilder->GetHouseCost(m_buildState))
 			{
+				//コストを取得して変数に格納しておく(後にGameDataに渡す→関数 HouseManager::SetGameData())
 				m_HouseCost = m_pHouseBuilder->GetHouseCost(m_buildState);
+				//建物をつくる
 				HouseBuild();
 			}
 		}
@@ -113,11 +127,16 @@ void HouseManager::BuildControl()
 	}
 }
 
+
 void HouseManager::HouseBuild()
 {
+	//家の種類を取得
 	House* pHouse = m_pHouseBuilder->HouseBuild(m_buildState);
+	//家を生成
 	m_pHouse.push_back(pHouse);
+	//家の位置を取得
 	m_HousePos.push_back(pHouse->GetHousePos());
+	//家の年を取得
 	m_HouseAge.push_back(pHouse->GetHouseStatus().Age);
 
 	// 建設された場所をビルドエリアに通知しておく
@@ -127,15 +146,16 @@ void HouseManager::HouseBuild()
 void HouseManager::Draw()
 {
 
+	//家の数分描画する
 	for (unsigned int i = 0; i < m_pHouse.size(); i++)
 	{
 
 		m_pHouse[i]->Draw();
 
-
+		//家のステータスを取得
 		House::Status Status = m_pHouse[i]->GetHouseStatus();
 
-
+		//３つ目までのステータスを表示
 		if (i == 0)
 		{
 			std::string Str =
@@ -172,6 +192,7 @@ void HouseManager::Draw()
 	}
 }
 
+//建物を作るかどうかという状態を取得
 void HouseManager::GetState()
 {
 	m_buildState = m_pStateManager->GetBuildState();
@@ -182,11 +203,13 @@ void HouseManager::SetState()
 
 }
 
+//ゲームデータを取得(お金)
 void HouseManager::GetGameData()
 {
 	m_Money = m_pGameData->GetMoney();
 }
 
+//ゲームデータに家を建てた分のコストを知らせる
 void HouseManager::SetGameData()
 {
 	m_pGameData->DecreaseMoney(m_HouseCost);

@@ -36,7 +36,7 @@ public:
 	void Save(FileSaveLoad* _pFileSaveLoad);
 
 private:
-	void HouseControl();
+	void HouseControl();			//建物関連のコントロール関数
 	void BuildControl();
 	void HouseBuild();
 
