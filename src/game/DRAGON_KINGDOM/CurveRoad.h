@@ -7,6 +7,7 @@ class CurveRoad : public Road
 public:
 	CurveRoad(D3DXVECTOR3 _startPos, D3DXVECTOR3 _controlPos, D3DXVECTOR3 _endPos, float _angle);
 	~CurveRoad();
+	bool GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos, float* _outputAngleDegree, bool* _startPos);
 	void Control();
 	void Draw();
 private:

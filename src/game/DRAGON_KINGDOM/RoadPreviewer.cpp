@@ -65,67 +65,72 @@ void RoadPreviewer::CurveDraw()
 
 	float length = CalculateBezierLength();
 	int RoadNum = static_cast<int>(length / ROAD_H_SIZE + 1);
-
-	float* pAngle = new float[RoadNum + 5];
-	D3DXVECTOR3* pRightLinePos = new D3DXVECTOR3[RoadNum];
-	D3DXVECTOR3* pLeftLinePos = new D3DXVECTOR3[RoadNum];
-
-	for (int i = 0; i < RoadNum; i++)
+	if (RoadNum < 0)
 	{
-		CenterLinePos.push_back(QuadraticBezPoint(i * 1.f / (float)(RoadNum - 1)));
 	}
-
-	for (int i = 0; i < RoadNum - 1; i++)
+	else
 	{
-		pAngle[i] =
-			atan2(CenterLinePos[i + 1].z - CenterLinePos[i].z,
-			CenterLinePos[i + 1].x - CenterLinePos[i].x);
+		float* pAngle = new float[RoadNum];
+		D3DXVECTOR3* pRightLinePos = new D3DXVECTOR3[RoadNum];
+		D3DXVECTOR3* pLeftLinePos = new D3DXVECTOR3[RoadNum];
+
+		for (int i = 0; i < RoadNum; i++)
+		{
+			CenterLinePos.push_back(QuadraticBezPoint(i * 1.f / (float)(RoadNum - 1)));
+		}
+
+		for (int i = 0; i < RoadNum - 1; i++)
+		{
+			pAngle[i] =
+				atan2(CenterLinePos[i + 1].z - CenterLinePos[i].z,
+				CenterLinePos[i + 1].x - CenterLinePos[i].x);
+		}
+		pAngle[RoadNum - 1] =
+			atan2(CenterLinePos[RoadNum - 1].z - CenterLinePos[RoadNum - 2].z,
+			CenterLinePos[RoadNum - 1].x - CenterLinePos[RoadNum - 2].x);
+
+
+		for (int i = 0; i < RoadNum; i++)
+		{
+			D3DXVECTOR3 p;
+			p.x = CenterLinePos[i].x + ROAD_H_SIZE / 2 * sin(pAngle[i]);
+			p.y = 20.f;
+			p.z = CenterLinePos[i].z + ROAD_H_SIZE / 2 * -cos(pAngle[i]);
+
+			pLeftLinePos[i] = p;
+
+			p.x = CenterLinePos[i].x + -ROAD_H_SIZE / 2 * sin(pAngle[i]);
+			p.z = CenterLinePos[i].z + -ROAD_H_SIZE / 2 * -cos(pAngle[i]);
+			pRightLinePos[i] = p;
+		}
+
+		//‰E‚Æ¶‚Ì’¸“_‚ª‚ ‚é‚Ì‚Å2”{
+		CUSTOMVERTEX* pVertex = new CUSTOMVERTEX[RoadNum * 2];
+		for (int i = 0; i < RoadNum; i++)
+		{
+			pVertex[i * 2].pos = pLeftLinePos[i];
+			pVertex[i * 2].tu = 1.f;
+			pVertex[i * 2].tv = 1.f;
+			pVertex[i * 2 + 1].pos = pRightLinePos[i];
+			pVertex[i * 2 + 1].tu = 1.f;
+			pVertex[i * 2 + 1].tv = 1.f;
+		}
+
+		GraphicsDevice::getInstance().GetDevice()->SetFVF(D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1);
+		GraphicsDevice::getInstance().GetDevice()->SetTexture(0, m_Texture.Get());
+		GraphicsDevice::getInstance().GetDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);
+		GraphicsDevice::getInstance().GetDevice()->DrawPrimitiveUP(
+			D3DPT_TRIANGLESTRIP,
+			CenterLinePos.size() * 2 - 2,
+			pVertex,
+			sizeof(CUSTOMVERTEX)
+			);
+
+		delete[] pVertex;
+		delete[] pLeftLinePos;
+		delete[] pRightLinePos;
+		delete[] pAngle;
 	}
-	pAngle[RoadNum - 1] =
-		atan2(CenterLinePos[RoadNum - 1].z - CenterLinePos[RoadNum - 2].z,
-		CenterLinePos[RoadNum - 1].x - CenterLinePos[RoadNum - 2].x);
-
-
-	for (int i = 0; i < RoadNum; i++)
-	{
-		D3DXVECTOR3 p;
-		p.x = CenterLinePos[i].x + ROAD_H_SIZE / 2 * sin(pAngle[i]);
-		p.y = 20.f;
-		p.z = CenterLinePos[i].z + ROAD_H_SIZE / 2 * -cos(pAngle[i]);
-
-		pLeftLinePos[i] = p;
-
-		p.x = CenterLinePos[i].x + -ROAD_H_SIZE / 2 * sin(pAngle[i]);
-		p.z = CenterLinePos[i].z + -ROAD_H_SIZE / 2 * -cos(pAngle[i]);
-		pRightLinePos[i] = p;
-	}
-
-	//‰E‚Æ¶‚Ì’¸“_‚ª‚ ‚é‚Ì‚Å2”{
-	CUSTOMVERTEX* pVertex = new CUSTOMVERTEX[RoadNum * 2];
-	for (int i = 0; i < RoadNum; i++)
-	{
-		pVertex[i * 2].pos = pLeftLinePos[i];
-		pVertex[i * 2].tu = 0.f;
-		pVertex[i * 2].tv = 0.f;
-		pVertex[i * 2 + 1].pos = pRightLinePos[i];
-		pVertex[i * 2 + 1].tu = 1.f;
-		pVertex[i * 2 + 1].tv = 1.f;
-	}
-
-	GraphicsDevice::getInstance().GetDevice()->SetFVF(D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX1);
-	GraphicsDevice::getInstance().GetDevice()->SetTexture(0, m_Texture.Get());
-	GraphicsDevice::getInstance().GetDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);
-	GraphicsDevice::getInstance().GetDevice()->DrawPrimitiveUP(
-		D3DPT_TRIANGLESTRIP,
-		CenterLinePos.size() * 2 - 2,
-		pVertex,
-		sizeof(CUSTOMVERTEX)
-		);
-
-	delete[] pVertex;
-	delete[] pLeftLinePos;
-	delete[] pRightLinePos;
-	delete[] pAngle;
 }
 
 void RoadPreviewer::Draw()

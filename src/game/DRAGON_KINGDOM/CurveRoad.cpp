@@ -183,3 +183,36 @@ void CurveRoad::Draw()
 	m_pShaderAssist->EndPass();
 	m_pShaderAssist->End();
 }
+
+bool CurveRoad::GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos, float* _outputAngleDegree, bool* _startPos)
+{
+	double length = pow((_checkPos->x - m_StartPos.x)*(_checkPos->x - m_StartPos.x) +
+		(_checkPos->z - m_StartPos.z)*(_checkPos->z - m_StartPos.z), 0.5);
+
+	float angle = atan2(m_CenterLinePos[1].z - m_CenterLinePos[0].z,
+		m_CenterLinePos[1].x - m_CenterLinePos[0].x);
+
+	if (length < 3000.f)
+	{
+		*_outputAngleDegree = D3DXToDegree(angle);
+		*_outputPos = m_StartPos;
+		*_startPos = true;
+		return true;
+	}
+
+
+	length = pow((_checkPos->x - m_EndPos.x)*(_checkPos->x - m_EndPos.x) +
+		(_checkPos->z - m_EndPos.z)*(_checkPos->z - m_EndPos.z), 0.5);
+
+	angle = atan2(m_CenterLinePos[m_CenterLinePos.size() - 1].z - m_CenterLinePos[m_CenterLinePos.size() - 2].z,
+		m_CenterLinePos[m_CenterLinePos.size() - 1].x - m_CenterLinePos[m_CenterLinePos.size() - 2].x);
+
+	if (length < 3000.f)
+	{
+		*_outputAngleDegree = D3DXToDegree(angle);
+		*_outputPos = m_EndPos;
+		*_startPos = false;
+		return true;
+	}
+	return false;
+}

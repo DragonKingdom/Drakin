@@ -11,7 +11,7 @@ public:
 	virtual void Control();
 	virtual void Draw();
 
-	bool GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos, float* _outputAngleDegree, bool* _startPos);
+	virtual bool GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos, float* _outputAngleDegree, bool* _startPos);
 	void GetStartEndData(std::vector<float>* _pRoadVertexData);
 protected:
 	D3DXVECTOR3 m_StartPos;
