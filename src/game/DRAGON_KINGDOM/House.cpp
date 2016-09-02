@@ -48,21 +48,12 @@ House::~House()
 	delete m_pShaderAssist;
 }
 
-void House::Control()
+BUILD_STATE House::Control()
 {
-	/// @todo 時間をうまくとる方法がぱっとでなかったからとりあえずこれで実装してる
+	CountAge();
 
-	m_AgeCount++;
-	if (m_AgeCount > 3600)
-	{
-		/// @todo 適当に上限作ってるだけ、仕様がわかり次第直す
-		if (m_Status.Age < 100000)
-		{
-			m_Status.Age++;
-		}
-		
-		m_AgeCount = 0;
-	}
+	return BUILD_NONE;
+
 }
 
 void House::Draw()
@@ -82,4 +73,22 @@ void House::GetHouseData(std::vector<float>* _pHouseVertexData, std::vector<floa
 
 	// 家のステータス
 	_pHouseStatus->push_back(m_Type);
+}
+
+//年齢をカウントする関数(Houseを継承するクラスのすべてで使用予定)
+void House::CountAge()
+{
+	/// @todo 時間をうまくとる方法がぱっとでなかったからとりあえずこれで実装してる
+
+	m_AgeCount++;
+	if (m_AgeCount > 3600)
+	{
+		/// @todo 適当に上限作ってるだけ、仕様がわかり次第直す
+		if (m_Status.Age < 100000)
+		{
+			m_Status.Age++;
+		}
+
+		m_AgeCount = 0;
+	}
 }

@@ -3,7 +3,7 @@
 #include "FbxModel.h"
 #include "ShaderAssist.h"
 
-
+//コンストラクタ
 Blacksmith::Blacksmith(D3DXVECTOR3 _housePos, float _angle, int _Type) :
 House(_housePos, _angle, _Type)
 {
@@ -11,6 +11,7 @@ House(_housePos, _angle, _Type)
 	FbxFileManager::Get()->GetModelData(&m_Model);
 }
 
+//デストラクタ
 Blacksmith::~Blacksmith()
 {
 	for (unsigned int i = 0; i < m_Model.size(); i++)
@@ -19,6 +20,16 @@ Blacksmith::~Blacksmith()
 	}
 }
 
+//コントロール関数
+BUILD_STATE Blacksmith::Control()
+{
+	CountAge();
+
+	return BUILD_BLACKSMITH;
+
+}
+
+//描画関数
 void Blacksmith::Draw()
 {
 	m_pShaderAssist->Begin();

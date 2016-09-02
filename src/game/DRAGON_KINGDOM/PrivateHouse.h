@@ -10,6 +10,7 @@ class PrivateHouse :public House
 public:
 	PrivateHouse(D3DXVECTOR3 _housePos, float _angle, int _Type);
 	virtual ~PrivateHouse();
+	virtual BUILD_STATE Control();
 	virtual void Draw();
 	virtual Status	GetMainStatus(){ return Status{ 10.f, 10.f, 1000.f, 0 }; };
 

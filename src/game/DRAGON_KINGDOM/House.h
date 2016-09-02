@@ -20,13 +20,17 @@ public:
 
 	House(D3DXVECTOR3 _housePos, float _angle, int _Type);
 	virtual ~House();
-	virtual void Control();
+	/**2016/09/03kå^ÇïœçX haga*/
+	virtual BUILD_STATE Control();
 	virtual void Draw();
 	Status			GetHouseStatus(){ return m_Status; };
 	virtual Status	GetMainStatus(){ return Status{ 10.f, 10.f, 1000.f, 0 }; };
 	D3DXVECTOR3		GetHousePos(){ return m_HousePos; };
 	void			GetHouseData(std::vector<float>* _pHouseVertexData, std::vector<float>* _pHouseAngleData, std::vector<int>* _pHouseStatus);
 	void			SetHouseStatus(House::Status _Status){ m_Status = _Status; };
+	/**2016/09/03í«â¡ haga*/
+	void			CountAge();
+	
 
 protected:
 	std::vector<FbxModel*>	m_Model;

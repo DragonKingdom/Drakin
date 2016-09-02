@@ -43,6 +43,14 @@ PrivateHouse::~PrivateHouse()
 	}
 }
 
+//ƒRƒ“ƒgƒ[ƒ‹ŠÖ”
+BUILD_STATE PrivateHouse::Control()
+{
+	CountAge();
+
+	return BUILD_PRIVATEHOUSE_RANDOM;
+}
+
 void PrivateHouse::Draw()
 {
 	m_pShaderAssist->Begin();

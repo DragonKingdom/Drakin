@@ -50,13 +50,15 @@ void HouseManager::Control()
 	}
 }
 
+//ハウスコントロール
 void HouseManager::HouseControl()
 {
 
 	//家の数分まわす
 	for (unsigned int i = 0; i < m_pHouse.size(); i++)
 	{
-		m_pHouse[i]->Control();
+		//家の種類を取得
+		BUILD_STATE	HouseType = m_pHouse[i]->Control();
 
 		//今のステータスを取得
 		House::Status MainStatus = m_pHouse[i]->GetHouseStatus();

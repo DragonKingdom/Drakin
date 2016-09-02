@@ -164,7 +164,9 @@ int HouseBuilder:: GetHouseCost(int _Type)
 		break;
 	case BUILD_BLACKSMITH:
 		BuildingCost = BLACKSMITH_COST;
-
+		break;
+	case BUILD_CHURCH:
+		BuildingCost = CHURCH_COST;
 		break;
 	}
 
