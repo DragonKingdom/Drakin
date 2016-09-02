@@ -44,8 +44,7 @@ void HouseManager::Control()
 	HouseControl();
 
 	//m_buildStateに建物の種類が入っていたらBuildControlを呼ぶ
-	if (m_buildState == BUILD_PRIVATEHOUSE_RANDOM ||
-		m_buildState == BUILD_BLACKSMITH)
+	if (m_buildState == BUILD_PRIVATEHOUSE_RANDOM || m_buildState == BUILD_BLACKSMITH || m_buildState == BUILD_CHURCH)
 	{
 		BuildControl();
 	}
@@ -64,7 +63,7 @@ void HouseManager::HouseControl()
 		//家の基本ステータスを取得
 		House::Status HouseStatus = m_pHouse[i]->GetMainStatus();
 
-		//ステータスの年齢が異なれば変更する
+	
 		if (MainStatus.Age != m_HouseAge[i])
 		{
 			m_HouseAge[i] = MainStatus.Age;
@@ -102,7 +101,6 @@ void HouseManager::BuildControl()
 	MousePosition = m_pInputDevice->GetMousePos();
 	m_pClickPosConverter->ConvertForLoad(&CreatePosition, int(MousePosition.x), int(MousePosition.y));
 
-	//建物をつくれるのであればエリアにPreviewerを表示する
 	if (m_pBuildAreaChecker->GetAreaCenterPos(&CreatePosition, &m_BuildPos, &m_BuildAngle) &&	// エリアがそもそも存在するのかチェック
 		m_pBuildAreaChecker->AreaCheck(&m_BuildPos))											// エリアが空いているかのチェック
 	{
@@ -131,13 +129,9 @@ void HouseManager::BuildControl()
 //家を作成する
 void HouseManager::HouseBuild()
 {
-	//家の種類を取得
 	House* pHouse = m_pHouseBuilder->HouseBuild(m_buildState);
-	//家を生成
 	m_pHouse.push_back(pHouse);
-	//家の位置を取得
 	m_HousePos.push_back(pHouse->GetHousePos());
-	//家の年を取得
 	m_HouseAge.push_back(pHouse->GetHouseStatus().Age);
 
 	// 建設された場所をビルドエリアに通知しておく

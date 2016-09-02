@@ -16,6 +16,7 @@ class GameData;
 class FileSaveLoad;
 class ClickPosConverter;
 
+
 class BuildAreaManager
 {
 public:

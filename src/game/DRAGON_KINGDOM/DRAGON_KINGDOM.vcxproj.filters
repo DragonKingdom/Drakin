@@ -185,6 +185,9 @@
     <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\HouseManager\House\PrivateHouse">
       <UniqueIdentifier>{5e2a0a4c-871f-4290-8207-d2b54483a5bd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\HouseManager\House\Church">
+      <UniqueIdentifier>{6b636ce6-256f-4cc1-bbf9-d67df2b051cd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scene.cpp">
@@ -361,6 +364,9 @@
     <ClCompile Include="PrivateHouse.cpp">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\HouseManager\House\PrivateHouse</Filter>
     </ClCompile>
+    <ClCompile Include="Church.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\HouseManager\House\Church</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -536,6 +542,9 @@
     </ClInclude>
     <ClInclude Include="PrivateHouse.h">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\HouseManager\House\PrivateHouse</Filter>
+    </ClInclude>
+    <ClInclude Include="Church.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\HouseManager\House\Church</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

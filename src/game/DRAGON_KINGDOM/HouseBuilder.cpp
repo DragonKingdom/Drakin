@@ -1,6 +1,7 @@
 #include "HouseBuilder.h"
 #include "HousePreviewer.h"
 #include "Blacksmith.h"
+#include "Church.h"
 #include "PrivateHouse.h"
 #include <time.h>
 
@@ -121,6 +122,10 @@ House* HouseBuilder::HouseBuild(int _Type)
 		pHouse = new Blacksmith(m_BuildPos, m_Angle, BUILD_BLACKSMITH);
 	}
 	break;
+	case BUILD_CHURCH:
+	{
+		pHouse = new Church(m_BuildPos, m_Angle, BUILD_CHURCH);
+	}
 	}
 
 	return pHouse;
