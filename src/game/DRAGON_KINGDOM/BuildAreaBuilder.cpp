@@ -57,7 +57,7 @@ BuildArea* BuildAreaBuilder::NormalAreaBuild(bool _isLeft)
 
 BuildArea* BuildAreaBuilder::CurveAreaBuild(bool _isLeft)
 {
-	BuildArea* pBuildArea;
+	BuildArea* pBuildArea = new BuildArea(_isLeft, m_StartPos,m_ControlPos, m_EndPos, m_roadStartAngle, m_roadEndAngle, m_StartPosLink, m_EndPosLink);
 	return pBuildArea;
 }
 
@@ -66,11 +66,11 @@ BuildArea* BuildAreaBuilder::AreaBuild(bool _isLeft, BUILDAREAMANAGER_ENUM::BUIL
 	BuildArea* pBuildArea;
 	switch (_buildType)
 	{
-	case BUILDAREAMANAGER_ENUM::CURVE:
-		pBuildArea = NormalAreaBuild(_isLeft);
-		break;
 	case BUILDAREAMANAGER_ENUM::NORMAL:
 		pBuildArea = NormalAreaBuild(_isLeft);
+		break;
+	case BUILDAREAMANAGER_ENUM::CURVE:
+		pBuildArea = CurveAreaBuild(_isLeft);
 		break;
 	}
 	return pBuildArea;
