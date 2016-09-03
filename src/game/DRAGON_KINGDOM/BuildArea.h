@@ -5,6 +5,7 @@ class BuildArea
 {
 public:
 	BuildArea(bool _isLeft, D3DXVECTOR3 _roadStartPos, D3DXVECTOR3 _roadEndPos, float _angle, float _roadStartAngle, float _roadEndAngle, bool _roadLinkStart, bool _roadLinkEnd);
+	BuildArea(bool _isLeft, D3DXVECTOR3 _roadStartPos, D3DXVECTOR3 _controlPos, D3DXVECTOR3 _roadEndPos, float _roadStartAngle, float _roadEndAngle, bool _roadLinkStart,bool _roadLinkEnd);
 	~BuildArea();
 	void Draw();
 	bool AreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle);
@@ -28,13 +29,23 @@ public:
 	void GetBuildAreaData(std::vector<float>* _pBuildAreaVertexData, std::vector<float>* _pBuildAreaAngleData, std::vector<int>* _pBuildAreaFlag);
 
 private:
+	struct CUSTOMVERTEX
+	{
+		D3DXVECTOR3	pos;
+		FLOAT	tu, tv;
+	};
+
 	Vertex      m_Vertex;
 	Texture		m_Texture;
 	D3DXVECTOR3 m_RoadStartPos;	/*対応する道の始点*/
 	D3DXVECTOR3 m_RoadEndPos;	/*対応する道の終点*/
 	D3DXVECTOR3 m_StartPos;
+	D3DXVECTOR3 m_ControlPos;
 	D3DXVECTOR3 m_EndPos;
 	D3DXVECTOR3 m_pBuildArea[4];
+	std::vector<std::vector<D3DXVECTOR3>> m_CurveBuildArea;
+	std::vector<D3DXVECTOR3> m_CenterLinePos;//曲線のビルドエリアを作るときに使う
+
 	bool	m_isLeft;	/*道に対して左にあるAreaかのフラグ*/
 	float	m_x;		/*中心座標*/
 	float	m_y;		/*中心座標*/
@@ -58,6 +69,9 @@ private:
 	int m_AreaCountZ;
 	float MousePosX;
 	float MousePosZ;
+
+	float CalculateBezierLength();
+	D3DXVECTOR3 QuadraticBezPoint(float _t);
 
 	bool RoadAngleCheck(float _roadAngle);
 

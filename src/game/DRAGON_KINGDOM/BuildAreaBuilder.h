@@ -11,6 +11,7 @@ public:
 	~BuildAreaBuilder();
 	BuildArea* AreaBuild(bool _isLeft, BUILDAREAMANAGER_ENUM::BUILD_TYPE _buildType);
 	BuildArea* NormalAreaBuild(bool _isLeft);
+	BuildArea* CurveAreaBuild(bool _isLeft);
 
 	void PreviewerDraw();
 	void StartPosSet(D3DXVECTOR3 _startPos);

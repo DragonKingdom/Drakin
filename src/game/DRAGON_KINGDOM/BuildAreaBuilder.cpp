@@ -55,6 +55,12 @@ BuildArea* BuildAreaBuilder::NormalAreaBuild(bool _isLeft)
 	return pBuildArea;
 }
 
+BuildArea* BuildAreaBuilder::CurveAreaBuild(bool _isLeft)
+{
+	BuildArea* pBuildArea;
+	return pBuildArea;
+}
+
 BuildArea* BuildAreaBuilder::AreaBuild(bool _isLeft, BUILDAREAMANAGER_ENUM::BUILD_TYPE _buildType)
 {
 	BuildArea* pBuildArea;
