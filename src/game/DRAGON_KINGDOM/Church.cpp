@@ -10,7 +10,7 @@ House(_housePos, _angle, _Type)
 {
 	FbxFileManager::Get()->FileImport("fbx//house_yellow.fbx");
 	FbxFileManager::Get()->GetModelData(&m_Model);
-	m_Status = GetMainStatus();
+	m_BasicStatus = GetMainStatus();
 }
 
 

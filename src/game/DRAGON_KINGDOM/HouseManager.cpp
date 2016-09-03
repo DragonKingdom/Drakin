@@ -54,7 +54,7 @@ void HouseManager::Control()
 void HouseManager::HouseControl()
 {
 
-	//家の数分まわす
+	//家ごとのコントロールと補正を行う
 	for (unsigned int i = 0; i < m_pHouse.size(); i++)
 	{
 		//家の種類を取得
@@ -65,7 +65,19 @@ void HouseManager::HouseControl()
 		//家の基本ステータスを取得
 		House::Status HouseStatus = m_pHouse[i]->GetMainStatus();
 
-	
+		//家の種類によって周囲の家のステータスを補正
+		switch (HouseType)
+		{
+		case BUILD_BLACKSMITH:
+
+			break;
+
+		case BUILD_CHURCH:
+
+			break;
+		}
+
+
 		if (MainStatus.Age != m_HouseAge[i])
 		{
 			m_HouseAge[i] = MainStatus.Age;
@@ -86,9 +98,17 @@ void HouseManager::HouseControl()
 						m_pHouse[i]->SetHouseStatus(HouseStatus);
 					}
 				}
+
 			}
 		}
 	}
+		//ステータスを決定する
+	for (unsigned int i = 0; i < m_pHouse.size(); i++)
+	{
+		m_pHouse[i]->GetCorrectionStatus();
+		m_pHouse[i]->DecisionHouseStatus();
+	}
+
 }
 
 //建物をつくるかを判断し、建物をつくる関数を呼ぶ関数)

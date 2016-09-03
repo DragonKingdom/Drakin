@@ -17,12 +17,15 @@
 class Church :public House
 {
 public:
-
+	//コンストラクタ
 	Church(D3DXVECTOR3 _housePos, float _angle, int _Type);
-
+	//デストラクタ
 	virtual~Church();
+	//コントロール関数
 	virtual BUILD_STATE Control();
+	//描画関数
 	virtual void Draw();
+	//
 	virtual Status	GetMainStatus(){ return Status{ 500.f, 10.f, 1000.f, 0 }; };
 };
 

@@ -186,7 +186,7 @@
       <UniqueIdentifier>{5e2a0a4c-871f-4290-8207-d2b54483a5bd}</UniqueIdentifier>
     </Filter>
     <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\HouseManager\House\Church">
-      <UniqueIdentifier>{6b636ce6-256f-4cc1-bbf9-d67df2b051cd}</UniqueIdentifier>
+      <UniqueIdentifier>{3ad5dd21-7caf-41fd-8d4d-df492a5be13a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

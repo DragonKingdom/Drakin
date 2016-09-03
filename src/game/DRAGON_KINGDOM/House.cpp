@@ -40,6 +40,13 @@ m_pShaderAssist(new ShaderAssist())
 	m_Status.Landscape = 10;
 	m_Status.Influence = 1000;
 	m_Status.Age = 0;
+
+	//補正値を初期化
+	m_CorrectionStatus.Age = 0;
+	m_CorrectionStatus.Comfort = 0;
+	m_CorrectionStatus.Influence = 0;
+	m_CorrectionStatus.Landscape = 0;
+
 }
 
 House::~House()
@@ -91,4 +98,20 @@ void House::CountAge()
 
 		m_AgeCount = 0;
 	}
+}
+
+/**建物本来のステータスと補正値を足して最終的なステータスを決定する*/
+void House::DecisionHouseStatus()
+{
+	//建物のステータスを最終決定する
+	m_Status.Comfort   = (m_BasicStatus.Comfort + m_CorrectionStatus.Comfort);
+	m_Status.Influence = (m_BasicStatus.Influence + m_CorrectionStatus.Influence);
+	m_Status.Landscape = (m_BasicStatus.Landscape + m_CorrectionStatus.Landscape);
+
+	
+	//補正値を初期化
+	m_CorrectionStatus.Comfort = 0;
+	m_CorrectionStatus.Influence = 0;
+	m_CorrectionStatus.Landscape = 0;
+	
 }
