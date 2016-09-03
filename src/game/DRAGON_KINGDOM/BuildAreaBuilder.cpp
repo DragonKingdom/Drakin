@@ -14,7 +14,7 @@ BuildAreaBuilder::~BuildAreaBuilder()
 	delete m_pBuildAreaPreviewer;
 }
 
-BuildArea* BuildAreaBuilder::AreaBuild(bool _isLeft)
+BuildArea* BuildAreaBuilder::NormalAreaBuild(bool _isLeft)
 {
 	// ‚à‚Æ‚à‚Æ‚ÌStartPos‚©‚çEndPos‚Ì’·‚³
 	int length = static_cast<int>(sqrt(
@@ -36,7 +36,7 @@ BuildArea* BuildAreaBuilder::AreaBuild(bool _isLeft)
 		NumZ = int(length / ROAD_W_SIZE);
 		VecLength = int(NumZ * ROAD_H_SIZE);
 	}
-	
+
 
 	// StartPos‚©‚çEndPos‚ÌŠp“x‚ð‚Æ‚é
 	float angle = atan2(m_EndPos.z - m_StartPos.z, m_EndPos.x - m_StartPos.x);
@@ -49,9 +49,24 @@ BuildArea* BuildAreaBuilder::AreaBuild(bool _isLeft)
 
 	angle = atan2(Vec.z - m_StartPos.z, Vec.x - m_StartPos.x);
 
-	
+
 	BuildArea* pBuildArea = new BuildArea(_isLeft, m_StartPos, Vec, angle, m_roadStartAngle, m_roadEndAngle, m_StartPosLink, m_EndPosLink);
 
+	return pBuildArea;
+}
+
+BuildArea* BuildAreaBuilder::AreaBuild(bool _isLeft, BUILDAREAMANAGER_ENUM::BUILD_TYPE _buildType)
+{
+	BuildArea* pBuildArea;
+	switch (_buildType)
+	{
+	case BUILDAREAMANAGER_ENUM::CURVE:
+		pBuildArea = NormalAreaBuild(_isLeft);
+		break;
+	case BUILDAREAMANAGER_ENUM::NORMAL:
+		pBuildArea = NormalAreaBuild(_isLeft);
+		break;
+	}
 	return pBuildArea;
 }
 
@@ -70,6 +85,13 @@ void BuildAreaBuilder::StartPosSet(D3DXVECTOR3 _startPos)
 	m_StartPos = _startPos;
 }
 
+void BuildAreaBuilder::ControlPosSet(const D3DXVECTOR3 _controlPos)
+{
+	m_ControlPos = _controlPos;
+	m_pBuildAreaPreviewer->ControlPosSet(_controlPos);
+	m_pBuildAreaPreviewer->BuildModeSet(BUILDAREAMANAGER_ENUM::BUILD_TYPE::CURVE);
+}
+
 void BuildAreaBuilder::EndPosSet(D3DXVECTOR3 _endPos)
 {
 	m_isEndPosSet = true;
@@ -84,6 +106,13 @@ void BuildAreaBuilder::InitStartPos()
 	m_roadStartAngle = 0.f;
 	m_pBuildAreaPreviewer->InitStartPos();
 	m_StartPos = D3DXVECTOR3(0, 0, 0);
+}
+
+void BuildAreaBuilder::InitControlPos()
+{
+	m_pBuildAreaPreviewer->BuildModeSet(BUILDAREAMANAGER_ENUM::BUILD_TYPE::NORMAL);
+	m_ControlPos = D3DXVECTOR3(0, 0, 0);
+	m_pBuildAreaPreviewer->ControlPosSet(D3DXVECTOR3(0, 0, 0));
 }
 
 void BuildAreaBuilder::InitEndPos()

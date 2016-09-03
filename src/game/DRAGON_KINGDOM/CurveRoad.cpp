@@ -62,10 +62,10 @@ void CurveRoad::BezierLineCreate()
 	{
 		m_pVertex[i * 2].pos = m_pLeftLinePos[i];
 		m_pVertex[i * 2].tu = 0.f;
-		m_pVertex[i * 2].tv = 0.f;
+		m_pVertex[i * 2].tv = i * 1.f / (m_CenterLinePos.size() - 1);
 		m_pVertex[i * 2 + 1].pos = m_pRightLinePos[i];
 		m_pVertex[i * 2 + 1].tu = 1.f;
-		m_pVertex[i * 2 + 1].tv = 1.f;
+		m_pVertex[i * 2 + 1].tv = i * 1.f / (m_CenterLinePos.size() - 1);
 	}
 }
 
@@ -210,7 +210,7 @@ bool CurveRoad::GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos
 	if (length < 3000.f)
 	{
 		*_outputAngleDegree = D3DXToDegree(angle);
-		*_outputPos = m_EndPos;
+		*_outputPos = m_CenterLinePos[m_CenterLinePos.size() - 1];
 		*_startPos = false;
 		return true;
 	}
