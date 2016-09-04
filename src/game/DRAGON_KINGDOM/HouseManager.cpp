@@ -73,10 +73,25 @@ void HouseManager::HouseControl()
 			break;
 
 		case BUILD_CHURCH:
+			for (unsigned int n = 0; n < m_pHouse.size(); n++)
+			{
+				if (n != i)
+				{
+					if (m_HousePos[n].x < m_HousePos[i].x + 1000 &&
+						m_HousePos[n].x > m_HousePos[i].x - 1000 &&
+						m_HousePos[n].z < m_HousePos[i].z + 1000 &&
+						m_HousePos[n].z > m_HousePos[i].z - 1000)
+					{
+						//ステータスを修正する
+						House::Status Status = {0.f,0.f,0.f,0};
+						Status.Landscape += 3;
+						m_pHouse[n]->SetCorrectionStatus(Status);
+					}
+				}
 
+			}
 			break;
 		}
-
 
 		if (MainStatus.Age != m_HouseAge[i])
 		{
@@ -105,7 +120,7 @@ void HouseManager::HouseControl()
 		//ステータスを決定する
 	for (unsigned int i = 0; i < m_pHouse.size(); i++)
 	{
-		m_pHouse[i]->GetCorrectionStatus();
+		//m_pHouse[i]->GetCorrectionStatus();    /**デバック用*/
 		m_pHouse[i]->DecisionHouseStatus();
 	}
 

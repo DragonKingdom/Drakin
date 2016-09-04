@@ -28,15 +28,14 @@ public:
 	D3DXVECTOR3		GetHousePos(){ return m_HousePos; };
 	void			GetHouseData(std::vector<float>* _pHouseVertexData, std::vector<float>* _pHouseAngleData, std::vector<int>* _pHouseStatus);
 	void			SetHouseStatus(House::Status _Status){ m_Status = _Status; };
+	void			SetCorrectionStatus(House::Status _Status);
 	/**2016/09/03追加 haga*/
 	/**年齢をカウントする関数*/
 	void			CountAge();
-	/**2016/09/03追加 haga*/
 	/**最終ステータスを決定する*/
 	void			DecisionHouseStatus();
-
-	//補正値取得用
-	void			GetCorrectionStatus(){ m_CorrectionStatus.Landscape = 3; }
+	/**補正値取得用*/
+	void			GetCorrectionStatus(){ m_CorrectionStatus.Landscape += 3; }
 	
 
 protected:

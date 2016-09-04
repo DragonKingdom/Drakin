@@ -33,6 +33,7 @@ House(_housePos, _angle, _Type)
 
 
 	FbxFileManager::Get()->GetModelData(&m_Model);
+	m_BasicStatus = GetMainStatus();
 }
 
 PrivateHouse::~PrivateHouse()

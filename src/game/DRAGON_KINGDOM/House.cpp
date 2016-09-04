@@ -91,13 +91,22 @@ void House::CountAge()
 	if (m_AgeCount > 3600)
 	{
 		/// @todo 適当に上限作ってるだけ、仕様がわかり次第直す
-		if (m_Status.Age < 100000)
+		if (m_BasicStatus.Age < 100000)
 		{
-			m_Status.Age++;
+			m_BasicStatus.Age++;
 		}
 
 		m_AgeCount = 0;
 	}
+}
+
+/**補正値を修正する関数*/
+void House::SetCorrectionStatus(House::Status _Status)
+{
+
+	m_CorrectionStatus.Comfort += _Status.Comfort;
+	m_CorrectionStatus.Influence += _Status.Influence;
+	m_CorrectionStatus.Landscape += _Status.Landscape;
 }
 
 /**建物本来のステータスと補正値を足して最終的なステータスを決定する*/
@@ -110,8 +119,8 @@ void House::DecisionHouseStatus()
 
 	
 	//補正値を初期化
-	m_CorrectionStatus.Comfort = 0;
-	m_CorrectionStatus.Influence = 0;
-	m_CorrectionStatus.Landscape = 0;
+	m_CorrectionStatus.Comfort = 0.f;
+	m_CorrectionStatus.Influence = 0.f;
+	m_CorrectionStatus.Landscape = 0.f;
 	
 }
