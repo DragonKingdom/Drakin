@@ -50,14 +50,14 @@ BuildArea* BuildAreaBuilder::NormalAreaBuild(bool _isLeft)
 	angle = atan2(Vec.z - m_StartPos.z, Vec.x - m_StartPos.x);
 
 
-	BuildArea* pBuildArea = new BuildArea(_isLeft, m_StartPos, Vec, angle, m_roadStartAngle, m_roadEndAngle, m_StartPosLink, m_EndPosLink);
+	BuildArea* pBuildArea = new BuildArea(_isLeft, m_StartPos, Vec, angle, m_roadStartAngle, m_roadEndAngle, m_StartPosLink, m_EndPosLink, BUILDAREAMANAGER_ENUM::BUILD_TYPE::NORMAL);
 
 	return pBuildArea;
 }
 
 BuildArea* BuildAreaBuilder::CurveAreaBuild(bool _isLeft)
 {
-	BuildArea* pBuildArea = new BuildArea(_isLeft, m_StartPos,m_ControlPos, m_EndPos, m_roadStartAngle, m_roadEndAngle, m_StartPosLink, m_EndPosLink);
+	BuildArea* pBuildArea = new BuildArea(_isLeft, m_StartPos, m_ControlPos, m_EndPos, m_roadStartAngle, m_roadEndAngle, m_StartPosLink, m_EndPosLink, BUILDAREAMANAGER_ENUM::BUILD_TYPE::CURVE);
 	return pBuildArea;
 }
 

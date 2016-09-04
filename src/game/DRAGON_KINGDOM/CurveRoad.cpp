@@ -19,8 +19,22 @@ CurveRoad::~CurveRoad()
 
 void CurveRoad::BezierLineCreate()
 {
-	float length = CalculateBezierLength();
-	int RoadNum = static_cast<int>(length / ROAD_H_SIZE + 1);
+	int length = CalculateBezierLength();
+	// ÉGÉäÉAÇÃêî
+	int NumZ = 0;
+	int VecLength = 0;
+
+	if (length % int(ROAD_H_SIZE) == int(ROAD_H_SIZE - 1))
+	{
+		NumZ = int(length / ROAD_W_SIZE) + 1;
+		VecLength = int(NumZ * ROAD_H_SIZE);
+	}
+	else
+	{
+		NumZ = int(length / ROAD_W_SIZE);
+		VecLength = int(NumZ * ROAD_H_SIZE);
+	}
+	int RoadNum = static_cast<int>(VecLength / ROAD_H_SIZE);
 
 	m_pLeftLinePos   = new D3DXVECTOR3[RoadNum];
 	m_pRightLinePos  = new D3DXVECTOR3[RoadNum];
@@ -52,7 +66,7 @@ void CurveRoad::BezierLineCreate()
 		m_pLeftLinePos[i] = p;
 
 		p.x = m_CenterLinePos[i].x + -ROAD_H_SIZE/2 * sin(m_pAngle[i]);
-		p.z = m_CenterLinePos[i].z + -ROAD_H_SIZE/2 * -cos(m_pAngle[i]);
+		p.z = m_CenterLinePos[i].z + -ROAD_H_SIZE / 2 * -cos(m_pAngle[i]);
 		m_pRightLinePos[i] = p;
 	}
 

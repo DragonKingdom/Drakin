@@ -4,8 +4,8 @@
 class BuildArea
 {
 public:
-	BuildArea(bool _isLeft, D3DXVECTOR3 _roadStartPos, D3DXVECTOR3 _roadEndPos, float _angle, float _roadStartAngle, float _roadEndAngle, bool _roadLinkStart, bool _roadLinkEnd);
-	BuildArea(bool _isLeft, D3DXVECTOR3 _roadStartPos, D3DXVECTOR3 _controlPos, D3DXVECTOR3 _roadEndPos, float _roadStartAngle, float _roadEndAngle, bool _roadLinkStart,bool _roadLinkEnd);
+	BuildArea(bool _isLeft, D3DXVECTOR3 _roadStartPos, D3DXVECTOR3 _roadEndPos, float _angle, float _roadStartAngle, float _roadEndAngle, bool _roadLinkStart, bool _roadLinkEnd, BUILDAREAMANAGER_ENUM::BUILD_TYPE _buildType);
+	BuildArea(bool _isLeft, D3DXVECTOR3 _roadStartPos, D3DXVECTOR3 _controlPos, D3DXVECTOR3 _roadEndPos, float _roadStartAngle, float _roadEndAngle, bool _roadLinkStart, bool _roadLinkEnd, BUILDAREAMANAGER_ENUM::BUILD_TYPE _buildType);
 	~BuildArea();
 	void Draw();
 	bool AreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle);
@@ -43,7 +43,8 @@ private:
 	D3DXVECTOR3 m_ControlPos;
 	D3DXVECTOR3 m_EndPos;
 	D3DXVECTOR3 m_pBuildArea[4];
-	std::vector<std::vector<D3DXVECTOR3>> m_CurveBuildArea;
+	D3DXVECTOR3** m_ppCurveBuildArea;
+	BUILDAREAMANAGER_ENUM::BUILD_TYPE m_buildType;
 	std::vector<D3DXVECTOR3> m_CenterLinePos;//曲線のビルドエリアを作るときに使う
 
 	bool	m_isLeft;	/*道に対して左にあるAreaかのフラグ*/
