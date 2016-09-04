@@ -4,6 +4,7 @@
 class StateManager;
 class GameData;
 class Map;
+class CharacterManager;
 class HouseManager;
 class RoadManager;
 class BuildAreaManager;
@@ -34,6 +35,7 @@ private:
 	StateManager*		m_pStateManager;
 	GameData*			m_pGameData;
 	Map*				m_pMap;
+	CharacterManager*	m_pCharacterManager;
 	BuildAreaManager*	m_pBuildAreaManager;
 	BuildAreaChecker*	m_pBuildAreaChecker;
 	HouseManager*		m_pHouseManager;

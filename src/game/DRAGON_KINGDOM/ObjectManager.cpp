@@ -1,4 +1,5 @@
 #include "ObjectManager.h"
+#include "CharacterManager.h"
 #include "Map.h"
 #include "HouseManager.h"
 #include "BuildAreaManager.h"
@@ -14,6 +15,7 @@ m_pClickPosConverter(_pClickPosConverter),
 m_pBuildAreaManager(new BuildAreaManager(_pStateManager, _pGameData, _pClickPosConverter)),
 m_pBuildAreaChecker(new BuildAreaChecker(m_pBuildAreaManager)),
 m_pMap(new Map(_pStateManager, _pGameData)),
+m_pCharacterManager(new CharacterManager(_pStateManager, _pGameData)),
 m_pHouseManager(new HouseManager(m_pBuildAreaChecker, _pStateManager, _pGameData, _pClickPosConverter)),
 m_pRoadManager(new RoadManager(m_pBuildAreaChecker, _pStateManager, _pGameData, _pClickPosConverter))
 {

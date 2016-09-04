@@ -110,9 +110,12 @@
     <ClCompile Include="BuildWindow.cpp" />
     <ClCompile Include="Button2D.cpp" />
     <ClCompile Include="CameraController.cpp" />
+    <ClCompile Include="CharacterManager.cpp" />
     <ClCompile Include="ClickPosConverter.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="DebugMode.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="FadeInOut.cpp" />
     <ClCompile Include="FileSaveLoad.cpp" />
     <ClCompile Include="GameData.cpp" />
@@ -122,6 +125,8 @@
     <ClCompile Include="HouseBuilder.cpp" />
     <ClCompile Include="HouseManager.cpp" />
     <ClCompile Include="HousePreviewer.cpp" />
+    <ClCompile Include="Human.cpp" />
+    <ClCompile Include="HumanManager.cpp" />
     <ClCompile Include="InputDeviceFacade.cpp" />
     <ClCompile Include="Kingdom.cpp" />
     <ClCompile Include="KingdomWindow.cpp" />
@@ -173,10 +178,13 @@
     <ClInclude Include="BuildWindow.h" />
     <ClInclude Include="Button2D.h" />
     <ClInclude Include="CameraController.h" />
+    <ClInclude Include="CharacterManager.h" />
     <ClInclude Include="ClickPosConverter.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="CommonDeclaration.h" />
     <ClInclude Include="DebugMode.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="FadeInOut.h" />
     <ClInclude Include="FileSaveLoad.h" />
     <ClInclude Include="GameData.h" />
@@ -186,6 +194,8 @@
     <ClInclude Include="HouseBuilder.h" />
     <ClInclude Include="HouseManager.h" />
     <ClInclude Include="HousePreviewer.h" />
+    <ClInclude Include="Human.h" />
+    <ClInclude Include="HumanManager.h" />
     <ClInclude Include="InputDeviceFacade.h" />
     <ClInclude Include="Kingdom.h" />
     <ClInclude Include="KingdomWindow.h" />

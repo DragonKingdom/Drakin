@@ -185,6 +185,21 @@
     <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\HouseManager\House\PrivateHouse">
       <UniqueIdentifier>{5e2a0a4c-871f-4290-8207-d2b54483a5bd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager">
+      <UniqueIdentifier>{cbbf0621-1bb1-4958-bc12-28ed03075e67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\HumanManager">
+      <UniqueIdentifier>{5d2e34b3-9f06-4b94-8ba9-3b7228f93204}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\EnemyManager">
+      <UniqueIdentifier>{396c44ed-6388-45a9-b44f-9aaa59a4870d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\EnemyManager\Enemy">
+      <UniqueIdentifier>{18cd3979-b137-40f6-b557-74a15e7c6766}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\HumanManager\Human">
+      <UniqueIdentifier>{24010290-785f-4730-a13f-42706bbdef5d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scene.cpp">
@@ -361,6 +376,21 @@
     <ClCompile Include="PrivateHouse.cpp">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\HouseManager\House\PrivateHouse</Filter>
     </ClCompile>
+    <ClCompile Include="CharacterManager.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyManager.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\EnemyManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Human.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\HumanManager\Human</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\EnemyManager\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="HumanManager.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\HumanManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -536,6 +566,21 @@
     </ClInclude>
     <ClInclude Include="PrivateHouse.h">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\HouseManager\House\PrivateHouse</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterManager.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyManager.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\EnemyManager</Filter>
+    </ClInclude>
+    <ClInclude Include="HumanManager.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\HumanManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Human.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\HumanManager\Human</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\EnemyManager\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

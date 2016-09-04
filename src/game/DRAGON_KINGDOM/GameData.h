@@ -28,6 +28,14 @@ struct KingdomData
 	int Popularity;		// 人気度
 };
 
+// 建物の数を格納する構造体
+struct HouseNum
+{
+	int House;			// 建物の総数
+	int PrivateHouse;	// 民家の総数
+	int Blacksmith;		// 鍛冶屋の総数
+};
+
 /**
  * ゲームデータを管理するクラス
  */
@@ -87,6 +95,18 @@ public:
 	KingdomData GetKingdomData();
 
 	/**
+	 * 建物の数をセットする関数
+	 * @param[in] _setHouseNum セットするデータが格納されたHouseNum構造体
+	 */
+	void SetHouseNum(HouseNum _setHouseNum);
+
+	/**
+	 * 建物の数を取得する関数
+	 * @return 建物の数が入った構造体
+	 */
+	HouseNum GetHouseNum();
+
+	/**
 	 * お金の情報をセットする関数
 	 * @param[in] _SetMoney セットするデータ
 	 */
@@ -120,7 +140,7 @@ private:
 	/// プレイ時間
 	Time			m_gameTime;
 	KingdomData		m_KingdomData;
-
+	HouseNum		m_HouseNum;
 
 };
 

@@ -20,6 +20,10 @@ GameData::GameData()
 	m_KingdomData.Satisfaction = 50;
 	m_KingdomData.Security = 100;
 
+	m_HouseNum.House = 0;
+	m_HouseNum.PrivateHouse = 0;
+	m_HouseNum.Blacksmith = 0;
+
 }
 
 GameData::~GameData()
@@ -98,6 +102,16 @@ void GameData::SetKingdomData(KingdomData _setKingdomData)
 KingdomData GameData::GetKingdomData()
 {
 	return m_KingdomData;
+}
+
+void GameData::SetHouseNum(HouseNum _setHouseNum)
+{
+	m_HouseNum = _setHouseNum;
+}
+
+HouseNum GameData::GetHouseNum()
+{
+	return m_HouseNum;
 }
 
 void GameData::SetMoney(int _setMoney)
