@@ -30,6 +30,11 @@ BUILD_STATE Church::Control()
 	return BUILD_CHURCH;
 
 }
+/**Œš•¨‚ªüˆÍ‚É—^‚¦‚é‰e‹¿’l‚ğæ“¾‚·‚éŠÖ”*/
+float Church::GetInfluence()
+{
+	return (CHURCH_INFLUENCE + (CHURCH_INFLUENCE * m_BasicStatus.Age));
+}
 
 //•`‰æŠÖ”
 void Church::Draw()

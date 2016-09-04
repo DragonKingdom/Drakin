@@ -32,6 +32,13 @@ public:
 	void GetGameData();
 	void SetGameData();
 
+	/**
+	*@date 2016/09/04 ’Ç‰Á haga
+	*/
+	/**“ñ“_ŠÔ‚Ì‹——£‚ğ‹‚ßAŒø‰Ê‚Ì‹­‚³‚ğ‘ª’è‚·‚éŠÖ”*/
+	float GetInfluenceRange(D3DXVECTOR3* _centerHousePos, D3DXVECTOR3* _checkHousePos);
+
+
 	void Load(FileSaveLoad* _pFileSaveLoad);
 	void Save(FileSaveLoad* _pFileSaveLoad);
 
@@ -49,6 +56,9 @@ private:
 	Font font1;
 	Font font2;
 	Font font3;
+	Font font4;
+	Font font5;
+
 
 	BUILD_STATE					m_buildState;
 	StateManager*				m_pStateManager;

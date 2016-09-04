@@ -52,6 +52,13 @@ BUILD_STATE PrivateHouse::Control()
 	return BUILD_PRIVATEHOUSE_RANDOM;
 }
 
+/**Œš•¨‚ªüˆÍ‚É—^‚¦‚é‰e‹¿’l‚ğæ“¾‚·‚éŠÖ”*/
+float PrivateHouse::GetInfluence()
+{
+
+	return 0.0f;
+}
+
 void PrivateHouse::Draw()
 {
 	m_pShaderAssist->Begin();

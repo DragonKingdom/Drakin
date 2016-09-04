@@ -68,24 +68,44 @@ void HouseManager::HouseControl()
 		//家の種類によって周囲の家のステータスを補正
 		switch (HouseType)
 		{
+			//鍛冶屋
 		case BUILD_BLACKSMITH:
+			for (unsigned int n = 0; n < m_pHouse.size(); n++)
+			{
+				if (n != i)
+				{
+					if (m_HousePos[n].x < m_HousePos[i].x + (ROAD_W_SIZE * INFLUENCE_RANGE + (ROAD_W_SIZE / 2)) &&
+						m_HousePos[n].x > m_HousePos[i].x - (ROAD_W_SIZE * INFLUENCE_RANGE + (ROAD_W_SIZE / 2)) &&
+						m_HousePos[n].z < m_HousePos[i].z + (ROAD_W_SIZE * INFLUENCE_RANGE + (ROAD_W_SIZE / 2)) &&
+						m_HousePos[n].z > m_HousePos[i].z - (ROAD_W_SIZE * INFLUENCE_RANGE + (ROAD_W_SIZE / 2)))
+					{
+						//補正ステータス用空の器
+						House::Status b_Status = { 0.f, 0.f, 0.f, 0 };
+						//試験的に教会が影響を与える数値を景観にしている
+						b_Status.Comfort += ((m_pHouse[i]->GetInfluence()) * (GetInfluenceRange(&m_HousePos[i], &m_HousePos[n])));
+						m_pHouse[n]->SetCorrectionStatus(b_Status);
+					}
+				}
 
+			}
 			break;
 
+			//教会
 		case BUILD_CHURCH:
 			for (unsigned int n = 0; n < m_pHouse.size(); n++)
 			{
 				if (n != i)
 				{
-					if (m_HousePos[n].x < m_HousePos[i].x + 1000 &&
-						m_HousePos[n].x > m_HousePos[i].x - 1000 &&
-						m_HousePos[n].z < m_HousePos[i].z + 1000 &&
-						m_HousePos[n].z > m_HousePos[i].z - 1000)
+					if (m_HousePos[n].x < m_HousePos[i].x + (ROAD_W_SIZE * INFLUENCE_RANGE + (ROAD_W_SIZE / 2)) &&
+						m_HousePos[n].x > m_HousePos[i].x - (ROAD_W_SIZE * INFLUENCE_RANGE + (ROAD_W_SIZE / 2)) &&
+						m_HousePos[n].z < m_HousePos[i].z + (ROAD_W_SIZE * INFLUENCE_RANGE + (ROAD_W_SIZE / 2)) &&
+						m_HousePos[n].z > m_HousePos[i].z - (ROAD_W_SIZE * INFLUENCE_RANGE + (ROAD_W_SIZE / 2)))
 					{
-						//ステータスを修正する
-						House::Status Status = {0.f,0.f,0.f,0};
-						Status.Landscape += 3;
-						m_pHouse[n]->SetCorrectionStatus(Status);
+						//補正ステータス用空の器
+						House::Status c_Status = {0.f,0.f,0.f,0};
+						//試験的に教会が影響を与える数値を景観にしている
+						c_Status.Landscape += ((m_pHouse[i]->GetInfluence()) * (GetInfluenceRange(&m_HousePos[i], &m_HousePos[n])));
+						m_pHouse[n]->SetCorrectionStatus(c_Status);
 					}
 				}
 
@@ -120,7 +140,6 @@ void HouseManager::HouseControl()
 		//ステータスを決定する
 	for (unsigned int i = 0; i < m_pHouse.size(); i++)
 	{
-		//m_pHouse[i]->GetCorrectionStatus();    /**デバック用*/
 		m_pHouse[i]->DecisionHouseStatus();
 	}
 
@@ -215,6 +234,24 @@ void HouseManager::Draw()
 				"Landscape" + std::to_string(Status.Landscape) + "\n";
 			font3.Draw(Str.c_str(), D3DXVECTOR2(400, 650));
 		}
+		else if (i == 3)
+		{
+			std::string Str =
+				"Age" + std::to_string(Status.Age) + "\n" +
+				"Comfort" + std::to_string(Status.Comfort) + "\n"
+				"Influence" + std::to_string(Status.Influence) + "\n"
+				"Landscape" + std::to_string(Status.Landscape) + "\n";
+			font4.Draw(Str.c_str(), D3DXVECTOR2(600, 650));
+		}
+		else if (i == 4)
+		{
+			std::string Str =
+				"Age" + std::to_string(Status.Age) + "\n" +
+				"Comfort" + std::to_string(Status.Comfort) + "\n"
+				"Influence" + std::to_string(Status.Influence) + "\n"
+				"Landscape" + std::to_string(Status.Landscape) + "\n";
+			font5.Draw(Str.c_str(), D3DXVECTOR2(800, 650));
+		}
 		
 	}
 
@@ -222,6 +259,12 @@ void HouseManager::Draw()
 	{
 		m_pHouseBuilder->PreviewerDraw();
 	}
+	/**特殊建物管理チェック用*/
+	if (m_buildState == BUILD_BLACKSMITH || m_buildState == BUILD_CHURCH)
+	{
+		m_pHouseBuilder->PreviewerDraw();
+	}
+
 }
 
 //建物を作るかどうかという状態を取得
@@ -248,6 +291,34 @@ void HouseManager::SetGameData()
 
 	// コストを初期化
 	m_HouseCost = 0;
+}
+
+/**二点間の距離を求め、効果の強さを測定する関数*/
+float HouseManager::GetInfluenceRange(D3DXVECTOR3* _centerHousePos, D3DXVECTOR3* _checkHousePos)
+{
+	/**二点間の距離を求める*/
+	double length = pow((_checkHousePos->x - _centerHousePos->x)*(_checkHousePos->x - _centerHousePos->x) +
+		(_checkHousePos->z - _centerHousePos->z)*(_checkHousePos->z - _centerHousePos->z), 0.5);
+
+	//距離によって戻す値をかえる。戻り値は仮のもの
+	if ((float)length <= (ROAD_W_SIZE + (ROAD_W_SIZE / 2)))
+	{
+		return 5.f;
+	}
+	else if ((float)length <= ((ROAD_W_SIZE * 2.f) + (ROAD_W_SIZE / 2)) && (float)length > (ROAD_W_SIZE + (ROAD_W_SIZE / 2)))
+	{
+		return 4.f;
+	}
+	else if ((float)length <= ((ROAD_W_SIZE * 3.f) + (ROAD_W_SIZE / 2)) && (float)length > ((ROAD_W_SIZE * 2.f) + (ROAD_W_SIZE / 2)))
+	{
+		return 3.f;
+	}
+	else if ((float)length <= ((ROAD_W_SIZE * 4.f) + (ROAD_W_SIZE / 2)) && (float)length > ((ROAD_W_SIZE * 3.f) + (ROAD_W_SIZE / 2)))
+	{
+		return 2.f;
+	}
+	
+	return 1.f;
 }
 
 void HouseManager::Load(FileSaveLoad* _pFileSaveLoad)

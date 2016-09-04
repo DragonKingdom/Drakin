@@ -1,6 +1,9 @@
 #ifndef HOUSE_H
 #define HOUSE_H
 
+//特殊建物が周りに及ぼす影響範囲（１単位１ブロック）
+#define INFLUENCE_RANGE 5
+
 #include "HouseBuilder.h"
 
 class FbxModel;
@@ -32,10 +35,11 @@ public:
 	/**2016/09/03追加 haga*/
 	/**年齢をカウントする関数*/
 	void			CountAge();
+	/**建物が周囲に与える影響値を取得する関数*/
+	virtual float GetInfluence();
 	/**最終ステータスを決定する*/
 	void			DecisionHouseStatus();
-	/**補正値取得用*/
-	void			GetCorrectionStatus(){ m_CorrectionStatus.Landscape += 3; }
+	
 	
 
 protected:

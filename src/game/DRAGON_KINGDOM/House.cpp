@@ -100,6 +100,13 @@ void House::CountAge()
 	}
 }
 
+/**Œš•¨‚ªüˆÍ‚É—^‚¦‚é‰e‹¿’l‚ğæ“¾‚·‚éŠÖ”*/
+float House::GetInfluence()
+{
+	//’†‚ÍŒp³ƒNƒ‰ƒX‚²‚Æ‚ÉˆÙ‚È‚é
+	return 0.0f;
+}
+
 /**•â³’l‚ğC³‚·‚éŠÖ”*/
 void House::SetCorrectionStatus(House::Status _Status)
 {

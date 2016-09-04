@@ -30,6 +30,12 @@ BUILD_STATE Blacksmith::Control()
 
 }
 
+/**Œš•¨‚ªüˆÍ‚É—^‚¦‚é‰e‹¿’l‚ğæ“¾‚·‚éŠÖ”*/
+float Blacksmith::GetInfluence()
+{
+	return (BLACKSMITH_INFLUENCE + (BLACKSMITH_INFLUENCE * m_BasicStatus.Age));
+}
+
 //•`‰æŠÖ”
 void Blacksmith::Draw()
 {
