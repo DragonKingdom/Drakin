@@ -7,7 +7,7 @@ m_EnemyPos(_enemyPos),
 m_Angle(_angle)
 {
 	m_Texture.Load("Resource\\image\\CLUTLight.jpg");
-	m_pShaderAssist->LoadTechnique("Effect\\HouseEffect.fx", "TShader", "WVPP");
+	m_pShaderAssist->LoadTechnique("Effect\\EnemyEffect.fx", "EnemyEffect", "WVPP");
 	m_LightDir = m_pShaderAssist->GetParameterHandle("LightDir");
 	m_Ambient = m_pShaderAssist->GetParameterHandle("Ambient");
 	m_CLUTTU = m_pShaderAssist->GetParameterHandle("CLUTTU");

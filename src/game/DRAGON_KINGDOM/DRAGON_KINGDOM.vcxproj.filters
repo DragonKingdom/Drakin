@@ -200,6 +200,9 @@
     <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\HumanManager\Human">
       <UniqueIdentifier>{24010290-785f-4730-a13f-42706bbdef5d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\RoadChecker">
+      <UniqueIdentifier>{b13eeacc-43f5-4a3e-9a44-9af5915a8bc8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scene.cpp">
@@ -390,6 +393,9 @@
     </ClCompile>
     <ClCompile Include="HumanManager.cpp">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\HumanManager</Filter>
+    </ClCompile>
+    <ClCompile Include="RoadChecker.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadChecker</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -582,6 +588,9 @@
     <ClInclude Include="Enemy.h">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\EnemyManager\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="RoadChecker.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadChecker</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
@@ -600,6 +609,12 @@
       <Filter>Effect</Filter>
     </FxCompile>
     <FxCompile Include="Effect\NormalHouseEffect.fx">
+      <Filter>Effect</Filter>
+    </FxCompile>
+    <FxCompile Include="Effect\EnemyEffect.fx">
+      <Filter>Effect</Filter>
+    </FxCompile>
+    <FxCompile Include="Effect\HumanEffect.fx">
       <Filter>Effect</Filter>
     </FxCompile>
   </ItemGroup>

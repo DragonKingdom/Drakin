@@ -141,6 +141,7 @@
     <ClCompile Include="PrivateHouse.cpp" />
     <ClCompile Include="Road.cpp" />
     <ClCompile Include="RoadBuilder.cpp" />
+    <ClCompile Include="RoadChecker.cpp" />
     <ClCompile Include="RoadManager.cpp" />
     <ClCompile Include="RoadPreviewer.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -209,6 +210,7 @@
     <ClInclude Include="PrivateHouse.h" />
     <ClInclude Include="Road.h" />
     <ClInclude Include="RoadBuilder.h" />
+    <ClInclude Include="RoadChecker.h" />
     <ClInclude Include="RoadManager.h" />
     <ClInclude Include="RoadPreviewer.h" />
     <ClInclude Include="Scene.h" />
@@ -237,10 +239,12 @@
     <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="Effect\EnemyEffect.fx" />
     <FxCompile Include="Effect\GroundEffect.fx">
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Effect\HouseEffect.fx" />
+    <FxCompile Include="Effect\HumanEffect.fx" />
     <FxCompile Include="Effect\NormalHouseEffect.fx" />
     <FxCompile Include="Effect\RoadEffect.fx">
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>
