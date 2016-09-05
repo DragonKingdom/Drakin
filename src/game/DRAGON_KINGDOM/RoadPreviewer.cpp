@@ -61,10 +61,24 @@ void RoadPreviewer::NormalDraw()
 
 void RoadPreviewer::CurveDraw()
 {
-	std::vector<D3DXVECTOR3> CenterLinePos;
+	m_CenterLinePos.clear();
+	m_TmpCenterLinePos.clear();
+	int length = CalculateBezierLength();
+	// エリアの数
+	int NumZ = 0;
+	int VecLength = 0;
 
-	float length = CalculateBezierLength();
-	int RoadNum = static_cast<int>(length / ROAD_H_SIZE + 1);
+	if (length % int(ROAD_H_SIZE) == int(ROAD_H_SIZE - 1))
+	{
+		NumZ = int(length / ROAD_W_SIZE) + 1;
+		VecLength = int(NumZ * ROAD_H_SIZE);
+	}
+	else
+	{
+		NumZ = int(length / ROAD_W_SIZE);
+		VecLength = int(NumZ * ROAD_H_SIZE);
+	}
+	int RoadNum = static_cast<int>(VecLength / ROAD_H_SIZE);
 	if (RoadNum < 0)
 	{
 	}
@@ -76,31 +90,35 @@ void RoadPreviewer::CurveDraw()
 
 		for (int i = 0; i < RoadNum; i++)
 		{
-			CenterLinePos.push_back(QuadraticBezPoint(i * 1.f / (float)(RoadNum - 1)));
+			m_TmpCenterLinePos.push_back(QuadraticBezPoint(i * 1.f / (float)(RoadNum - 1)));
+		}
+		for (int i = 0; i < RoadNum; i++)
+		{
+			m_CenterLinePos.push_back(QuadraticConstantBezPoint(i * 1.f / (float)(RoadNum - 1), RoadNum));
 		}
 
 		for (int i = 0; i < RoadNum - 1; i++)
 		{
 			pAngle[i] =
-				atan2(CenterLinePos[i + 1].z - CenterLinePos[i].z,
-				CenterLinePos[i + 1].x - CenterLinePos[i].x);
+				atan2(m_CenterLinePos[i + 1].z - m_CenterLinePos[i].z,
+				m_CenterLinePos[i + 1].x - m_CenterLinePos[i].x);
 		}
 		pAngle[RoadNum - 1] =
-			atan2(CenterLinePos[RoadNum - 1].z - CenterLinePos[RoadNum - 2].z,
-			CenterLinePos[RoadNum - 1].x - CenterLinePos[RoadNum - 2].x);
+			atan2(m_CenterLinePos[RoadNum - 1].z - m_CenterLinePos[RoadNum - 2].z,
+			m_CenterLinePos[RoadNum - 1].x - m_CenterLinePos[RoadNum - 2].x);
 
 
 		for (int i = 0; i < RoadNum; i++)
 		{
 			D3DXVECTOR3 p;
-			p.x = CenterLinePos[i].x + ROAD_H_SIZE / 2 * sin(pAngle[i]);
+			p.x = m_CenterLinePos[i].x + ROAD_H_SIZE / 2 * sin(pAngle[i]);
 			p.y = 20.f;
-			p.z = CenterLinePos[i].z + ROAD_H_SIZE / 2 * -cos(pAngle[i]);
+			p.z = m_CenterLinePos[i].z + ROAD_H_SIZE / 2 * -cos(pAngle[i]);
 
 			pLeftLinePos[i] = p;
 
-			p.x = CenterLinePos[i].x + -ROAD_H_SIZE / 2 * sin(pAngle[i]);
-			p.z = CenterLinePos[i].z + -ROAD_H_SIZE / 2 * -cos(pAngle[i]);
+			p.x = m_CenterLinePos[i].x + -ROAD_H_SIZE / 2 * sin(pAngle[i]);
+			p.z = m_CenterLinePos[i].z + -ROAD_H_SIZE / 2 * -cos(pAngle[i]);
 			pRightLinePos[i] = p;
 		}
 
@@ -121,7 +139,7 @@ void RoadPreviewer::CurveDraw()
 		GraphicsDevice::getInstance().GetDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);
 		GraphicsDevice::getInstance().GetDevice()->DrawPrimitiveUP(
 			D3DPT_TRIANGLESTRIP,
-			CenterLinePos.size() * 2 - 2,
+			m_CenterLinePos.size() * 2 - 2,
 			pVertex,
 			sizeof(CUSTOMVERTEX)
 			);
@@ -223,4 +241,45 @@ D3DXVECTOR3 RoadPreviewer::QuadraticBezPoint(float _t)
 	vertex.z += valueTemp * m_EndPos.z;
 
 	return vertex;
+}
+
+D3DXVECTOR3 RoadPreviewer::QuadraticConstantBezPoint(float _t, int _divideNum)
+{
+	int N = _divideNum;
+	float ni = 1 / static_cast<float>(N);
+	float tt = 0;
+	float x, t = _t / static_cast<float>(_divideNum);
+	float *dd = new float[N + 1];
+	D3DXVECTOR3 q;
+	//ttは小数なのでintで桁落ちしないためのゲタ
+	const int G = 1000000;
+	//始めの長さは0
+	dd[0] = 0;
+
+	for (int i = 1; i < N; i++)
+	{
+		tt += ni;
+		q = QuadraticBezPoint(tt);
+		float distance = pow((m_TmpCenterLinePos[i - 1].x - m_TmpCenterLinePos[i].x)*(m_TmpCenterLinePos[i - 1].x - m_TmpCenterLinePos[i].x)
+			+ (m_TmpCenterLinePos[i - 1].y - m_TmpCenterLinePos[i].y)*(m_TmpCenterLinePos[i - 1].y - m_TmpCenterLinePos[i].y), 0.5);
+		dd[i] = dd[i - 1] + distance;
+	}
+	//距離の合計(=dd[N])で正規化
+	//これでddはdd[0]=0<dd[1]<dd[2]<...<dd[N-1]<dd[N]=1となる
+	for (int i = 1; i<N + 1; i++){
+		dd[i] /= dd[N];
+	}
+	//指定されたtが距離でいうと何番目の区間kにあるかを求める
+	int k = 0;
+	for (int i = 0; i<N; i++, k++){
+		if (dd[i] <= t && t <= dd[i + 1])break;
+	}
+
+	//tが区間内のどのあたりにあるかを調べる
+	//t=dd[k]ならx=0,t=dd[k+1]ならx=1,0<=x<=1
+	x = (t - dd[k]) / (dd[k + 1] - dd[k]);
+	//その割合で線形補間し、区間長をかける
+	x = (k*(1 - x) + (1 + k)*x)*ni;
+	delete[] dd;
+	return QuadraticBezPoint(x * _t);
 }

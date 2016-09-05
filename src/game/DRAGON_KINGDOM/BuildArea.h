@@ -46,6 +46,7 @@ private:
 	D3DXVECTOR3** m_ppCurveBuildArea;
 	BUILDAREAMANAGER_ENUM::BUILD_TYPE m_buildType;
 	std::vector<D3DXVECTOR3> m_CenterLinePos;//曲線のビルドエリアを作るときに使う
+	std::vector<D3DXVECTOR3> m_TmpCenterLinePos;//曲線のビルドエリアを作るときの頂点一時保存
 
 	bool	m_isLeft;	/*道に対して左にあるAreaかのフラグ*/
 	float	m_x;		/*中心座標*/
@@ -73,7 +74,7 @@ private:
 
 	float CalculateBezierLength();
 	D3DXVECTOR3 QuadraticBezPoint(float _t);
-
+	D3DXVECTOR3 QuadraticConstantBezPoint(float _t, int _divideNum);
 	bool RoadAngleCheck(float _roadAngle);
 
 };

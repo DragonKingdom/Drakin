@@ -20,6 +20,7 @@ private:
 	D3DXVECTOR3* m_pBezierLine;
 	D3DXVECTOR3  m_ControlPos;
 	std::vector<D3DXVECTOR3> m_CenterLinePos;
+	std::vector<D3DXVECTOR3> m_TmpCenterLinePos;
 	D3DXVECTOR3* m_pLeftLinePos;
 	D3DXVECTOR3* m_pRightLinePos;
 	float*       m_pAngle;
@@ -27,7 +28,8 @@ private:
 	void BezierLineCreate();
 	float CalculateBezierLength();
 	D3DXVECTOR3 QuadraticBezPoint(float _t);
-	
+	D3DXVECTOR3 QuadraticConstantBezPoint(float _t,int _divideNum);
+
 
 };
 
