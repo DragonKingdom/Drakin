@@ -167,7 +167,7 @@ void HouseManager::BuildControl()
 		if (m_pInputDevice->MouseLeftPush())
 		{
 			// ŠŽ‹à‚ÆƒRƒXƒg‚ð”äŠr‚µ‚ÄŒšÝ‚·‚é‚©”»’f
-			if (m_Money > m_pHouseBuilder->GetHouseCost(m_buildState))
+			if ((m_Money - (m_pHouseBuilder->GetHouseCost(m_buildState))) >= 0)
 			{
 				//ƒRƒXƒg‚ðŽæ“¾‚µ‚Ä•Ï”‚ÉŠi”[‚µ‚Ä‚¨‚­(Œã‚ÉGameData‚É“n‚·¨ŠÖ” HouseManager::SetGameData())
 				m_HouseCost = m_pHouseBuilder->GetHouseCost(m_buildState);
