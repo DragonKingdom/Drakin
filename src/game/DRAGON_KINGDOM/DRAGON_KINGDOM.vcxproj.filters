@@ -167,9 +167,6 @@
     <Filter Include="main\SceneManager\Scene\GameScene\Kingdom">
       <UniqueIdentifier>{7fcdc10a-0d69-40f6-b373-fb24bec5e672}</UniqueIdentifier>
     </Filter>
-    <Filter Include="main\SceneManager\Scene\GameScene\NowLoading">
-      <UniqueIdentifier>{3bf1345d-5862-455b-afac-1afe71ca870d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="main\SceneManager\Scene\GameScene\FileSaveLoad">
       <UniqueIdentifier>{4dc2f0fa-efa9-4f16-abc0-7a95aa066d15}</UniqueIdentifier>
     </Filter>
@@ -184,6 +181,9 @@
     </Filter>
     <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\HouseManager\House\PrivateHouse">
       <UniqueIdentifier>{5e2a0a4c-871f-4290-8207-d2b54483a5bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\Kingdom\NowLoading">
+      <UniqueIdentifier>{3bf1345d-5862-455b-afac-1afe71ca870d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -344,7 +344,7 @@
       <Filter>main\SceneManager\Scene\GameScene\Kingdom</Filter>
     </ClCompile>
     <ClCompile Include="NowLoading.cpp">
-      <Filter>main\SceneManager\Scene\GameScene\NowLoading</Filter>
+      <Filter>main\SceneManager\Scene\GameScene\Kingdom\NowLoading</Filter>
     </ClCompile>
     <ClCompile Include="FileSaveLoad.cpp">
       <Filter>main\SceneManager\Scene\GameScene\FileSaveLoad</Filter>
@@ -520,7 +520,7 @@
       <Filter>main\SceneManager\Scene\GameScene\Kingdom</Filter>
     </ClInclude>
     <ClInclude Include="NowLoading.h">
-      <Filter>main\SceneManager\Scene\GameScene\NowLoading</Filter>
+      <Filter>main\SceneManager\Scene\GameScene\Kingdom\NowLoading</Filter>
     </ClInclude>
     <ClInclude Include="FileSaveLoad.h">
       <Filter>main\SceneManager\Scene\GameScene\FileSaveLoad</Filter>
