@@ -36,6 +36,7 @@ float Blacksmith::GetInfluence()
 	return (BLACKSMITH_INFLUENCE + (BLACKSMITH_INFLUENCE * m_BasicStatus.Age));
 }
 
+
 //ï`âÊä÷êî
 void Blacksmith::Draw()
 {

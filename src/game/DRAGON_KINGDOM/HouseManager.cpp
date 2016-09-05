@@ -81,7 +81,7 @@ void HouseManager::HouseControl()
 					{
 						//補正ステータス用空の器
 						House::Status b_Status = { 0.f, 0.f, 0.f, 0 };
-						//試験的に教会が影響を与える数値を景観にしている
+						//試験的に鍛冶屋が影響を与える数値を快適にしている
 						b_Status.Comfort += ((m_pHouse[i]->GetInfluence()) * (GetInfluenceRange(&m_HousePos[i], &m_HousePos[n])));
 						m_pHouse[n]->SetCorrectionStatus(b_Status);
 					}
@@ -300,7 +300,7 @@ float HouseManager::GetInfluenceRange(D3DXVECTOR3* _centerHousePos, D3DXVECTOR3*
 	double length = pow((_checkHousePos->x - _centerHousePos->x)*(_checkHousePos->x - _centerHousePos->x) +
 		(_checkHousePos->z - _centerHousePos->z)*(_checkHousePos->z - _centerHousePos->z), 0.5);
 
-	//距離によって戻す値をかえる。戻り値は仮のもの
+	//距離によって戻す値をかえる。戻り値は仮置き
 	if ((float)length <= (ROAD_W_SIZE + (ROAD_W_SIZE / 2)))
 	{
 		return 5.f;
