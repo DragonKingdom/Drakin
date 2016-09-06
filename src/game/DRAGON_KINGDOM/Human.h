@@ -3,6 +3,8 @@
 
 class FbxModel;
 class ShaderAssist;
+class RoadChecker;
+class HouseChecker;
 
 class Human
 {
@@ -12,15 +14,18 @@ public:
 		int HitPoint;
 		int MagicPoint;
 		int Power;
+		int Time;
 	};
 
-	Human(D3DXVECTOR3 _humanPos, float _angle);
+	Human(D3DXVECTOR3 _humanPos, float _angle, RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker);
 	~Human();
 	void Control();
 
 private:
 	State m_State;
 
+	RoadChecker*			m_pRoadChecker;
+	HouseChecker*			m_pHouseChecker;
 	std::vector<FbxModel*>	m_Model;
 	D3DXVECTOR3				m_HumanPos;
 	float					m_Angle;

@@ -2,9 +2,11 @@
 #include "CharacterManager.h"
 #include "Map.h"
 #include "HouseManager.h"
+#include "HouseChecker.h"
 #include "BuildAreaManager.h"
 #include "BuildAreaChecker.h"
 #include "RoadManager.h"
+#include "RoadChecker.h"
 #include "StateManager.h"
 #include "FileSaveLoad.h"
 
@@ -12,12 +14,14 @@ ObjectManager::ObjectManager(StateManager* _pStateManager, GameData* _pGameData,
 m_pStateManager(_pStateManager),
 m_pGameData(_pGameData),
 m_pClickPosConverter(_pClickPosConverter),
+m_pMap(new Map(_pStateManager, _pGameData)),
 m_pBuildAreaManager(new BuildAreaManager(_pStateManager, _pGameData, _pClickPosConverter)),
 m_pBuildAreaChecker(new BuildAreaChecker(m_pBuildAreaManager)),
-m_pMap(new Map(_pStateManager, _pGameData)),
-m_pCharacterManager(new CharacterManager(_pStateManager, _pGameData)),
 m_pHouseManager(new HouseManager(m_pBuildAreaChecker, _pStateManager, _pGameData, _pClickPosConverter)),
-m_pRoadManager(new RoadManager(m_pBuildAreaChecker, _pStateManager, _pGameData, _pClickPosConverter))
+m_pHouseChecker(new HouseChecker(m_pHouseManager)),
+m_pRoadManager(new RoadManager(m_pBuildAreaChecker, _pStateManager, _pGameData, _pClickPosConverter)),
+m_pRoadChecker(new RoadChecker(m_pRoadManager)),
+m_pCharacterManager(new CharacterManager(_pStateManager, _pGameData, m_pRoadChecker, m_pHouseChecker))
 {
 }
 
@@ -35,6 +39,7 @@ void ObjectManager::Control()
 	if (m_GameSceneState == GAMESCENE_NORMAL)
 	{
 		m_pMap->Control();
+		m_pCharacterManager->Control();
 		m_pHouseManager->Control();
 
 		BuildControl();

@@ -1,9 +1,12 @@
 #include "HumanManager.h"
 #include "Human.h"
+#include <time.h>
 
-HumanManager::HumanManager(StateManager* _pStateManager, GameData* _pGameData):
+HumanManager::HumanManager(StateManager* _pStateManager, GameData* _pGameData, RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker) :
 m_pStateManager(_pStateManager),
-m_pGameData(_pGameData)
+m_pGameData(_pGameData),
+m_pRoadChecker(_pRoadChecker),
+m_pHouseChecker(_pHouseChecker)
 {
 }
 
@@ -13,10 +16,13 @@ HumanManager::~HumanManager()
 
 void HumanManager::Control()
 {
-	/// @todo 動作チェックのためのテストコード
-	if (m_pHuman.size() == 0 && m_HouseNum.PrivateHouse >= 1)
+	if (m_pHuman.size() <= HUMAN_MAX && m_HouseNum.PrivateHouse >= 1)
 	{
-		m_pHuman.push_back(new Human(D3DXVECTOR3(0,0,0),0));
+		srand(unsigned int(time(NULL)));
+		if (rand() % 100 < 10)
+		{
+			m_pHuman.push_back(new Human(D3DXVECTOR3(0, 0, 0), 0, m_pRoadChecker, m_pHouseChecker));
+		}
 	}
 
 	for (unsigned int i = 0; i < m_pHuman.size(); i++)

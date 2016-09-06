@@ -1,9 +1,11 @@
 #include "EnemyManager.h"
 #include "Enemy.h"
 
-EnemyManager::EnemyManager(StateManager* _pStateManager, GameData* _pGameData) :
+EnemyManager::EnemyManager(StateManager* _pStateManager, GameData* _pGameData, RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker) :
 m_pStateManager(_pStateManager),
-m_pGameData(_pGameData)
+m_pGameData(_pGameData),
+m_pRoadChecker(_pRoadChecker),
+m_pHouseChecker(_pHouseChecker)
 {
 }
 

@@ -123,6 +123,7 @@
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="House.cpp" />
     <ClCompile Include="HouseBuilder.cpp" />
+    <ClCompile Include="HouseChecker.cpp" />
     <ClCompile Include="HouseManager.cpp" />
     <ClCompile Include="HousePreviewer.cpp" />
     <ClCompile Include="Human.cpp" />
@@ -193,6 +194,7 @@
     <ClInclude Include="Ground.h" />
     <ClInclude Include="House.h" />
     <ClInclude Include="HouseBuilder.h" />
+    <ClInclude Include="HouseChecker.h" />
     <ClInclude Include="HouseManager.h" />
     <ClInclude Include="HousePreviewer.h" />
     <ClInclude Include="Human.h" />

@@ -4,11 +4,13 @@
 #include "HumanManager.h"
 #include "EnemyManager.h"
 
-CharacterManager::CharacterManager(StateManager* _pStateManager, GameData* _pGameData) :
+CharacterManager::CharacterManager(StateManager* _pStateManager, GameData* _pGameData, RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker) :
 m_pStateManager(_pStateManager),
 m_pGameData(_pGameData),
-m_pHumanManager(new HumanManager(m_pStateManager, m_pGameData)),
-m_pEnemyManager(new EnemyManager(m_pStateManager, m_pGameData))
+m_pRoadChecker(_pRoadChecker),
+m_pHouseChecker(_pHouseChecker),
+m_pHumanManager(new HumanManager(m_pStateManager, m_pGameData, m_pRoadChecker, m_pHouseChecker)),
+m_pEnemyManager(new EnemyManager(m_pStateManager, m_pGameData, m_pRoadChecker, m_pHouseChecker))
 {
 }
 

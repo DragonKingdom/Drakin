@@ -203,6 +203,9 @@
     <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\RoadChecker">
       <UniqueIdentifier>{b13eeacc-43f5-4a3e-9a44-9af5915a8bc8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\HouseChecker">
+      <UniqueIdentifier>{b886c65b-756f-43ed-b7cf-47a9dc4d2443}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scene.cpp">
@@ -397,6 +400,9 @@
     <ClCompile Include="RoadChecker.cpp">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadChecker</Filter>
     </ClCompile>
+    <ClCompile Include="HouseChecker.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\HouseChecker</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -590,6 +596,9 @@
     </ClInclude>
     <ClInclude Include="RoadChecker.h">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadChecker</Filter>
+    </ClInclude>
+    <ClInclude Include="HouseChecker.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\HouseChecker</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

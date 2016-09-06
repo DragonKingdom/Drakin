@@ -1,9 +1,11 @@
 #include "Human.h"
 #include "ShaderAssist.h"
 
-Human::Human(D3DXVECTOR3 _humanPos, float _angle):
+Human::Human(D3DXVECTOR3 _humanPos, float _angle, RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker) :
 m_HumanPos(_humanPos),
-m_Angle(_angle)
+m_Angle(_angle),
+m_pRoadChecker(_pRoadChecker),
+m_pHouseChecker(_pHouseChecker)
 {
 	m_Texture.Load("Resource\\image\\CLUTLight.jpg");
 	m_pShaderAssist->LoadTechnique("Effect\\HumanEffect.fx", "HumanEffect", "WVPP");
@@ -32,6 +34,7 @@ m_Angle(_angle)
 	m_State.HitPoint = 30;
 	m_State.MagicPoint = 20;
 	m_State.Power = 10;
+	m_State.Time = 3600;
 }
 
 Human::~Human()
@@ -40,5 +43,5 @@ Human::~Human()
 
 void Human::Control()
 {
-
+	
 }

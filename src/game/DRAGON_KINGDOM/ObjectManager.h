@@ -6,7 +6,9 @@ class GameData;
 class Map;
 class CharacterManager;
 class HouseManager;
+class HouseChecker;
 class RoadManager;
+class RoadChecker;
 class BuildAreaManager;
 class BuildAreaChecker;
 class ClickPosConverter;
@@ -35,11 +37,13 @@ private:
 	StateManager*		m_pStateManager;
 	GameData*			m_pGameData;
 	Map*				m_pMap;
-	CharacterManager*	m_pCharacterManager;
 	BuildAreaManager*	m_pBuildAreaManager;
 	BuildAreaChecker*	m_pBuildAreaChecker;
 	HouseManager*		m_pHouseManager;
+	HouseChecker*		m_pHouseChecker;
 	RoadManager*		m_pRoadManager;
+	RoadChecker*		m_pRoadChecker;
+	CharacterManager*	m_pCharacterManager;
 	GAMESCENE_STATE     m_GameSceneState;
 	BUILD_STATE         m_BuildState;
 
