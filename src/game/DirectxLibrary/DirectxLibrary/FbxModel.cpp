@@ -94,8 +94,6 @@ void FbxModel::Draw()
 	///@todo fvf‚ÌÝ’è‚Í•ª‚¯‚Æ‚«‚½‚¢‚©‚È
 	m_pDevice->SetFVF(USERVERTEX_FVF);
 
-	m_pDevice->SetMaterial(&m_pFbxModelData->Material);
-
 	for (unsigned int n = 0; n < m_pFbxModelData->pTextureData.size(); n++)
 	{
 		m_pDevice->SetTexture(n, m_pFbxModelData->pTextureData[n]->pTexture);
@@ -119,8 +117,6 @@ void FbxModel::Draw()
 void FbxModel::NonTextureDraw()
 {
 	m_pDevice->SetFVF(USERVERTEX_FVF);
-
-	m_pDevice->SetMaterial(&m_pFbxModelData->Material);
 
 	m_pDevice->SetTexture(0, NULL);
 
@@ -172,16 +168,15 @@ void FbxModel::ReleaseAnimation()
 	delete[] m_pVertex;
 }
 
+void FbxModel::SetAnimationFrame()
+{
+
+}
+
 void FbxModel::AnimationDraw()
 {
 	if (m_pFbxModelData->Animation.SkinNum != 0)
 	{
-
-		///@todo fvf‚ÌÝ’è‚Í•ª‚¯‚Æ‚«‚½‚¢‚©‚È
-		m_pDevice->SetFVF(USERVERTEX_FVF);
-
-		m_pDevice->SetMaterial(&m_pFbxModelData->Material);
-
 		//for (unsigned int n = 0; n < m_pFbxModelData->pTextureData.size(); n++)
 		//{
 		//	m_pDevice->SetTexture(n, m_pFbxModelData->pTextureData[n]->pTexture);

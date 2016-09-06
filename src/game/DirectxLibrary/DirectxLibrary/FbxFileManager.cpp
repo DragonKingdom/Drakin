@@ -413,8 +413,7 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 	std::vector<const char*>		TextureFileName;
 	std::vector<fbxsdk::FbxString>	TextureUvSetName;
 
-	D3DMATERIAL9 MaterialData;
-	ZeroMemory(&MaterialData, sizeof(D3DMATERIAL9));
+	std::vector<D3DMATERIAL9> pMaterialData;
 
 
 	// Nodeに戻る
@@ -425,13 +424,6 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 	
 	for (int i = 0; i < MaterialCount; i++)
 	{
-		if (MaterialCount > 1)
-		{
-			MessageBox(NULL, TEXT("複数のマテリアルはわりあてられません"), TEXT("エラー"), MB_OK);
-			break;
-		}
-
-
 		// マテリアルの取得
 		fbxsdk::FbxSurfaceMaterial* Material = Node->GetMaterial(i);
 
@@ -440,8 +432,7 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 			// Lambertにダウンキャスト
 			fbxsdk::FbxSurfaceLambert* lambert = (fbxsdk::FbxSurfaceLambert*)Material;
 			
-
-			// Materialはカラーとバンプとすぺきゅらーを優先的にしたい
+			D3DMATERIAL9 MaterialData;
 
 			// アンビエント
 			MaterialData.Ambient.r = (float)lambert->Ambient.Get().mData[0] * (float)lambert->AmbientFactor.Get();
@@ -469,6 +460,8 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 
 
 			GetTextureName(lambert, fbxsdk::FbxSurfaceMaterial::sNormalMap, &TextureFileName, &TextureUvSetName, &TextureFileCount);
+
+			pMaterialData.push_back(MaterialData);
 		}
 		else if (Material->GetClassId().Is(fbxsdk::FbxSurfacePhong::ClassId))
 		{
@@ -538,6 +531,10 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 			fbxsdk::FbxArray<FbxString*> animation_names;
 			m_pFbxScene->FillAnimStackNameArray(animation_names);
 
+			//auto take_info = m_pFbxScene->GetTakeInfo(animation_names[0]->Buffer());
+			//FbxTime start_time = take_info->mLocalTimeSpan.GetStart();
+			//FbxTime end_time = take_info->mLocalTimeSpan.GetStop();
+
 			for (int j = 0; j < animationData.pSkinData[i].ClusterNum; j++)
 			{
 				// j番目のクラスタを取得
@@ -548,7 +545,6 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 				animationData.pSkinData[i].pCluster[j].WeightAry = cluster->GetControlPointWeights();
 
 				FbxAMatrix initMat;
-				//initMat = cluster->GetLink()->EvaluateGlobalTransform();
 				 initMat = cluster->GetTransformLinkMatrix(initMat);
 
 				FbxAMatrix GeometryMat = GetGeometry(cluster->GetLink());
@@ -668,7 +664,10 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 	// マテリアルのでーたがあるなら詰める
 	if (MaterialCount != 0)
 	{
-		pModelData->Material = MaterialData;
+		for (unsigned int i = 0; i < pMaterialData.size(); i++)
+		{
+			pModelData->Material.push_back(pMaterialData[i]);
+		}
 	}
 
 	for (int i = 0; i < TextureFileCount; i++)
