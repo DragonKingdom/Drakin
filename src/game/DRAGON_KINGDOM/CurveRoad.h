@@ -28,7 +28,7 @@ private:
 	void BezierLineCreate();
 	float CalculateBezierLength();
 	D3DXVECTOR3 QuadraticBezPoint(float _t);
-	D3DXVECTOR3 QuadraticConstantBezPoint(float _t,int _divideNum);
+	D3DXVECTOR3 QuadraticConstantBezPoint(int _divideNum,int _nowCnt);
 
 
 };

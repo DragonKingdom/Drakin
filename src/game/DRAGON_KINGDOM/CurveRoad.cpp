@@ -24,17 +24,10 @@ void CurveRoad::BezierLineCreate()
 	int NumZ = 0;
 	int VecLength = 0;
 
-	if (length % int(ROAD_H_SIZE) == int(ROAD_H_SIZE - 1))
-	{
-		NumZ = int(length / ROAD_W_SIZE) + 1;
-		VecLength = int(NumZ * ROAD_H_SIZE);
-	}
-	else
-	{
 		NumZ = int(length / ROAD_W_SIZE);
 		VecLength = int(NumZ * ROAD_H_SIZE);
-	}
-	int RoadNum = static_cast<int>(VecLength / ROAD_H_SIZE);
+
+		int RoadNum = static_cast<int>(VecLength / ROAD_H_SIZE);
 
 	m_pLeftLinePos   = new D3DXVECTOR3[RoadNum];
 	m_pRightLinePos  = new D3DXVECTOR3[RoadNum];
@@ -47,7 +40,7 @@ void CurveRoad::BezierLineCreate()
 
 	for (int i = 0; i < RoadNum; i++)
 	{
-		m_CenterLinePos.push_back(QuadraticConstantBezPoint(i * 1.f / (float)(RoadNum - 1),RoadNum));
+		m_CenterLinePos.push_back(QuadraticConstantBezPoint(RoadNum,i));
 	}
 
 	for (int i = 0; i < RoadNum - 1; i++)
@@ -147,45 +140,48 @@ D3DXVECTOR3 CurveRoad::QuadraticBezPoint(float _t)
 	return vertex;
 }
 
-D3DXVECTOR3 CurveRoad::QuadraticConstantBezPoint(float _t,int _divideNum)
+D3DXVECTOR3 CurveRoad::QuadraticConstantBezPoint(int _divideNum, int _nowCnt)
 {
-	int N = _divideNum;
-	float ni = 1 / static_cast<float>(N);
-	float tt = 0;
-	float x, t = _t / static_cast<float>(_divideNum);
-	float *dd = new float[N + 1];
-	//D3DXVECTOR3 startPos;
-	D3DXVECTOR3 endPos;
-	//始めの長さは0
-	dd[0] = 0;
+	int roadDivideNum = _divideNum - 1; //道を分割する数
+	float t = _nowCnt / static_cast<float>(_divideNum);
+	float constantTime; //同じ距離になるベジェ曲線のフレーム位置がどこか
 
-	for (int i = 1; i < N; i++)
+	std::vector<float> flameTotalLength;
+	flameTotalLength.resize(roadDivideNum + 1);
+	//始めの長さは0
+	flameTotalLength[0] = 0;
+	for (int i = 1; i < roadDivideNum + 1; i++)
 	{
-		tt += ni;
-		endPos = QuadraticBezPoint(tt);
-		float distance = pow((m_TmpCenterLinePos[i - 1].x - endPos.x)*(m_TmpCenterLinePos[i - 1].x - endPos.x)
-			+ (m_TmpCenterLinePos[i - 1].z - endPos.z)*(m_TmpCenterLinePos[i - 1].z - endPos.z), 0.5);
-		dd[i] = dd[i - 1] + distance;
+		D3DXVECTOR3 startPos = m_TmpCenterLinePos[i - 1];
+		D3DXVECTOR3 endPos = m_TmpCenterLinePos[i];
+
+		float squareX = static_cast<float>(pow(startPos.x - endPos.x, 2.0)),
+			squareZ = static_cast<float>(pow(startPos.z - endPos.z, 2.0));
+
+		float distance = static_cast<float>(pow(squareX + squareZ, 0.5));
+		flameTotalLength[i] = flameTotalLength[i - 1] + distance;
 	}
 
-	//距離の合計(=dd[N])で正規化
-	//これでddはdd[0]=0<dd[1]<dd[2]<...<dd[N-1]<dd[N]=1となる
-	for (int i = 1; i<N + 1; i++){
-		dd[i] /= dd[N];
+	//距離の合計で正規化
+	for (int i = 1; i < roadDivideNum + 1; i++)
+	{
+		flameTotalLength[i] /= flameTotalLength[roadDivideNum];
 	}
 	//指定されたtが距離でいうと何番目の区間kにあるかを求める
 	int k = 0;
-	for (int i = 0; i<N; i++, k++){
-		if (dd[i] <= t && t <= dd[i + 1])break;
+	for (int i = 0; i < roadDivideNum; i++, k++)
+	{
+		if (flameTotalLength[i] <= t && t <= flameTotalLength[i + 1]) break;
 	}
 
 	//tが区間内のどのあたりにあるかを調べる
 	//t=dd[k]ならx=0,t=dd[k+1]ならx=1,0<=x<=1
-	x = (t - dd[k]) / (dd[k + 1] - dd[k]);
+	constantTime = (t - flameTotalLength[k]) / (flameTotalLength[k + 1] - flameTotalLength[k]);
+
 	//その割合で線形補間し、区間長をかける
-	x = (k*(1 - x) + (1 + k)*x)*ni;
-	delete[] dd;
-	return QuadraticBezPoint(x * _t);
+	float ni = 1 / static_cast<float>(roadDivideNum); //ベジェ曲線を引く時の1フレームの増加値
+	constantTime = (k * (1 - constantTime) + (1 + k) * constantTime) * ni;
+	return QuadraticBezPoint(constantTime);
 }
 
 void CurveRoad::Control()

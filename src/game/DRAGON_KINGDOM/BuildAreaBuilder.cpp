@@ -47,9 +47,6 @@ BuildArea* BuildAreaBuilder::NormalAreaBuild(bool _isLeft)
 	D3DXVec3Scale(&Vec, &Vec, static_cast<float>(VecLength));
 	Vec = Vec + m_StartPos;
 
-	angle = atan2(Vec.z - m_StartPos.z, Vec.x - m_StartPos.x);
-
-
 	BuildArea* pBuildArea = new BuildArea(_isLeft, m_StartPos, Vec, angle, m_roadStartAngle, m_roadEndAngle, m_StartPosLink, m_EndPosLink, BUILDAREAMANAGER_ENUM::BUILD_TYPE::NORMAL);
 
 	return pBuildArea;
@@ -57,7 +54,38 @@ BuildArea* BuildAreaBuilder::NormalAreaBuild(bool _isLeft)
 
 BuildArea* BuildAreaBuilder::CurveAreaBuild(bool _isLeft)
 {
-	BuildArea* pBuildArea = new BuildArea(_isLeft, m_StartPos, m_ControlPos, m_EndPos, m_roadStartAngle, m_roadEndAngle, m_StartPosLink, m_EndPosLink, BUILDAREAMANAGER_ENUM::BUILD_TYPE::CURVE);
+	// もともとのStartPosからEndPosの長さ
+	int length = static_cast<int>(sqrt(
+		(m_EndPos.x - m_StartPos.x) * (m_EndPos.x - m_StartPos.x) +
+		(m_EndPos.y - m_StartPos.y) * (m_EndPos.y - m_StartPos.y) +
+		(m_EndPos.z - m_StartPos.z) * (m_EndPos.z - m_StartPos.z)));
+
+	// エリアの数
+	int NumZ = 0;
+	int VecLength = 0;
+
+	if (length % int(ROAD_H_SIZE) == int(ROAD_H_SIZE - 1))
+	{
+		NumZ = int(length / ROAD_W_SIZE) + 1;
+		VecLength = int(NumZ * ROAD_H_SIZE);
+	}
+	else
+	{
+		NumZ = int(length / ROAD_W_SIZE);
+		VecLength = int(NumZ * ROAD_H_SIZE);
+	}
+
+
+	// StartPosからEndPosの角度をとる
+	float angle = atan2(m_EndPos.z - m_StartPos.z, m_EndPos.x - m_StartPos.x);
+
+	// EndPosを原点に戻して、正規化、スケーリングして、もう一度同じ場所に戻す
+	D3DXVECTOR3 Vec = m_EndPos - m_StartPos;
+	D3DXVec3Normalize(&Vec, &Vec);
+	D3DXVec3Scale(&Vec, &Vec, static_cast<float>(VecLength));
+	Vec = Vec + m_StartPos;
+
+	BuildArea* pBuildArea = new BuildArea(_isLeft, m_StartPos, m_ControlPos, Vec, m_roadStartAngle, m_roadEndAngle, m_StartPosLink, m_EndPosLink, BUILDAREAMANAGER_ENUM::BUILD_TYPE::CURVE);
 	return pBuildArea;
 }
 

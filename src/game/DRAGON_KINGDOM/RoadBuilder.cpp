@@ -38,9 +38,9 @@ void RoadBuilder::BuildModeSet(ROADMANAGER_ENUM::BUILD_TYPE _buildType)
 void RoadBuilder::EndPosSet(const D3DXVECTOR3 _endPos)
 {
 	m_isEndPointSet = true;
-
+	m_pRoadPreviewer->EndPosSet(_endPos);
 	m_EndPos = _endPos;
-	m_pRoadPreviewer->EndPosSet(m_EndPos);
+
 }
 
 void RoadBuilder::InitStartPos()
