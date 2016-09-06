@@ -100,22 +100,10 @@ void RoadManager::BuildControl()
 		// “¹‚ğ¶¬‚·‚é
 		//“¹‚ª90“xˆÈã‚Ì‹}‚È“¹‚Íì‚ê‚È‚¢
 		bool buildOk = m_pRoadBuilder->BuildCheck(m_roadLinkStart_StartPos, m_roadLinkEnd_StartPos);
-		switch (m_buildType)
+		if (buildOk)
 		{
-		case BUILD_TYPE::NORMAL:
-			if (buildOk)
-			{
-				Road* pRoad = m_pRoadBuilder->RoadBuild(m_buildType);
-				m_pRoad.push_back(pRoad);
-			}
-			break;
-		case BUILD_TYPE::CURVE:
-			if (buildOk)
-			{
-				Road* pRoad = m_pRoadBuilder->RoadBuild(m_buildType);
-				m_pRoad.push_back(pRoad);
-			}
-			break;
+			Road* pRoad = m_pRoadBuilder->RoadBuild(m_buildType);
+			m_pRoad.push_back(pRoad);
 		}
 		
 		// Ÿ‚Ì“¹ì¬‚Ì‚½‚ß‚Ì‰Šú‰»ˆ—

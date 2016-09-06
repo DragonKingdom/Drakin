@@ -250,18 +250,16 @@ D3DXVECTOR3 RoadPreviewer::QuadraticConstantBezPoint(float _t, int _divideNum)
 	float tt = 0;
 	float x, t = _t / static_cast<float>(_divideNum);
 	float *dd = new float[N + 1];
-	D3DXVECTOR3 q;
-	//tt‚Í¬”‚È‚Ì‚Åint‚ÅŒ…—‚¿‚µ‚È‚¢‚½‚ß‚ÌƒQƒ^
-	const int G = 1000000;
+	D3DXVECTOR3 endPos;
 	//n‚ß‚Ì’·‚³‚Í0
 	dd[0] = 0;
 
 	for (int i = 1; i < N; i++)
 	{
 		tt += ni;
-		q = QuadraticBezPoint(tt);
-		float distance = pow((m_TmpCenterLinePos[i - 1].x - m_TmpCenterLinePos[i].x)*(m_TmpCenterLinePos[i - 1].x - m_TmpCenterLinePos[i].x)
-			+ (m_TmpCenterLinePos[i - 1].y - m_TmpCenterLinePos[i].y)*(m_TmpCenterLinePos[i - 1].y - m_TmpCenterLinePos[i].y), 0.5);
+		endPos = QuadraticBezPoint(tt);
+		float distance = pow((m_TmpCenterLinePos[i - 1].x - endPos.x)*(m_TmpCenterLinePos[i - 1].x - endPos.x)
+			+ (m_TmpCenterLinePos[i - 1].z - endPos.z)*(m_TmpCenterLinePos[i - 1].z - endPos.z), 0.5);
 		dd[i] = dd[i - 1] + distance;
 	}
 	//‹——£‚Ì‡Œv(=dd[N])‚Å³‹K‰»

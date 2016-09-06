@@ -102,28 +102,13 @@ void BuildAreaManager::AreaBuildControl()
 		/// @todo BuildArea‚Ì’·‚³0‚Å‚àì¬‚Å‚«‚é‚æ‚¤‚É‚È‚Á‚Ä‚µ‚Ü‚Á‚Ä‚é‹C‚ª‚·‚é
 		// ‚Æ‚è‚ ‚¦‚¸‚Å‚â‚Á‚Ä‚Ý‚½
 		bool buildOk = m_pBuildAreaBuilder->BuildCheck(m_roadLinkStart_StartPos, m_roadLinkEnd_StartPos);
-		switch (m_buildType)
+		if (buildOk)
 		{
-		case BUILD_TYPE::NORMAL:
-			if (buildOk)
-			{
-				BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild(true, m_buildType);
-				m_pBuildArea.push_back(pBuildArea);
+			BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild(true, m_buildType);
+			m_pBuildArea.push_back(pBuildArea);
 
-				pBuildArea = m_pBuildAreaBuilder->AreaBuild(false, m_buildType);
-				m_pBuildArea.push_back(pBuildArea);
-			}
-			break;
-		case BUILD_TYPE::CURVE:
-			if (buildOk)
-			{
-				BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild(true, m_buildType);
-				m_pBuildArea.push_back(pBuildArea);
-
-				pBuildArea = m_pBuildAreaBuilder->AreaBuild(false, m_buildType);
-				m_pBuildArea.push_back(pBuildArea);
-			}
-			break;
+			pBuildArea = m_pBuildAreaBuilder->AreaBuild(false, m_buildType);
+			m_pBuildArea.push_back(pBuildArea);
 		}
 		// ŽŸ‚Ì‚½‚ß‚É‰Šú‰»
 		m_pBuildAreaBuilder->InitStartPos();
