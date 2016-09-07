@@ -24,10 +24,10 @@ void CurveRoad::BezierLineCreate()
 	int NumZ = 0;
 	int VecLength = 0;
 
-		NumZ = int(length / ROAD_W_SIZE);
-		VecLength = int(NumZ * ROAD_H_SIZE);
+	NumZ = int(length / ROAD_W_SIZE);
+	VecLength = int(NumZ * ROAD_H_SIZE);
 
-		int RoadNum = static_cast<int>(VecLength / ROAD_H_SIZE);
+	int RoadNum = static_cast<int>(VecLength / ROAD_H_SIZE);
 
 	m_pLeftLinePos   = new D3DXVECTOR3[RoadNum];
 	m_pRightLinePos  = new D3DXVECTOR3[RoadNum];
