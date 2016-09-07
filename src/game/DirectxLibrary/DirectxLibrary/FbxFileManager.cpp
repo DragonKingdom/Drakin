@@ -531,9 +531,14 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 			fbxsdk::FbxArray<FbxString*> animation_names;
 			m_pFbxScene->FillAnimStackNameArray(animation_names);
 
-			//auto take_info = m_pFbxScene->GetTakeInfo(animation_names[0]->Buffer());
-			//FbxTime start_time = take_info->mLocalTimeSpan.GetStart();
-			//FbxTime end_time = take_info->mLocalTimeSpan.GetStop();
+			// アニメーションフレーム取得
+			FbxTakeInfo* take_info = m_pFbxScene->GetTakeInfo(animation_names[0]->Buffer());	// アニメーションが複数入っているのは考慮しない
+			FbxTime start_time = take_info->mLocalTimeSpan.GetStart();
+			FbxTime end_time = take_info->mLocalTimeSpan.GetStop();
+
+			animationData.pSkinData[i].StartFrame = (int)(start_time.Get() / FbxTime::GetOneFrameValue(FbxTime::eFrames60));
+			animationData.pSkinData[i].EndFrame = (int)(end_time.Get() / FbxTime::GetOneFrameValue(FbxTime::eFrames60));
+
 
 			for (int j = 0; j < animationData.pSkinData[i].ClusterNum; j++)
 			{
@@ -545,7 +550,7 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 				animationData.pSkinData[i].pCluster[j].WeightAry = cluster->GetControlPointWeights();
 
 				FbxAMatrix initMat;
-				 initMat = cluster->GetTransformLinkMatrix(initMat);
+				initMat = cluster->GetTransformLinkMatrix(initMat);
 
 				FbxAMatrix GeometryMat = GetGeometry(cluster->GetLink());
 				initMat *= GeometryMat;
@@ -559,12 +564,11 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 					}
 				}
 
-				
-				animationData.pSkinData[i].FrameNum = 50;	// @todo いまのとこ適当にやってる
-				animationData.pSkinData[i].pCluster[j].pMat = new D3DXMATRIX[animationData.pSkinData[i].FrameNum];
+
+				animationData.pSkinData[i].pCluster[j].pMat = new D3DXMATRIX[animationData.pSkinData[i].EndFrame];
 
 
-				for (int n = 0; n < animationData.pSkinData[i].FrameNum; n++)
+				for (int n = 0; n < animationData.pSkinData[i].EndFrame; n++)
 				{
 					FbxTime time;
 					time.Set(FbxTime::GetOneFrameValue(FbxTime::eFrames60) * n);

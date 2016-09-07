@@ -89,6 +89,14 @@ FbxModel::~FbxModel()
 	delete m_pFbxModelData;
 }
 
+void FbxModel::GetMaterial(std::vector<D3DMATERIAL9>* pMaterial)
+{
+	for (unsigned int i = 0; i < m_pFbxModelData->Material.size(); i++)
+	{
+		pMaterial->push_back(m_pFbxModelData->Material[i]);
+	}
+}
+
 void FbxModel::Draw()
 {
 	///@todo fvfの設定は分けときたいかな
@@ -168,21 +176,85 @@ void FbxModel::ReleaseAnimation()
 	delete[] m_pVertex;
 }
 
-void FbxModel::SetAnimationFrame()
+void FbxModel::SetAnimationFrame(int _setFrame)
 {
-
+	m_FrameCount = _setFrame;
 }
 
 void FbxModel::AnimationDraw()
 {
 	if (m_pFbxModelData->Animation.SkinNum != 0)
 	{
-		//for (unsigned int n = 0; n < m_pFbxModelData->pTextureData.size(); n++)
-		//{
-		//	m_pDevice->SetTexture(n, m_pFbxModelData->pTextureData[n]->pTexture);
-		//}
+		for (unsigned int n = 0; n < m_pFbxModelData->pTextureData.size(); n++)
+		{
+			m_pDevice->SetTexture(n, m_pFbxModelData->pTextureData[n]->pTexture);
+		}
+
+		//-------- アニメーション処理 --------//
+
+		for (int i = 0; i < m_pFbxModelData->ControlPointCount; i++)
+		{
+			m_pDrawVertex[i].Vec.x = 0.f;
+			m_pDrawVertex[i].Vec.y = 0.f;
+			m_pDrawVertex[i].Vec.z = 0.f;
+		}
+
+		for (int i = 0; i < m_pFbxModelData->Animation.pSkinData[0].ClusterNum; i++)
+		{
+			D3DXMATRIX InvMat;
+			D3DXMatrixInverse(&InvMat, NULL, &m_pFbxModelData->Animation.pSkinData[0].pCluster[i].InitMatrix);
+
+			for (int j = 0; j < m_pFbxModelData->Animation.pSkinData[0].pCluster[i].PointNum; j++)
+			{
+				D3DVECTOR TmpVertex;
+				Vec3Transform(
+					&TmpVertex,
+					&m_pVertex[m_pFbxModelData->Animation.pSkinData[0].pCluster[i].PointAry[j]].Vec,
+					&InvMat
+					);
+
+				Vec3Transform(
+					&m_pTmpVertex[m_pFbxModelData->Animation.pSkinData[0].pCluster[i].PointAry[j]].Vec,
+					&TmpVertex,
+					&(m_pFbxModelData->Animation.pSkinData[0].pCluster[i].pMat[m_FrameCount] * m_pFbxModelData->Animation.pSkinData[0].pCluster[i].WeightAry[j])
+					);
+
+
+				m_pDrawVertex[m_pFbxModelData->Animation.pSkinData[0].pCluster[i].PointAry[j]].Vec.x += m_pTmpVertex[m_pFbxModelData->Animation.pSkinData[0].pCluster[i].PointAry[j]].Vec.x;
+				m_pDrawVertex[m_pFbxModelData->Animation.pSkinData[0].pCluster[i].PointAry[j]].Vec.y += m_pTmpVertex[m_pFbxModelData->Animation.pSkinData[0].pCluster[i].PointAry[j]].Vec.y;
+				m_pDrawVertex[m_pFbxModelData->Animation.pSkinData[0].pCluster[i].PointAry[j]].Vec.z += m_pTmpVertex[m_pFbxModelData->Animation.pSkinData[0].pCluster[i].PointAry[j]].Vec.z;
+			}
+		}
+
+		
+		if (m_FrameCount == m_pFbxModelData->Animation.pSkinData[0].EndFrame - 1)
+		{
+			m_FrameCount = 0;
+		}
+		else
+		{
+			m_FrameCount++;
+		}
+
+		m_pDevice->DrawIndexedPrimitiveUP(
+			D3DPT_TRIANGLELIST,
+			0,
+			m_pFbxModelData->pIndex.IndexCount,
+			m_pFbxModelData->pIndex.IndexCount / 3,
+			m_pFbxModelData->pIndex.IndexAry,
+			D3DFMT_INDEX16,
+			m_pDrawVertex,
+			sizeof(UserVertex));
+	}
+}
+
+void FbxModel::NonTextureAnimationDraw()
+{
+	if (m_pFbxModelData->Animation.SkinNum != 0)
+	{
 		m_pDevice->SetTexture(0, NULL);
 		m_pDevice->SetTexture(1, NULL);
+		m_pDevice->SetTexture(2, NULL);
 
 
 		//-------- アニメーション処理 --------//
@@ -222,7 +294,7 @@ void FbxModel::AnimationDraw()
 		}
 
 
-		if (m_FrameCount == 49)
+		if (m_FrameCount == m_pFbxModelData->Animation.pSkinData[0].EndFrame - 1)
 		{
 			m_FrameCount = 0;
 		}
@@ -242,4 +314,3 @@ void FbxModel::AnimationDraw()
 			sizeof(UserVertex));
 	}
 }
-

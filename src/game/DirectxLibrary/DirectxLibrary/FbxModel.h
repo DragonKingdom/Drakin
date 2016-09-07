@@ -41,7 +41,8 @@ struct Cluster
 struct SkinData
 {
 	Cluster* pCluster;
-	int FrameNum;
+	int StartFrame;
+	int EndFrame;
 	int ClusterNum;
 };
 
@@ -81,12 +82,14 @@ public:
 	~FbxModel();
 	void      SetMode(MODELMODE _Mode){ m_Mode = _Mode; };
 	MODELMODE GetMode(){ return m_Mode; };
+	void	GetMaterial(std::vector<D3DMATERIAL9>* pMaterial);
 	void	Draw();
 	void	NonTextureDraw();
 	void	InitAnimation();
 	void	ReleaseAnimation();
-	void	SetAnimationFrame();
+	void	SetAnimationFrame(int _setFrame);
 	void	AnimationDraw();
+	void	NonTextureAnimationDraw();
 
 	FbxModelData*	m_pFbxModelData;
 
