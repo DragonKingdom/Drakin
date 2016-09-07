@@ -41,14 +41,16 @@ struct Cluster
 struct SkinData
 {
 	Cluster* pCluster;
-	int FrameNum;
+	int StartFrame;
+	int EndFrame;
 	int ClusterNum;
 };
 
 struct AnimationData
 {
-	SkinData* pSkinData;
-	int SkinNum;
+	std::string*	AnimationName;
+	SkinData*		pSkinData;
+	int				SkinNum;
 };
 
 // Mesh情報が格納される構造体
@@ -60,8 +62,8 @@ struct FbxModelData
 	UserVertex*					pVertex;			// 頂点データ
 	UserIndex					pIndex;				// インデックス系データ
 	std::vector<UserTexture*>	pTextureData;		// テクスチャ情報
-	D3DMATERIAL9				Material;			// マテリアル情報
-	AnimationData				Animation;
+	std::vector<D3DMATERIAL9>	Material;			// マテリアル情報
+	AnimationData				Animation;			// アニメーションのデータ
 };
 
 /**
@@ -80,11 +82,14 @@ public:
 	~FbxModel();
 	void      SetMode(MODELMODE _Mode){ m_Mode = _Mode; };
 	MODELMODE GetMode(){ return m_Mode; };
+	void	GetMaterial(std::vector<D3DMATERIAL9>* pMaterial);
 	void	Draw();
 	void	NonTextureDraw();
-	void	AnimationDraw();
 	void	InitAnimation();
 	void	ReleaseAnimation();
+	void	SetAnimationFrame(int _setFrame);
+	void	AnimationDraw();
+	void	NonTextureAnimationDraw();
 
 	FbxModelData*	m_pFbxModelData;
 
