@@ -191,7 +191,7 @@ void HouseManager::HouseBuild()
 	m_HouseAge.push_back(pHouse->GetHouseStatus().Age);
 
 	// 建設された場所をビルドエリアに通知しておく
-	m_pBuildAreaChecker->SetBuilding(&m_BuildPos);
+	m_pBuildAreaChecker->SetBuilding(&m_BuildPos, m_buildState);
 }
 
 void HouseManager::Draw()

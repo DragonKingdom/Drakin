@@ -20,9 +20,10 @@ public:
 	/**
 	 * Œš•¨‚ªŒš’z‚³‚ê‚½‚±‚Æ‚ğ“`‚¦‚éŠÖ”
 	 * @param[in] Œš’z‚³‚ê‚½êŠ
+	 * @param[in] Œš’z•¨
 	 * @return ¬Œ÷‚µ‚½‚çtrue
 	 */
-	bool SetBuilding(D3DXVECTOR3* _setPos);
+	bool SetBuilding(D3DXVECTOR3* _setPos, int _Type);
 
 	bool GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos, float* _outputAngleDegree, bool* _startPos);
 	float GetAngleDegree(){ return D3DXToDegree(m_angle); };

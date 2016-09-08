@@ -42,9 +42,10 @@ public:
 	/**
 	* 建物が建築されたことを伝える関数
 	* @param[in] 建築された場所
+	* @param[in] 建築物
 	* @return 成功したらtrue
 	*/
-	bool SetBuilding(D3DXVECTOR3* _setPos);
+	bool SetBuilding(D3DXVECTOR3* _setPos,int _Type);
 
 	/**
 	* ビルドエリアの存在と中心座標を取得する関数

@@ -143,7 +143,7 @@ bool BuildAreaManager::AreaCheck(D3DXVECTOR3* _checkPos)
 	return false;	
 }
 
-bool BuildAreaManager::SetBuilding(D3DXVECTOR3* _setPos)
+bool BuildAreaManager::SetBuilding(D3DXVECTOR3* _setPos,int _Type)
 {
 	if (_setPos == NULL)
 	{
@@ -154,7 +154,7 @@ bool BuildAreaManager::SetBuilding(D3DXVECTOR3* _setPos)
 		///@todo ”ÍˆÍŽw’è‚È‚Ç‚ð‚·‚é
 		for (unsigned int i = 0; i < m_pBuildArea.size(); i++)
 		{
-			if (m_pBuildArea[i]->SetBuilding(_setPos))
+			if (m_pBuildArea[i]->SetBuilding(_setPos,_Type))
 			{
 				return true;
 			}
