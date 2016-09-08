@@ -1,10 +1,10 @@
-float4x4 WVPP;                //ワールド × ビュー × 射影
-float4 LightDir;              //平行光源の方向ベクトル
-float4 Ambient = 1.0f;       //環境光
-float  CLUTTU;                //太陽の方向ベクトルと上方向ベクトル[0.0f, 1.0f, 0.0f]との内積
-float4 FogColor;              //フォグカラー
-float  Param1;                //フォグの計算式のパラメータ１
-float  Param2;                //フォグの計算式のパラメータ２
+float4x4 WVPP;              //ワールド × ビュー × 射影
+float4 LightDir;            //平行光源の方向ベクトル
+float4 Ambient = 1.0f;		//環境光
+float  CLUTTU;              //太陽の方向ベクトルと上方向ベクトル[0.0f, 1.0f, 0.0f]との内積
+float4 FogColor;            //フォグカラー
+float  Param1;              //フォグの計算式のパラメータ１
+float  Param2;              //フォグの計算式のパラメータ２
 
 sampler tex1 : register(s2);    //Pass1:ライト用CLUTテーブル
 sampler tex0 : register(s0);    //Pass1:デカールマップ

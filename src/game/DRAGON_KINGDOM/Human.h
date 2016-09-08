@@ -1,6 +1,8 @@
 #ifndef HUMAN_H
 #define HUMAN_H
 
+#define HUMAN_MOVE_SPEED 30
+
 class FbxModel;
 class ShaderAssist;
 class RoadChecker;
@@ -9,26 +11,38 @@ class HouseChecker;
 class Human
 {
 public:
-	struct State
+	enum Mode
+	{
+		NORMAL_MODE,
+		BATTLE_MODE
+	};
+
+	struct Status
 	{
 		int HitPoint;
 		int MagicPoint;
 		int Power;
 		int Time;
+		Mode State;
 	};
 
 	Human(D3DXVECTOR3 _humanPos, float _angle, RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker);
 	~Human();
 	void Control();
+	void Draw();
 
 private:
-	State m_State;
+	Status m_Status;
 
 	RoadChecker*			m_pRoadChecker;
 	HouseChecker*			m_pHouseChecker;
 	std::vector<FbxModel*>	m_Model;
 	D3DXVECTOR3				m_HumanPos;
+	D3DXVECTOR3				m_NextPos;
+	float					m_Length;
+	int						m_LengthNum;
 	float					m_Angle;
+
 	D3DXMATRIX				m_World;
 	ShaderAssist*			m_pShaderAssist;
 	Texture					m_Texture;
