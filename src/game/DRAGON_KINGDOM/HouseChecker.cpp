@@ -18,7 +18,6 @@ D3DXVECTOR3 HouseChecker::GetRandomPrivateHousePos()
 
 D3DXVECTOR3 HouseChecker::GetPrivateHousePos(D3DXVECTOR3 _CheckPos)
 {
-
 	return D3DXVECTOR3(0, 0, 0);
 }
 

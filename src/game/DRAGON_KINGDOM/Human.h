@@ -26,14 +26,16 @@ public:
 		Mode State;
 	};
 
-	Human(D3DXVECTOR3 _humanPos, float _angle, RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker);
+	Human(RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker);
 	~Human();
 	void Control();
 	void Draw();
 
 private:
-	Status m_Status;
+	void NormalControl();
+	void BattleControl();
 
+	Status					m_Status;
 	RoadChecker*			m_pRoadChecker;
 	HouseChecker*			m_pHouseChecker;
 	std::vector<FbxModel*>	m_Model;

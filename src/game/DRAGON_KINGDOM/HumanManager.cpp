@@ -12,6 +12,10 @@ m_pHouseChecker(_pHouseChecker)
 
 HumanManager::~HumanManager()
 {
+	for (unsigned int i = 0; i < m_pHuman.size(); i++)
+	{
+		delete m_pHuman[i];
+	}
 }
 
 void HumanManager::Control()
@@ -21,7 +25,7 @@ void HumanManager::Control()
 		srand(unsigned int(time(NULL)));
 		if (rand() % 100 < 10)
 		{
-			m_pHuman.push_back(new Human(D3DXVECTOR3(0, 0, 0), 0, m_pRoadChecker, m_pHouseChecker));
+			m_pHuman.push_back(new Human(m_pRoadChecker, m_pHouseChecker));
 		}
 	}
 

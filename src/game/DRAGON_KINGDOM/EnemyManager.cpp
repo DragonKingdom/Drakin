@@ -11,6 +11,10 @@ m_pHouseChecker(_pHouseChecker)
 
 EnemyManager::~EnemyManager()
 {
+	for (unsigned int i = 0; i < m_pEnemy.size(); i++)
+	{
+		delete m_pEnemy[i];
+	}
 }
 
 void EnemyManager::Control()

@@ -27,7 +27,10 @@ m_pCharacterManager(new CharacterManager(_pStateManager, _pGameData, m_pRoadChec
 
 ObjectManager::~ObjectManager()
 {
+	delete m_pCharacterManager;
+	delete m_pRoadChecker;
 	delete m_pRoadManager;
+	delete m_pHouseChecker;
 	delete m_pHouseManager;
 	delete m_pMap;
 	delete m_pBuildAreaChecker;
@@ -70,6 +73,7 @@ void ObjectManager::GetState()
 	m_GameSceneState = m_pStateManager->GetGameSceneState();
 	m_BuildState = m_pStateManager->GetBuildState();
 
+	m_pCharacterManager->GetState();
 	m_pRoadManager->GetState();
 	m_pBuildAreaManager->GetState();
 	m_pHouseManager->GetState();
@@ -77,6 +81,7 @@ void ObjectManager::GetState()
 
 void ObjectManager::SetState()
 {
+	m_pCharacterManager->SetState();
 	m_pRoadManager->SetState();
 	m_pBuildAreaManager->SetState();
 	m_pHouseManager->SetState();
@@ -84,11 +89,13 @@ void ObjectManager::SetState()
 
 void ObjectManager::GetGameData()
 {
+	m_pCharacterManager->GetGameData();
 	m_pHouseManager->GetGameData();
 }
 
 void ObjectManager::SetGameData()
 {
+	m_pCharacterManager->SetGameData();
 	m_pHouseManager->SetGameData();
 }
 

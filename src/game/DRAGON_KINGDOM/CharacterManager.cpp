@@ -16,6 +16,8 @@ m_pEnemyManager(new EnemyManager(m_pStateManager, m_pGameData, m_pRoadChecker, m
 
 CharacterManager::~CharacterManager()
 {
+	delete m_pEnemyManager;
+	delete m_pHumanManager;
 }
 
 void CharacterManager::Control()
@@ -26,18 +28,26 @@ void CharacterManager::Control()
 
 void CharacterManager::GetState()
 {
+	m_pHumanManager->GetState();
+	m_pEnemyManager->GetState();
 }
 
 void CharacterManager::SetState()
 {
+	m_pHumanManager->SetState();
+	m_pEnemyManager->SetState();
 }
 
 void CharacterManager::GetGameData()
 {
+	m_pHumanManager->GetGameData();
+	m_pEnemyManager->GetGameData();
 }
 
 void CharacterManager::SetGameData()
 {
+	m_pHumanManager->SetGameData();
+	m_pEnemyManager->SetGameData();
 }
 
 void CharacterManager::Load(FileSaveLoad* _pFileSaveLoad)

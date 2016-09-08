@@ -4,11 +4,10 @@
 #include "HouseChecker.h"
 #include "FbxFileManager.h"
 
-Human::Human(D3DXVECTOR3 _humanPos, float _angle, RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker) :
-m_HumanPos(_humanPos),
-m_Angle(_angle),
+Human::Human(RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker) :
 m_pRoadChecker(_pRoadChecker),
-m_pHouseChecker(_pHouseChecker)
+m_pHouseChecker(_pHouseChecker),
+m_pShaderAssist(new ShaderAssist())
 {
 	m_Texture.Load("Resource\\image\\CLUTLight.jpg");
 	m_pShaderAssist->LoadTechnique("Effect\\HumanEffect.fx", "HumanEffect", "WVPP");
@@ -26,62 +25,36 @@ m_pHouseChecker(_pHouseChecker)
 	m_HumanPos = m_pHouseChecker->GetRandomPrivateHousePos();
 	m_NextPos = m_HumanPos;
 	m_Angle = m_pHouseChecker->GetHouseAngle(m_HumanPos);
-	//m_NextPos.x = m_HumanPos.x + (ROAD_W_SIZE / 2) * sin(m_Angle);
-	//m_NextPos.z = m_HumanPos.z + (ROAD_W_SIZE / 2) * -cos(m_Angle);
-
 	m_NextPos = m_pRoadChecker->NextRoadPos(m_HumanPos);
 
 	m_Status.HitPoint = 30;
 	m_Status.MagicPoint = 20;
 	m_Status.Power = 10;
-	m_Status.Time = 3600;
+	m_Status.Time = 7200;
 	m_Status.State = NORMAL_MODE;
 }
 
 Human::~Human()
 {
+	for (unsigned int i = 0; i < m_Model.size(); i++)
+	{
+		delete m_Model[i];
+	}
+	m_Texture.Release();
+	delete m_pShaderAssist;
 }
 
 void Human::Control()
 {
-	m_Status.Time--;
-
-	if (m_HumanPos == m_NextPos)
+	switch (m_Status.State)
 	{
-		D3DXVECTOR3 NextPos;
-
-		if (m_Status.Time <= 0)
-		{
-			// Œš•¨‚ÌÀ•W‚ðŽæ“¾ 
-			//NextPos.x = m_pHouseChecker;
-			//NextPos.y = m_pHouseChecker;
-		}
-		else
-		{
-			NextPos.x = m_pRoadChecker->NextRoadPos(m_HumanPos).x;
-			NextPos.y = m_pRoadChecker->NextRoadPos(m_HumanPos).y;
-		}
-		
-		float x1 = pow(NextPos.x - m_HumanPos.x, 2);
-		float y1 = pow(NextPos.y - m_HumanPos.y, 2);
-		float xy = x1 + y1;
-		m_Length = sqrt(xy);
-
-		m_LengthNum = m_Length / HUMAN_MOVE_SPEED;
+	case NORMAL_MODE:
+		NormalControl();
+		break;
+	case BATTLE_MODE:
+		BattleControl();
+		break;
 	}
-	else
-	{
-		if ((m_NextPos.x - m_HumanPos.x) / m_LengthNum == 0)
-		{
-			m_HumanPos = m_NextPos;
-		}
-		else
-		{
-			m_HumanPos.x = (m_NextPos.x - m_HumanPos.x) / m_LengthNum;
-			m_HumanPos.y = (m_NextPos.y - m_HumanPos.y) / m_LengthNum;
-		}
-	}
-
 }
 
 void Human::Draw()
@@ -134,9 +107,52 @@ void Human::Draw()
 
 	for (unsigned int i = 0; i < m_Model.size(); i++)
 	{
-		m_Model[i]->Draw();
+		m_Model[i]->NonTextureAnimationDraw();
 	}
 
 	m_pShaderAssist->EndPass();
 	m_pShaderAssist->End();
+}
+
+void Human::NormalControl()
+{
+	m_Status.Time--;
+
+	if (m_HumanPos == m_NextPos)
+	{
+		if (m_Status.Time <= 0)
+		{
+			// Œš•¨‚ÌÀ•W‚ðŽæ“¾ 
+			m_NextPos = m_pHouseChecker->GetPrivateHousePos(m_HumanPos);
+		}
+		else
+		{
+			m_NextPos.x = m_pRoadChecker->NextRoadPos(m_HumanPos).x;
+			m_NextPos.y = m_pRoadChecker->NextRoadPos(m_HumanPos).y;
+		}
+
+		float x1 = pow(m_NextPos.x - m_HumanPos.x, 2);
+		float y1 = pow(m_NextPos.y - m_HumanPos.y, 2);
+		float xy = x1 + y1;
+		m_Length = sqrt(xy);
+
+		m_LengthNum = m_Length / HUMAN_MOVE_SPEED;
+	}
+	else
+	{
+		if ((m_NextPos.x - m_HumanPos.x) / m_LengthNum == 0)
+		{
+			m_HumanPos = m_NextPos;
+		}
+		else
+		{
+			m_HumanPos.x = (m_NextPos.x - m_HumanPos.x) / m_LengthNum;
+			m_HumanPos.y = (m_NextPos.y - m_HumanPos.y) / m_LengthNum;
+		}
+	}
+}
+
+void Human::BattleControl()
+{
+
 }
