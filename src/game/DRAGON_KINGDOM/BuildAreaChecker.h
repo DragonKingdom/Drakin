@@ -30,14 +30,16 @@ public:
 	 */
 	bool SetBuilding(D3DXVECTOR3* _setPos);
 
+	/**2016/09/08haga追加*/
 	/**
 	 * ビルドエリアの中心座標を取得する関数
 	 * @param[in] _checkPos チェックしたいエリアの座標
 	 * @param[out] _centerPos エリアの中心位置が入るポインタ 
 	 * @param[out] _pAngle エリアの角度が入る
+	 * @param[in] _Type	建てたい建物の種類
 	 * @return エリアが存在しなければfalseを返す
 	 */
-	bool GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle);
+	bool GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle,int _Type);
 
 
 

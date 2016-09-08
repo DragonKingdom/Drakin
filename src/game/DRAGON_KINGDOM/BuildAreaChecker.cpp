@@ -28,9 +28,9 @@ bool BuildAreaChecker::SetBuilding(D3DXVECTOR3* _setPos)
 	return m_pBuildAreaManager->SetBuilding(_setPos);
 }
 
-bool BuildAreaChecker::GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle)
+bool BuildAreaChecker::GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle,int _Type)
 {
-	return m_pBuildAreaManager->GetAreaCenterPos(_checkPos, _centerPos, _pAngle);
+	return m_pBuildAreaManager->GetAreaCenterPos(_checkPos, _centerPos, _pAngle,_Type);
 }
 
 

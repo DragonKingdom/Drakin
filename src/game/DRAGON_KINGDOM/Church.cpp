@@ -8,7 +8,7 @@
 Church::Church(D3DXVECTOR3 _housePos, float _angle, int _Type) :
 House(_housePos, _angle, _Type)
 {
-	FbxFileManager::Get()->FileImport("fbx//house_yellow.fbx");
+	FbxFileManager::Get()->FileImport("fbx//kyoukai_LV1.fbx");
 	FbxFileManager::Get()->GetModelData(&m_Model);
 	m_BasicStatus = GetMainStatus();
 }

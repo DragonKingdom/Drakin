@@ -157,7 +157,7 @@ void HouseManager::BuildControl()
 	MousePosition = m_pInputDevice->GetMousePos();
 	m_pClickPosConverter->ConvertForLoad(&CreatePosition, int(MousePosition.x), int(MousePosition.y));
 
-	if (m_pBuildAreaChecker->GetAreaCenterPos(&CreatePosition, &m_BuildPos, &m_BuildAngle) &&	// エリアがそもそも存在するのかチェック
+	if (m_pBuildAreaChecker->GetAreaCenterPos(&CreatePosition, &m_BuildPos, &m_BuildAngle, m_buildState) &&	// エリアがそもそも存在するのかチェック
 		m_pBuildAreaChecker->AreaCheck(&m_BuildPos))											// エリアが空いているかのチェック
 	{
 		m_pHouseBuilder->SetBuildPos(&m_BuildPos);
