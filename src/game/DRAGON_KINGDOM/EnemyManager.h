@@ -14,6 +14,7 @@ public:
 	EnemyManager(StateManager* _pStateManager, GameData* _pGameData, RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker);
 	~EnemyManager();
 	void Control();
+	void Draw();
 	void GetState();
 	void SetState();
 	void GetGameData();

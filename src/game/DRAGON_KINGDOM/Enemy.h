@@ -3,24 +3,28 @@
 
 class FbxModel;
 class ShaderAssist;
+class RoadChecker;
+class HouseChecker;
 
 class Enemy
 {
 public:
-	struct State
+	struct Status
 	{
 		int HitPoint;
 		int MagicPoint;
 		int Power;
 	};
 
-	Enemy(D3DXVECTOR3 _enemyPos, float _angle);
+	Enemy(RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker);
 	~Enemy();
 	void Control();
+	void Draw();
 
 private:
-	State m_State;
-
+	Status					m_Status;
+	RoadChecker*			m_pRoadChecker;
+	HouseChecker*			m_pHouseChecker;
 	std::vector<FbxModel*>	m_Model;
 	D3DXVECTOR3				m_EnemyPos;
 	float					m_Angle;

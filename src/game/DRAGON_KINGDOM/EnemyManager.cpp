@@ -25,6 +25,11 @@ void EnemyManager::Control()
 	}
 }
 
+void EnemyManager::Draw()
+{
+
+}
+
 void EnemyManager::GetState()
 {
 }
