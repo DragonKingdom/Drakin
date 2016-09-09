@@ -28,7 +28,7 @@ public:
 	void SetGameData();
 
 	void Load(FileSaveLoad* _pFileSaveLoad);
-	void Save(FileSaveLoad* _pFileSaveLoad) const;
+	void Save(FileSaveLoad* _pFileSaveLoad);
 
 private:
 	void BuildControl();
