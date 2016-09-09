@@ -16,7 +16,7 @@ public:
 	virtual ~Blacksmith();
 	virtual BUILD_STATE Control();
 	virtual void Draw();
-	virtual Status	GetMainStatus(){ return Status{ 100.f, 20.f, 1000.f, 0 }; };
+	virtual Status	GetMainStatus(){ return Status{ 100.f, 20.f, 1000.f, 0, 40 }; };
 	/**Œš•¨‚ªüˆÍ‚É—^‚¦‚é‰e‹¿’l‚ğæ“¾‚·‚éŠÖ”*/
 	virtual float GetInfluence();
 

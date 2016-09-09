@@ -36,16 +36,18 @@ m_pShaderAssist(new ShaderAssist())
 
 	/// @todo 今はここでやってる
 	// 適当にステータス初期化
-	m_Status.Comfort = 10;
-	m_Status.Landscape = 10;
-	m_Status.Influence = 1000;
+	m_Status.Comfort = 10.f;
+	m_Status.Landscape = 10.f;
+	m_Status.Influence = 1000.f;
 	m_Status.Age = 0;
+	m_Status.Hp = 0;
 
 	//補正値を初期化
+	m_CorrectionStatus.Comfort = 0.f;
+	m_CorrectionStatus.Influence = 0.f;
+	m_CorrectionStatus.Landscape = 0.f;
 	m_CorrectionStatus.Age = 0;
-	m_CorrectionStatus.Comfort = 0;
-	m_CorrectionStatus.Influence = 0;
-	m_CorrectionStatus.Landscape = 0;
+	m_CorrectionStatus.Hp = 0;
 
 }
 
@@ -114,6 +116,7 @@ void House::SetCorrectionStatus(House::Status _Status)
 	m_CorrectionStatus.Comfort += _Status.Comfort;
 	m_CorrectionStatus.Influence += _Status.Influence;
 	m_CorrectionStatus.Landscape += _Status.Landscape;
+	m_CorrectionStatus.Hp += _Status.Hp;
 }
 
 /**建物本来のステータスと補正値を足して最終的なステータスを決定する*/
@@ -123,11 +126,12 @@ void House::DecisionHouseStatus()
 	m_Status.Comfort   = (m_BasicStatus.Comfort + m_CorrectionStatus.Comfort);
 	m_Status.Influence = (m_BasicStatus.Influence + m_CorrectionStatus.Influence);
 	m_Status.Landscape = (m_BasicStatus.Landscape + m_CorrectionStatus.Landscape);
-
+	m_Status.Hp		   = (m_BasicStatus.Hp + m_CorrectionStatus.Hp);
 	
 	//補正値を初期化
 	m_CorrectionStatus.Comfort = 0.f;
 	m_CorrectionStatus.Influence = 0.f;
 	m_CorrectionStatus.Landscape = 0.f;
+	m_CorrectionStatus.Hp = 0;
 	
 }

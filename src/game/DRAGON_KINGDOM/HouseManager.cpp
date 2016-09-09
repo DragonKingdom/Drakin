@@ -213,7 +213,8 @@ void HouseManager::Draw()
 				"Age" + std::to_string(Status.Age) + "\n" +
 				"Comfort" + std::to_string(Status.Comfort) + "\n"
 				"Influence" + std::to_string(Status.Influence) + "\n"
-				"Landscape" + std::to_string(Status.Landscape) + "\n";
+				"Landscape" + std::to_string(Status.Landscape) + "\n"
+				"Hp" + std::to_string(Status.Hp) + "\n";
 			font1.Draw(Str.c_str(), D3DXVECTOR2(0, 650));
 		}
 		else if (i == 1)
@@ -222,7 +223,8 @@ void HouseManager::Draw()
 				"Age" + std::to_string(Status.Age) + "\n" +
 				"Comfort" + std::to_string(Status.Comfort) + "\n"
 				"Influence" + std::to_string(Status.Influence) + "\n"
-				"Landscape" + std::to_string(Status.Landscape) + "\n";
+				"Landscape" + std::to_string(Status.Landscape) + "\n"
+				"Hp" + std::to_string(Status.Hp) + "\n";
 			font2.Draw(Str.c_str(), D3DXVECTOR2(200, 650));
 		}
 		else if (i == 2)
@@ -231,7 +233,8 @@ void HouseManager::Draw()
 				"Age" + std::to_string(Status.Age) + "\n" +
 				"Comfort" + std::to_string(Status.Comfort) + "\n"
 				"Influence" + std::to_string(Status.Influence) + "\n"
-				"Landscape" + std::to_string(Status.Landscape) + "\n";
+				"Landscape" + std::to_string(Status.Landscape) + "\n"
+				"Hp" + std::to_string(Status.Hp) + "\n";
 			font3.Draw(Str.c_str(), D3DXVECTOR2(400, 650));
 		}
 		else if (i == 3)
@@ -240,7 +243,8 @@ void HouseManager::Draw()
 				"Age" + std::to_string(Status.Age) + "\n" +
 				"Comfort" + std::to_string(Status.Comfort) + "\n"
 				"Influence" + std::to_string(Status.Influence) + "\n"
-				"Landscape" + std::to_string(Status.Landscape) + "\n";
+				"Landscape" + std::to_string(Status.Landscape) + "\n"
+				"Hp" + std::to_string(Status.Hp) + "\n";
 			font4.Draw(Str.c_str(), D3DXVECTOR2(600, 650));
 		}
 		else if (i == 4)
@@ -249,7 +253,8 @@ void HouseManager::Draw()
 				"Age" + std::to_string(Status.Age) + "\n" +
 				"Comfort" + std::to_string(Status.Comfort) + "\n"
 				"Influence" + std::to_string(Status.Influence) + "\n"
-				"Landscape" + std::to_string(Status.Landscape) + "\n";
+				"Landscape" + std::to_string(Status.Landscape) + "\n"
+				"Hp" + std::to_string(Status.Hp) + "\n";
 			font5.Draw(Str.c_str(), D3DXVECTOR2(800, 650));
 		}
 		

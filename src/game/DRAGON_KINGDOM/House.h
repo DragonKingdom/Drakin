@@ -19,6 +19,7 @@ public:
 		float Comfort;			// ‰õ“K
 		float Influence;		// ‰e‹¿“x
 		int Age;				// ”N—î
+		int Hp;					// ‘Ï‹v“x
 	};
 
 	House(D3DXVECTOR3 _housePos, float _angle, int _Type);
@@ -27,7 +28,7 @@ public:
 	virtual BUILD_STATE Control();
 	virtual void Draw();
 	Status			GetHouseStatus(){ return m_Status; };
-	virtual Status	GetMainStatus(){ return Status{ 10.f, 10.f, 1000.f, 0 }; };
+	virtual Status	GetMainStatus(){ return Status{ 10.f, 10.f, 1000.f, 0, 0 }; };
 	D3DXVECTOR3		GetHousePos(){ return m_HousePos; };
 	void			GetHouseData(std::vector<float>* _pHouseVertexData, std::vector<float>* _pHouseAngleData, std::vector<int>* _pHouseStatus);
 	void			SetHouseStatus(House::Status _Status){ m_Status = _Status; };

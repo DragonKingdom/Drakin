@@ -31,7 +31,7 @@ public:
 	/**Œš•¨‚ªüˆÍ‚É—^‚¦‚é‰e‹¿’l‚ğæ“¾‚·‚éŠÖ”*/
 	virtual float GetInfluence();
 	//
-	virtual Status	GetMainStatus(){ return Status{ 500.f, 10.f, 1000.f, 0 }; };
+	virtual Status	GetMainStatus(){ return Status{ 500.f, 10.f, 1000.f, 0, 30 }; };
 };
 
 #endif
