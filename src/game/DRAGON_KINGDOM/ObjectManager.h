@@ -10,6 +10,7 @@ class BuildAreaManager;
 class BuildAreaChecker;
 class ClickPosConverter;
 class FileSaveLoad;
+class CastleManager;
 
 class ObjectManager
 {
@@ -38,6 +39,7 @@ private:
 	BuildAreaChecker*	m_pBuildAreaChecker;
 	HouseManager*		m_pHouseManager;
 	RoadManager*		m_pRoadManager;
+	CastleManager*		m_pCastleManager;
 	GAMESCENE_STATE     m_GameSceneState;
 	BUILD_STATE         m_BuildState;
 

@@ -88,3 +88,8 @@ void CastleManager::GetState()
 {
 	m_buildState = m_pStateManager->GetBuildState();
 }
+
+void CastleManager::SetGameData()
+{
+
+}

@@ -27,11 +27,13 @@ public:
 	void Control();
 	/**城を建てる関数*/
 	void BuildControl();
-
 	/**描画関数*/
 	void Draw();
 	/**建物を作るかどうかという状態を取得*/
 	void GetState();
+
+	/**ゲームデータに値をセットする←2016/09/09時点未実装*/
+	void SetGameData();
 
 private:
 

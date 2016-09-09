@@ -1,6 +1,7 @@
 #include "ObjectManager.h"
 #include "Map.h"
 #include "HouseManager.h"
+#include "CastleManager.h"
 #include "BuildAreaManager.h"
 #include "BuildAreaChecker.h"
 #include "RoadManager.h"
@@ -15,12 +16,14 @@ m_pBuildAreaManager(new BuildAreaManager(_pStateManager, _pGameData, _pClickPosC
 m_pBuildAreaChecker(new BuildAreaChecker(m_pBuildAreaManager)),
 m_pMap(new Map(_pStateManager, _pGameData)),
 m_pHouseManager(new HouseManager(m_pBuildAreaChecker, _pStateManager, _pGameData, _pClickPosConverter)),
-m_pRoadManager(new RoadManager(m_pBuildAreaChecker, _pStateManager, _pGameData, _pClickPosConverter))
+m_pRoadManager(new RoadManager(m_pBuildAreaChecker, _pStateManager, _pGameData, _pClickPosConverter)),
+m_pCastleManager(new CastleManager(m_pBuildAreaChecker,_pStateManager, _pGameData, _pClickPosConverter))
 {
 }
 
 ObjectManager::~ObjectManager()
 {
+	delete m_pCastleManager;
 	delete m_pRoadManager;
 	delete m_pHouseManager;
 	delete m_pMap;
@@ -34,6 +37,7 @@ void ObjectManager::Control()
 	{
 		m_pMap->Control();
 		m_pHouseManager->Control();
+		m_pCastleManager->Control();
 
 		BuildControl();
 	}
@@ -47,6 +51,9 @@ void ObjectManager::BuildControl()
 		m_pRoadManager->BuildControl();
 		m_pBuildAreaManager->AreaBuildControl();
 		break;
+	case BUILD_CASTLE:
+		m_pCastleManager->BuildControl();
+		break;
 	}
 }
 
@@ -55,6 +62,7 @@ void ObjectManager::Draw()
 	m_pMap->Draw();
 	m_pRoadManager->Draw();
 	m_pBuildAreaManager->Draw();
+	m_pCastleManager->Draw();
 	m_pHouseManager->Draw();
 }
 
@@ -66,6 +74,7 @@ void ObjectManager::GetState()
 	m_pRoadManager->GetState();
 	m_pBuildAreaManager->GetState();
 	m_pHouseManager->GetState();
+	m_pCastleManager->GetState();
 }
 
 void ObjectManager::SetState()
@@ -83,6 +92,7 @@ void ObjectManager::GetGameData()
 void ObjectManager::SetGameData()
 {
 	m_pHouseManager->SetGameData();
+	m_pCastleManager->SetGameData();
 }
 
 void ObjectManager::Load(FileSaveLoad* _pFileSaveLoad)
