@@ -122,7 +122,7 @@ void BuildAreaManager::Draw()
 	}
 }
 
-bool BuildAreaManager::AreaCheck(D3DXVECTOR3* _checkPos)
+bool BuildAreaManager::AreaCheck(D3DXVECTOR3* _checkPos,int _Type)
 {
 	if (_checkPos == NULL)
 	{
@@ -133,7 +133,7 @@ bool BuildAreaManager::AreaCheck(D3DXVECTOR3* _checkPos)
 		///@todo ”ÍˆÍŽw’è‚È‚Ç‚ð‚·‚é
 		for (unsigned int i = 0; i < m_pBuildArea.size(); i++)
 		{
-			if (m_pBuildArea[i]->AreaCheck(_checkPos) == false)
+			if (m_pBuildArea[i]->AreaCheck(_checkPos,_Type) == false)
 			{
 				return true;
 			}

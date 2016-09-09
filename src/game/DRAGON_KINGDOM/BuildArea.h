@@ -11,11 +11,12 @@ public:
 	bool AreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle,int _Type);
 
 	/**
-	 * エリア内の座標に建物が歩かないかをチェックする関数
-	 * @param[in] チェックしたい座標
+	 * エリア内の座標に建物があるかないかをチェックする関数
+	 * @param[in] _checkPos	チェックしたい座標
+	 * @param[in] _Type チェックした座標に建てる物
 	 * @return エリアが空いていればfalse
 	 */
-	bool AreaCheck(D3DXVECTOR3* _checkPos);
+	bool AreaCheck(D3DXVECTOR3* _checkPos,int _Type);
 
 	/**
 	 * 建物が建築されたことを伝える関数

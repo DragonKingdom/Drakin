@@ -18,9 +18,9 @@ BuildAreaChecker::~BuildAreaChecker()
 {
 }
 
-bool BuildAreaChecker::AreaCheck(D3DXVECTOR3* _checkPos)
+bool BuildAreaChecker::AreaCheck(D3DXVECTOR3* _checkPos,int _Type)
 {
-	return m_pBuildAreaManager->AreaCheck(_checkPos);
+	return m_pBuildAreaManager->AreaCheck(_checkPos,_Type);
 }
 
 bool BuildAreaChecker::SetBuilding(D3DXVECTOR3* _setPos ,int _Type)

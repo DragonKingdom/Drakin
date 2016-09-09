@@ -27,7 +27,7 @@ public:
 	 * Area生成の制御関数
 	 */
 	void AreaBuildControl();
-	/**
+	/**_
 	 * 描画関数
 	 */
 	void Draw();
@@ -35,9 +35,10 @@ public:
 	/**
 	* エリアが空いてるかをチェックする関数(エリアがあるかは関係ない)
 	* @param[in] _checkPos チェックしたい座標
+	* @param[in] _Type チェックした座標に建てる物
 	* @return エリアが空いていればtrueを返す(ビルドエリアがなくてもtrueを返す)
 	*/
-	bool AreaCheck(D3DXVECTOR3* _checkPos);	
+	bool AreaCheck(D3DXVECTOR3* _checkPos,int _Type);	
 
 	/**
 	* 建物が建築されたことを伝える関数

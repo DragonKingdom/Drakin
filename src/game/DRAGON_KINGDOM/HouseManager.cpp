@@ -158,7 +158,7 @@ void HouseManager::BuildControl()
 	m_pClickPosConverter->ConvertForLoad(&CreatePosition, int(MousePosition.x), int(MousePosition.y));
 
 	if (m_pBuildAreaChecker->GetAreaCenterPos(&CreatePosition, &m_BuildPos, &m_BuildAngle, m_buildState) &&	// エリアがそもそも存在するのかチェック
-		m_pBuildAreaChecker->AreaCheck(&m_BuildPos))											// エリアが空いているかのチェック
+		m_pBuildAreaChecker->AreaCheck(&m_BuildPos, m_buildState))											// エリアが空いているかのチェック
 	{
 		m_pHouseBuilder->SetBuildPos(&m_BuildPos);
 		m_pHouseBuilder->SetBuildAngle(m_BuildAngle);
