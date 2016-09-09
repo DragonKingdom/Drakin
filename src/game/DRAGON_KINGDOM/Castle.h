@@ -1,6 +1,6 @@
 /**
 *@file Castle.h
-*@brief 城のクラス
+*@brief 城クラスのｈ
 *@autor haga
 *@data 2016/09/09
 */

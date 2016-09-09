@@ -65,7 +65,7 @@ Castle::~Castle()
 // コントロール関数
 void Castle::Control()
 {
-	//とりあえず年齢
+	//とりあえず年齢をカウントする機能だけ実装
 	m_AgeCount++;
 	if (m_AgeCount  > 3600)
 	{
