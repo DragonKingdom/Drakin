@@ -6,7 +6,9 @@ class GameData;
 class RoadChecker;
 class HouseChecker;
 class HumanManager;
+class HumanChecker;
 class EnemyManager;
+class EnemyChecker;
 class FileSaveLoad;
 
 class CharacterManager
@@ -30,6 +32,8 @@ private:
 	HouseChecker*	m_pHouseChecker;
 	HumanManager*	m_pHumanManager;
 	EnemyManager*	m_pEnemyManager;
+	HumanChecker*	m_pHumanChecker;
+	EnemyChecker*	m_pEnemyChecker;
 
 };
 

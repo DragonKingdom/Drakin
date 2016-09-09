@@ -30,6 +30,7 @@ public:
 	~Human();
 	void Control();
 	void Draw();
+	D3DXVECTOR3 GetPos();
 
 private:
 	void NormalControl();

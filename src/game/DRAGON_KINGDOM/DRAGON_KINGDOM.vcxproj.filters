@@ -209,6 +209,12 @@
     <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\DungeonChecker">
       <UniqueIdentifier>{cee65262-09c0-4cab-9eba-1b523d6555fa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\EnemyChecker">
+      <UniqueIdentifier>{20ac0b66-f69d-40a9-9916-87bd43411a4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\HumanChecker">
+      <UniqueIdentifier>{217f56d0-51f8-4417-aba5-17e355c4bbcb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scene.cpp">
@@ -409,6 +415,12 @@
     <ClCompile Include="DungeonChecker.cpp">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\DungeonChecker</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyChecker.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\EnemyChecker</Filter>
+    </ClCompile>
+    <ClCompile Include="HumanChecker.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\HumanChecker</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -608,6 +620,12 @@
     </ClInclude>
     <ClInclude Include="DungeonChecker.h">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\DungeonChecker</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyChecker.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\EnemyChecker</Filter>
+    </ClInclude>
+    <ClInclude Include="HumanChecker.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\HumanChecker</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

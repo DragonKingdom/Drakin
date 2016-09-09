@@ -9,6 +9,7 @@ public:
 	RoadChecker(RoadManager* _pRoadManager);
 	~RoadChecker();
 	D3DXVECTOR3 NextRoadPos(D3DXVECTOR3 _CheckPos);
+	D3DXVECTOR3 PreviousRoadPos(D3DXVECTOR3 _CheckPos);
 
 private:
 	RoadManager* m_pRoadManager;

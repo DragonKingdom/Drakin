@@ -18,6 +18,11 @@ HumanManager::~HumanManager()
 	}
 }
 
+void HumanManager::Init(EnemyChecker* _pEnemyChecker)
+{
+	m_pEnemyChecker = _pEnemyChecker;
+}
+
 void HumanManager::Control()
 {
 	if (m_pHuman.size() <= HUMAN_MAX && m_HouseNum.PrivateHouse >= 1)
@@ -52,3 +57,29 @@ void HumanManager::SetGameData()
 {
 }
 
+D3DXVECTOR3 HumanManager::GetShortDistanceHumanPos(D3DXVECTOR3 _CheckPos)
+{
+	D3DXVECTOR3 HumanPos = D3DXVECTOR3(0, 0, 0);
+	float Length = 0.0;
+	float PreviousLength = 0.0f;
+
+	for (unsigned int i = 0; i < m_pHuman.size(); i++)
+	{
+		D3DXVECTOR3 HumanVec = m_pHuman[i]->GetPos();
+		Length = sqrt(abs(pow(HumanVec.x - _CheckPos.x, 2) + pow(HumanVec.y - _CheckPos.y, 2)));
+
+		///@todo いい方法がパット浮かばなかったから適当にやってる
+		if (i == 0)
+		{
+			PreviousLength = Length;
+		}
+
+		if (PreviousLength >= Length)
+		{
+			HumanPos = HumanVec;
+			PreviousLength = Length;
+		}
+	}
+
+	return HumanPos;
+}

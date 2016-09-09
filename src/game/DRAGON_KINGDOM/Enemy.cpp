@@ -32,6 +32,7 @@ m_pShaderAssist(new ShaderAssist())
 	m_Status.HitPoint = 30;
 	m_Status.MagicPoint = 20;
 	m_Status.Power = 10;
+	m_Status.State = NORMAL_MODE;
 }
 
 Enemy::~Enemy()
@@ -46,7 +47,15 @@ Enemy::~Enemy()
 
 void Enemy::Control()
 {
-
+	switch (m_Status.State)
+	{
+	case NORMAL_MODE:
+		NormalControl();
+		break;
+	case BATTLE_MODE:
+		BattleControl();
+		break;
+	}
 }
 
 void Enemy::Draw()
@@ -104,4 +113,19 @@ void Enemy::Draw()
 
 	m_pShaderAssist->EndPass();
 	m_pShaderAssist->End();
+}
+
+D3DXVECTOR3 Enemy::GetPos()
+{
+	return m_EnemyPos;
+}
+
+void Enemy::NormalControl()
+{
+
+}
+
+void Enemy::BattleControl()
+{
+
 }

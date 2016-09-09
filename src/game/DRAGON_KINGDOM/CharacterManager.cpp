@@ -1,6 +1,8 @@
 #include "CharacterManager.h"
 #include "StateManager.h"
 #include "GameData.h"
+#include "HumanChecker.h"
+#include "EnemyChecker.h"
 #include "HumanManager.h"
 #include "EnemyManager.h"
 
@@ -10,8 +12,12 @@ m_pGameData(_pGameData),
 m_pRoadChecker(_pRoadChecker),
 m_pHouseChecker(_pHouseChecker),
 m_pHumanManager(new HumanManager(m_pStateManager, m_pGameData, m_pRoadChecker, m_pHouseChecker)),
-m_pEnemyManager(new EnemyManager(m_pStateManager, m_pGameData, m_pRoadChecker, m_pHouseChecker))
+m_pHumanChecker(new HumanChecker(m_pHumanManager)),
+m_pEnemyManager(new EnemyManager(m_pStateManager, m_pGameData, m_pRoadChecker, m_pHouseChecker)),
+m_pEnemyChecker(new EnemyChecker(m_pEnemyManager))
 {
+	m_pHumanManager->Init(m_pEnemyChecker);
+	m_pEnemyManager->Init(m_pHumanChecker);
 }
 
 CharacterManager::~CharacterManager()

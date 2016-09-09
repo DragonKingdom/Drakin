@@ -9,19 +9,30 @@ class HouseChecker;
 class Enemy
 {
 public:
+	enum Mode
+	{
+		NORMAL_MODE,
+		BATTLE_MODE
+	};
+
 	struct Status
 	{
 		int HitPoint;
 		int MagicPoint;
 		int Power;
+		Mode State;
 	};
 
 	Enemy(RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker);
 	~Enemy();
 	void Control();
 	void Draw();
+	D3DXVECTOR3 GetPos();
 
 private:
+	void NormalControl();
+	void BattleControl();
+
 	Status					m_Status;
 	RoadChecker*			m_pRoadChecker;
 	HouseChecker*			m_pHouseChecker;

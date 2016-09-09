@@ -114,6 +114,11 @@ void Human::Draw()
 	m_pShaderAssist->End();
 }
 
+D3DXVECTOR3 Human::GetPos()
+{
+	return m_HumanPos; 
+}
+
 void Human::NormalControl()
 {
 	m_Status.Time--;

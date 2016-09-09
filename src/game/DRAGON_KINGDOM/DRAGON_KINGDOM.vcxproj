@@ -116,6 +116,7 @@
     <ClCompile Include="DebugMode.cpp" />
     <ClCompile Include="DungeonChecker.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyChecker.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
     <ClCompile Include="FadeInOut.cpp" />
     <ClCompile Include="FileSaveLoad.cpp" />
@@ -128,6 +129,7 @@
     <ClCompile Include="HouseManager.cpp" />
     <ClCompile Include="HousePreviewer.cpp" />
     <ClCompile Include="Human.cpp" />
+    <ClCompile Include="HumanChecker.cpp" />
     <ClCompile Include="HumanManager.cpp" />
     <ClCompile Include="InputDeviceFacade.cpp" />
     <ClCompile Include="Kingdom.cpp" />
@@ -188,6 +190,7 @@
     <ClInclude Include="DebugMode.h" />
     <ClInclude Include="DungeonChecker.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyChecker.h" />
     <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="FadeInOut.h" />
     <ClInclude Include="FileSaveLoad.h" />
@@ -200,6 +203,7 @@
     <ClInclude Include="HouseManager.h" />
     <ClInclude Include="HousePreviewer.h" />
     <ClInclude Include="Human.h" />
+    <ClInclude Include="HumanChecker.h" />
     <ClInclude Include="HumanManager.h" />
     <ClInclude Include="InputDeviceFacade.h" />
     <ClInclude Include="Kingdom.h" />
