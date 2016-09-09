@@ -51,6 +51,14 @@ void EnemyManager::SetGameData()
 {
 }
 
+void EnemyManager::Load(FileSaveLoad* _pFileSaveLoad)
+{
+}
+
+void EnemyManager::Save(FileSaveLoad* _pFileSaveLoad)
+{
+}
+
 D3DXVECTOR3 EnemyManager::GetShortDistanceEnemyPos(D3DXVECTOR3 _CheckPos)
 {
 	D3DXVECTOR3 EnemyPos = D3DXVECTOR3(0, 0, 0);

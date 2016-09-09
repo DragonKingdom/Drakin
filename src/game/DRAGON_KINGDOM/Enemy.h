@@ -1,6 +1,11 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
+#define DEFAULT_ENEMY_HITPOINT 30
+#define DEFAULT_ENEMY_MAGICPOINT 20
+#define DEFAULT_ENEMY_POWER 10
+#define DEFAULT_ENEMY_TIME 7200
+
 class FbxModel;
 class ShaderAssist;
 class RoadChecker;

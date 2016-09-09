@@ -3,6 +3,7 @@
 
 #include "GameData.h"
 
+class FileSaveLoad;
 class StateManager;
 class RoadChecker;
 class HouseChecker;
@@ -21,6 +22,9 @@ public:
 	void SetState();
 	void GetGameData();
 	void SetGameData();
+
+	void Load(FileSaveLoad* _pFileSaveLoad);
+	void Save(FileSaveLoad* _pFileSaveLoad);
 
 	/**
 	 * “n‚µ‚½À•W‚Éˆê”Ô‹ß‚¢“G‚ÌÀ•W‚ğ•Ô‚·ŠÖ”

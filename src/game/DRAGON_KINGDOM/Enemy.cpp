@@ -29,9 +29,9 @@ m_pShaderAssist(new ShaderAssist())
 	D3DXMatrixMultiply(&m_World, &m_World, &PositionMatrix);
 
 
-	m_Status.HitPoint = 30;
-	m_Status.MagicPoint = 20;
-	m_Status.Power = 10;
+	m_Status.HitPoint = DEFAULT_ENEMY_HITPOINT;
+	m_Status.MagicPoint = DEFAULT_ENEMY_MAGICPOINT;
+	m_Status.Power = DEFAULT_ENEMY_POWER;
 	m_Status.State = NORMAL_MODE;
 }
 

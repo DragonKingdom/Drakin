@@ -25,3 +25,8 @@ float HouseChecker::GetHouseAngle(D3DXVECTOR3 _CheckPos)
 {
 	return 0.0f;	
 }
+
+void HouseChecker::GetHouseStatus(D3DXVECTOR3 _CheckPos)
+{
+	///@todo ç°ÇÃÇ∆Ç±ÇÎÇÕï‘ÇËílÇ»Çµ
+}

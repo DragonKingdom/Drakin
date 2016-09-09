@@ -57,6 +57,14 @@ void HumanManager::SetGameData()
 {
 }
 
+void HumanManager::Load(FileSaveLoad* _pFileSaveLoad)
+{
+}
+
+void HumanManager::Save(FileSaveLoad* _pFileSaveLoad)
+{
+}
+
 D3DXVECTOR3 HumanManager::GetShortDistanceHumanPos(D3DXVECTOR3 _CheckPos)
 {
 	D3DXVECTOR3 HumanPos = D3DXVECTOR3(0, 0, 0);

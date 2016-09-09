@@ -58,9 +58,13 @@ void CharacterManager::SetGameData()
 
 void CharacterManager::Load(FileSaveLoad* _pFileSaveLoad)
 {
+	m_pHumanManager->Load(_pFileSaveLoad);
+	m_pEnemyManager->Load(_pFileSaveLoad);
 }
 
 void CharacterManager::Save(FileSaveLoad* _pFileSaveLoad)
 {
+	m_pHumanManager->Save(_pFileSaveLoad);
+	m_pEnemyManager->Save(_pFileSaveLoad);
 }
 

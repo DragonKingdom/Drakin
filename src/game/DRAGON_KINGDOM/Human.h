@@ -1,7 +1,11 @@
 #ifndef HUMAN_H
 #define HUMAN_H
 
-#define HUMAN_MOVE_SPEED 30
+#define HUMAN_MOVE_SPEED 30.0f
+#define DEFAULT_HUMAN_HITPOINT 30
+#define DEFAULT_HUMAN_MAGICPOINT 20
+#define DEFAULT_HUMAN_POWER 10
+#define DEFAULT_HUMAN_TIME 7200
 
 class FbxModel;
 class ShaderAssist;

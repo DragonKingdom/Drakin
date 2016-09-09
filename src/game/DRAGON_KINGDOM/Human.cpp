@@ -27,10 +27,13 @@ m_pShaderAssist(new ShaderAssist())
 	m_Angle = m_pHouseChecker->GetHouseAngle(m_HumanPos);
 	m_NextPos = m_pRoadChecker->NextRoadPos(m_HumanPos);
 
-	m_Status.HitPoint = 30;
-	m_Status.MagicPoint = 20;
-	m_Status.Power = 10;
-	m_Status.Time = 7200;
+
+	/// @todo GetHouseStatusの帰り値から人間の性能を判断させる
+
+	m_Status.HitPoint = DEFAULT_HUMAN_HITPOINT;
+	m_Status.MagicPoint = DEFAULT_HUMAN_MAGICPOINT;
+	m_Status.Power = DEFAULT_HUMAN_POWER;
+	m_Status.Time = DEFAULT_HUMAN_TIME;
 	m_Status.State = NORMAL_MODE;
 }
 
@@ -141,7 +144,7 @@ void Human::NormalControl()
 		float xy = x1 + y1;
 		m_Length = sqrt(xy);
 
-		m_LengthNum = m_Length / HUMAN_MOVE_SPEED;
+		m_LengthNum = static_cast<int>(m_Length / HUMAN_MOVE_SPEED);
 	}
 	else
 	{

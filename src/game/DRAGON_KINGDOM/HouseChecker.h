@@ -29,6 +29,14 @@ public:
 	 */
 	float GetHouseAngle(D3DXVECTOR3 _CheckPos);
 
+	/**
+	 * 建物のステータスを取得する
+	 * @param[in] _CheckPos チェックする建物の座標
+	 * @return 建物のステータス
+	 */
+	void GetHouseStatus(D3DXVECTOR3 _CheckPos);
+
+
 private:
 	HouseManager* m_pHouseManager;
 
