@@ -206,6 +206,9 @@
     <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\HouseChecker">
       <UniqueIdentifier>{b886c65b-756f-43ed-b7cf-47a9dc4d2443}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\DungeonChecker">
+      <UniqueIdentifier>{cee65262-09c0-4cab-9eba-1b523d6555fa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scene.cpp">
@@ -403,6 +406,9 @@
     <ClCompile Include="HouseChecker.cpp">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\HouseChecker</Filter>
     </ClCompile>
+    <ClCompile Include="DungeonChecker.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\DungeonChecker</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -599,6 +605,9 @@
     </ClInclude>
     <ClInclude Include="HouseChecker.h">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\HouseChecker</Filter>
+    </ClInclude>
+    <ClInclude Include="DungeonChecker.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\DungeonChecker</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
