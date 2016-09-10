@@ -26,7 +26,11 @@ void EnemyManager::Control()
 {
 	for (unsigned int i = 0; i < m_pEnemy.size(); i++)
 	{
-		m_pEnemy[i]->Control();
+		if (m_pEnemy[i]->Control())
+		{
+			delete m_pEnemy[i];
+			m_pEnemy.erase(m_pEnemy.begin() + i);
+		}
 	}
 }
 

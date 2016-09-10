@@ -15,10 +15,17 @@ class HouseChecker;
 class Human
 {
 public:
-	enum Mode
+	enum ControlMode
 	{
-		NORMAL_MODE,
-		BATTLE_MODE
+		NORMAL_CONTROL,
+		BATTLE_CONTROL
+	};
+
+	enum AnimationMode
+	{
+		WAIT_ANIMATION,
+		WALK_ANIMATION,
+		ATTACK_ANIMATION
 	};
 
 	struct Status
@@ -27,25 +34,53 @@ public:
 		int MagicPoint;
 		int Power;
 		int Time;
-		Mode State;
+		ControlMode		ControlState;
+		AnimationMode	AnimationState;
 	};
 
 	Human(RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker);
 	~Human();
-	void Control();
+
+	/**
+	 * Humanの制御関数
+	 * @return Humanを破棄するべきか
+	 */
+	bool Control();
+
+	/**
+	 * Humanの描画関数
+	 */
 	void Draw();
+	
+	/**
+	 * Humanの位置を取得する関数
+	 * @return Humanの座標
+	 */
 	D3DXVECTOR3 GetPos();
 
+	/**
+	 * Humanのステータスを取得する関数
+	 * @return Humanのステータス
+	 */
+	Human::Status GetStatus();
+
 private:
-	void NormalControl();
-	void BattleControl();
+	bool NormalControl();
+	bool BattleControl();
+	void WaitAnimationDraw();
+	void WalkAnimationDraw();
+	void AttackAnimationDraw();
 
 	Status					m_Status;
 	RoadChecker*			m_pRoadChecker;
 	HouseChecker*			m_pHouseChecker;
-	std::vector<FbxModel*>	m_Model;
+	std::vector<FbxModel*>	m_pWaitAnimation;
+	std::vector<FbxModel*>	m_pWalkAnimation;
+	std::vector<FbxModel*>	m_pAttackAnimation;
 	D3DXVECTOR3				m_HumanPos;
 	D3DXVECTOR3				m_NextPos;
+	int						m_AnimationFrame;
+	bool					m_isReturn;
 	float					m_Length;
 	int						m_LengthNum;
 	float					m_Angle;

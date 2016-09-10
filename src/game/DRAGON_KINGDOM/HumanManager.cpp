@@ -36,7 +36,11 @@ void HumanManager::Control()
 
 	for (unsigned int i = 0; i < m_pHuman.size(); i++)
 	{
-		m_pHuman[i]->Control();
+		if (m_pHuman[i]->Control())
+		{
+			delete m_pHuman[i];
+			m_pHuman.erase(m_pHuman.begin() + i);
+		}
 	}
 }
 

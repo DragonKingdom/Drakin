@@ -14,10 +14,17 @@ class HouseChecker;
 class Enemy
 {
 public:
-	enum Mode
+	enum ControlMode
 	{
-		NORMAL_MODE,
-		BATTLE_MODE
+		NORMAL_CONTROL,
+		BATTLE_CONTROL
+	};
+
+	enum AnimationMode
+	{
+		WAIT_ANIMATION,
+		WALK_ANIMATION,
+		ATTACK_ANIMATION
 	};
 
 	struct Status
@@ -25,23 +32,49 @@ public:
 		int HitPoint;
 		int MagicPoint;
 		int Power;
-		Mode State;
+		ControlMode		ControlState;
+		AnimationMode	AnimationState;
 	};
 
 	Enemy(RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker);
 	~Enemy();
-	void Control();
+
+	/**
+	 * Enemyの制御関数
+	 * @return Enemyを破棄するべきか
+	 */
+	bool Control();
+
+	/**
+	 * Enemyの描画関数
+	 */
 	void Draw();
+
+	/**
+	 * Enemyの位置を取得する関数
+	 * @return Enemyの座標
+	 */
 	D3DXVECTOR3 GetPos();
 
+	/**
+	 * Enemyのステータスを取得する関数
+	 * @return Enemyのステータス
+	 */
+	Enemy::Status GetStatus();
+
 private:
-	void NormalControl();
-	void BattleControl();
+	bool NormalControl();
+	bool BattleControl();
+	void WaitAnimationDraw();
+	void WalkAnimationDraw();
+	void AttackAnimationDraw();
 
 	Status					m_Status;
 	RoadChecker*			m_pRoadChecker;
 	HouseChecker*			m_pHouseChecker;
-	std::vector<FbxModel*>	m_Model;
+	std::vector<FbxModel*>	m_pWaitAnimation;
+	std::vector<FbxModel*>	m_pWalkAnimation;
+	std::vector<FbxModel*>	m_pAttackAnimation;
 	D3DXVECTOR3				m_EnemyPos;
 	float					m_Angle;
 	D3DXMATRIX				m_World;
