@@ -56,10 +56,14 @@ void CastleManager::BuildControl()
 		MousePosition = m_pInputDevice->GetMousePos();
 		m_pClickPosConverter->ConvertForLoad(&CreatePosition, int(MousePosition.x), int(MousePosition.y));
 
+		//座標と角度をメンバーにセット。角度は現在指定はないので0を代入
+		m_BuildPos = CreatePosition;
+		m_BuildAngle = 0;
+
 		//クリックしたら城を作成
 		if (m_pInputDevice->MouseLeftPush())
 		{
-			m_castle = new Castle(CreatePosition,0);
+			m_castle = new Castle(m_BuildPos, m_BuildAngle);
 		}
 
 	}
@@ -81,15 +85,20 @@ void CastleManager::Draw()
 	}
 }
 
-
-
 // 建物を作るかどうかという状態を取得
 void CastleManager::GetState()
 {
 	m_buildState = m_pStateManager->GetBuildState();
 }
 
+// ゲームデータに値をセットする
 void CastleManager::SetGameData()
+{
+
+}
+
+// ゲームデータから値をゲットする
+void CastleManager::GetGameData()
 {
 
 }

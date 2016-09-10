@@ -31,9 +31,10 @@ public:
 	void Draw();
 	/**建物を作るかどうかという状態を取得*/
 	void GetState();
-
 	/**ゲームデータに値をセットする←2016/09/09時点未実装*/
 	void SetGameData();
+	/**ゲームデータから値をセットする←2016/09/09時点未実装*/
+	void GetGameData();
 
 private:
 
@@ -41,7 +42,7 @@ private:
 	BUILD_STATE					m_buildState;			//!< //建物を作るかどうかという状態
 	/**m_BuildPosとm_BuildAngleはローカルに変更するかも*/
 	D3DXVECTOR3					m_BuildPos;				//!< 建築する城の座標
-	float						m_BuildAngle;			//!< 建築する城の角度
+	float						m_BuildAngle;			//!< 建築する城の角度←今後使用する可能性があるかもということで残しておく
 			
 	BuildAreaChecker*			m_pBuildAreaChecker;
 	StateManager*				m_pStateManager;
@@ -50,5 +51,4 @@ private:
 	ClickPosConverter*			m_pClickPosConverter;
 
 };
-
 #endif
