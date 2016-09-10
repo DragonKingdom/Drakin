@@ -48,6 +48,8 @@ private:
 	std::vector<D3DXVECTOR3> m_CenterLinePos;//曲線のビルドエリアを作るときに使う
 	std::vector<D3DXVECTOR3> m_TmpCenterLinePos;//曲線のビルドエリアを作るときの頂点一時保存
 
+	bool** m_AreaExcist; //ビルドエリアが存在しているか？
+
 	bool	m_isLeft;	/*道に対して左にあるAreaかのフラグ*/
 	float	m_x;		/*中心座標*/
 	float	m_y;		/*中心座標*/
