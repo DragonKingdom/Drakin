@@ -1,7 +1,7 @@
 /**
 *@file CastleManager.h
 *@brief 城を管理するクラスのｈ
-*@autor haga
+*@author haga
 *@data 2016/09/09
 */
 #ifndef CASTLE_MANAGER_H
@@ -14,6 +14,7 @@ class InputDeviceFacade;
 class FileSaveLoad;
 class ClickPosConverter;
 class Castle;
+class CastlePreviewer;
 
 class CastleManager
 {
@@ -37,8 +38,9 @@ public:
 	void GetGameData();
 
 private:
-
+	
 	Castle*						m_castle;				//!< 城のオブジェクト
+	CastlePreviewer*			m_castlePreviewer;		//!< 城のプレビュー
 	BUILD_STATE					m_buildState;			//!< //建物を作るかどうかという状態
 	/**m_BuildPosとm_BuildAngleはローカルに変更するかも*/
 	D3DXVECTOR3					m_BuildPos;				//!< 建築する城の座標

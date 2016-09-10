@@ -1,7 +1,7 @@
 /**
 *@file Castle.h
 *@brief éƒNƒ‰ƒX‚Ì‚ˆ
-*@autor haga
+*@author haga
 *@data 2016/09/09
 */
 #ifndef CASTLE_H

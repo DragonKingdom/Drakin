@@ -70,11 +70,11 @@ void ObjectManager::GetState()
 {
 	m_GameSceneState = m_pStateManager->GetGameSceneState();
 	m_BuildState = m_pStateManager->GetBuildState();
-
+	m_pCastleManager->GetState();
 	m_pRoadManager->GetState();
 	m_pBuildAreaManager->GetState();
 	m_pHouseManager->GetState();
-	m_pCastleManager->GetState();
+	
 }
 
 void ObjectManager::SetState()
@@ -87,6 +87,7 @@ void ObjectManager::SetState()
 void ObjectManager::GetGameData()
 {
 	m_pHouseManager->GetGameData();
+	m_pCastleManager->GetGameData();
 }
 
 void ObjectManager::SetGameData()

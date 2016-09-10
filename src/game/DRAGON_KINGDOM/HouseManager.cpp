@@ -257,19 +257,13 @@ void HouseManager::Draw()
 				"Hp" + std::to_string(Status.Hp) + "\n";
 			font5.Draw(Str.c_str(), D3DXVECTOR2(800, 650));
 		}
-		
 	}
 
-	if (m_buildState == BUILD_PRIVATEHOUSE_RANDOM)
+	//プレビュー描画
+	if (m_buildState != BUILD_NONE)
 	{
-		m_pHouseBuilder->PreviewerDraw();
+		m_pHouseBuilder->PreviewerDraw(m_buildState);
 	}
-	/**特殊建物管理チェック用*/
-	if (m_buildState == BUILD_BLACKSMITH || m_buildState == BUILD_CHURCH)
-	{
-		m_pHouseBuilder->PreviewerDraw();
-	}
-
 }
 
 //建物を作るかどうかという状態を取得

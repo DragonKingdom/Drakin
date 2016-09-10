@@ -1,7 +1,7 @@
 /**
 *@file Castle.cpp
 *@brief 城のクラスのcppファイル
-*@autor haga
+*@author haga
 *@data 2016/09/09
 */
 

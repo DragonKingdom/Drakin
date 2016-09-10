@@ -7,6 +7,7 @@
 #include "FileSaveLoad.h"
 #include "ClickPosConverter.h"
 #include "Castle.h"
+#include "CastlePreviewer.h"
 
 
 // コンストラクタ
@@ -16,13 +17,15 @@ m_pStateManager(_pStateManager),
 m_pGameData(_pGameData),
 m_pClickPosConverter(_pClickPosConverter),
 m_pInputDevice(InputDeviceFacade::GetInstance()),
-m_castle(NULL)
+m_castle(NULL),
+m_castlePreviewer(new CastlePreviewer())
 {
 }
 
 // デストラクタ
 CastleManager::~CastleManager()
 {
+	delete m_castlePreviewer;
 	delete m_castle;
 }
 
@@ -56,9 +59,12 @@ void CastleManager::BuildControl()
 		MousePosition = m_pInputDevice->GetMousePos();
 		m_pClickPosConverter->ConvertForLoad(&CreatePosition, int(MousePosition.x), int(MousePosition.y));
 
-		//座標と角度をメンバーにセット。角度は現在指定はないので0を代入
+		//座標と角度をメンバーにセット。角度は現在指定はないので135を代入（モデルを正面に向ける為）
 		m_BuildPos = CreatePosition;
-		m_BuildAngle = 0;
+		m_BuildAngle = 135;
+
+		m_castlePreviewer->SetBuildPos(&m_BuildPos);
+		m_castlePreviewer->SetAngle(&m_BuildAngle);
 
 		//クリックしたら城を作成
 		if (m_pInputDevice->MouseLeftPush())
@@ -78,11 +84,12 @@ void CastleManager::Draw()
 	{
 		m_castle->Draw();
 	}
-	else if (m_buildState == BUILD_CASTLE )
+	else if (m_buildState == BUILD_CASTLE)
 	{
 		// プレビュー描画 予定場所
-
+		m_castlePreviewer->Draw();
 	}
+	
 }
 
 // 建物を作るかどうかという状態を取得

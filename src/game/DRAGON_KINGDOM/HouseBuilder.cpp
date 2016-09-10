@@ -25,12 +25,12 @@ HouseBuilder::~HouseBuilder()
 	delete m_pHousePreviewer;
 }
 
-void HouseBuilder::PreviewerDraw()
+void HouseBuilder::PreviewerDraw(int _Type)
 {
 	//true‚È‚çƒvƒŒƒrƒ…[‚ð•`‰æ
 	if (m_isDraw == true)
 	{
-		m_pHousePreviewer->Draw();
+		m_pHousePreviewer->Draw(_Type);
 	}
 }
 

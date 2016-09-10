@@ -148,7 +148,6 @@ void GameScene::Draw()
 	m_pKingdom->Draw();
 	m_pUI->Draw();
 	m_pCameraController->Draw();
-
 	m_pDebugMode->DebugDisplay();
 }
 

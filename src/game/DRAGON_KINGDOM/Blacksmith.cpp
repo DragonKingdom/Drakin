@@ -7,7 +7,7 @@
 Blacksmith::Blacksmith(D3DXVECTOR3 _housePos, float _angle, int _Type) :
 House(_housePos, _angle, _Type)
 {
-	FbxFileManager::Get()->FileImport("fbx//house_normal_red.fbx");
+	FbxFileManager::Get()->FileImport("fbx//kaziya.fbx");
 	FbxFileManager::Get()->GetModelData(&m_Model);
 	m_BasicStatus = GetMainStatus();
 }
@@ -78,7 +78,7 @@ void Blacksmith::Draw()
 
 	for (unsigned int i = 0; i < m_Model.size(); i++)
 	{
-		m_Model[i]->Draw();
+		m_Model[i]->NonTextureDraw();
 	}
 
 	m_pShaderAssist->EndPass();

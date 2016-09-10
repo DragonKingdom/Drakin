@@ -1,3 +1,7 @@
+/**
+*
+*
+*/
 #include "stdafx.h"
 #include "Church.h"
 #include "FbxFileManager.h"
@@ -27,6 +31,7 @@ BUILD_STATE Church::Control()
 {
 	CountAge();
 
+
 	return BUILD_CHURCH;
 
 }
@@ -36,6 +41,8 @@ float Church::GetInfluence()
 	return (CHURCH_INFLUENCE + (CHURCH_INFLUENCE * m_BasicStatus.Age));
 }
 
+
+//2016/09/10“_Draw‚ğNonTextureDraw‚É•ÏX
 //•`‰æŠÖ”
 void Church::Draw()
 {
@@ -77,7 +84,7 @@ void Church::Draw()
 
 	for (unsigned int i = 0; i < m_Model.size(); i++)
 	{
-		m_Model[i]->Draw();
+		m_Model[i]->NonTextureDraw();
 	}
 
 	m_pShaderAssist->EndPass();
