@@ -4,10 +4,10 @@
 class BuildArea
 {
 public:
-	BuildArea(bool _isLeft, D3DXVECTOR3 _roadStartPos, D3DXVECTOR3 _roadEndPos, float _angle, float _roadStartAngle, float _roadEndAngle, bool _roadLinkStart, bool _roadLinkEnd, BUILDAREAMANAGER_ENUM::BUILD_TYPE _buildType);
-	BuildArea(bool _isLeft, D3DXVECTOR3 _roadStartPos, D3DXVECTOR3 _controlPos, D3DXVECTOR3 _roadEndPos, float _roadStartAngle, float _roadEndAngle, bool _roadLinkStart, bool _roadLinkEnd, BUILDAREAMANAGER_ENUM::BUILD_TYPE _buildType);
+	BuildArea(bool _isLeft, D3DXVECTOR3 _roadStartPos, D3DXVECTOR3 _roadEndPos, float _roadStartAngle, float _roadEndAngle, bool _roadLinkStart, bool _roadLinkEnd);
+	BuildArea(){};
 	~BuildArea();
-	void Draw();
+	virtual void Draw();
 	bool AreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle);
 
 	/**
@@ -28,7 +28,7 @@ public:
 	float GetAngleDegree(){ return D3DXToDegree(m_angle); };
 	void GetBuildAreaData(std::vector<float>* _pBuildAreaVertexData, std::vector<float>* _pBuildAreaAngleData, std::vector<int>* _pBuildAreaFlag);
 
-private:
+protected:
 	struct CUSTOMVERTEX
 	{
 		D3DXVECTOR3	pos;
@@ -42,13 +42,6 @@ private:
 	D3DXVECTOR3 m_StartPos;
 	D3DXVECTOR3 m_ControlPos;
 	D3DXVECTOR3 m_EndPos;
-	D3DXVECTOR3 m_pBuildArea[4];
-	D3DXVECTOR3** m_ppCurveBuildArea;
-	BUILDAREAMANAGER_ENUM::BUILD_TYPE m_buildType;
-	std::vector<D3DXVECTOR3> m_CenterLinePos;//曲線のビルドエリアを作るときに使う
-	std::vector<D3DXVECTOR3> m_TmpCenterLinePos;//曲線のビルドエリアを作るときの頂点一時保存
-
-	bool** m_AreaExcist; //ビルドエリアが存在しているか？
 
 	bool	m_isLeft;	/*道に対して左にあるAreaかのフラグ*/
 	float	m_x;		/*中心座標*/
@@ -74,9 +67,6 @@ private:
 	float MousePosX;
 	float MousePosZ;
 
-	float CalculateBezierLength();
-	D3DXVECTOR3 QuadraticBezPoint(float _t);
-	D3DXVECTOR3 QuadraticConstantBezPoint(int _divideNum,int _nowCnt);
 	bool RoadAngleCheck(float _roadAngle);
 
 };

@@ -1,6 +1,8 @@
 #include "BuildAreaBuilder.h"
 #include "BuildAreaPreviewer.h"
 #include "BuildArea.h"
+#include "NormalBuildArea.h"
+#include "CurveBuildArea.h"
 
 BuildAreaBuilder::BuildAreaBuilder():
 m_pBuildAreaPreviewer(new BuildAreaPreviewer()),
@@ -47,7 +49,7 @@ BuildArea* BuildAreaBuilder::NormalAreaBuild(bool _isLeft)
 	D3DXVec3Scale(&Vec, &Vec, static_cast<float>(VecLength));
 	Vec = Vec + m_StartPos;
 
-	BuildArea* pBuildArea = new BuildArea(_isLeft, m_StartPos, Vec, angle, m_roadStartAngle, m_roadEndAngle, m_StartPosLink, m_EndPosLink, BUILDAREAMANAGER_ENUM::BUILD_TYPE::NORMAL);
+	BuildArea* pBuildArea = new NormalBuildArea(_isLeft, m_StartPos, Vec, angle, m_roadStartAngle, m_roadEndAngle, m_StartPosLink, m_EndPosLink);
 
 	return pBuildArea;
 }
@@ -85,7 +87,7 @@ BuildArea* BuildAreaBuilder::CurveAreaBuild(bool _isLeft)
 	D3DXVec3Scale(&Vec, &Vec, static_cast<float>(VecLength));
 	Vec = Vec + m_StartPos;
 
-	BuildArea* pBuildArea = new BuildArea(_isLeft, m_StartPos, m_ControlPos, Vec, m_roadStartAngle, m_roadEndAngle, m_StartPosLink, m_EndPosLink, BUILDAREAMANAGER_ENUM::BUILD_TYPE::CURVE);
+	BuildArea* pBuildArea = new CurveBuildArea(_isLeft, m_StartPos, m_ControlPos, Vec, m_roadStartAngle, m_roadEndAngle, m_StartPosLink, m_EndPosLink);
 	return pBuildArea;
 }
 

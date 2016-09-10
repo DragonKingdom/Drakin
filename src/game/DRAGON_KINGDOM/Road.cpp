@@ -25,14 +25,6 @@ Road::~Road()
 	m_Texture.Release();
 }
 
-void Road::Control()
-{
-}
-
-void Road::Draw()
-{
-}
-
 bool Road::GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos, float* _outputAngleDegree, bool* _startPos)
 {
 	double length = pow((_checkPos->x - m_StartPos.x)*(_checkPos->x - m_StartPos.x) +
