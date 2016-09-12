@@ -2,8 +2,8 @@
 #include "NormalRoad.h"
 #include "ShaderAssist.h"
 
-NormalRoad::NormalRoad(D3DXVECTOR3 _startPos, D3DXVECTOR3 _endPos, float _angle) :
-Road(_startPos,_endPos,_angle)
+NormalRoad::NormalRoad(D3DXVECTOR3 _startPos, D3DXVECTOR3 _endPos, float _angle, int _nextArray, int _previousArray) :
+Road(_startPos, _endPos, _angle, _nextArray, _previousArray)
 {
 	m_pRoad[0].x = m_StartPos.x + (ROAD_W_SIZE / 2) * sin(m_angle);
 	m_pRoad[0].y = 20.f;

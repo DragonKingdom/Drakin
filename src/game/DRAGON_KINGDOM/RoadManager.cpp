@@ -40,6 +40,8 @@ void RoadManager::BuildControl()
 	D3DXVECTOR3 StartPos;
 	D3DXVECTOR3 EndPos;
 	D3DXVECTOR2 MousePos;
+	int nextArray = 0;
+	int previousArray = 0;
 	float roadStartAngle = 0.f;
 	float roadEndAngle = 0.f;
 	switch (m_state)
@@ -55,10 +57,11 @@ void RoadManager::BuildControl()
 			MousePos = m_pInputDevice->GetMousePos();
 			m_pClickPosConverter->ConvertForLoad(&StartPos, int(MousePos.x), int(MousePos.y));
 			//StartPos‚ªŒq‚ª‚Á‚Ä‚¢‚é‚©‚ð”»’f‚µ‚ÄAŒq‚°‚ç‚ê‚é“¹‚ª‚ ‚Á‚½‚ç‚»‚ÌŒq‚°‚é“¹‚ÌŠp“x‚ðŽæ‚Á‚Ä‚«‚ÄA‚»‚Ì“¹‚ÌŽn“_‚©‚Ìƒtƒ‰ƒO‚ðŽæ‚Á‚Ä‚«‚Ä‚¢‚é
-			m_pRoadBuilder->StartPosLinkSet(RoadCheck(&StartPos, &StartPos, &roadStartAngle, &m_roadLinkStart_StartPos));
+			m_pRoadBuilder->StartPosLinkSet(RoadCheck(&StartPos, &StartPos, &roadStartAngle, &m_roadLinkStart_StartPos,&previousArray));
 			//“¹‚ðŒq‚°‚ç‚ê‚é‚©‚Ì”»’f‚ð‚·‚éŒq‚°‚é“¹‚ÌŠp“x‚ðƒZƒbƒg‚·‚é
 			m_pRoadBuilder->SetRoadStartAngle(roadStartAngle);
 			m_pRoadBuilder->StartPosSet(StartPos);
+			m_pRoadBuilder->SetPreviousArray(previousArray);
 			m_state = STATE::END_POS_SET;
 		}
 
@@ -68,10 +71,11 @@ void RoadManager::BuildControl()
 		MousePos = m_pInputDevice->GetMousePos();
 		m_pClickPosConverter->ConvertForLoad(&EndPos, int(MousePos.x), int(MousePos.y));
 		//EndPos‚ªŒq‚ª‚Á‚Ä‚¢‚é‚©‚ð”»’f‚µ‚ÄAŒq‚°‚ç‚ê‚é“¹‚ª‚ ‚Á‚½‚ç‚»‚ÌŒq‚°‚é“¹‚ÌŠp“x‚ðŽæ‚Á‚Ä‚«‚ÄA‚»‚Ì“¹‚ÌŽn“_‚©‚Ìƒtƒ‰ƒO‚ðŽæ‚Á‚Ä‚«‚Ä‚¢‚é
-		m_pRoadBuilder->EndPosLinkSet(RoadCheck(&EndPos, &EndPos, &roadEndAngle, &m_roadLinkEnd_StartPos));
+		m_pRoadBuilder->EndPosLinkSet(RoadCheck(&EndPos, &EndPos, &roadEndAngle, &m_roadLinkEnd_StartPos,&nextArray));
 		//“¹‚ðŒq‚°‚ç‚ê‚é‚©‚Ì”»’f‚ð‚·‚éŒq‚°‚é“¹‚ÌŠp“x‚ðƒZƒbƒg‚·‚é
 		m_pRoadBuilder->SetRoadEndAngle(roadEndAngle);
 		m_pRoadBuilder->EndPosSet(EndPos);
+		m_pRoadBuilder->SetNextArray(nextArray);
 
 		//‹Èü‚ðˆø‚­Žž‚Ì§Œä“_‚ðŽw’è‚·‚éB
 		if (Scene::m_keyStateOn & Scene::KEY_E)
@@ -210,11 +214,12 @@ void RoadManager::Save(FileSaveLoad* _pFileSaveLoad)
 	_pFileSaveLoad->CreateGroup("RoadStartEndPos", &RoadVec);
 }
 
-bool RoadManager::RoadCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pStartOrEndPos, float* _outputAngleDegree, bool* _startPos)
+bool RoadManager::RoadCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pStartOrEndPos, float* _outputAngleDegree, bool* _startPos,int* ConnectArray)
 {
 	int BuildAreaMax = m_pRoad.size();
 	if (BuildAreaMax == 0)
 	{
+		*ConnectArray = -1;
 		return false;
 	}
 
@@ -222,8 +227,10 @@ bool RoadManager::RoadCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pStartOrEndPos
 	{
 		if (m_pRoad[i]->GetStartOrEndPos(_checkPos, _pStartOrEndPos, _outputAngleDegree, _startPos))
 		{
+			*ConnectArray = i;
 			return true;
 		}
 	}
+	*ConnectArray = -1;
 	return false;
 }

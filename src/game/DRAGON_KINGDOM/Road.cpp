@@ -1,10 +1,12 @@
 #include "Road.h"
 #include "ShaderAssist.h"
 
-Road::Road(D3DXVECTOR3 _startPos, D3DXVECTOR3 _endPos, float _angle) :
+Road::Road(D3DXVECTOR3 _startPos, D3DXVECTOR3 _endPos, float _angle, int _nextArray, int _previousArray) :
 m_StartPos(_startPos),
 m_EndPos(_endPos),
 m_angle(_angle),
+m_NextArray(_nextArray),
+m_PreviousArray(_previousArray),
 m_pShaderAssist(new ShaderAssist)
 {
 	m_Texture.Load("../sourceimages/Road.bmp");

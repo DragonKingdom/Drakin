@@ -2,9 +2,9 @@
 #include "CurveRoad.h"
 #include "ShaderAssist.h"
 #include <graphicsDevice.h>
-CurveRoad::CurveRoad(D3DXVECTOR3 _startPos, D3DXVECTOR3 _controlPos, D3DXVECTOR3 _endPos, float _angle) :
+CurveRoad::CurveRoad(D3DXVECTOR3 _startPos, D3DXVECTOR3 _controlPos, D3DXVECTOR3 _endPos, float _angle, int _nextArray, int _previousArray) :
 m_ControlPos(_controlPos),
-Road(_startPos, _endPos, _angle)
+Road(_startPos, _endPos, _angle, _nextArray,_previousArray)
 {
 	BezierLineCreate();
 }

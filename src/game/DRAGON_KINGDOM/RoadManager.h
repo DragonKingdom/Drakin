@@ -51,7 +51,7 @@ private:
 	* @param[in] _startPos 繋げられる道の始点か？
 	* @return 周辺に道がなければfalseを返す
 	*/
-	bool					RoadCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pStartOrEndPos, float* _outputAngleDegree, bool* _startPos);
+	bool					RoadCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pStartOrEndPos, float* _outputAngleDegree, bool* _startPos, int* ConnectArray);
 	/// @todo テスト用
 	ClickPosConverter*		m_pClickPosConverter;
 	Font m_Font;

@@ -25,18 +25,21 @@ public:
 	bool BuildAngleCheck(float _roadAngle);
 	void SetRoadStartAngle(float _roadStartAngle){ m_roadStartAngle = _roadStartAngle; }
 	void SetRoadEndAngle(float _roadEndAngle){ m_roadEndAngle = _roadEndAngle; }
-
+	void SetNextArray(int _nextArray){ m_NextArray = _nextArray; };
+	void SetPreviousArray(int _previousArray){ m_PreviousArray = _previousArray; };
 private:
-	RoadPreviewer*				 m_pRoadPreviewer;
-	D3DXVECTOR3					 m_StartPos;
-	D3DXVECTOR3					 m_ControlPos;
-	D3DXVECTOR3					 m_EndPos;
-	float						 m_roadStartAngle;
-	float						 m_roadEndAngle;
-	bool						 m_StartPosLink;
-	bool						 m_EndPosLink;
-	bool						 m_isStartPointSet;
-	bool						 m_isEndPointSet;
+	RoadPreviewer*	m_pRoadPreviewer;
+	D3DXVECTOR3		m_StartPos;
+	D3DXVECTOR3		m_ControlPos;
+	D3DXVECTOR3		m_EndPos;
+	int				m_NextArray;
+	int				m_PreviousArray;
+	float			m_roadStartAngle;
+	float			m_roadEndAngle;
+	bool			m_StartPosLink;
+	bool			m_EndPosLink;
+	bool			m_isStartPointSet;
+	bool			m_isEndPointSet;
 
 };
 
