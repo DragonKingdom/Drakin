@@ -25,10 +25,12 @@ CurveBuildArea::~CurveBuildArea()
 	{
 		delete[] m_AreaExcist[i];
 	}
+	delete[] m_AreaExcist;
 	for (int i = 0; i < m_CenterLinePos.size(); i++)
 	{
 		delete[] m_ppCurveBuildArea[i];
 	}
+	delete[] m_ppCurveBuildArea;
 }
 
 void CurveBuildArea::Draw()
@@ -188,7 +190,7 @@ void CurveBuildArea::LeftRoadCreate()
 					{
 						for (int a = m; a < 4; a++)
 						{
-							m_AreaExcist[i - 1][a] = false;
+							m_AreaExcist[i + 1][a] = false;
 						}
 					}
 				}
@@ -390,7 +392,7 @@ void CurveBuildArea::RightRoadCreate()
 					{
 						for (int a = m; a < 4; a++)
 						{
-							m_AreaExcist[i - 1][a] = false;
+							m_AreaExcist[i + 1][a] = false;
 						}
 					}
 				}
@@ -534,6 +536,39 @@ D3DXVECTOR3 CurveBuildArea::QuadraticBezPoint(float _t)
 	vertex.z += valueTemp * m_EndPos.z;
 
 	return vertex;
+}
+
+bool CurveBuildArea::GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos, float* _outputAngleDegree, bool* _startPos)
+{
+	double length = pow((_checkPos->x - m_StartPos.x)*(_checkPos->x - m_StartPos.x) +
+		(_checkPos->z - m_StartPos.z)*(_checkPos->z - m_StartPos.z), 0.5);
+
+	float angle = atan2(m_CenterLinePos[1].z - m_CenterLinePos[0].z,
+		m_CenterLinePos[1].x - m_CenterLinePos[0].x);
+
+	if (length < 3000.f)
+	{
+		*_outputAngleDegree = D3DXToDegree(angle);
+		*_outputPos = m_StartPos;
+		*_startPos = true;
+		return true;
+	}
+
+
+	length = pow((_checkPos->x - m_EndPos.x)*(_checkPos->x - m_EndPos.x) +
+		(_checkPos->z - m_EndPos.z)*(_checkPos->z - m_EndPos.z), 0.5);
+
+	angle = atan2(m_CenterLinePos[m_CenterLinePos.size() - 1].z - m_CenterLinePos[m_CenterLinePos.size() - 2].z,
+		m_CenterLinePos[m_CenterLinePos.size() - 1].x - m_CenterLinePos[m_CenterLinePos.size() - 2].x);
+
+	if (length < 3000.f)
+	{
+		*_outputAngleDegree = D3DXToDegree(angle);
+		*_outputPos = m_CenterLinePos[m_CenterLinePos.size() - 1];
+		*_startPos = false;
+		return true;
+	}
+	return false;
 }
 
 D3DXVECTOR3 CurveBuildArea::QuadraticConstantBezPoint(int _divideNum, int _nowCnt)

@@ -7,7 +7,7 @@ public:
 	Road(D3DXVECTOR3 _startPos, D3DXVECTOR3 _endPos, float _angle);
 	Road(){}
 
-	~Road();
+	virtual ~Road();
 	virtual void Control(){};
 	virtual void Draw(){};
 

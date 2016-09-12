@@ -35,6 +35,7 @@ NormalBuildArea::NormalBuildArea(bool _isLeft, D3DXVECTOR3 _roadStartPos, D3DXVE
 
 NormalBuildArea::~NormalBuildArea()
 {
+	delete[] m_pAreaData;
 }
 
 void NormalBuildArea::Draw()
