@@ -42,12 +42,15 @@ m_pShaderAssist(new ShaderAssist())
 	m_Status.Age = 0;
 	m_Status.Hp = 0;
 
-	//補正値を初期化
+	// 補正値を初期化
 	m_CorrectionStatus.Comfort = 0.f;
 	m_CorrectionStatus.Influence = 0.f;
 	m_CorrectionStatus.Landscape = 0.f;
 	m_CorrectionStatus.Age = 0;
 	m_CorrectionStatus.Hp = 0;
+
+	// レベルをいれる
+	m_houseLevel = LV1;
 
 }
 
@@ -123,6 +126,7 @@ void House::SetCorrectionStatus(House::Status _Status)
 void House::DecisionHouseStatus()
 {
 	//建物のステータスを最終決定する
+	m_Status.Age = m_BasicStatus.Age;
 	m_Status.Comfort   = (m_BasicStatus.Comfort + m_CorrectionStatus.Comfort);
 	m_Status.Influence = (m_BasicStatus.Influence + m_CorrectionStatus.Influence);
 	m_Status.Landscape = (m_BasicStatus.Landscape + m_CorrectionStatus.Landscape);

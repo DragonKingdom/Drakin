@@ -188,6 +188,15 @@
     <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\HouseManager\House\Church">
       <UniqueIdentifier>{3ad5dd21-7caf-41fd-8d4d-df492a5be13a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\CastleManager">
+      <UniqueIdentifier>{1a2dda61-94e5-4054-9806-317a57a8c489}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\CastleManager\CastlePreviewer">
+      <UniqueIdentifier>{edcd7cde-0de8-41aa-ae59-1b6173b3d450}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\CastleManager\Castle">
+      <UniqueIdentifier>{d7a26309-5880-432f-b43e-ef3b7187650d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scene.cpp">
@@ -367,6 +376,15 @@
     <ClCompile Include="Church.cpp">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\HouseManager\House\Church</Filter>
     </ClCompile>
+    <ClCompile Include="CastleManager.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CastleManager</Filter>
+    </ClCompile>
+    <ClCompile Include="CastlePreviewer.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CastleManager\CastlePreviewer</Filter>
+    </ClCompile>
+    <ClCompile Include="Castle.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CastleManager\Castle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -545,6 +563,15 @@
     </ClInclude>
     <ClInclude Include="Church.h">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\HouseManager\House\Church</Filter>
+    </ClInclude>
+    <ClInclude Include="CastleManager.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CastleManager</Filter>
+    </ClInclude>
+    <ClInclude Include="CastlePreviewer.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CastleManager\CastlePreviewer</Filter>
+    </ClInclude>
+    <ClInclude Include="Castle.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CastleManager\Castle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

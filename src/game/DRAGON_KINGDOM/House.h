@@ -13,6 +13,8 @@ class ShaderAssist;
 class House
 {
 public:
+
+	// ステータス
 	struct Status
 	{
 		float Landscape;		// 景観
@@ -20,6 +22,14 @@ public:
 		float Influence;		// 影響度
 		int Age;				// 年齢
 		int Hp;					// 耐久度
+	};
+
+	// 建物レベル
+	enum Level
+	{
+		LV1,	//!<レベル1
+		LV2,	//!<レベル2
+		LVMAX
 	};
 
 	House(D3DXVECTOR3 _housePos, float _angle, int _Type);
@@ -53,6 +63,7 @@ protected:
 	House::Status			m_BasicStatus;			// 建物の基本ステータス
 	House::Status			m_CorrectionStatus;		// 他の建物からの補正値
 	int						m_AgeCount;				// 年齢をカウントするための変数 (修正予定)
+	House::Level			m_houseLevel;			// 家のレベル
 
 	ShaderAssist*			m_pShaderAssist;
 	Texture					m_Texture;

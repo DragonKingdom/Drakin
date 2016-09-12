@@ -110,6 +110,9 @@
     <ClCompile Include="BuildWindow.cpp" />
     <ClCompile Include="Button2D.cpp" />
     <ClCompile Include="CameraController.cpp" />
+    <ClCompile Include="Castle.cpp" />
+    <ClCompile Include="CastleManager.cpp" />
+    <ClCompile Include="CastlePreviewer.cpp" />
     <ClCompile Include="Church.cpp" />
     <ClCompile Include="ClickPosConverter.cpp" />
     <ClCompile Include="Collision.cpp" />
@@ -174,6 +177,9 @@
     <ClInclude Include="BuildWindow.h" />
     <ClInclude Include="Button2D.h" />
     <ClInclude Include="CameraController.h" />
+    <ClInclude Include="Castle.h" />
+    <ClInclude Include="CastleManager.h" />
+    <ClInclude Include="CastlePreviewer.h" />
     <ClInclude Include="Church.h" />
     <ClInclude Include="ClickPosConverter.h" />
     <ClInclude Include="Collision.h" />
