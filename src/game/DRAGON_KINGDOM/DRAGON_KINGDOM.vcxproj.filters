@@ -215,6 +215,18 @@
     <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\HumanChecker">
       <UniqueIdentifier>{217f56d0-51f8-4417-aba5-17e355c4bbcb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\Road\CurveRoad">
+      <UniqueIdentifier>{b637f857-9daa-4da8-97cf-766efbae2f29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\Road\NormalRoad">
+      <UniqueIdentifier>{1becfb52-92e3-4050-8852-ab9e1041ae28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildArea\NormalBuildArea">
+      <UniqueIdentifier>{98a1a679-043e-467a-9ff1-59ed9757eb25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildArea\CurveBuildArea">
+      <UniqueIdentifier>{68ab0cd8-f27c-41dc-8fe9-4c34aa44cc7e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scene.cpp">
@@ -421,6 +433,18 @@
     <ClCompile Include="HumanChecker.cpp">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\HumanChecker</Filter>
     </ClCompile>
+    <ClCompile Include="CurveRoad.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\Road\CurveRoad</Filter>
+    </ClCompile>
+    <ClCompile Include="NormalRoad.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\Road\NormalRoad</Filter>
+    </ClCompile>
+    <ClCompile Include="CurveBuildArea.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildArea\CurveBuildArea</Filter>
+    </ClCompile>
+    <ClCompile Include="NormalBuildArea.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildArea\NormalBuildArea</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -626,6 +650,18 @@
     </ClInclude>
     <ClInclude Include="HumanChecker.h">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\HumanChecker</Filter>
+    </ClInclude>
+    <ClInclude Include="CurveRoad.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\Road\CurveRoad</Filter>
+    </ClInclude>
+    <ClInclude Include="NormalRoad.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\Road\NormalRoad</Filter>
+    </ClInclude>
+    <ClInclude Include="CurveBuildArea.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildArea\CurveBuildArea</Filter>
+    </ClInclude>
+    <ClInclude Include="NormalBuildArea.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildArea\NormalBuildArea</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

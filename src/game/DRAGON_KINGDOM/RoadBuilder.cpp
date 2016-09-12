@@ -1,7 +1,8 @@
 #include "RoadBuilder.h"
 #include "RoadPreviewer.h"
 #include "Road.h"
-
+#include "NormalRoad.h"
+#include "CurveRoad.h"
 RoadBuilder::RoadBuilder() :
 m_pRoadPreviewer(new RoadPreviewer()),
 m_StartPos(D3DXVECTOR3(0, 0, 0)),
@@ -22,13 +23,24 @@ void RoadBuilder::StartPosSet(const D3DXVECTOR3 _startPos)
 	m_StartPos = _startPos;
 	m_pRoadPreviewer->StartPosSet(m_StartPos);
 }
+void RoadBuilder::ControlPosSet(const D3DXVECTOR3 _controlPos)
+{
+	m_ControlPos = _controlPos;
+	m_pRoadPreviewer->ControlPosSet(_controlPos);
+	m_pRoadPreviewer->BuildModeSet(ROADMANAGER_ENUM::BUILD_TYPE::CURVE);
+}
+
+void RoadBuilder::BuildModeSet(ROADMANAGER_ENUM::BUILD_TYPE _buildType)
+{
+	m_pRoadPreviewer->BuildModeSet(_buildType);
+}
 
 void RoadBuilder::EndPosSet(const D3DXVECTOR3 _endPos)
 {
 	m_isEndPointSet = true;
-
+	m_pRoadPreviewer->EndPosSet(_endPos);
 	m_EndPos = _endPos;
-	m_pRoadPreviewer->EndPosSet(m_EndPos);
+
 }
 
 void RoadBuilder::InitStartPos()
@@ -39,6 +51,13 @@ void RoadBuilder::InitStartPos()
 	m_StartPos = D3DXVECTOR3(0, 0, 0);
 }
 
+void RoadBuilder::InitControlPos()
+{
+	m_pRoadPreviewer->BuildModeSet(ROADMANAGER_ENUM::BUILD_TYPE::NORMAL);
+	m_ControlPos = D3DXVECTOR3(0, 0, 0);
+	m_pRoadPreviewer->ControlPosSet(D3DXVECTOR3(0, 0, 0));
+}
+
 void RoadBuilder::InitEndPos()
 {
 	m_isEndPointSet = false;
@@ -47,7 +66,7 @@ void RoadBuilder::InitEndPos()
 	m_EndPos = D3DXVECTOR3(0, 0, 0);
 }
 
-Road* RoadBuilder::RoadBuild()
+Road* RoadBuilder::RoadBuild(ROADMANAGER_ENUM::BUILD_TYPE _buildType)
 {
 	// ‚à‚Æ‚à‚Æ‚ÌStartPos‚©‚çEndPos‚Ì’·‚³
 	int length = static_cast<int>(sqrt(
@@ -81,8 +100,16 @@ Road* RoadBuilder::RoadBuild()
 	D3DXVec3Scale(&Vec, &Vec, float(VecLength));
 	Vec = Vec + m_StartPos;
 
-
-	Road* pRoad = new Road(m_StartPos, Vec, angle);
+	Road* pRoad = NULL;
+	switch (_buildType)
+	{
+	case ROADMANAGER_ENUM::NORMAL:
+		pRoad = new NormalRoad(m_StartPos, Vec, angle);
+		break;
+	case ROADMANAGER_ENUM::CURVE:
+		pRoad = new CurveRoad(m_StartPos, m_ControlPos, Vec, angle);
+		break;
+	}
 
 	return pRoad;
 }

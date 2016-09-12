@@ -35,6 +35,7 @@ private:
 	RoadBuilder*			m_pRoadBuilder;
 	std::vector<Road*>		m_pRoad;
 	ROADMANAGER_ENUM::STATE	m_state;
+	ROADMANAGER_ENUM::BUILD_TYPE m_buildType;
 	BUILD_STATE				m_buildState;
 	StateManager*			m_pStateManager;
 	GameData*				m_pGameData;
@@ -53,6 +54,7 @@ private:
 	bool					RoadCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pStartOrEndPos, float* _outputAngleDegree, bool* _startPos);
 	/// @todo テスト用
 	ClickPosConverter*		m_pClickPosConverter;
+	Font m_Font;
 
 };
 

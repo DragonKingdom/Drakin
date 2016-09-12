@@ -50,3 +50,12 @@ bool InputDeviceFacade::MouseRightPush()
 	}
 	return false;
 }
+
+bool InputDeviceFacade::MouseCenterPush()
+{
+	if (Scene::m_mousePushState & Scene::M_CENTER_PUSH)
+	{
+		return true;
+	}
+	return false;
+}

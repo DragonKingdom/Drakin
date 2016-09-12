@@ -4,37 +4,45 @@
 class BuildArea
 {
 public:
-	BuildArea(bool _isLeft, D3DXVECTOR3 _roadStartPos, D3DXVECTOR3 _roadEndPos, float _angle, float _roadStartAngle, float _roadEndAngle, bool _roadLinkStart, bool _roadLinkEnd);
+	BuildArea(bool _isLeft, D3DXVECTOR3 _roadStartPos, D3DXVECTOR3 _roadEndPos, float _roadStartAngle, float _roadEndAngle, bool _roadLinkStart, bool _roadLinkEnd);
+	BuildArea(){};
 	~BuildArea();
-	void Draw();
-	bool AreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle);
+	virtual void Draw();
+	virtual bool AreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle);
 
 	/**
 	 * エリア内の座標に建物が歩かないかをチェックする関数
 	 * @param[in] チェックしたい座標
 	 * @return エリアが空いていればfalse
 	 */
-	bool AreaCheck(D3DXVECTOR3* _checkPos);
+	virtual bool AreaCheck(D3DXVECTOR3* _checkPos);
 
 	/**
 	 * 建物が建築されたことを伝える関数
 	 * @param[in] 建築された場所
 	 * @return 成功したらtrue
 	 */
-	bool SetBuilding(D3DXVECTOR3* _setPos);
+	virtual bool SetBuilding(D3DXVECTOR3* _setPos);
 
-	bool GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos, float* _outputAngleDegree, bool* _startPos);
+	virtual bool GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos, float* _outputAngleDegree, bool* _startPos);
 	float GetAngleDegree(){ return D3DXToDegree(m_angle); };
-	void GetBuildAreaData(std::vector<float>* _pBuildAreaVertexData, std::vector<float>* _pBuildAreaAngleData, std::vector<int>* _pBuildAreaFlag);
+	virtual void GetBuildAreaData(std::vector<float>* _pBuildAreaVertexData, std::vector<float>* _pBuildAreaAngleData, std::vector<int>* _pBuildAreaFlag);
 
-private:
+protected:
+	struct CUSTOMVERTEX
+	{
+		D3DXVECTOR3	pos;
+		FLOAT	tu, tv;
+	};
+
 	Vertex      m_Vertex;
 	Texture		m_Texture;
 	D3DXVECTOR3 m_RoadStartPos;	/*対応する道の始点*/
 	D3DXVECTOR3 m_RoadEndPos;	/*対応する道の終点*/
 	D3DXVECTOR3 m_StartPos;
+	D3DXVECTOR3 m_ControlPos;
 	D3DXVECTOR3 m_EndPos;
-	D3DXVECTOR3 m_pBuildArea[4];
+
 	bool	m_isLeft;	/*道に対して左にあるAreaかのフラグ*/
 	float	m_x;		/*中心座標*/
 	float	m_y;		/*中心座標*/
