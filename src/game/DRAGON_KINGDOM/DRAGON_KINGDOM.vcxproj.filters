@@ -191,6 +191,12 @@
     <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\Road\CurveRoad">
       <UniqueIdentifier>{fe79306c-c9af-429e-8b10-d810d8cc49c6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildArea\NormalBuildArea">
+      <UniqueIdentifier>{7a0da485-e20b-404a-99e8-1ca0ac945002}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildArea\CurveBuildArea">
+      <UniqueIdentifier>{749cd76a-6da7-49ae-b0f7-5046ff1775f2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scene.cpp">
@@ -373,6 +379,12 @@
     <ClCompile Include="NormalRoad.cpp">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\Road\NormalRoad</Filter>
     </ClCompile>
+    <ClCompile Include="CurveBuildArea.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildArea\CurveBuildArea</Filter>
+    </ClCompile>
+    <ClCompile Include="NormalBuildArea.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildArea\NormalBuildArea</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -554,6 +566,12 @@
     </ClInclude>
     <ClInclude Include="NormalRoad.h">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\Road\NormalRoad</Filter>
+    </ClInclude>
+    <ClInclude Include="CurveBuildArea.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildArea\CurveBuildArea</Filter>
+    </ClInclude>
+    <ClInclude Include="NormalBuildArea.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildArea\NormalBuildArea</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
