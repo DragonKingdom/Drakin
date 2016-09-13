@@ -107,7 +107,14 @@ Road* RoadBuilder::RoadBuild(ROADMANAGER_ENUM::BUILD_TYPE _buildType)
 		pRoad = new NormalRoad(m_StartPos, Vec, angle);
 		break;
 	case ROADMANAGER_ENUM::CURVE:
-		pRoad = new CurveRoad(m_StartPos, m_ControlPos, m_EndPos, angle);
+		if (m_ControlPos == m_EndPos)
+		{
+			pRoad = new NormalRoad(m_StartPos, Vec, angle);
+		}
+		else
+		{
+			pRoad = new CurveRoad(m_StartPos, m_ControlPos, m_EndPos, angle);
+		}
 		break;
 	}
 
