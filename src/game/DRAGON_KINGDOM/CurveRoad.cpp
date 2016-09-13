@@ -74,7 +74,7 @@ void CurveRoad::BezierLineCreate()
 	{
 		m_pVertex[i * 2].pos = m_pLeftLinePos[i];
 		m_pVertex[i * 2].tu = 0.f;
-		m_pVertex[i * 2].tv = i * 1.f / (m_CenterLinePos.size() - 1);
+		m_pVertex[i * 2].tv = 1.f / (m_CenterLinePos.size() - 1);
 		m_pVertex[i * 2 + 1].pos = m_pRightLinePos[i];
 		m_pVertex[i * 2 + 1].tu = 1.f;
 		m_pVertex[i * 2 + 1].tv = i * 1.f / (m_CenterLinePos.size() - 1);

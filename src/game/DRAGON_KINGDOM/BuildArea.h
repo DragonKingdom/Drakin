@@ -57,8 +57,6 @@ protected:
 
 
 	Font m_Font;
-	int m_AreaCountX;
-	int m_AreaCountZ;
 	float MousePosX;
 	float MousePosZ;
 

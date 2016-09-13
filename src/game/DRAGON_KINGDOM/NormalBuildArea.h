@@ -1,4 +1,5 @@
-#pragma once
+#ifndef NORMALBUILDAREA_H
+#define NORMALBUILDAREA_H
 #include "BuildArea.h"
 
 class NormalBuildArea : public BuildArea
@@ -51,3 +52,4 @@ private:
 	void RightRoadCreate();
 };
 
+#endif

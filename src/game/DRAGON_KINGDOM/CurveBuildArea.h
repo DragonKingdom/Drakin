@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CURVEBUILDAREA_H
+#define CURVEBUILDAREA_H
 #include "BuildArea.h"
 class CurveBuildArea : public BuildArea
 {
@@ -41,6 +42,8 @@ private:
 	std::vector<float> m_z;		/*’†SÀ•W*/;
 	std::vector<float> m_w;		/*•*/;
 	BYTE*		m_pAreaData;
+	int m_AreaCountX;
+	int m_AreaCountZ;
 
 	/*‚‚³‚ÍŒÅ’è‚È‚Ì‚Å‚¢‚ç‚È‚¢*/
 	float CalculateBezierLength();
@@ -51,4 +54,4 @@ private:
 	bool CurveAreaCheck(D3DXVECTOR3* _checkPos, int _array);
 
 };
-
+#endif

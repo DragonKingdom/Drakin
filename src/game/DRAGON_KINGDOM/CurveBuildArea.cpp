@@ -28,6 +28,8 @@ CurveBuildArea::CurveBuildArea(bool _isLeft, D3DXVECTOR3 _roadStartPos, D3DXVECT
 	m_pAreaData = new BYTE[AreaDataByte];
 	ZeroMemory(m_pAreaData, AreaDataByte);
 
+	//m_AreaCountX.resize(m_CenterLinePos.size());
+	//m_AreaCountZ.resize(m_CenterLinePos.size());
 }
 
 CurveBuildArea::~CurveBuildArea()
@@ -282,8 +284,8 @@ void CurveBuildArea::LeftRoadCreate()
 		m_ppCurveBuildArea[i][3].x = m_CenterLinePos[i + 1].x + (ROAD_W_SIZE / 2 - ROAD_W_SIZE) * sin(m_Angle[i]);
 		m_ppCurveBuildArea[i][3].y = 20.f;
 		m_ppCurveBuildArea[i][3].z = m_CenterLinePos[i + 1].z + (ROAD_W_SIZE / 2 - ROAD_W_SIZE) * -cos(m_Angle[i]);
-		m_x.push_back(m_ppCurveBuildArea[i][0].x + (m_ppCurveBuildArea[i][2].x - m_ppCurveBuildArea[i][0].x));
-		m_z.push_back(m_ppCurveBuildArea[i][0].z + (m_ppCurveBuildArea[i][2].z - m_ppCurveBuildArea[i][0].z));
+		m_x.push_back(m_ppCurveBuildArea[i][0].x + (m_ppCurveBuildArea[i][2].x - m_ppCurveBuildArea[i][0].x) / 2);
+		m_z.push_back(m_ppCurveBuildArea[i][0].z + (m_ppCurveBuildArea[i][2].z - m_ppCurveBuildArea[i][0].z) / 2);
 		m_w.push_back(ROAD_W_SIZE * buildAreaNum);
 	}
 }
@@ -464,8 +466,8 @@ void CurveBuildArea::RightRoadCreate()
 		m_ppCurveBuildArea[i][3].x = m_CenterLinePos[i + 1].x + (ROAD_W_SIZE / 2 + (ROAD_W_SIZE * buildAreaNum)) * sin(m_Angle[i]);
 		m_ppCurveBuildArea[i][3].y = 20.f;
 		m_ppCurveBuildArea[i][3].z = m_CenterLinePos[i + 1].z + (ROAD_W_SIZE / 2 + (ROAD_W_SIZE * buildAreaNum)) * -cos(m_Angle[i]);
-		m_x.push_back(m_ppCurveBuildArea[i][0].x + (m_ppCurveBuildArea[i][2].x - m_ppCurveBuildArea[i][0].x));
-		m_z.push_back(m_ppCurveBuildArea[i][0].z + (m_ppCurveBuildArea[i][2].z - m_ppCurveBuildArea[i][0].z));
+		m_x.push_back(m_ppCurveBuildArea[i][0].x + (m_ppCurveBuildArea[i][2].x - m_ppCurveBuildArea[i][0].x) / 2);
+		m_z.push_back(m_ppCurveBuildArea[i][0].z + (m_ppCurveBuildArea[i][2].z - m_ppCurveBuildArea[i][0].z) / 2);
 		m_w.push_back(ROAD_W_SIZE * buildAreaNum);
 	}
 }
@@ -506,6 +508,7 @@ bool CurveBuildArea::CurveAreaCheck(D3DXVECTOR3* _checkPos,int _array)
 				m_AreaCountZ = AreaCountZ = static_cast<int>((
 					((_checkPos->z - m_CenterLinePos[_array].z) * sin(m_Angle[_array]) +
 					((_checkPos->x - m_CenterLinePos[_array].x) * cos(m_Angle[_array])))) / ROAD_H_SIZE);
+				m_AreaCountZ = 0;
 			}
 			else
 			{
@@ -516,6 +519,7 @@ bool CurveBuildArea::CurveAreaCheck(D3DXVECTOR3* _checkPos,int _array)
 				m_AreaCountZ = AreaCountZ = static_cast<int>((
 					((_checkPos->z - m_CenterLinePos[_array].z) * sin(m_Angle[_array]) +
 					((_checkPos->x - m_CenterLinePos[_array].x) * cos(m_Angle[_array])))) / ROAD_H_SIZE);
+				m_AreaCountZ = 0;
 			}
 
 
@@ -566,13 +570,40 @@ bool CurveBuildArea::CurveAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _ce
 			{
 				m_AreaCountX = AreaCountX = static_cast<int>((
 					((_checkPos->z - m_CenterLinePos[_array].z) * cos(m_Angle[_array]) -
-					((_checkPos->x - m_CenterLinePos[_array].x) * sin(m_Angle[_array]))) + ROAD_W_SIZE / 2) / ROAD_W_SIZE);
+					((_checkPos->x - m_CenterLinePos[_array].x) * sin(m_Angle[_array]))) - ROAD_W_SIZE / 2) / ROAD_W_SIZE);
 
 
 				m_AreaCountZ = AreaCountZ = static_cast<int>((
 					((_checkPos->z - m_CenterLinePos[_array].z) * sin(m_Angle[_array]) +
 					((_checkPos->x - m_CenterLinePos[_array].x) * cos(m_Angle[_array])))) / ROAD_H_SIZE);
+				m_AreaCountZ = 0;
 
+				// AreaCount番目のエリアの中心を渡す
+				AreaPosX = m_CenterLinePos[_array].x + (ROAD_W_SIZE / 2 - ROAD_W_SIZE) * sin(m_Angle[_array]) +
+					((AreaCountZ * ROAD_W_SIZE + ROAD_W_SIZE / 2) * cos(m_Angle[_array])) -
+					((AreaCountX* ROAD_H_SIZE + ROAD_H_SIZE / 2) * sin(m_Angle[_array]));
+
+
+				// AreaCount番目のエリアの中心を渡す
+				AreaPosZ = m_CenterLinePos[_array].z + (ROAD_W_SIZE / 2 - ROAD_W_SIZE) * -cos(m_Angle[_array]) +
+					((AreaCountZ * ROAD_W_SIZE + ROAD_W_SIZE / 2) * sin(m_Angle[_array])) +
+					((AreaCountX* ROAD_H_SIZE + ROAD_H_SIZE / 2) * cos(m_Angle[_array]));
+
+				_centerPos->x = AreaPosX;
+				_centerPos->y = 0.5f;
+				_centerPos->z = AreaPosZ;
+				*_pAngle = -m_Angle[_array] + D3DXToRadian(180);
+				return true;
+			}
+			else
+			{
+				m_AreaCountX = AreaCountX = static_cast<int>((
+					((_checkPos->z - m_CenterLinePos[_array].z) * cos(m_Angle[_array]) -
+					((_checkPos->x - m_CenterLinePos[_array].x) * sin(m_Angle[_array]))) + ROAD_W_SIZE / 2) / ROAD_W_SIZE);
+				m_AreaCountZ = AreaCountZ = static_cast<int>((
+					((_checkPos->z - m_CenterLinePos[_array].z) * sin(m_Angle[_array]) +
+					((_checkPos->x - m_CenterLinePos[_array].x) * cos(m_Angle[_array])))) / ROAD_H_SIZE);
+				m_AreaCountZ = 0;
 
 				// AreaCount番目のエリアの中心を渡す
 				AreaPosX = m_CenterLinePos[_array].x + (-(ROAD_W_SIZE / 2 - ROAD_W_SIZE) * sin(m_Angle[_array])) +
@@ -591,36 +622,7 @@ bool CurveBuildArea::CurveAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _ce
 				_centerPos->z = AreaPosZ;
 				*_pAngle = -m_Angle[_array];
 				return true;
-			}
-			else
-			{
-				m_AreaCountX = AreaCountX = static_cast<int>((
-					((_checkPos->z - m_CenterLinePos[_array].z) * cos(m_Angle[_array]) -
-					((_checkPos->x - m_CenterLinePos[_array].x) * sin(m_Angle[_array]))) - ROAD_W_SIZE / 2) / ROAD_W_SIZE);
 
-
-				m_AreaCountZ = AreaCountZ = static_cast<int>((
-					((_checkPos->z - m_CenterLinePos[_array].z) * sin(m_Angle[_array]) +
-					((_checkPos->x - m_CenterLinePos[_array].x) * cos(m_Angle[_array])))) / ROAD_H_SIZE);
-
-
-				// AreaCount番目のエリアの中心を渡す
-				AreaPosX = m_RoadStartPos.x + (ROAD_W_SIZE / 2 - ROAD_W_SIZE) * sin(m_Angle[_array]) +
-					((AreaCountZ * ROAD_W_SIZE + ROAD_W_SIZE / 2) * cos(m_Angle[_array])) -
-					((AreaCountX* ROAD_H_SIZE + ROAD_H_SIZE / 2) * sin(m_Angle[_array]));
-
-
-				// AreaCount番目のエリアの中心を渡す
-				AreaPosZ = m_RoadStartPos.z + (ROAD_W_SIZE / 2 - ROAD_W_SIZE) * -cos(m_Angle[_array]) +
-					((AreaCountZ * ROAD_W_SIZE + ROAD_W_SIZE / 2) * sin(m_Angle[_array])) +
-					((AreaCountX* ROAD_H_SIZE + ROAD_H_SIZE / 2) * cos(m_Angle[_array]));
-
-
-				_centerPos->x = AreaPosX;
-				_centerPos->y = 0.5f;
-				_centerPos->z = AreaPosZ;
-				*_pAngle = -m_Angle[_array] + D3DXToRadian(180);
-				return true;
 			}
 		}
 	}
