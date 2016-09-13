@@ -32,6 +32,12 @@ void CharacterManager::Control()
 	m_pEnemyManager->Control();
 }
 
+void CharacterManager::Draw()
+{
+	m_pHumanManager->Draw();
+	m_pEnemyManager->Draw();
+}
+
 void CharacterManager::GetState()
 {
 	m_pHumanManager->GetState();

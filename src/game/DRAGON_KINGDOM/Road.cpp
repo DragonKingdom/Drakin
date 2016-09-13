@@ -1,10 +1,12 @@
 #include "Road.h"
 #include "ShaderAssist.h"
 
-Road::Road(D3DXVECTOR3 _startPos, D3DXVECTOR3 _endPos, float _angle) :
+Road::Road(D3DXVECTOR3 _startPos, D3DXVECTOR3 _endPos, float _angle, int _nextIndex, int _previousIndex) :
 m_StartPos(_startPos),
 m_EndPos(_endPos),
 m_angle(_angle),
+m_NextRoadIndex(_nextIndex),
+m_PreviousRoadIndex(_previousIndex),
 m_pShaderAssist(new ShaderAssist)
 {
 	m_Texture.Load("../sourceimages/Road.bmp");
@@ -25,7 +27,7 @@ Road::~Road()
 	m_Texture.Release();
 }
 
-bool Road::GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos, float* _outputAngleDegree, bool* _startPos)
+bool Road::GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos, float* _outputAngleDegree, bool* _isStartPos)
 {
 	double length = pow((_checkPos->x - m_StartPos.x)*(_checkPos->x - m_StartPos.x) +
 					   (_checkPos->z - m_StartPos.z)*(_checkPos->z - m_StartPos.z), 0.5);
@@ -34,7 +36,7 @@ bool Road::GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos, flo
 	{
 		*_outputAngleDegree = D3DXToDegree(m_angle);
 		*_outputPos = m_StartPos;
-		*_startPos = true;
+		*_isStartPos = true;
 		return true;
 	}
 
@@ -46,7 +48,7 @@ bool Road::GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos, flo
 	{
 		*_outputAngleDegree = D3DXToDegree(m_angle);
 		*_outputPos = m_EndPos;
-		*_startPos = false;
+		*_isStartPos = false;
 		return true;
 	}
 	return false;
@@ -63,6 +65,19 @@ void Road::GetStartEndData(std::vector<float>* _pRoadVertexData)
 	_pRoadVertexData->push_back(m_EndPos.z);
 }
 
+bool Road::GetisStartPos(D3DXVECTOR3 _Vec)
+{
+	bool isStart = false;
+	float Length = 0.0;
+	float Length2 = 0.0;
 
+	Length = sqrt(abs(pow(m_StartPos.x - _Vec.x, 2) + pow(m_StartPos.y - _Vec.y, 2)));
+	Length2 = sqrt(abs(pow(m_EndPos.x - _Vec.x, 2) + pow(m_EndPos.y - _Vec.y, 2)));
 
+	if (Length2 > Length)
+	{
+		isStart = true;
+	}
 
+	return isStart;
+}

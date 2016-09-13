@@ -1,5 +1,5 @@
 #include "RoadChecker.h"
-
+#include "RoadManager.h"
 
 RoadChecker::RoadChecker(RoadManager* _pRoadManager):
 m_pRoadManager(_pRoadManager)
@@ -10,12 +10,13 @@ RoadChecker::~RoadChecker()
 {
 }
 
-D3DXVECTOR3 RoadChecker::NextRoadPos(D3DXVECTOR3 _CheckPos)
+void RoadChecker::NextRoadPos(std::vector<D3DXVECTOR3>* _pNextPos, D3DXVECTOR3 _CheckPos)
 {
-	return D3DXVECTOR3(0, 0, 0);
+	m_pRoadManager->NextRoadPos(_pNextPos, _CheckPos);
 }
 
-D3DXVECTOR3 RoadChecker::PreviousRoadPos(D3DXVECTOR3 _CheckPos)
+D3DXVECTOR3 RoadChecker::GetShortDistancePos(D3DXVECTOR3 _CheckPos)
 {
-	return D3DXVECTOR3(0, 0, 0);
+	return m_pRoadManager->GetShortDistancePos(_CheckPos);
 }
+

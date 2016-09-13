@@ -8,8 +8,8 @@ class RoadChecker
 public:
 	RoadChecker(RoadManager* _pRoadManager);
 	~RoadChecker();
-	D3DXVECTOR3 NextRoadPos(D3DXVECTOR3 _CheckPos);
-	D3DXVECTOR3 PreviousRoadPos(D3DXVECTOR3 _CheckPos);
+	void NextRoadPos(std::vector<D3DXVECTOR3>* _pNextPos, D3DXVECTOR3 _CheckPos);
+	D3DXVECTOR3 GetShortDistancePos(D3DXVECTOR3 _CheckPos);
 
 private:
 	RoadManager* m_pRoadManager;

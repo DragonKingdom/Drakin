@@ -20,21 +20,17 @@ m_AnimationFrame(0)
 	m_Param1 = m_pShaderAssist->GetParameterHandle("Param1");
 	m_Param2 = m_pShaderAssist->GetParameterHandle("Param2");
 
-	FbxFileManager::Get()->FileImport("fbx//maoiu_animetion_taiki.fbx");
-	FbxFileManager::Get()->GetModelData(&m_pWaitAnimation);
 
-	FbxFileManager::Get()->FileImport("fbx//maoiu_animetion_taiki.fbx");
+	FbxFileManager::Get()->FileImport("fbx//house_red.fbx");
 	FbxFileManager::Get()->GetModelData(&m_pWalkAnimation);
 
-	FbxFileManager::Get()->FileImport("fbx//maoiu_animetion_taiki.fbx");
-	FbxFileManager::Get()->GetModelData(&m_pAttackAnimation);
 
 
 	m_HumanPos = m_pHouseChecker->GetRandomPrivateHousePos();
 	m_NextPos = m_HumanPos;
 	m_Angle = m_pHouseChecker->GetHouseAngle(m_HumanPos);
-	m_NextPos = m_pRoadChecker->NextRoadPos(m_HumanPos);
-
+	m_pRoadChecker->NextRoadPos(&m_pWalkLineBuffer, m_HumanPos);
+	m_BufferIndex = 0;
 
 	/// @todo GetHouseStatusの帰り値から人間の性能を判断させる
 
@@ -115,7 +111,7 @@ bool Human::NormalControl()
 {
 	bool isDestroy = false;
 
-	m_Status.Time--;
+	//m_Status.Time--;
 
 	if (m_HumanPos == m_NextPos)
 	{
@@ -132,28 +128,51 @@ bool Human::NormalControl()
 			}
 			else
 			{
-				m_NextPos.x = m_pRoadChecker->NextRoadPos(m_HumanPos).x;
-				m_NextPos.y = m_pRoadChecker->NextRoadPos(m_HumanPos).y;
+				//m_NextPos.x = m_pRoadChecker->NextRoadPos(m_HumanPos).x;
+				//m_NextPos.z = m_pRoadChecker->NextRoadPos(m_HumanPos).z;
+
+				if (m_pWalkLineBuffer.size() == m_BufferIndex)
+				{
+					for (unsigned int i = 0; i < m_pWalkLineBuffer.size(); i++)
+					{
+						m_pWalkLineBuffer.erase(m_pWalkLineBuffer.begin() + i);
+					}
+					m_pRoadChecker->NextRoadPos(&m_pWalkLineBuffer, m_HumanPos);
+					
+					m_BufferIndex = 0;
+					m_NextPos = m_pWalkLineBuffer[m_BufferIndex];
+				}
+				else
+				{
+					m_NextPos = m_pWalkLineBuffer[m_BufferIndex];
+					m_BufferIndex++;
+				}
 			}
 
 			float x1 = pow(m_NextPos.x - m_HumanPos.x, 2);
-			float y1 = pow(m_NextPos.y - m_HumanPos.y, 2);
-			float xy = x1 + y1;
-			m_Length = sqrt(xy);
+			float z1 = pow(m_NextPos.z - m_HumanPos.z, 2);
+			float xz = x1 + z1;
+			m_Length = sqrt(xz);
+			m_Angle = atan2(m_NextPos.z - m_HumanPos.z, m_NextPos.x - m_HumanPos.x);
 
 			m_LengthNum = static_cast<int>(m_Length / HUMAN_MOVE_SPEED);
+			m_DisplacementX = m_LengthNum * cos(m_Angle);
+			m_DisplacementZ = m_LengthNum * sin(m_Angle);
 		}
 	}
 	else
 	{
-		if ((m_NextPos.x - m_HumanPos.x) / m_LengthNum == 0)
+		if ((m_HumanPos.x + m_DisplacementX + 250) > m_NextPos.x &&
+			(m_HumanPos.x - m_DisplacementX - 250) < m_NextPos.x &&
+			(m_HumanPos.z + m_DisplacementZ + 250) > m_NextPos.z &&
+			(m_HumanPos.z - m_DisplacementZ - 250) < m_NextPos.z)
 		{
 			m_HumanPos = m_NextPos;
 		}
 		else
 		{
-			m_HumanPos.x = (m_NextPos.x - m_HumanPos.x) / m_LengthNum;
-			m_HumanPos.y = (m_NextPos.y - m_HumanPos.y) / m_LengthNum;
+			m_HumanPos.x += m_DisplacementX;
+			m_HumanPos.z += m_DisplacementZ;
 		}
 	}
 
@@ -268,7 +287,7 @@ void Human::WalkAnimationDraw()
 
 	for (unsigned int i = 0; i < m_pWalkAnimation.size(); i++)
 	{
-		m_pWalkAnimation[i]->NonTextureAnimationDraw();
+		m_pWalkAnimation[i]->NonTextureDraw();
 	}
 
 

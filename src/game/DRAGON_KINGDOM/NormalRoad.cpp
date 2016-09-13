@@ -2,8 +2,8 @@
 #include "NormalRoad.h"
 #include "ShaderAssist.h"
 
-NormalRoad::NormalRoad(D3DXVECTOR3 _startPos, D3DXVECTOR3 _endPos, float _angle) :
-Road(_startPos,_endPos,_angle)
+NormalRoad::NormalRoad(D3DXVECTOR3 _startPos, D3DXVECTOR3 _endPos, float _angle, int _nextIndex, int _previousIndex) :
+Road(_startPos, _endPos, _angle, _nextIndex, _previousIndex)
 {
 	m_pRoad[0].x = m_StartPos.x + (ROAD_W_SIZE / 2) * sin(m_angle);
 	m_pRoad[0].y = 20.f;
@@ -72,4 +72,19 @@ void NormalRoad::Draw()
 	m_Vertex.VertexDraw(m_Texture, m_pRoad, D3DCOLOR_ARGB(255, 255, 255, 255), 0);
 	m_pShaderAssist->EndPass();
 	m_pShaderAssist->End();
+}
+
+void NormalRoad::GetCenterLinePos(std::vector<D3DXVECTOR3>* _pVector, bool _isStart)
+{
+	if (_isStart == true)
+	{
+		_pVector->push_back(m_StartPos);
+		_pVector->push_back(m_EndPos);
+	}
+	else
+	{
+		_pVector->push_back(m_EndPos);
+		_pVector->push_back(m_StartPos);
+	}
+	
 }

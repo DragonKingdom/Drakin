@@ -30,6 +30,9 @@ public:
 	void Load(FileSaveLoad* _pFileSaveLoad);
 	void Save(FileSaveLoad* _pFileSaveLoad);
 
+	void NextRoadPos(std::vector<D3DXVECTOR3>* _pNextPos, D3DXVECTOR3 _CheckPos);
+	D3DXVECTOR3 GetShortDistancePos(D3DXVECTOR3 _CheckPos);
+
 private:
 	BuildAreaChecker*		m_pBuildAreaChecker;
 	RoadBuilder*			m_pRoadBuilder;
@@ -51,8 +54,8 @@ private:
 	* @param[in] _startPos 繋げられる道の始点か？
 	* @return 周辺に道がなければfalseを返す
 	*/
-	bool					RoadCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pStartOrEndPos, float* _outputAngleDegree, bool* _startPos);
-	/// @todo テスト用
+	bool					RoadCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pStartOrEndPos, float* _outputAngleDegree, bool* _startPos, int* _pConnectIndex);
+
 	ClickPosConverter*		m_pClickPosConverter;
 	Font m_Font;
 

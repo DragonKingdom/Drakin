@@ -65,6 +65,7 @@ void ObjectManager::Draw()
 	m_pMap->Draw();
 	m_pRoadManager->Draw();
 	m_pBuildAreaManager->Draw();
+	m_pCharacterManager->Draw();
 	m_pHouseManager->Draw();
 }
 

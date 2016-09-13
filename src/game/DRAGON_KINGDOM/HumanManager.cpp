@@ -8,6 +8,7 @@ m_pGameData(_pGameData),
 m_pRoadChecker(_pRoadChecker),
 m_pHouseChecker(_pHouseChecker)
 {
+
 }
 
 HumanManager::~HumanManager()
@@ -41,6 +42,14 @@ void HumanManager::Control()
 			delete m_pHuman[i];
 			m_pHuman.erase(m_pHuman.begin() + i);
 		}
+	}
+}
+
+void HumanManager::Draw()
+{
+	for (unsigned int i = 0; i < m_pHuman.size(); i++)
+	{
+		m_pHuman[i]->Draw();
 	}
 }
 

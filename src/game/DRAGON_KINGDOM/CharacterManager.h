@@ -17,6 +17,7 @@ public:
 	CharacterManager(StateManager* _pStateManager, GameData* _pGameData, RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker);
 	~CharacterManager();
 	void Control();
+	void Draw();
 	void GetState();
 	void SetState();
 	void GetGameData();

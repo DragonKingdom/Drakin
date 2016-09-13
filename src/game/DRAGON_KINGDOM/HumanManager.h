@@ -19,6 +19,7 @@ public:
 	~HumanManager();
 	void Init(EnemyChecker* _pEnemyChecker);
 	void Control();
+	void Draw();
 	void GetState();
 	void SetState();
 	void GetGameData();

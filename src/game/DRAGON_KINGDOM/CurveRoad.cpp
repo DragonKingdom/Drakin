@@ -2,9 +2,9 @@
 #include "CurveRoad.h"
 #include "ShaderAssist.h"
 #include <graphicsDevice.h>
-CurveRoad::CurveRoad(D3DXVECTOR3 _startPos, D3DXVECTOR3 _controlPos, D3DXVECTOR3 _endPos, float _angle) :
+CurveRoad::CurveRoad(D3DXVECTOR3 _startPos, D3DXVECTOR3 _controlPos, D3DXVECTOR3 _endPos, float _angle, int _nextIndex, int _previousIndex) :
 m_ControlPos(_controlPos),
-Road(_startPos, _endPos, _angle)
+Road(_startPos, _endPos, _angle, _nextIndex, _previousIndex)
 {
 	BezierLineCreate();
 }
@@ -238,6 +238,25 @@ void CurveRoad::Draw()
 
 	m_pShaderAssist->EndPass();
 	m_pShaderAssist->End();
+}
+
+void CurveRoad::GetCenterLinePos(std::vector<D3DXVECTOR3>* _pVector, bool _isStart)
+{
+	if (_isStart == true)
+	{
+		for (unsigned int i = 0; i < m_CenterLinePos.size(); i++)
+		{
+			_pVector->push_back(m_CenterLinePos[i]);
+		}
+	}
+	else
+	{
+		for (unsigned int i = m_CenterLinePos.size()-1; i > 0; i--)
+		{
+			_pVector->push_back(m_CenterLinePos[i]);
+		}
+	}
+	
 }
 
 bool CurveRoad::GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos, float* _outputAngleDegree, bool* _startPos)

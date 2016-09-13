@@ -104,10 +104,10 @@ Road* RoadBuilder::RoadBuild(ROADMANAGER_ENUM::BUILD_TYPE _buildType)
 	switch (_buildType)
 	{
 	case ROADMANAGER_ENUM::NORMAL:
-		pRoad = new NormalRoad(m_StartPos, Vec, angle);
+		pRoad = new NormalRoad(m_StartPos, Vec, angle, m_NextIndex, m_PreviousIndex);
 		break;
 	case ROADMANAGER_ENUM::CURVE:
-		pRoad = new CurveRoad(m_StartPos, m_ControlPos, Vec, angle);
+		pRoad = new CurveRoad(m_StartPos, m_ControlPos, Vec, angle, m_NextIndex, m_PreviousIndex);
 		break;
 	}
 
@@ -214,4 +214,5 @@ bool RoadBuilder::BuildAngleCheck(float _roadAngle)
 	}
 	return false;
 }
+
 

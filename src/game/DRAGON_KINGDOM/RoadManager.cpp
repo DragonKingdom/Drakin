@@ -10,6 +10,8 @@
 /// @todo テスト用
 #include "ClickPosConverter.h"
 
+#include <time.h>
+
 using ROADMANAGER_ENUM::STATE;
 using ROADMANAGER_ENUM::BUILD_TYPE;
 
@@ -45,30 +47,39 @@ void RoadManager::BuildControl()
 	switch (m_state)
 	{
 	case STATE::START_POS_SET:
+	{
 		if (m_pInputDevice->MouseLeftPush())
 		{
-			/// @todo マウスの位置がUIとかぶってた場合の処理も考えとく
-
 			// 取得したマウスの座標を3d空間上の座標に変換して渡す
 			m_roadLinkStart_StartPos = false;
 			m_roadLinkEnd_StartPos = false;
 			MousePos = m_pInputDevice->GetMousePos();
 			m_pClickPosConverter->ConvertForLoad(&StartPos, int(MousePos.x), int(MousePos.y));
-			//StartPosが繋がっているかを判断して、繋げられる道があったらその繋げる道の角度を取ってきて、その道の始点かのフラグを取ってきている
-			m_pRoadBuilder->StartPosLinkSet(RoadCheck(&StartPos, &StartPos, &roadStartAngle, &m_roadLinkStart_StartPos));
+
+			int PreviousIndex = -1;
+			m_pRoadBuilder->StartPosLinkSet(RoadCheck(&StartPos, &StartPos, &roadStartAngle, &m_roadLinkStart_StartPos, &PreviousIndex));
+			m_pRoadBuilder->SetPreviousIndex(PreviousIndex);
+
+
 			//道を繋げられるかの判断をする繋げる道の角度をセットする
 			m_pRoadBuilder->SetRoadStartAngle(roadStartAngle);
 			m_pRoadBuilder->StartPosSet(StartPos);
+
 			m_state = STATE::END_POS_SET;
 		}
-
-		break;
+	}
+	break;
 	case STATE::END_POS_SET:
+	{
 		// 取得したマウスの座標を3d空間上の座標に変換して渡す
 		MousePos = m_pInputDevice->GetMousePos();
 		m_pClickPosConverter->ConvertForLoad(&EndPos, int(MousePos.x), int(MousePos.y));
-		//EndPosが繋がっているかを判断して、繋げられる道があったらその繋げる道の角度を取ってきて、その道の始点かのフラグを取ってきている
-		m_pRoadBuilder->EndPosLinkSet(RoadCheck(&EndPos, &EndPos, &roadEndAngle, &m_roadLinkEnd_StartPos));
+
+		int NextIndex = -1;
+		m_pRoadBuilder->EndPosLinkSet(RoadCheck(&EndPos, &EndPos, &roadEndAngle, &m_roadLinkEnd_StartPos, &NextIndex));
+
+		m_pRoadBuilder->SetNextIndex(NextIndex);
+
 		//道を繋げられるかの判断をする繋げる道の角度をセットする
 		m_pRoadBuilder->SetRoadEndAngle(roadEndAngle);
 		m_pRoadBuilder->EndPosSet(EndPos);
@@ -94,8 +105,10 @@ void RoadManager::BuildControl()
 			m_state = STATE::START_POS_SET;
 			m_buildType = BUILD_TYPE::NORMAL;
 		}
-		break;
+	}
+	break;
 	case STATE::CREATE:
+	{
 		/// @todo 道の長さ0でも作れてしまう気がする
 		// 道を生成する
 		//道が90度以上の急な道は作れない
@@ -104,15 +117,44 @@ void RoadManager::BuildControl()
 		{
 			Road* pRoad = m_pRoadBuilder->RoadBuild(m_buildType);
 			m_pRoad.push_back(pRoad);
+
+			int Index = m_pRoad.size()-1;
+
+			int NextIndex = pRoad->GetNextRoadIndex();
+			if (NextIndex != -1)
+			{
+				if (m_roadLinkEnd_StartPos)
+				{
+					m_pRoad[NextIndex]->SetPreviousRoadIndex(Index);
+				}
+				else
+				{
+					m_pRoad[NextIndex]->SetNextRoadIndex(Index);
+				}
+			}
+
+			int PreviousIndex = pRoad->GetPreviousRoadIndex();
+			if (PreviousIndex != -1)
+			{
+				if (m_roadLinkStart_StartPos)
+				{
+					m_pRoad[PreviousIndex]->SetPreviousRoadIndex(Index);
+				}
+				else
+				{
+					m_pRoad[PreviousIndex]->SetNextRoadIndex(Index);
+				}
+			}
 		}
-		
+
 		// 次の道作成のための初期化処理
 		m_pRoadBuilder->InitStartPos();
 		m_pRoadBuilder->InitControlPos();
 		m_pRoadBuilder->InitEndPos();
 		m_state = STATE::START_POS_SET;
 		m_buildType = BUILD_TYPE::NORMAL;
-		break;
+	}
+	break;
 	}
 }
 
@@ -181,7 +223,7 @@ void RoadManager::Load(FileSaveLoad* _pFileSaveLoad)
 		EndVec.x = RoadVec[x * 6 + 3];
 		EndVec.y = RoadVec[x * 6 + 4];
 		EndVec.z = RoadVec[x * 6 + 5];
-		
+
 		m_pRoadBuilder->StartPosSet(StartVec);
 		m_pRoadBuilder->EndPosSet(EndVec);
 
@@ -199,7 +241,7 @@ void RoadManager::Save(FileSaveLoad* _pFileSaveLoad)
 {
 	// セーブするデータを格納するvector
 	std::vector<float> RoadVec;
-	
+
 	// データを用意
 	for (unsigned int i = 0; i < m_pRoad.size(); i++)
 	{
@@ -210,7 +252,7 @@ void RoadManager::Save(FileSaveLoad* _pFileSaveLoad)
 	_pFileSaveLoad->CreateGroup("RoadStartEndPos", &RoadVec);
 }
 
-bool RoadManager::RoadCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pStartOrEndPos, float* _outputAngleDegree, bool* _startPos)
+bool RoadManager::RoadCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pStartOrEndPos, float* _outputAngleDegree, bool* _startPos, int* _pConnectIndex)
 {
 	int BuildAreaMax = m_pRoad.size();
 	if (BuildAreaMax == 0)
@@ -222,8 +264,131 @@ bool RoadManager::RoadCheck(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _pStartOrEndPos
 	{
 		if (m_pRoad[i]->GetStartOrEndPos(_checkPos, _pStartOrEndPos, _outputAngleDegree, _startPos))
 		{
+			*_pConnectIndex = i;
 			return true;
 		}
 	}
+	*_pConnectIndex = -1;
 	return false;
+}
+
+void RoadManager::NextRoadPos(std::vector<D3DXVECTOR3>* _pNextPos, D3DXVECTOR3 _CheckPos)
+{
+	int Index = 0;
+	bool isStart = false;
+	D3DXVECTOR3 ShortDistanceVec;
+	float Length = 0.0;
+	float Length2 = 0.0;
+	float PreviousLength = 0.0;
+	PreviousLength = sqrt(abs(pow(m_pRoad[0]->GetStartPos().x - _CheckPos.x, 2) + pow(m_pRoad[0]->GetStartPos().y - _CheckPos.y, 2)));
+
+	for (unsigned int i = 0; i < m_pRoad.size(); i++)
+	{
+		D3DXVECTOR3 Vec = m_pRoad[i]->GetStartPos();
+		Length = sqrt(abs(pow(Vec.x - _CheckPos.x, 2) + pow(Vec.y - _CheckPos.y, 2)));
+
+		D3DXVECTOR3 Vec2 = m_pRoad[i]->GetEndPos();
+		Length2 = sqrt(abs(pow(Vec2.x - _CheckPos.x, 2) + pow(Vec2.y - _CheckPos.y, 2)));
+
+		if (PreviousLength > Length)
+		{
+			ShortDistanceVec = Vec;
+			PreviousLength = Length;
+			Index = i;
+			isStart = true;
+		}
+
+		if (PreviousLength > Length2)
+		{
+			ShortDistanceVec = Vec2;
+			PreviousLength = Length2;
+			Index = i;
+			isStart = false;
+		}
+	}
+
+
+	int NextIndex = 0;
+	for (unsigned int i = 0; i < 6;i++)
+	{
+		m_pRoad[Index]->GetCenterLinePos(_pNextPos, isStart);
+		if (isStart)
+		{
+			NextIndex = m_pRoad[Index]->GetNextRoadIndex();
+			if (NextIndex == -1)
+			{
+				NextIndex = Index;
+				isStart = false;
+			}
+			else
+			{
+				if (m_pRoad[NextIndex]->GetisStartPos(m_pRoad[Index]->GetEndPos()))
+				{
+					isStart = true;
+				}
+				else
+				{
+					isStart = false;
+				}
+				
+				Index = NextIndex;
+			}
+
+
+		}
+		else
+		{
+			NextIndex = m_pRoad[Index]->GetPreviousRoadIndex();
+			if (NextIndex == -1)
+			{
+				NextIndex = Index;
+				isStart = true;
+			}
+			else
+			{
+				if (m_pRoad[NextIndex]->GetisStartPos(m_pRoad[Index]->GetStartPos()))
+				{
+					isStart = true;
+				}
+				else
+				{
+					isStart = false;
+				}
+
+				Index = NextIndex;
+			}
+		}
+	}
+}
+
+D3DXVECTOR3 RoadManager::GetShortDistancePos(D3DXVECTOR3 _CheckPos)
+{
+	D3DXVECTOR3 ShortDistanceVec;
+	float Length = 0.0;
+	float Length2 = 0.0;
+	float PreviousLength = 0.0;
+	PreviousLength = sqrt(abs(pow(m_pRoad[0]->GetStartPos().x - _CheckPos.x, 2) + pow(m_pRoad[0]->GetStartPos().y - _CheckPos.y, 2)));
+
+	for (unsigned int i = 0; i < m_pRoad.size(); i++)
+	{
+		D3DXVECTOR3 Vec = m_pRoad[i]->GetStartPos();
+		Length = sqrt(abs(pow(Vec.x - _CheckPos.x, 2) + pow(Vec.y - _CheckPos.y, 2)));
+
+		D3DXVECTOR3 Vec2 = m_pRoad[i]->GetEndPos();
+		Length2 = sqrt(abs(pow(Vec2.x - _CheckPos.x, 2) + pow(Vec2.y - _CheckPos.y, 2)));
+
+		if (PreviousLength > Length)
+		{
+			ShortDistanceVec = Vec;
+			PreviousLength = Length;
+		}
+
+		if (PreviousLength > Length2)
+		{
+			ShortDistanceVec = Vec2;
+			PreviousLength = Length2;
+		}
+	}
+
+	return ShortDistanceVec;
 }
