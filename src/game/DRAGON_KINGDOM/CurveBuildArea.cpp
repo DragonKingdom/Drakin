@@ -17,6 +17,17 @@ CurveBuildArea::CurveBuildArea(bool _isLeft, D3DXVECTOR3 _roadStartPos, D3DXVECT
 	{
 		RightRoadCreate();
 	}
+	int AreaDataByte = static_cast<int>(m_CenterLinePos.size() - 1);
+
+	// エリアのマスの数に対応して動的に確保
+	if (AreaDataByte % 2 == 1)
+	{
+		AreaDataByte += 1;
+	}
+
+	m_pAreaData = new BYTE[AreaDataByte];
+	ZeroMemory(m_pAreaData, AreaDataByte);
+
 }
 
 CurveBuildArea::~CurveBuildArea()
@@ -31,6 +42,7 @@ CurveBuildArea::~CurveBuildArea()
 		delete[] m_ppCurveBuildArea[i];
 	}
 	delete[] m_ppCurveBuildArea;
+	delete[] m_pAreaData;
 }
 
 void CurveBuildArea::Draw()
@@ -94,7 +106,6 @@ void CurveBuildArea::LeftRoadCreate()
 	VecLength = int(NumZ * ROAD_H_SIZE);
 
 	int RectNum = static_cast<int>(VecLength / ROAD_H_SIZE);
-	float* angle = new float[RectNum];
 
 	m_ppCurveBuildArea = new D3DXVECTOR3*[RectNum];
 	for (int i = 0; i < RectNum; i++)
@@ -113,22 +124,11 @@ void CurveBuildArea::LeftRoadCreate()
 
 	for (int i = 0; i < RectNum - 1; i++)
 	{
-		angle[i] =
-			atan2(m_CenterLinePos[i + 1].z - m_CenterLinePos[i].z,
-			m_CenterLinePos[i + 1].x - m_CenterLinePos[i].x);
+		m_Angle.push_back(atan2(m_CenterLinePos[i + 1].z - m_CenterLinePos[i].z,
+			m_CenterLinePos[i + 1].x - m_CenterLinePos[i].x));
 	}
-	angle[RectNum - 1] =
-		atan2(m_CenterLinePos[RectNum - 1].z - m_CenterLinePos[RectNum - 2].z,
-		m_CenterLinePos[RectNum - 1].x - m_CenterLinePos[RectNum - 2].x);
-
-	m_tu[0] = 0.0f;
-	m_tv[0] = 0.0f;
-	m_tu[1] = 4.0f;
-	m_tv[1] = 0.0f;
-	m_tu[2] = 4.0f;
-	m_tv[2] = 1.f;
-	m_tu[3] = 0.0f;
-	m_tv[3] = 1.f;
+	m_Angle.push_back(atan2(m_CenterLinePos[RectNum - 1].z - m_CenterLinePos[RectNum - 2].z,
+		m_CenterLinePos[RectNum - 1].x - m_CenterLinePos[RectNum - 2].x));
 
 	m_AreaExcist = new bool*[RectNum];
 
@@ -147,21 +147,21 @@ void CurveBuildArea::LeftRoadCreate()
 
 	for (int i = 0; i < RectNum - 1; i++)
 	{
-		m_ppCurveBuildArea[i][0].x = m_CenterLinePos[i].x + (ROAD_W_SIZE / 2 - ROAD_W_SIZE) * sin(angle[i]);
+		m_ppCurveBuildArea[i][0].x = m_CenterLinePos[i].x + (ROAD_W_SIZE / 2 - ROAD_W_SIZE) * sin(m_Angle[i]);
 		m_ppCurveBuildArea[i][0].y = 20.f;
-		m_ppCurveBuildArea[i][0].z = m_CenterLinePos[i].z + (ROAD_W_SIZE / 2 - ROAD_W_SIZE) * -cos(angle[i]);
+		m_ppCurveBuildArea[i][0].z = m_CenterLinePos[i].z + (ROAD_W_SIZE / 2 - ROAD_W_SIZE) * -cos(m_Angle[i]);
 
-		m_ppCurveBuildArea[i][1].x = m_CenterLinePos[i].x + -(ROAD_W_SIZE / 2 + (ROAD_W_SIZE * 4)) * sin(angle[i]);
+		m_ppCurveBuildArea[i][1].x = m_CenterLinePos[i].x + -(ROAD_W_SIZE / 2 + (ROAD_W_SIZE * 4)) * sin(m_Angle[i]);
 		m_ppCurveBuildArea[i][1].y = 20.f;
-		m_ppCurveBuildArea[i][1].z = m_CenterLinePos[i].z + -(ROAD_W_SIZE / 2 + (ROAD_W_SIZE * 4)) * -cos(angle[i]);
+		m_ppCurveBuildArea[i][1].z = m_CenterLinePos[i].z + -(ROAD_W_SIZE / 2 + (ROAD_W_SIZE * 4)) * -cos(m_Angle[i]);
 
-		m_ppCurveBuildArea[i][2].x = m_CenterLinePos[i + 1].x + -(ROAD_W_SIZE / 2 + (ROAD_W_SIZE * 4)) * sin(angle[i]);
+		m_ppCurveBuildArea[i][2].x = m_CenterLinePos[i + 1].x + -(ROAD_W_SIZE / 2 + (ROAD_W_SIZE * 4)) * sin(m_Angle[i]);
 		m_ppCurveBuildArea[i][2].y = 20.f;
-		m_ppCurveBuildArea[i][2].z = m_CenterLinePos[i + 1].z + -(ROAD_W_SIZE / 2 + (ROAD_W_SIZE * 4)) * -cos(angle[i]);
+		m_ppCurveBuildArea[i][2].z = m_CenterLinePos[i + 1].z + -(ROAD_W_SIZE / 2 + (ROAD_W_SIZE * 4)) * -cos(m_Angle[i]);
 
-		m_ppCurveBuildArea[i][3].x = m_CenterLinePos[i + 1].x + (ROAD_W_SIZE / 2 - ROAD_W_SIZE) * sin(angle[i]);
+		m_ppCurveBuildArea[i][3].x = m_CenterLinePos[i + 1].x + (ROAD_W_SIZE / 2 - ROAD_W_SIZE) * sin(m_Angle[i]);
 		m_ppCurveBuildArea[i][3].y = 20.f;
-		m_ppCurveBuildArea[i][3].z = m_CenterLinePos[i + 1].z + (ROAD_W_SIZE / 2 - ROAD_W_SIZE) * -cos(angle[i]);
+		m_ppCurveBuildArea[i][3].z = m_CenterLinePos[i + 1].z + (ROAD_W_SIZE / 2 - ROAD_W_SIZE) * -cos(m_Angle[i]);
 	}
 
 	//ビルドエリア当たり判定
@@ -175,13 +175,13 @@ void CurveBuildArea::LeftRoadCreate()
 				{
 					float x1 = (m_CenterLinePos[i].x + m_CenterLinePos[i + 1].x) / 2;
 					float z1 = (m_CenterLinePos[i].z + m_CenterLinePos[i + 1].z) / 2;
-					x1 = x1 - ROAD_W_SIZE * (m + 1) * sin(angle[i + 1]);
-					z1 = z1 - ROAD_W_SIZE * (m + 1) * -cos(angle[i + 1]);
+					x1 = x1 - ROAD_W_SIZE * (m + 1) * sin(m_Angle[i + 1]);
+					z1 = z1 - ROAD_W_SIZE * (m + 1) * -cos(m_Angle[i + 1]);
 					
 					float x2 = (m_CenterLinePos[k].x + m_CenterLinePos[k + 1].x) / 2;
 					float z2 = (m_CenterLinePos[k].z + m_CenterLinePos[k + 1].z) / 2;
-					x2 = x2 - ROAD_W_SIZE * (j + 1) * sin(angle[k + 1]);
-					z2 = z2 - ROAD_W_SIZE * (j + 1) * -cos(angle[k + 1]);
+					x2 = x2 - ROAD_W_SIZE * (j + 1) * sin(m_Angle[k + 1]);
+					z2 = z2 - ROAD_W_SIZE * (j + 1) * -cos(m_Angle[k + 1]);
 					
 					double arealength = pow((x2 - x1)*(x2 - x1) + (z2 - z1)*(z2 - z1), 0.5);
 
@@ -211,13 +211,13 @@ void CurveBuildArea::LeftRoadCreate()
 					float x1 = (m_CenterLinePos[i].x + m_CenterLinePos[i - 1].x) / 2;
 					float z1 = (m_CenterLinePos[i].z + m_CenterLinePos[i - 1].z) / 2;
 
-					x1 = x1 - ROAD_W_SIZE * (m + 1) * sin(angle[i - 1]);
-					z1 = z1 - ROAD_W_SIZE * (m + 1) * -cos(angle[i - 1]);
+					x1 = x1 - ROAD_W_SIZE * (m + 1) * sin(m_Angle[i - 1]);
+					z1 = z1 - ROAD_W_SIZE * (m + 1) * -cos(m_Angle[i - 1]);
 
 					float x2 = (m_CenterLinePos[k].x + m_CenterLinePos[k - 1].x) / 2;
 					float z2 = (m_CenterLinePos[k].z + m_CenterLinePos[k - 1].z) / 2;
-					x2 = x2 - ROAD_W_SIZE * (j + 1) * sin(angle[k - 1]);
-					z2 = z2 - ROAD_W_SIZE * (j + 1) * -cos(angle[k - 1]);
+					x2 = x2 - ROAD_W_SIZE * (j + 1) * sin(m_Angle[k - 1]);
+					z2 = z2 - ROAD_W_SIZE * (j + 1) * -cos(m_Angle[k - 1]);
 					double arealength = pow((x2 - x1)*(x2 - x1) + (z2 - z1)*(z2 - z1), 0.5);
 
 					if (arealength < 480.0 && m_AreaExcist[k - 1][j])
@@ -267,24 +267,25 @@ void CurveBuildArea::LeftRoadCreate()
 			buildAreaNum = 4;
 		}
 
-		m_ppCurveBuildArea[i][0].x = m_CenterLinePos[i].x + (ROAD_W_SIZE / 2 - ROAD_W_SIZE) * sin(angle[i]);
+		m_ppCurveBuildArea[i][0].x = m_CenterLinePos[i].x + (ROAD_W_SIZE / 2 - ROAD_W_SIZE) * sin(m_Angle[i]);
 		m_ppCurveBuildArea[i][0].y = 20.f;
-		m_ppCurveBuildArea[i][0].z = m_CenterLinePos[i].z + (ROAD_W_SIZE / 2 - ROAD_W_SIZE) * -cos(angle[i]);
+		m_ppCurveBuildArea[i][0].z = m_CenterLinePos[i].z + (ROAD_W_SIZE / 2 - ROAD_W_SIZE) * -cos(m_Angle[i]);
 
-		m_ppCurveBuildArea[i][1].x = m_CenterLinePos[i].x + -(ROAD_W_SIZE / 2 + (ROAD_W_SIZE * buildAreaNum)) * sin(angle[i]);
+		m_ppCurveBuildArea[i][1].x = m_CenterLinePos[i].x + -(ROAD_W_SIZE / 2 + (ROAD_W_SIZE * buildAreaNum)) * sin(m_Angle[i]);
 		m_ppCurveBuildArea[i][1].y = 20.f;
-		m_ppCurveBuildArea[i][1].z = m_CenterLinePos[i].z + -(ROAD_W_SIZE / 2 + (ROAD_W_SIZE * buildAreaNum)) * -cos(angle[i]);
+		m_ppCurveBuildArea[i][1].z = m_CenterLinePos[i].z + -(ROAD_W_SIZE / 2 + (ROAD_W_SIZE * buildAreaNum)) * -cos(m_Angle[i]);
 
-		m_ppCurveBuildArea[i][2].x = m_CenterLinePos[i + 1].x + -(ROAD_W_SIZE / 2 + (ROAD_W_SIZE * buildAreaNum)) * sin(angle[i]);
+		m_ppCurveBuildArea[i][2].x = m_CenterLinePos[i + 1].x + -(ROAD_W_SIZE / 2 + (ROAD_W_SIZE * buildAreaNum)) * sin(m_Angle[i]);
 		m_ppCurveBuildArea[i][2].y = 20.f;
-		m_ppCurveBuildArea[i][2].z = m_CenterLinePos[i + 1].z + -(ROAD_W_SIZE / 2 + (ROAD_W_SIZE * buildAreaNum)) * -cos(angle[i]);
+		m_ppCurveBuildArea[i][2].z = m_CenterLinePos[i + 1].z + -(ROAD_W_SIZE / 2 + (ROAD_W_SIZE * buildAreaNum)) * -cos(m_Angle[i]);
 
-		m_ppCurveBuildArea[i][3].x = m_CenterLinePos[i + 1].x + (ROAD_W_SIZE / 2 - ROAD_W_SIZE) * sin(angle[i]);
+		m_ppCurveBuildArea[i][3].x = m_CenterLinePos[i + 1].x + (ROAD_W_SIZE / 2 - ROAD_W_SIZE) * sin(m_Angle[i]);
 		m_ppCurveBuildArea[i][3].y = 20.f;
-		m_ppCurveBuildArea[i][3].z = m_CenterLinePos[i + 1].z + (ROAD_W_SIZE / 2 - ROAD_W_SIZE) * -cos(angle[i]);
-
+		m_ppCurveBuildArea[i][3].z = m_CenterLinePos[i + 1].z + (ROAD_W_SIZE / 2 - ROAD_W_SIZE) * -cos(m_Angle[i]);
+		m_x.push_back(m_ppCurveBuildArea[i][0].x + (m_ppCurveBuildArea[i][2].x - m_ppCurveBuildArea[i][0].x));
+		m_z.push_back(m_ppCurveBuildArea[i][0].z + (m_ppCurveBuildArea[i][2].z - m_ppCurveBuildArea[i][0].z));
+		m_w.push_back(ROAD_W_SIZE * buildAreaNum);
 	}
-	delete[] angle;
 }
 
 void CurveBuildArea::RightRoadCreate()
@@ -298,7 +299,6 @@ void CurveBuildArea::RightRoadCreate()
 	VecLength = int(NumZ * ROAD_H_SIZE);
 
 	int RectNum = static_cast<int>(VecLength / ROAD_H_SIZE);
-	float* angle = new float[RectNum];
 
 	m_ppCurveBuildArea = new D3DXVECTOR3*[RectNum];
 	for (int i = 0; i < RectNum; i++)
@@ -317,22 +317,11 @@ void CurveBuildArea::RightRoadCreate()
 
 	for (int i = 0; i < RectNum - 1; i++)
 	{
-		angle[i] =
-			atan2(m_CenterLinePos[i + 1].z - m_CenterLinePos[i].z,
-			m_CenterLinePos[i + 1].x - m_CenterLinePos[i].x);
+		m_Angle.push_back(atan2(m_CenterLinePos[i + 1].z - m_CenterLinePos[i].z,
+			m_CenterLinePos[i + 1].x - m_CenterLinePos[i].x));
 	}
-	angle[RectNum - 1] =
-		atan2(m_CenterLinePos[RectNum - 1].z - m_CenterLinePos[RectNum - 2].z,
-		m_CenterLinePos[RectNum - 1].x - m_CenterLinePos[RectNum - 2].x);
-
-	m_tu[0] = 0.0f;
-	m_tv[0] = 0.0f;
-	m_tu[1] = 4.0f;
-	m_tv[1] = 0.0f;
-	m_tu[2] = 4.0f;
-	m_tv[2] = 1.f;
-	m_tu[3] = 0.0f;
-	m_tv[3] = 1.f;
+	m_Angle.push_back(atan2(m_CenterLinePos[RectNum - 1].z - m_CenterLinePos[RectNum - 2].z,
+		m_CenterLinePos[RectNum - 1].x - m_CenterLinePos[RectNum - 2].x));
 
 	m_AreaExcist = new bool*[RectNum];
 
@@ -351,21 +340,21 @@ void CurveBuildArea::RightRoadCreate()
 
 	for (int i = 0; i < RectNum - 1; i++)
 	{
-		m_ppCurveBuildArea[i][0].x = m_CenterLinePos[i].x + ((ROAD_W_SIZE / 2 + (ROAD_W_SIZE * 4)) * sin(angle[i]));
+		m_ppCurveBuildArea[i][0].x = m_CenterLinePos[i].x + ((ROAD_W_SIZE / 2 + (ROAD_W_SIZE * 4)) * sin(m_Angle[i]));
 		m_ppCurveBuildArea[i][0].y = 20.f;
-		m_ppCurveBuildArea[i][0].z = m_CenterLinePos[i].z + (ROAD_W_SIZE / 2 + (ROAD_W_SIZE * 4)) * -cos(angle[i]);
+		m_ppCurveBuildArea[i][0].z = m_CenterLinePos[i].z + (ROAD_W_SIZE / 2 + (ROAD_W_SIZE * 4)) * -cos(m_Angle[i]);
 
-		m_ppCurveBuildArea[i][1].x = m_CenterLinePos[i].x + (-(ROAD_W_SIZE / 2 - ROAD_W_SIZE) * sin(angle[i]));
+		m_ppCurveBuildArea[i][1].x = m_CenterLinePos[i].x + (-(ROAD_W_SIZE / 2 - ROAD_W_SIZE) * sin(m_Angle[i]));
 		m_ppCurveBuildArea[i][1].y = 20.f;
-		m_ppCurveBuildArea[i][1].z = m_CenterLinePos[i].z + (-(ROAD_W_SIZE / 2 - ROAD_W_SIZE) * -cos(angle[i]));
+		m_ppCurveBuildArea[i][1].z = m_CenterLinePos[i].z + (-(ROAD_W_SIZE / 2 - ROAD_W_SIZE) * -cos(m_Angle[i]));
 
-		m_ppCurveBuildArea[i][2].x = m_CenterLinePos[i + 1].x + -(ROAD_W_SIZE / 2 - ROAD_W_SIZE) * sin(angle[i]);
+		m_ppCurveBuildArea[i][2].x = m_CenterLinePos[i + 1].x + -(ROAD_W_SIZE / 2 - ROAD_W_SIZE) * sin(m_Angle[i]);
 		m_ppCurveBuildArea[i][2].y = 20.f;
-		m_ppCurveBuildArea[i][2].z = m_CenterLinePos[i + 1].z + -(ROAD_W_SIZE / 2 - ROAD_W_SIZE) * -cos(angle[i]);
+		m_ppCurveBuildArea[i][2].z = m_CenterLinePos[i + 1].z + -(ROAD_W_SIZE / 2 - ROAD_W_SIZE) * -cos(m_Angle[i]);
 
-		m_ppCurveBuildArea[i][3].x = m_CenterLinePos[i + 1].x + (ROAD_W_SIZE / 2 + (ROAD_W_SIZE * 4)) * sin(angle[i]);
+		m_ppCurveBuildArea[i][3].x = m_CenterLinePos[i + 1].x + (ROAD_W_SIZE / 2 + (ROAD_W_SIZE * 4)) * sin(m_Angle[i]);
 		m_ppCurveBuildArea[i][3].y = 20.f;
-		m_ppCurveBuildArea[i][3].z = m_CenterLinePos[i + 1].z + (ROAD_W_SIZE / 2 + (ROAD_W_SIZE * 4)) * -cos(angle[i]);
+		m_ppCurveBuildArea[i][3].z = m_CenterLinePos[i + 1].z + (ROAD_W_SIZE / 2 + (ROAD_W_SIZE * 4)) * -cos(m_Angle[i]);
 	}
 
 	//ビルドエリア当たり判定
@@ -380,12 +369,12 @@ void CurveBuildArea::RightRoadCreate()
 					float x1 = (m_CenterLinePos[i].x + m_CenterLinePos[i + 1].x) / 2;
 					float z1 = (m_CenterLinePos[i].z + m_CenterLinePos[i + 1].z) / 2;
 
-					x1 = x1 + ROAD_W_SIZE * (m + 1) * sin(angle[i + 1]);
-					z1 = z1 + ROAD_W_SIZE * (m + 1) * -cos(angle[i + 1]);
+					x1 = x1 + ROAD_W_SIZE * (m + 1) * sin(m_Angle[i + 1]);
+					z1 = z1 + ROAD_W_SIZE * (m + 1) * -cos(m_Angle[i + 1]);
 					float x2 = (m_CenterLinePos[k].x + m_CenterLinePos[k + 1].x) / 2;
 					float z2 = (m_CenterLinePos[k].z + m_CenterLinePos[k + 1].z) / 2;
-					x2 = x2 + ROAD_W_SIZE * (j + 1) * sin(angle[k + 1]);
-					z2 = z2 + ROAD_W_SIZE * (j + 1) * -cos(angle[k + 1]);
+					x2 = x2 + ROAD_W_SIZE * (j + 1) * sin(m_Angle[k + 1]);
+					z2 = z2 + ROAD_W_SIZE * (j + 1) * -cos(m_Angle[k + 1]);
 					double arealength = pow((x2 - x1)*(x2 - x1) + (z2 - z1)*(z2 - z1), 0.5);
 
 					if (arealength < 480.0 && m_AreaExcist[k + 1][j])
@@ -413,13 +402,13 @@ void CurveBuildArea::RightRoadCreate()
 					float x1 = (m_CenterLinePos[i].x + m_CenterLinePos[i - 1].x) / 2;
 					float z1 = (m_CenterLinePos[i].z + m_CenterLinePos[i - 1].z) / 2;
 
-					x1 = x1 + ROAD_W_SIZE * (m + 1) * sin(angle[i - 1]);
-					z1 = z1 + ROAD_W_SIZE * (m + 1) * -cos(angle[i - 1]);
+					x1 = x1 + ROAD_W_SIZE * (m + 1) * sin(m_Angle[i - 1]);
+					z1 = z1 + ROAD_W_SIZE * (m + 1) * -cos(m_Angle[i - 1]);
 
 					float x2 = (m_CenterLinePos[k].x + m_CenterLinePos[k - 1].x) / 2;
 					float z2 = (m_CenterLinePos[k].z + m_CenterLinePos[k - 1].z) / 2;
-					x2 = x2 + ROAD_W_SIZE * (j + 1) * sin(angle[k - 1]);
-					z2 = z2 + ROAD_W_SIZE * (j + 1) * -cos(angle[k - 1]);
+					x2 = x2 + ROAD_W_SIZE * (j + 1) * sin(m_Angle[k - 1]);
+					z2 = z2 + ROAD_W_SIZE * (j + 1) * -cos(m_Angle[k - 1]);
 					double arealength = pow((x2 - x1)*(x2 - x1) + (z2 - z1)*(z2 - z1), 0.5);
 
 					if (arealength < 480.0 && m_AreaExcist[k - 1][j])
@@ -460,23 +449,182 @@ void CurveBuildArea::RightRoadCreate()
 			buildAreaNum = 4;
 		}
 
-		m_ppCurveBuildArea[i][0].x = m_CenterLinePos[i].x + ((ROAD_W_SIZE / 2 + (ROAD_W_SIZE * buildAreaNum)) * sin(angle[i]));
+		m_ppCurveBuildArea[i][0].x = m_CenterLinePos[i].x + ((ROAD_W_SIZE / 2 + (ROAD_W_SIZE * buildAreaNum)) * sin(m_Angle[i]));
 		m_ppCurveBuildArea[i][0].y = 20.f;
-		m_ppCurveBuildArea[i][0].z = m_CenterLinePos[i].z + (ROAD_W_SIZE / 2 + (ROAD_W_SIZE * buildAreaNum)) * -cos(angle[i]);
+		m_ppCurveBuildArea[i][0].z = m_CenterLinePos[i].z + (ROAD_W_SIZE / 2 + (ROAD_W_SIZE * buildAreaNum)) * -cos(m_Angle[i]);
 
-		m_ppCurveBuildArea[i][1].x = m_CenterLinePos[i].x + (-(ROAD_W_SIZE / 2 - ROAD_W_SIZE) * sin(angle[i]));
+		m_ppCurveBuildArea[i][1].x = m_CenterLinePos[i].x + (-(ROAD_W_SIZE / 2 - ROAD_W_SIZE) * sin(m_Angle[i]));
 		m_ppCurveBuildArea[i][1].y = 20.f;
-		m_ppCurveBuildArea[i][1].z = m_CenterLinePos[i].z + (-(ROAD_W_SIZE / 2 - ROAD_W_SIZE) * -cos(angle[i]));
+		m_ppCurveBuildArea[i][1].z = m_CenterLinePos[i].z + (-(ROAD_W_SIZE / 2 - ROAD_W_SIZE) * -cos(m_Angle[i]));
 
-		m_ppCurveBuildArea[i][2].x = m_CenterLinePos[i + 1].x + -(ROAD_W_SIZE / 2 - ROAD_W_SIZE) * sin(angle[i]);
+		m_ppCurveBuildArea[i][2].x = m_CenterLinePos[i + 1].x + -(ROAD_W_SIZE / 2 - ROAD_W_SIZE) * sin(m_Angle[i]);
 		m_ppCurveBuildArea[i][2].y = 20.f;
-		m_ppCurveBuildArea[i][2].z = m_CenterLinePos[i + 1].z + -(ROAD_W_SIZE / 2 - ROAD_W_SIZE) * -cos(angle[i]);
+		m_ppCurveBuildArea[i][2].z = m_CenterLinePos[i + 1].z + -(ROAD_W_SIZE / 2 - ROAD_W_SIZE) * -cos(m_Angle[i]);
 
-		m_ppCurveBuildArea[i][3].x = m_CenterLinePos[i + 1].x + (ROAD_W_SIZE / 2 + (ROAD_W_SIZE * buildAreaNum)) * sin(angle[i]);
+		m_ppCurveBuildArea[i][3].x = m_CenterLinePos[i + 1].x + (ROAD_W_SIZE / 2 + (ROAD_W_SIZE * buildAreaNum)) * sin(m_Angle[i]);
 		m_ppCurveBuildArea[i][3].y = 20.f;
-		m_ppCurveBuildArea[i][3].z = m_CenterLinePos[i + 1].z + (ROAD_W_SIZE / 2 + (ROAD_W_SIZE * buildAreaNum)) * -cos(angle[i]);
+		m_ppCurveBuildArea[i][3].z = m_CenterLinePos[i + 1].z + (ROAD_W_SIZE / 2 + (ROAD_W_SIZE * buildAreaNum)) * -cos(m_Angle[i]);
+		m_x.push_back(m_ppCurveBuildArea[i][0].x + (m_ppCurveBuildArea[i][2].x - m_ppCurveBuildArea[i][0].x));
+		m_z.push_back(m_ppCurveBuildArea[i][0].z + (m_ppCurveBuildArea[i][2].z - m_ppCurveBuildArea[i][0].z));
+		m_w.push_back(ROAD_W_SIZE * buildAreaNum);
 	}
-	delete[] angle;
+}
+
+bool CurveBuildArea::AreaCheck(D3DXVECTOR3* _checkPos)
+{
+	for (int i = 0; i < m_CenterLinePos.size() - 1;i++)
+	{
+		if (!CurveAreaCheck(_checkPos, i)) return false;
+	}
+	return true;
+}
+
+bool CurveBuildArea::CurveAreaCheck(D3DXVECTOR3* _checkPos,int _array)
+{
+
+	float CheckPosX = m_x[_array] +
+		(_checkPos->z - m_z[_array]) * cos(m_Angle[_array]) -
+		(_checkPos->x - m_x[_array]) * sin(m_Angle[_array]);
+
+	float CheckPosZ = m_z[_array] +
+		(_checkPos->z - m_z[_array]) * sin(m_Angle[_array]) +
+		(_checkPos->x - m_x[_array]) * cos(m_Angle[_array]);
+
+	if (m_x[_array] + (m_w[_array] / 2.0f) > CheckPosX &&  m_x[_array] - (m_w[_array] / 2.0f) < CheckPosX)
+	{
+		if (m_z[_array] + (ROAD_H_SIZE / 2.0f) > CheckPosZ && m_z[_array] - (ROAD_H_SIZE / 2.0f) < CheckPosZ)
+		{
+			int AreaCountX = 0;
+			int AreaCountZ = 0;
+
+			if (m_isLeft)
+			{
+				m_AreaCountX = AreaCountX = static_cast<int>((
+					((_checkPos->z - m_CenterLinePos[_array].z) * cos(m_Angle[_array]) -
+					((_checkPos->x - m_CenterLinePos[_array].x) * sin(m_Angle[_array]))) + ROAD_W_SIZE / 2) / ROAD_W_SIZE);
+
+				m_AreaCountZ = AreaCountZ = static_cast<int>((
+					((_checkPos->z - m_CenterLinePos[_array].z) * sin(m_Angle[_array]) +
+					((_checkPos->x - m_CenterLinePos[_array].x) * cos(m_Angle[_array])))) / ROAD_H_SIZE);
+			}
+			else
+			{
+				m_AreaCountX = AreaCountX = static_cast<int>((
+					((_checkPos->z - m_CenterLinePos[_array].z) * cos(m_Angle[_array]) -
+					((_checkPos->x - m_CenterLinePos[_array].x) * sin(m_Angle[_array]))) - ROAD_W_SIZE / 2) / ROAD_W_SIZE);
+
+				m_AreaCountZ = AreaCountZ = static_cast<int>((
+					((_checkPos->z - m_CenterLinePos[_array].z) * sin(m_Angle[_array]) +
+					((_checkPos->x - m_CenterLinePos[_array].x) * cos(m_Angle[_array])))) / ROAD_H_SIZE);
+			}
+
+
+			BYTE CheckArea = 1;
+			CheckArea = CheckArea << abs(AreaCountX);
+
+			if (AreaCountZ % 2 == 1)
+			{
+				CheckArea = CheckArea << 4;
+			}
+
+			return m_pAreaData[AreaCountZ / 2] & CheckArea;
+		}
+	}
+	return true;
+}
+
+bool CurveBuildArea::AreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle)
+{
+	for (int i = 0; i < m_CenterLinePos.size() - 1; i++)
+	{
+		if (CurveAreaCenterPos(_checkPos,_centerPos,_pAngle, i)) return true;
+	}
+	return false;
+}
+
+bool CurveBuildArea::CurveAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle, int _array)
+{
+	float CheckPosX = m_x[_array] +
+		(_checkPos->z - m_z[_array]) * cos(m_Angle[_array]) -
+		(_checkPos->x - m_x[_array]) * sin(m_Angle[_array]);
+
+	float CheckPosZ = m_z[_array] +
+		(_checkPos->z - m_z[_array]) * sin(m_Angle[_array]) +
+		(_checkPos->x - m_x[_array]) * cos(m_Angle[_array]);
+
+
+	if (m_x[_array] + (m_w[_array] / 2.0f) > CheckPosX &&  m_x[_array] - (m_w[_array] / 2.0f) < CheckPosX)
+	{
+		if (m_z[_array] + (ROAD_H_SIZE / 2.0f) > CheckPosZ && m_z[_array] - (ROAD_H_SIZE / 2.0f) < CheckPosZ)
+		{
+			float AreaPosX = 0.f;
+			float AreaPosZ = 0.f;
+			int AreaCountX = 0;
+			int AreaCountZ = 0;
+
+			if (m_isLeft)
+			{
+				m_AreaCountX = AreaCountX = static_cast<int>((
+					((_checkPos->z - m_CenterLinePos[_array].z) * cos(m_Angle[_array]) -
+					((_checkPos->x - m_CenterLinePos[_array].x) * sin(m_Angle[_array]))) + ROAD_W_SIZE / 2) / ROAD_W_SIZE);
+
+
+				m_AreaCountZ = AreaCountZ = static_cast<int>((
+					((_checkPos->z - m_CenterLinePos[_array].z) * sin(m_Angle[_array]) +
+					((_checkPos->x - m_CenterLinePos[_array].x) * cos(m_Angle[_array])))) / ROAD_H_SIZE);
+
+
+				// AreaCount番目のエリアの中心を渡す
+				AreaPosX = m_CenterLinePos[_array].x + (-(ROAD_W_SIZE / 2 - ROAD_W_SIZE) * sin(m_Angle[_array])) +
+					((AreaCountZ * ROAD_W_SIZE + ROAD_W_SIZE / 2) * cos(m_Angle[_array])) -
+					((AreaCountX* ROAD_H_SIZE - ROAD_H_SIZE / 2) * sin(m_Angle[_array]));
+
+
+				// AreaCount番目のエリアの中心を渡す
+				AreaPosZ = m_CenterLinePos[_array].z + (-(ROAD_H_SIZE / 2 - ROAD_H_SIZE) * -cos(m_Angle[_array])) +
+					((AreaCountZ * ROAD_W_SIZE + ROAD_W_SIZE / 2) * sin(m_Angle[_array])) +
+					((AreaCountX* ROAD_H_SIZE - ROAD_H_SIZE / 2) * cos(m_Angle[_array]));
+
+
+				_centerPos->x = AreaPosX;
+				_centerPos->y = 0.5f;
+				_centerPos->z = AreaPosZ;
+				*_pAngle = -m_Angle[_array];
+				return true;
+			}
+			else
+			{
+				m_AreaCountX = AreaCountX = static_cast<int>((
+					((_checkPos->z - m_CenterLinePos[_array].z) * cos(m_Angle[_array]) -
+					((_checkPos->x - m_CenterLinePos[_array].x) * sin(m_Angle[_array]))) - ROAD_W_SIZE / 2) / ROAD_W_SIZE);
+
+
+				m_AreaCountZ = AreaCountZ = static_cast<int>((
+					((_checkPos->z - m_CenterLinePos[_array].z) * sin(m_Angle[_array]) +
+					((_checkPos->x - m_CenterLinePos[_array].x) * cos(m_Angle[_array])))) / ROAD_H_SIZE);
+
+
+				// AreaCount番目のエリアの中心を渡す
+				AreaPosX = m_RoadStartPos.x + (ROAD_W_SIZE / 2 - ROAD_W_SIZE) * sin(m_Angle[_array]) +
+					((AreaCountZ * ROAD_W_SIZE + ROAD_W_SIZE / 2) * cos(m_Angle[_array])) -
+					((AreaCountX* ROAD_H_SIZE + ROAD_H_SIZE / 2) * sin(m_Angle[_array]));
+
+
+				// AreaCount番目のエリアの中心を渡す
+				AreaPosZ = m_RoadStartPos.z + (ROAD_W_SIZE / 2 - ROAD_W_SIZE) * -cos(m_Angle[_array]) +
+					((AreaCountZ * ROAD_W_SIZE + ROAD_W_SIZE / 2) * sin(m_Angle[_array])) +
+					((AreaCountX* ROAD_H_SIZE + ROAD_H_SIZE / 2) * cos(m_Angle[_array]));
+
+
+				_centerPos->x = AreaPosX;
+				_centerPos->y = 0.5f;
+				_centerPos->z = AreaPosZ;
+				*_pAngle = -m_Angle[_array] + D3DXToRadian(180);
+				return true;
+			}
+		}
+	}
+	return false;
 }
 
 float CurveBuildArea::CalculateBezierLength()
@@ -543,12 +691,12 @@ bool CurveBuildArea::GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outp
 	double length = pow((_checkPos->x - m_StartPos.x)*(_checkPos->x - m_StartPos.x) +
 		(_checkPos->z - m_StartPos.z)*(_checkPos->z - m_StartPos.z), 0.5);
 
-	float angle = atan2(m_CenterLinePos[1].z - m_CenterLinePos[0].z,
+	float m_Angle = atan2(m_CenterLinePos[1].z - m_CenterLinePos[0].z,
 		m_CenterLinePos[1].x - m_CenterLinePos[0].x);
 
 	if (length < 3000.f)
 	{
-		*_outputAngleDegree = D3DXToDegree(angle);
+		*_outputAngleDegree = D3DXToDegree(m_Angle);
 		*_outputPos = m_StartPos;
 		*_startPos = true;
 		return true;
@@ -558,12 +706,12 @@ bool CurveBuildArea::GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outp
 	length = pow((_checkPos->x - m_EndPos.x)*(_checkPos->x - m_EndPos.x) +
 		(_checkPos->z - m_EndPos.z)*(_checkPos->z - m_EndPos.z), 0.5);
 
-	angle = atan2(m_CenterLinePos[m_CenterLinePos.size() - 1].z - m_CenterLinePos[m_CenterLinePos.size() - 2].z,
+	m_Angle = atan2(m_CenterLinePos[m_CenterLinePos.size() - 1].z - m_CenterLinePos[m_CenterLinePos.size() - 2].z,
 		m_CenterLinePos[m_CenterLinePos.size() - 1].x - m_CenterLinePos[m_CenterLinePos.size() - 2].x);
 
 	if (length < 3000.f)
 	{
-		*_outputAngleDegree = D3DXToDegree(angle);
+		*_outputAngleDegree = D3DXToDegree(m_Angle);
 		*_outputPos = m_CenterLinePos[m_CenterLinePos.size() - 1];
 		*_startPos = false;
 		return true;

@@ -21,32 +21,31 @@ public:
 	* @param[in] 建築された場所
 	* @return 成功したらtrue
 	*/
-	bool SetBuilding(D3DXVECTOR3* _setPos);
-
-	bool GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos, float* _outputAngleDegree, bool* _startPos);
+	bool  SetBuilding(D3DXVECTOR3* _setPos);
+	bool  GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos, float* _outputAngleDegree, bool* _startPos);
 	float GetAngleDegree(){ return D3DXToDegree(m_angle); };
-	void GetBuildAreaData(std::vector<float>* _pBuildAreaVertexData, std::vector<float>* _pBuildAreaAngleData, std::vector<int>* _pBuildAreaFlag);
+	void  GetBuildAreaData(std::vector<float>* _pBuildAreaVertexData, std::vector<float>* _pBuildAreaAngleData, std::vector<int>* _pBuildAreaFlag);
 
 private:
-	float	m_x;		/*中心座標*/
-	float	m_y;		/*中心座標*/
-	float	m_z;		/*中心座標*/
-	float	m_w;		/*幅*/
-	float	m_h;		/*高さ*/
-	float	m_tu[4];	/*テクスチャ座標*/
-	float	m_tv[4];	/*テクスチャ座標*/
-	float m_angle;
-	int		m_length;
-	int		m_roadLength;
-	BYTE*	m_pAreaData;
-	Vertex      m_Vertex;
 	D3DXVECTOR3 m_pBuildArea[4];
+	Vertex      m_Vertex;
+	float		m_x;		/*中心座標*/
+	float		m_y;		/*中心座標*/
+	float		m_z;		/*中心座標*/
+	float		m_w;		/*幅*/
+	float		m_h;		/*高さ*/
+	float		m_tu[4];	/*テクスチャ座標*/
+	float		m_tv[4];	/*テクスチャ座標*/
+	float		m_angle;
+	int			m_length;
+	int			m_roadLength;
+	BYTE*		m_pAreaData;
 
-	Font m_Font;
-	int m_AreaCountX;
-	int m_AreaCountZ;
-	float MousePosX;
-	float MousePosZ;
+	Font		m_Font;
+	int			m_AreaCountX;
+	int			m_AreaCountZ;
+	float		MousePosX;
+	float		MousePosZ;
 
 	void LeftRoadCreate();
 	void RightRoadCreate();

@@ -44,13 +44,8 @@ protected:
 	D3DXVECTOR3 m_EndPos;
 
 	bool	m_isLeft;	/*道に対して左にあるAreaかのフラグ*/
-	float	m_x;		/*中心座標*/
-	float	m_y;		/*中心座標*/
-	float	m_z;		/*中心座標*/
-	float	m_w;		/*幅*/
-	float	m_h;		/*高さ*/
-	float	m_tu[4];	/*テクスチャ座標*/
-	float	m_tv[4];	/*テクスチャ座標*/
+	float	m_tu[4];
+	float	m_tv[4];
 	float	m_angle;	/*傾き*/
 	float	m_roadStartAngle;	/*道が繋がっていた場所からの角度*/
 	float	m_roadEndAngle;		/*道が繋がっていた場所からの角度*/

@@ -7,14 +7,15 @@ public:
 
 	~CurveBuildArea();
 	void Draw();
-	//bool AreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle){};
+	bool AreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle);
+	bool CurveAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle, int _array);
 
 	/**
 	* エリア内の座標に建物が歩かないかをチェックする関数
 	* @param[in] チェックしたい座標
 	* @return エリアが空いていればfalse
 	*/
-	//bool AreaCheck(D3DXVECTOR3* _checkPos){};
+	bool AreaCheck(D3DXVECTOR3* _checkPos);
 
 	/**
 	* 建物が建築されたことを伝える関数
@@ -34,11 +35,20 @@ private:
 	std::vector<D3DXVECTOR3> m_CenterLinePos;//曲線のビルドエリアを作るときに使う
 	std::vector<D3DXVECTOR3> m_TmpCenterLinePos;//曲線のビルドエリアを作るときの頂点一時保存
 
+	std::vector<float> m_Angle;
+	std::vector<float> m_x;		/*中心座標*/;
+	std::vector<float> m_y;		/*中心座標*/;
+	std::vector<float> m_z;		/*中心座標*/;
+	std::vector<float> m_w;		/*幅*/;
+	BYTE*		m_pAreaData;
+
+	/*高さは固定なのでいらない*/
 	float CalculateBezierLength();
 	D3DXVECTOR3 QuadraticBezPoint(float _t);
 	D3DXVECTOR3 QuadraticConstantBezPoint(int _divideNum, int _nowCnt);
 	void LeftRoadCreate();
 	void RightRoadCreate();
+	bool CurveAreaCheck(D3DXVECTOR3* _checkPos, int _array);
 
 };
 
