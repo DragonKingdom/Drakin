@@ -44,12 +44,18 @@ BuildArea* BuildAreaBuilder::NormalAreaBuild(bool _isLeft)
 	float angle = atan2(m_EndPos.z - m_StartPos.z, m_EndPos.x - m_StartPos.x);
 
 	// EndPosを原点に戻して、正規化、スケーリングして、もう一度同じ場所に戻す
+	D3DXVECTOR3 roadVec = m_EndPos - m_StartPos;
+	D3DXVec3Normalize(&roadVec, &roadVec);
+	D3DXVec3Scale(&roadVec, &roadVec, static_cast<float>(length));
+	roadVec = roadVec + m_StartPos;
+
+	// EndPosを原点に戻して、正規化、スケーリングして、もう一度同じ場所に戻す
 	D3DXVECTOR3 Vec = m_EndPos - m_StartPos;
 	D3DXVec3Normalize(&Vec, &Vec);
 	D3DXVec3Scale(&Vec, &Vec, static_cast<float>(VecLength));
 	Vec = Vec + m_StartPos;
 
-	BuildArea* pBuildArea = new NormalBuildArea(_isLeft, m_StartPos, Vec, angle, m_roadStartAngle, m_roadEndAngle, m_StartPosLink, m_EndPosLink);
+	BuildArea* pBuildArea = new NormalBuildArea(_isLeft, m_StartPos, Vec, roadVec, angle, m_roadStartAngle, m_roadEndAngle, m_StartPosLink, m_EndPosLink);
 
 	return pBuildArea;
 }
@@ -82,12 +88,18 @@ BuildArea* BuildAreaBuilder::CurveAreaBuild(bool _isLeft)
 	float angle = atan2(m_EndPos.z - m_StartPos.z, m_EndPos.x - m_StartPos.x);
 
 	// EndPosを原点に戻して、正規化、スケーリングして、もう一度同じ場所に戻す
+	D3DXVECTOR3 roadVec = m_EndPos - m_StartPos;
+	D3DXVec3Normalize(&roadVec, &roadVec);
+	D3DXVec3Scale(&roadVec, &roadVec, static_cast<float>(length));
+	roadVec = roadVec + m_StartPos;
+
+	//@todo ここがずれてる原因と分かったので直す
 	D3DXVECTOR3 Vec = m_EndPos - m_StartPos;
 	D3DXVec3Normalize(&Vec, &Vec);
 	D3DXVec3Scale(&Vec, &Vec, static_cast<float>(VecLength));
 	Vec = Vec + m_StartPos;
 
-	BuildArea* pBuildArea = new CurveBuildArea(_isLeft, m_StartPos, m_ControlPos, Vec, m_roadStartAngle, m_roadEndAngle, m_StartPosLink, m_EndPosLink);
+	BuildArea* pBuildArea = new CurveBuildArea(_isLeft, m_StartPos, m_ControlPos, Vec, roadVec, m_roadStartAngle, m_roadEndAngle, m_StartPosLink, m_EndPosLink);
 	return pBuildArea;
 }
 

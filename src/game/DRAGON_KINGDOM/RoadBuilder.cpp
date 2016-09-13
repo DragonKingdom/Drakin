@@ -97,7 +97,7 @@ Road* RoadBuilder::RoadBuild(ROADMANAGER_ENUM::BUILD_TYPE _buildType)
 	// EndPosを原点に戻して、正規化、スケーリングして、もう一度同じ場所に戻す
 	D3DXVECTOR3 Vec = m_EndPos - m_StartPos;
 	D3DXVec3Normalize(&Vec, &Vec);
-	D3DXVec3Scale(&Vec, &Vec, float(VecLength));
+	D3DXVec3Scale(&Vec, &Vec, float(length));
 	Vec = Vec + m_StartPos;
 
 	Road* pRoad = NULL;
@@ -107,7 +107,7 @@ Road* RoadBuilder::RoadBuild(ROADMANAGER_ENUM::BUILD_TYPE _buildType)
 		pRoad = new NormalRoad(m_StartPos, Vec, angle);
 		break;
 	case ROADMANAGER_ENUM::CURVE:
-		pRoad = new CurveRoad(m_StartPos, m_ControlPos, Vec, angle);
+		pRoad = new CurveRoad(m_StartPos, m_ControlPos, m_EndPos, angle);
 		break;
 	}
 

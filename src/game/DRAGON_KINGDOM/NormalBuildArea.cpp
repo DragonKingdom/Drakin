@@ -3,10 +3,10 @@
 #include <string>
 
 
-NormalBuildArea::NormalBuildArea(bool _isLeft, D3DXVECTOR3 _roadStartPos, D3DXVECTOR3 _roadEndPos,
+NormalBuildArea::NormalBuildArea(bool _isLeft, D3DXVECTOR3 _roadStartPos, D3DXVECTOR3 _roadEndPos, D3DXVECTOR3 _EndPos,
 	float _angle, float _roadStartAngle, float _roadEndAngle, bool _roadLinkStart, bool _roadLinkEnd) :
 	m_angle(_angle),
-	BuildArea(_isLeft, _roadStartPos, _roadEndPos, _roadStartAngle, _roadEndAngle, _roadLinkStart, _roadLinkEnd)
+	BuildArea(_isLeft, _roadStartPos, _roadEndPos,_EndPos, _roadStartAngle, _roadEndAngle, _roadLinkStart, _roadLinkEnd)
 {
 	m_Texture.Load("Resource\\image\\BuildArea.png");
 
