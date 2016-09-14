@@ -48,7 +48,6 @@ void RoadManager::BuildControl()
 		if (m_pInputDevice->MouseLeftPush())
 		{
 			/// @todo マウスの位置がUIとかぶってた場合の処理も考えとく
-
 			// 取得したマウスの座標を3d空間上の座標に変換して渡す
 			m_roadLinkStart_StartPos = false;
 			m_roadLinkEnd_StartPos = false;
@@ -103,7 +102,10 @@ void RoadManager::BuildControl()
 		if (buildOk)
 		{
 			Road* pRoad = m_pRoadBuilder->RoadBuild(m_buildType);
-			m_pRoad.push_back(pRoad);
+			if (pRoad != NULL)
+			{
+				m_pRoad.push_back(pRoad);
+			}
 		}
 		
 		// 次の道作成のための初期化処理

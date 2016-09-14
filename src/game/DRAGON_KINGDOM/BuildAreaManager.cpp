@@ -105,10 +105,16 @@ void BuildAreaManager::AreaBuildControl()
 		if (buildOk)
 		{
 			BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild(true, m_buildType);
-			m_pBuildArea.push_back(pBuildArea);
-
+			if (pBuildArea != NULL)
+			{
+				m_pBuildArea.push_back(pBuildArea);
+			}
+			
 			pBuildArea = m_pBuildAreaBuilder->AreaBuild(false, m_buildType);
-			m_pBuildArea.push_back(pBuildArea);
+			if (pBuildArea != NULL)
+			{
+				m_pBuildArea.push_back(pBuildArea);
+			}
 		}
 		// ŽŸ‚Ì‚½‚ß‚É‰Šú‰»
 		m_pBuildAreaBuilder->InitStartPos();

@@ -68,6 +68,8 @@ void RoadBuilder::InitEndPos()
 
 Road* RoadBuilder::RoadBuild(ROADMANAGER_ENUM::BUILD_TYPE _buildType)
 {
+	// StartPosからEndPosの角度をとる
+	float angle = atan2(m_EndPos.z - m_StartPos.z, m_EndPos.x - m_StartPos.x);
 	// もともとのStartPosからEndPosの長さ
 	int length = static_cast<int>(sqrt(
 		(m_EndPos.x - m_StartPos.x) * (m_EndPos.x - m_StartPos.x) +
@@ -88,12 +90,6 @@ Road* RoadBuilder::RoadBuild(ROADMANAGER_ENUM::BUILD_TYPE _buildType)
 		NumZ = int(length / ROAD_W_SIZE);
 		VecLength = int(NumZ * ROAD_H_SIZE);
 	}
-
-
-
-	// StartPosからEndPosの角度をとる
-	float angle = atan2(m_EndPos.z - m_StartPos.z, m_EndPos.x - m_StartPos.x);
-
 	// EndPosを原点に戻して、正規化、スケーリングして、もう一度同じ場所に戻す
 	D3DXVECTOR3 Vec = m_EndPos - m_StartPos;
 	D3DXVec3Normalize(&Vec, &Vec);
@@ -107,11 +103,16 @@ Road* RoadBuilder::RoadBuild(ROADMANAGER_ENUM::BUILD_TYPE _buildType)
 		pRoad = new NormalRoad(m_StartPos, Vec, angle);
 		break;
 	case ROADMANAGER_ENUM::CURVE:
-		if (m_ControlPos == m_EndPos)
-		{
-			pRoad = new NormalRoad(m_StartPos, Vec, angle);
-		}
-		else
+		float length1 = sqrt(
+			(m_ControlPos.x - m_EndPos.x) * (m_ControlPos.x - m_EndPos.x) +
+			(m_ControlPos.y - m_EndPos.y) * (m_ControlPos.y - m_EndPos.y) +
+			(m_ControlPos.z - m_EndPos.z) * (m_ControlPos.z - m_EndPos.z));
+
+		float length2 = sqrt(
+			(m_ControlPos.x - m_StartPos.x) * (m_ControlPos.x - m_StartPos.x) +
+			(m_ControlPos.y - m_StartPos.y) * (m_ControlPos.y - m_StartPos.y) +
+			(m_ControlPos.z - m_StartPos.z) * (m_ControlPos.z - m_StartPos.z));
+		if (length1 > 1000 && length2 > 1000)
 		{
 			pRoad = new CurveRoad(m_StartPos, m_ControlPos, m_EndPos, angle);
 		}
