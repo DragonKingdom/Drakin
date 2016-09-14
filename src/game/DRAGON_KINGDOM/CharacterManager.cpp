@@ -23,7 +23,9 @@ m_pEnemyChecker(new EnemyChecker(m_pEnemyManager))
 CharacterManager::~CharacterManager()
 {
 	delete m_pEnemyManager;
+	delete m_pEnemyChecker;
 	delete m_pHumanManager;
+	delete m_pHumanChecker;
 }
 
 void CharacterManager::Control()

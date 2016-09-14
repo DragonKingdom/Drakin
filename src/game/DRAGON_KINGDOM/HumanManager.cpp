@@ -40,6 +40,8 @@ void HumanManager::Control()
 		if (m_pHuman[i]->Control())
 		{
 			delete m_pHuman[i];
+
+			///@todo C³‚·‚é•K—v‚ª‚ ‚é‚©‚à
 			m_pHuman.erase(m_pHuman.begin() + i);
 		}
 	}

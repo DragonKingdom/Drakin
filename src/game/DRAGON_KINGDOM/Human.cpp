@@ -150,9 +150,8 @@ bool Human::NormalControl()
 			m_Length = sqrt(xz);
 			m_Angle = atan2(m_NextPos.z - m_HumanPos.z, m_NextPos.x - m_HumanPos.x);
 
-			m_LengthNum = static_cast<int>(m_Length / HUMAN_MOVE_SPEED);
-			m_DisplacementX = m_LengthNum * cos(m_Angle);
-			m_DisplacementZ = m_LengthNum * sin(m_Angle);
+			m_DisplacementX = HUMAN_MOVE_SPEED * cos(m_Angle);
+			m_DisplacementZ = HUMAN_MOVE_SPEED * sin(m_Angle);
 		}
 	}
 	else

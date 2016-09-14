@@ -308,8 +308,11 @@ void RoadManager::NextRoadPos(std::vector<D3DXVECTOR3>* _pNextPos, D3DXVECTOR3 _
 	}
 
 
+	srand(unsigned int(time(NULL)));
+	int MoveNum = rand() % 20 + 3;
+
 	int NextIndex = 0;
-	for (unsigned int i = 0; i < 6;i++)
+	for (unsigned int i = 0; i < MoveNum; i++)
 	{
 		m_pRoad[Index]->GetCenterLinePos(_pNextPos, isStart);
 		if (isStart)
