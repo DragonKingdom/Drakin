@@ -128,15 +128,10 @@ bool Human::NormalControl()
 			}
 			else
 			{
-				//m_NextPos.x = m_pRoadChecker->NextRoadPos(m_HumanPos).x;
-				//m_NextPos.z = m_pRoadChecker->NextRoadPos(m_HumanPos).z;
-
 				if (m_pWalkLineBuffer.size() == m_BufferIndex)
 				{
-					for (unsigned int i = 0; i < m_pWalkLineBuffer.size(); i++)
-					{
-						m_pWalkLineBuffer.erase(m_pWalkLineBuffer.begin() + i);
-					}
+					m_pWalkLineBuffer.clear();
+
 					m_pRoadChecker->NextRoadPos(&m_pWalkLineBuffer, m_HumanPos);
 					
 					m_BufferIndex = 0;
