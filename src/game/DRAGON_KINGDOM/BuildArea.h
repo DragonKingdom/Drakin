@@ -5,7 +5,7 @@ class BuildArea
 {
 public:
 	BuildArea(bool _isLeft, D3DXVECTOR3 _roadStartPos, D3DXVECTOR3 _roadEndPos, D3DXVECTOR3 _EndPos, float _roadStartAngle, float _roadEndAngle, bool _roadLinkStart, bool _roadLinkEnd);
-	~BuildArea();
+	virtual ~BuildArea();
 	virtual void Draw();
 	//エリアの中心座標を求める
 	virtual bool AreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle, int _Type);
