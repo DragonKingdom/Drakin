@@ -197,6 +197,18 @@
     <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\CastleManager\Castle">
       <UniqueIdentifier>{d7a26309-5880-432f-b43e-ef3b7187650d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildArea\CurveBuildArea">
+      <UniqueIdentifier>{469eaa58-274c-4266-a122-d73088ee72c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildArea\NormalBuildArea">
+      <UniqueIdentifier>{262239b5-365e-4683-9c8d-bdca3e4272fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\Road\CurveRoadArea">
+      <UniqueIdentifier>{2c6b73a8-fe3a-4e56-a0ef-6c8fedbbf4b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\Road\NormalRoadArea">
+      <UniqueIdentifier>{78cdb501-7d7f-4a44-8956-5cbbc5e46adc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scene.cpp">
@@ -385,6 +397,18 @@
     <ClCompile Include="Castle.cpp">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CastleManager\Castle</Filter>
     </ClCompile>
+    <ClCompile Include="CurveBuildArea.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildArea\CurveBuildArea</Filter>
+    </ClCompile>
+    <ClCompile Include="NormalBuildArea.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildArea\NormalBuildArea</Filter>
+    </ClCompile>
+    <ClCompile Include="CurveRoad.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\Road\CurveRoadArea</Filter>
+    </ClCompile>
+    <ClCompile Include="NormalRoad.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\Road\NormalRoadArea</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -572,6 +596,18 @@
     </ClInclude>
     <ClInclude Include="Castle.h">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CastleManager\Castle</Filter>
+    </ClInclude>
+    <ClInclude Include="CurveBuildArea.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildArea\CurveBuildArea</Filter>
+    </ClInclude>
+    <ClInclude Include="NormalBuildArea.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildArea\NormalBuildArea</Filter>
+    </ClInclude>
+    <ClInclude Include="CurveRoad.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\Road\CurveRoadArea</Filter>
+    </ClInclude>
+    <ClInclude Include="NormalRoad.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\Road\NormalRoadArea</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

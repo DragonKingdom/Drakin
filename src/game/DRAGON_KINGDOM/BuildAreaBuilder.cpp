@@ -1,6 +1,8 @@
 #include "BuildAreaBuilder.h"
 #include "BuildAreaPreviewer.h"
 #include "BuildArea.h"
+#include "NormalBuildArea.h"
+#include "CurveBuildArea.h"
 
 BuildAreaBuilder::BuildAreaBuilder():
 m_pBuildAreaPreviewer(new BuildAreaPreviewer()),
@@ -14,7 +16,7 @@ BuildAreaBuilder::~BuildAreaBuilder()
 	delete m_pBuildAreaPreviewer;
 }
 
-BuildArea* BuildAreaBuilder::AreaBuild(bool _isLeft)
+BuildArea* BuildAreaBuilder::NormalAreaBuild(bool _isLeft)
 {
 	// もともとのStartPosからEndPosの長さ
 	int length = static_cast<int>(sqrt(
@@ -36,10 +38,16 @@ BuildArea* BuildAreaBuilder::AreaBuild(bool _isLeft)
 		NumZ = int(length / ROAD_W_SIZE);
 		VecLength = int(NumZ * ROAD_H_SIZE);
 	}
-	
+
 
 	// StartPosからEndPosの角度をとる
 	float angle = atan2(m_EndPos.z - m_StartPos.z, m_EndPos.x - m_StartPos.x);
+
+	// EndPosを原点に戻して、正規化、スケーリングして、もう一度同じ場所に戻す
+	D3DXVECTOR3 roadVec = m_EndPos - m_StartPos;
+	D3DXVec3Normalize(&roadVec, &roadVec);
+	D3DXVec3Scale(&roadVec, &roadVec, static_cast<float>(length));
+	roadVec = roadVec + m_StartPos;
 
 	// EndPosを原点に戻して、正規化、スケーリングして、もう一度同じ場所に戻す
 	D3DXVECTOR3 Vec = m_EndPos - m_StartPos;
@@ -47,11 +55,78 @@ BuildArea* BuildAreaBuilder::AreaBuild(bool _isLeft)
 	D3DXVec3Scale(&Vec, &Vec, static_cast<float>(VecLength));
 	Vec = Vec + m_StartPos;
 
-	angle = atan2(Vec.z - m_StartPos.z, Vec.x - m_StartPos.x);
+	BuildArea* pBuildArea = new NormalBuildArea(_isLeft, m_StartPos, Vec, roadVec, angle, m_roadStartAngle, m_roadEndAngle, m_StartPosLink, m_EndPosLink);
 
-	
-	BuildArea* pBuildArea = new BuildArea(_isLeft, m_StartPos, Vec, angle, m_roadStartAngle, m_roadEndAngle, m_StartPosLink, m_EndPosLink);
+	return pBuildArea;
+}
 
+BuildArea* BuildAreaBuilder::CurveAreaBuild(bool _isLeft)
+{
+	// もともとのStartPosからEndPosの長さ
+	int length = static_cast<int>(sqrt(
+		(m_EndPos.x - m_StartPos.x) * (m_EndPos.x - m_StartPos.x) +
+		(m_EndPos.y - m_StartPos.y) * (m_EndPos.y - m_StartPos.y) +
+		(m_EndPos.z - m_StartPos.z) * (m_EndPos.z - m_StartPos.z)));
+
+	// エリアの数
+	int NumZ = 0;
+	int VecLength = 0;
+
+	if (length % int(ROAD_H_SIZE) == int(ROAD_H_SIZE - 1))
+	{
+		NumZ = int(length / ROAD_W_SIZE) + 1;
+		VecLength = int(NumZ * ROAD_H_SIZE);
+	}
+	else
+	{
+		NumZ = int(length / ROAD_W_SIZE);
+		VecLength = int(NumZ * ROAD_H_SIZE);
+	}
+
+
+	// StartPosからEndPosの角度をとる
+	float angle = atan2(m_EndPos.z - m_StartPos.z, m_EndPos.x - m_StartPos.x);
+
+	// EndPosを原点に戻して、正規化、スケーリングして、もう一度同じ場所に戻す
+	D3DXVECTOR3 roadVec = m_EndPos - m_StartPos;
+	D3DXVec3Normalize(&roadVec, &roadVec);
+	D3DXVec3Scale(&roadVec, &roadVec, static_cast<float>(length));
+	roadVec = roadVec + m_StartPos;
+
+	//@todo ここがずれてる原因と分かったので直す
+	D3DXVECTOR3 Vec = m_EndPos - m_StartPos;
+	D3DXVec3Normalize(&Vec, &Vec);
+	D3DXVec3Scale(&Vec, &Vec, static_cast<float>(VecLength));
+	Vec = Vec + m_StartPos;
+	BuildArea* pBuildArea = NULL;
+	float length1 = sqrt(
+		(m_ControlPos.x - m_EndPos.x) * (m_ControlPos.x - m_EndPos.x) +
+		(m_ControlPos.y - m_EndPos.y) * (m_ControlPos.y - m_EndPos.y) +
+		(m_ControlPos.z - m_EndPos.z) * (m_ControlPos.z - m_EndPos.z));
+
+	float length2 = sqrt(
+		(m_ControlPos.x - m_StartPos.x) * (m_ControlPos.x - m_StartPos.x) +
+		(m_ControlPos.y - m_StartPos.y) * (m_ControlPos.y - m_StartPos.y) +
+		(m_ControlPos.z - m_StartPos.z) * (m_ControlPos.z - m_StartPos.z));
+	if (length1 > 1000 && length2 > 1000)
+	{
+		pBuildArea = new CurveBuildArea(_isLeft, m_StartPos, m_ControlPos, Vec, roadVec, m_roadStartAngle, m_roadEndAngle, m_StartPosLink, m_EndPosLink);
+	}
+	return pBuildArea;
+}
+
+BuildArea* BuildAreaBuilder::AreaBuild(bool _isLeft, BUILDAREAMANAGER_ENUM::BUILD_TYPE _buildType)
+{
+	BuildArea* pBuildArea;
+	switch (_buildType)
+	{
+	case BUILDAREAMANAGER_ENUM::NORMAL:
+		pBuildArea = NormalAreaBuild(_isLeft);
+		break;
+	case BUILDAREAMANAGER_ENUM::CURVE:
+		pBuildArea = CurveAreaBuild(_isLeft);
+		break;
+	}
 	return pBuildArea;
 }
 
@@ -70,6 +145,13 @@ void BuildAreaBuilder::StartPosSet(D3DXVECTOR3 _startPos)
 	m_StartPos = _startPos;
 }
 
+void BuildAreaBuilder::ControlPosSet(const D3DXVECTOR3 _controlPos)
+{
+	m_ControlPos = _controlPos;
+	m_pBuildAreaPreviewer->ControlPosSet(_controlPos);
+	m_pBuildAreaPreviewer->BuildModeSet(BUILDAREAMANAGER_ENUM::BUILD_TYPE::CURVE);
+}
+
 void BuildAreaBuilder::EndPosSet(D3DXVECTOR3 _endPos)
 {
 	m_isEndPosSet = true;
@@ -84,6 +166,13 @@ void BuildAreaBuilder::InitStartPos()
 	m_roadStartAngle = 0.f;
 	m_pBuildAreaPreviewer->InitStartPos();
 	m_StartPos = D3DXVECTOR3(0, 0, 0);
+}
+
+void BuildAreaBuilder::InitControlPos()
+{
+	m_pBuildAreaPreviewer->BuildModeSet(BUILDAREAMANAGER_ENUM::BUILD_TYPE::NORMAL);
+	m_ControlPos = D3DXVECTOR3(0, 0, 0);
+	m_pBuildAreaPreviewer->ControlPosSet(D3DXVECTOR3(0, 0, 0));
 }
 
 void BuildAreaBuilder::InitEndPos()

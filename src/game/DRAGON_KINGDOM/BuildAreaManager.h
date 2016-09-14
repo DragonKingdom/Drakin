@@ -77,6 +77,7 @@ private:
 	std::vector<BuildArea*>			m_pBuildArea;
 	BUILDAREAMANAGER_ENUM::STATE	m_state;
 	BUILD_STATE						m_buildState;
+	BUILDAREAMANAGER_ENUM::BUILD_TYPE	m_buildType;
 	StateManager*					m_pStateManager;
 	GameData*						m_pGameData;
 	InputDeviceFacade*				m_pInputDevice;

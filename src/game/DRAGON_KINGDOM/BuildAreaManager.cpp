@@ -12,8 +12,10 @@
 #include "InputDeviceFacade.h"
 #include "FileSaveLoad.h"
 #include "ClickPosConverter.h"
+#include "Scene.h"
 
 using BUILDAREAMANAGER_ENUM::STATE;
+using BUILDAREAMANAGER_ENUM::BUILD_TYPE;
 
 BuildAreaManager::BuildAreaManager(StateManager* _pStateManager, GameData* _pGameData, ClickPosConverter* _pClickPosConverter) :
 m_pStateManager(_pStateManager),
@@ -22,7 +24,8 @@ m_pBuildAreaBuilder(new BuildAreaBuilder()),
 m_pClickPosConverter(_pClickPosConverter),
 m_pInputDevice(InputDeviceFacade::GetInstance()),
 m_state(STATE::START_POS_SET),
-m_buildState(BUILD_NONE)
+m_buildState(BUILD_NONE),
+m_buildType(BUILD_TYPE::NORMAL)
 {
 	
 }
@@ -71,6 +74,13 @@ void BuildAreaManager::AreaBuildControl()
 		m_pBuildAreaBuilder->SetRoadEndAngle(roadEndAngle);
 		m_pBuildAreaBuilder->EndPosSet(EndPos);
 
+		//曲線を引く時の制御点を指定する。
+		if (Scene::m_keyStateOn & Scene::KEY_E)
+		{
+			m_buildType = BUILD_TYPE::CURVE;
+			m_pBuildAreaBuilder->ControlPosSet(EndPos);
+		}
+
 		if (m_pInputDevice->MouseLeftPush())
 		{
 			m_state = STATE::CREATE;
@@ -81,27 +91,37 @@ void BuildAreaManager::AreaBuildControl()
 		{
 			// 右クリックされたら戻るため初期化
 			m_pBuildAreaBuilder->InitStartPos();
+			m_pBuildAreaBuilder->InitControlPos();
 			m_pBuildAreaBuilder->InitEndPos();
 			m_state = STATE::START_POS_SET;
+			m_buildType = BUILD_TYPE::NORMAL;
 		}
 
 		break;
 	case STATE::CREATE:
 		/// @todo BuildAreaの長さ0でも作成できるようになってしまってる気がする
 		// とりあえずでやってみた
-		if (m_pBuildAreaBuilder->BuildCheck(m_roadLinkStart_StartPos,m_roadLinkEnd_StartPos))
+		bool buildOk = m_pBuildAreaBuilder->BuildCheck(m_roadLinkStart_StartPos, m_roadLinkEnd_StartPos);
+		if (buildOk)
 		{
-			BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild(true);
-			m_pBuildArea.push_back(pBuildArea);
-
-			pBuildArea = m_pBuildAreaBuilder->AreaBuild(false);
-			m_pBuildArea.push_back(pBuildArea);
+			BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild(true, m_buildType);
+			if (pBuildArea != NULL)
+			{
+				m_pBuildArea.push_back(pBuildArea);
+			}
+			
+			pBuildArea = m_pBuildAreaBuilder->AreaBuild(false, m_buildType);
+			if (pBuildArea != NULL)
+			{
+				m_pBuildArea.push_back(pBuildArea);
+			}
 		}
-
 		// 次のために初期化
 		m_pBuildAreaBuilder->InitStartPos();
+		m_pBuildAreaBuilder->InitControlPos();
 		m_pBuildAreaBuilder->InitEndPos();
 		m_state = STATE::START_POS_SET;
+		m_buildType = BUILD_TYPE::NORMAL;
 		break;
 	}
 }
@@ -115,11 +135,11 @@ void BuildAreaManager::Draw()
 			m_pBuildArea[i]->Draw();
 		}
 	}
-
-	if (m_buildState == BUILD_ROAD)
-	{
-		m_pBuildAreaBuilder->PreviewerDraw();
-	}
+	//ビルドエリアはプレビューを表示しないようにした
+	//if (m_buildState == BUILD_ROAD)
+	//{
+	//	  m_pBuildAreaBuilder->PreviewerDraw();
+	//}
 }
 
 bool BuildAreaManager::AreaCheck(D3DXVECTOR3* _checkPos,int _Type)
@@ -289,12 +309,12 @@ void BuildAreaManager::Load(FileSaveLoad* _pFileSaveLoad)
 
 		
 		// 左側のビルドエリア生成
-		BuildArea* pArea = m_pBuildAreaBuilder->AreaBuild(true);
-		m_pBuildArea.push_back(pArea);
+		//BuildArea* pArea = m_pBuildAreaBuilder->AreaBuild(true);
+		//m_pBuildArea.push_back(pArea);
 
 		// 右側のビルドエリア生成
-		pArea = m_pBuildAreaBuilder->AreaBuild(false);
-		m_pBuildArea.push_back(pArea);
+		//pArea = m_pBuildAreaBuilder->AreaBuild(false);
+		//m_pBuildArea.push_back(pArea);
 
 		// 生成後は初期化しておく
 		m_pBuildAreaBuilder->InitStartPos();

@@ -74,6 +74,11 @@ namespace BUILDAREAMANAGER_ENUM
 		END_POS_SET,
 		CREATE
 	};
+	enum BUILD_TYPE
+	{
+		NORMAL,
+		CURVE
+	};
 }
 
 namespace ROADMANAGER_ENUM
@@ -83,6 +88,12 @@ namespace ROADMANAGER_ENUM
 		START_POS_SET,
 		END_POS_SET,
 		CREATE
+	};
+
+	enum BUILD_TYPE
+	{
+		NORMAL,
+		CURVE
 	};
 }
 

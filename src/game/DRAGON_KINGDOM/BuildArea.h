@@ -4,11 +4,11 @@
 class BuildArea
 {
 public:
-	BuildArea(bool _isLeft, D3DXVECTOR3 _roadStartPos, D3DXVECTOR3 _roadEndPos, float _angle, float _roadStartAngle, float _roadEndAngle, bool _roadLinkStart, bool _roadLinkEnd);
+	BuildArea(bool _isLeft, D3DXVECTOR3 _roadStartPos, D3DXVECTOR3 _roadEndPos, D3DXVECTOR3 _EndPos, float _roadStartAngle, float _roadEndAngle, bool _roadLinkStart, bool _roadLinkEnd);
 	~BuildArea();
-	void Draw();
+	virtual void Draw();
 	//エリアの中心座標を求める
-	bool AreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle,int _Type);
+	virtual bool AreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle, int _Type);
 
 	/**
 	 * エリア内の座標に建物があるかないかをチェックする関数
@@ -16,7 +16,7 @@ public:
 	 * @param[in] _Type チェックした座標に建てる物
 	 * @return エリアが空いていればfalse
 	 */
-	bool AreaCheck(D3DXVECTOR3* _checkPos,int _Type);
+	virtual bool AreaCheck(D3DXVECTOR3* _checkPos, int _Type);
 
 	/**
 	 * 建物が建築されたことを伝える関数
@@ -24,28 +24,30 @@ public:
 	 * @param[in] 建築物
 	 * @return 成功したらtrue
 	 */
-	bool SetBuilding(D3DXVECTOR3* _setPos, int _Type);
+	virtual bool SetBuilding(D3DXVECTOR3* _setPos, int _Type);
 
-	bool GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos, float* _outputAngleDegree, bool* _startPos);
+	virtual bool GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos, float* _outputAngleDegree, bool* _startPos);
 	float GetAngleDegree(){ return D3DXToDegree(m_angle); };
-	void GetBuildAreaData(std::vector<float>* _pBuildAreaVertexData, std::vector<float>* _pBuildAreaAngleData, std::vector<int>* _pBuildAreaFlag);
+	virtual void GetBuildAreaData(std::vector<float>* _pBuildAreaVertexData, std::vector<float>* _pBuildAreaAngleData, std::vector<int>* _pBuildAreaFlag);
 
-private:
+protected:
+	struct CUSTOMVERTEX
+	{
+		D3DXVECTOR3	pos;
+		FLOAT	tu, tv;
+	};
+
 	Vertex      m_Vertex;
 	Texture		m_Texture;
 	D3DXVECTOR3 m_RoadStartPos;	/*対応する道の始点*/
 	D3DXVECTOR3 m_RoadEndPos;	/*対応する道の終点*/
 	D3DXVECTOR3 m_StartPos;
+	D3DXVECTOR3 m_ControlPos;
 	D3DXVECTOR3 m_EndPos;
-	D3DXVECTOR3 m_pBuildArea[4];
+
 	bool	m_isLeft;	/*道に対して左にあるAreaかのフラグ*/
-	float	m_x;		/*中心座標*/
-	float	m_y;		/*中心座標*/
-	float	m_z;		/*中心座標*/
-	float	m_w;		/*幅*/
-	float	m_h;		/*高さ*/
-	float	m_tu[4];	/*テクスチャ座標*/
-	float	m_tv[4];	/*テクスチャ座標*/
+	float	m_tu[4];
+	float	m_tv[4];
 	float	m_angle;	/*傾き*/
 	float	m_roadStartAngle;	/*道が繋がっていた場所からの角度*/
 	float	m_roadEndAngle;		/*道が繋がっていた場所からの角度*/
@@ -57,8 +59,6 @@ private:
 
 
 	Font m_Font;
-	int m_AreaCountX;
-	int m_AreaCountZ;
 	float MousePosX;
 	float MousePosZ;
 

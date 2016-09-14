@@ -1,7 +1,8 @@
 #include "RoadBuilder.h"
 #include "RoadPreviewer.h"
 #include "Road.h"
-
+#include "NormalRoad.h"
+#include "CurveRoad.h"
 RoadBuilder::RoadBuilder() :
 m_pRoadPreviewer(new RoadPreviewer()),
 m_StartPos(D3DXVECTOR3(0, 0, 0)),
@@ -22,13 +23,24 @@ void RoadBuilder::StartPosSet(const D3DXVECTOR3 _startPos)
 	m_StartPos = _startPos;
 	m_pRoadPreviewer->StartPosSet(m_StartPos);
 }
+void RoadBuilder::ControlPosSet(const D3DXVECTOR3 _controlPos)
+{
+	m_ControlPos = _controlPos;
+	m_pRoadPreviewer->ControlPosSet(_controlPos);
+	m_pRoadPreviewer->BuildModeSet(ROADMANAGER_ENUM::BUILD_TYPE::CURVE);
+}
+
+void RoadBuilder::BuildModeSet(ROADMANAGER_ENUM::BUILD_TYPE _buildType)
+{
+	m_pRoadPreviewer->BuildModeSet(_buildType);
+}
 
 void RoadBuilder::EndPosSet(const D3DXVECTOR3 _endPos)
 {
 	m_isEndPointSet = true;
-
+	m_pRoadPreviewer->EndPosSet(_endPos);
 	m_EndPos = _endPos;
-	m_pRoadPreviewer->EndPosSet(m_EndPos);
+
 }
 
 void RoadBuilder::InitStartPos()
@@ -39,6 +51,13 @@ void RoadBuilder::InitStartPos()
 	m_StartPos = D3DXVECTOR3(0, 0, 0);
 }
 
+void RoadBuilder::InitControlPos()
+{
+	m_pRoadPreviewer->BuildModeSet(ROADMANAGER_ENUM::BUILD_TYPE::NORMAL);
+	m_ControlPos = D3DXVECTOR3(0, 0, 0);
+	m_pRoadPreviewer->ControlPosSet(D3DXVECTOR3(0, 0, 0));
+}
+
 void RoadBuilder::InitEndPos()
 {
 	m_isEndPointSet = false;
@@ -47,8 +66,10 @@ void RoadBuilder::InitEndPos()
 	m_EndPos = D3DXVECTOR3(0, 0, 0);
 }
 
-Road* RoadBuilder::RoadBuild()
+Road* RoadBuilder::RoadBuild(ROADMANAGER_ENUM::BUILD_TYPE _buildType)
 {
+	// StartPosからEndPosの角度をとる
+	float angle = atan2(m_EndPos.z - m_StartPos.z, m_EndPos.x - m_StartPos.x);
 	// もともとのStartPosからEndPosの長さ
 	int length = static_cast<int>(sqrt(
 		(m_EndPos.x - m_StartPos.x) * (m_EndPos.x - m_StartPos.x) +
@@ -69,20 +90,34 @@ Road* RoadBuilder::RoadBuild()
 		NumZ = int(length / ROAD_W_SIZE);
 		VecLength = int(NumZ * ROAD_H_SIZE);
 	}
-
-
-
-	// StartPosからEndPosの角度をとる
-	float angle = atan2(m_EndPos.z - m_StartPos.z, m_EndPos.x - m_StartPos.x);
-
 	// EndPosを原点に戻して、正規化、スケーリングして、もう一度同じ場所に戻す
 	D3DXVECTOR3 Vec = m_EndPos - m_StartPos;
 	D3DXVec3Normalize(&Vec, &Vec);
-	D3DXVec3Scale(&Vec, &Vec, float(VecLength));
+	D3DXVec3Scale(&Vec, &Vec, float(length));
 	Vec = Vec + m_StartPos;
 
+	Road* pRoad = NULL;
+	switch (_buildType)
+	{
+	case ROADMANAGER_ENUM::NORMAL:
+		pRoad = new NormalRoad(m_StartPos, Vec, angle);
+		break;
+	case ROADMANAGER_ENUM::CURVE:
+		float length1 = sqrt(
+			(m_ControlPos.x - m_EndPos.x) * (m_ControlPos.x - m_EndPos.x) +
+			(m_ControlPos.y - m_EndPos.y) * (m_ControlPos.y - m_EndPos.y) +
+			(m_ControlPos.z - m_EndPos.z) * (m_ControlPos.z - m_EndPos.z));
 
-	Road* pRoad = new Road(m_StartPos, Vec, angle);
+		float length2 = sqrt(
+			(m_ControlPos.x - m_StartPos.x) * (m_ControlPos.x - m_StartPos.x) +
+			(m_ControlPos.y - m_StartPos.y) * (m_ControlPos.y - m_StartPos.y) +
+			(m_ControlPos.z - m_StartPos.z) * (m_ControlPos.z - m_StartPos.z));
+		if (length1 > 1000 && length2 > 1000)
+		{
+			pRoad = new CurveRoad(m_StartPos, m_ControlPos, m_EndPos, angle);
+		}
+		break;
+	}
 
 	return pRoad;
 }
