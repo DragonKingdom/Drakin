@@ -11,7 +11,7 @@ public:
 	void SetBuildPos(D3DXVECTOR3* _buildPos);
 	void SetAngle(float* _angle);
 	void SetDrawState(bool _isBuild);
-	void Draw();
+	void Draw(int _Type);
 
 private:
 	/// 家を描画する3D座標
@@ -21,9 +21,13 @@ private:
 	float		m_Angle;
 
 	/// 家のモデルを格納してるクラス
-	std::vector<FbxModel*>   m_FbxModel;
+	std::vector<FbxModel*>   m_FbxModelHouse;
 
+	/// 教会のモデルを格納しているクラス
+	std::vector<FbxModel*>   m_FbxModelChurch;
 
+	/// 鍛冶屋のモデルを格納しているクラス
+	std::vector<FbxModel*>   m_FbxModelSmith;
 };
 
 

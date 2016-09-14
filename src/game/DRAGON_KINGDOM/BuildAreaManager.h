@@ -16,6 +16,7 @@ class GameData;
 class FileSaveLoad;
 class ClickPosConverter;
 
+
 class BuildAreaManager
 {
 public:
@@ -26,7 +27,7 @@ public:
 	 * Area生成の制御関数
 	 */
 	void AreaBuildControl();
-	/**
+	/**_
 	 * 描画関数
 	 */
 	void Draw();
@@ -34,24 +35,28 @@ public:
 	/**
 	* エリアが空いてるかをチェックする関数(エリアがあるかは関係ない)
 	* @param[in] _checkPos チェックしたい座標
+	* @param[in] _Type チェックした座標に建てる物
 	* @return エリアが空いていればtrueを返す(ビルドエリアがなくてもtrueを返す)
 	*/
-	bool AreaCheck(D3DXVECTOR3* _checkPos);	
+	bool AreaCheck(D3DXVECTOR3* _checkPos,int _Type);	
 
 	/**
 	* 建物が建築されたことを伝える関数
 	* @param[in] 建築された場所
+	* @param[in] 建築物
 	* @return 成功したらtrue
 	*/
-	bool SetBuilding(D3DXVECTOR3* _setPos);
+	bool SetBuilding(D3DXVECTOR3* _setPos,int _Type);
 
 	/**
 	* ビルドエリアの存在と中心座標を取得する関数
 	* @param[in] _checkPos チェックしたいエリアの座標
 	* @param[out] _centerPos エリアの中心位置が入るポインタ
+	* @param[out] _pAngle エリアの角度が入る
+	* @param[in] _Type	建てたい建物の種類
 	* @return エリアが存在しなければfalseを返す
 	*/
-	bool GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle);
+	bool GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle,int _Type);
 
 
 	void GetState();

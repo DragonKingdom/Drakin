@@ -105,10 +105,16 @@ void BuildAreaManager::AreaBuildControl()
 		if (buildOk)
 		{
 			BuildArea* pBuildArea = m_pBuildAreaBuilder->AreaBuild(true, m_buildType);
-			m_pBuildArea.push_back(pBuildArea);
-
+			if (pBuildArea != NULL)
+			{
+				m_pBuildArea.push_back(pBuildArea);
+			}
+			
 			pBuildArea = m_pBuildAreaBuilder->AreaBuild(false, m_buildType);
-			m_pBuildArea.push_back(pBuildArea);
+			if (pBuildArea != NULL)
+			{
+				m_pBuildArea.push_back(pBuildArea);
+			}
 		}
 		// 次のために初期化
 		m_pBuildAreaBuilder->InitStartPos();
@@ -136,7 +142,7 @@ void BuildAreaManager::Draw()
 	//}
 }
 
-bool BuildAreaManager::AreaCheck(D3DXVECTOR3* _checkPos)
+bool BuildAreaManager::AreaCheck(D3DXVECTOR3* _checkPos,int _Type)
 {
 	if (_checkPos == NULL)
 	{
@@ -147,7 +153,7 @@ bool BuildAreaManager::AreaCheck(D3DXVECTOR3* _checkPos)
 		///@todo 範囲指定などをする
 		for (unsigned int i = 0; i < m_pBuildArea.size(); i++)
 		{
-			if (m_pBuildArea[i]->AreaCheck(_checkPos) == false)
+			if (m_pBuildArea[i]->AreaCheck(_checkPos,_Type) == false)
 			{
 				return true;
 			}
@@ -157,7 +163,7 @@ bool BuildAreaManager::AreaCheck(D3DXVECTOR3* _checkPos)
 	return false;	
 }
 
-bool BuildAreaManager::SetBuilding(D3DXVECTOR3* _setPos)
+bool BuildAreaManager::SetBuilding(D3DXVECTOR3* _setPos,int _Type)
 {
 	if (_setPos == NULL)
 	{
@@ -168,7 +174,7 @@ bool BuildAreaManager::SetBuilding(D3DXVECTOR3* _setPos)
 		///@todo 範囲指定などをする
 		for (unsigned int i = 0; i < m_pBuildArea.size(); i++)
 		{
-			if (m_pBuildArea[i]->SetBuilding(_setPos))
+			if (m_pBuildArea[i]->SetBuilding(_setPos,_Type))
 			{
 				return true;
 			}
@@ -178,7 +184,7 @@ bool BuildAreaManager::SetBuilding(D3DXVECTOR3* _setPos)
 	return false;
 }
 
-bool BuildAreaManager::GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle)
+bool BuildAreaManager::GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle,int _Type)
 {
 	if (_checkPos == NULL)
 	{
@@ -189,7 +195,7 @@ bool BuildAreaManager::GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _ce
 		for (unsigned int i = 0; i < m_pBuildArea.size(); i++)
 		{
 			// チェック座標がビルドエリアの内側にあれば中央座標を取得してtrueを返す
-			if (m_pBuildArea[i]->AreaCenterPos(_checkPos, _centerPos, _pAngle))
+			if (m_pBuildArea[i]->AreaCenterPos(_checkPos, _centerPos, _pAngle,_Type))
 			{
 				return true;
 			}

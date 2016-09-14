@@ -26,14 +26,10 @@ void RoadPreviewer::NormalDraw()
 	// StartPosからEndPosの角度をとる
 	float angle = atan2(m_EndPos.z - m_StartPos.z, m_EndPos.x - m_StartPos.x);
 
-	// エリアの数
-	int NumZ = static_cast<int>(length / ROAD_W_SIZE);
-	int VecLength = static_cast<int>(NumZ * ROAD_H_SIZE);
-
 	// EndPosを原点に戻して、正規化、スケーリングして、もう一度同じ場所に戻す
 	D3DXVECTOR3 Vec = m_EndPos - m_StartPos;
 	D3DXVec3Normalize(&Vec, &Vec);
-	D3DXVec3Scale(&Vec, &Vec, float(VecLength));
+	D3DXVec3Scale(&Vec, &Vec, float(length));
 	Vec = Vec + m_StartPos;
 
 
@@ -96,6 +92,9 @@ void RoadPreviewer::CurveDraw()
 		{
 			m_CenterLinePos.push_back(QuadraticConstantBezPoint(RoadNum,i));
 		}
+
+		m_CenterLinePos[RoadNum - 1] = m_EndPos;
+
 
 		for (int i = 0; i < RoadNum - 1; i++)
 		{

@@ -116,7 +116,6 @@ void RoadManager::BuildControl()
 		if (buildOk)
 		{
 			Road* pRoad = m_pRoadBuilder->RoadBuild(m_buildType);
-			m_pRoad.push_back(pRoad);
 
 			int Index = m_pRoad.size()-1;
 
@@ -144,6 +143,11 @@ void RoadManager::BuildControl()
 				{
 					m_pRoad[PreviousIndex]->SetNextRoadIndex(Index);
 				}
+			}
+
+			if (pRoad != NULL)
+			{
+				m_pRoad.push_back(pRoad);
 			}
 		}
 

@@ -1,6 +1,7 @@
 #include "HouseBuilder.h"
 #include "HousePreviewer.h"
 #include "Blacksmith.h"
+#include "Church.h"
 #include "PrivateHouse.h"
 #include <time.h>
 
@@ -11,43 +12,49 @@
 #define RICHHOUSE_THRESHOLD 20		// 高級な家のしきい値
 #define HOUSE_THRESHOLD_MAX 20		// しきい値の最大値
 
-
+//コンストラクタ
 HouseBuilder::HouseBuilder() :
 m_pHousePreviewer(new HousePreviewer()),
 m_isDraw(false)
 {
 }
 
+//デストラクタ
 HouseBuilder::~HouseBuilder()
 {
 	delete m_pHousePreviewer;
 }
 
-void HouseBuilder::PreviewerDraw()
+void HouseBuilder::PreviewerDraw(int _Type)
 {
+	//trueならプレビューを描画
 	if (m_isDraw == true)
 	{
-		m_pHousePreviewer->Draw();
+		m_pHousePreviewer->Draw(_Type);
 	}
 }
 
+//建物の座標をセット
 void HouseBuilder::SetBuildPos(D3DXVECTOR3* _BuildPos)
 {
 	m_BuildPos = (*_BuildPos);
 	m_pHousePreviewer->SetBuildPos(&m_BuildPos);
 }
 
+//角度をセット
 void HouseBuilder::SetBuildAngle(float _angle)
 {
 	m_Angle = _angle;
 	m_pHousePreviewer->SetAngle(&_angle);
 }
 
+//描画の可否をセット
 void HouseBuilder::SetDrawState(bool _isDraw)
 {
 	m_isDraw = _isDraw;
 }
 
+//建物タイプにあわせて生成する
 House* HouseBuilder::HouseBuild(int _Type)
 {
 	House* pHouse = NULL;
@@ -115,11 +122,16 @@ House* HouseBuilder::HouseBuild(int _Type)
 		pHouse = new Blacksmith(m_BuildPos, m_Angle, BUILD_BLACKSMITH);
 	}
 	break;
+	case BUILD_CHURCH:
+	{
+		pHouse = new Church(m_BuildPos, m_Angle, BUILD_CHURCH);
+	}
 	}
 
 	return pHouse;
 }
 
+//建物にあわせてコストをかえす
 int HouseBuilder:: GetHouseCost(int _Type)
 {
 	int BuildingCost = 0;
@@ -152,7 +164,9 @@ int HouseBuilder:: GetHouseCost(int _Type)
 		break;
 	case BUILD_BLACKSMITH:
 		BuildingCost = BLACKSMITH_COST;
-
+		break;
+	case BUILD_CHURCH:
+		BuildingCost = CHURCH_COST;
 		break;
 	}
 

@@ -110,13 +110,16 @@
     <ClCompile Include="BuildWindow.cpp" />
     <ClCompile Include="Button2D.cpp" />
     <ClCompile Include="CameraController.cpp" />
+    <ClCompile Include="Castle.cpp" />
+    <ClCompile Include="CastleManager.cpp" />
+    <ClCompile Include="CastlePreviewer.cpp" />
     <ClCompile Include="CharacterManager.cpp" />
+    <ClCompile Include="Church.cpp" />
     <ClCompile Include="ClickPosConverter.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="CurveBuildArea.cpp" />
     <ClCompile Include="CurveRoad.cpp" />
     <ClCompile Include="DebugMode.cpp" />
-    <ClCompile Include="DungeonChecker.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyChecker.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
@@ -187,14 +190,17 @@
     <ClInclude Include="BuildWindow.h" />
     <ClInclude Include="Button2D.h" />
     <ClInclude Include="CameraController.h" />
+    <ClInclude Include="Castle.h" />
+    <ClInclude Include="CastleManager.h" />
+    <ClInclude Include="CastlePreviewer.h" />
     <ClInclude Include="CharacterManager.h" />
+    <ClInclude Include="Church.h" />
     <ClInclude Include="ClickPosConverter.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="CommonDeclaration.h" />
     <ClInclude Include="CurveBuildArea.h" />
     <ClInclude Include="CurveRoad.h" />
     <ClInclude Include="DebugMode.h" />
-    <ClInclude Include="DungeonChecker.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyChecker.h" />
     <ClInclude Include="EnemyManager.h" />
@@ -255,12 +261,10 @@
     <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Effect\EnemyEffect.fx" />
     <FxCompile Include="Effect\GroundEffect.fx">
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Effect\HouseEffect.fx" />
-    <FxCompile Include="Effect\HumanEffect.fx" />
     <FxCompile Include="Effect\NormalHouseEffect.fx" />
     <FxCompile Include="Effect\RoadEffect.fx">
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">5.0</ShaderModel>

@@ -3,14 +3,16 @@
 #include "FbxModel.h"
 #include "ShaderAssist.h"
 
-
+//コンストラクタ
 Blacksmith::Blacksmith(D3DXVECTOR3 _housePos, float _angle, int _Type) :
 House(_housePos, _angle, _Type)
 {
-	FbxFileManager::Get()->FileImport("fbx//house_normal_red.fbx");
+	FbxFileManager::Get()->FileImport("fbx//kaziya.fbx");
 	FbxFileManager::Get()->GetModelData(&m_Model);
+	m_BasicStatus = GetMainStatus();
 }
 
+//デストラクタ
 Blacksmith::~Blacksmith()
 {
 	for (unsigned int i = 0; i < m_Model.size(); i++)
@@ -19,6 +21,23 @@ Blacksmith::~Blacksmith()
 	}
 }
 
+//コントロール関数
+BUILD_STATE Blacksmith::Control()
+{
+	CountAge();
+
+	return BUILD_BLACKSMITH;
+
+}
+
+/**建物が周囲に与える影響値を取得する関数*/
+float Blacksmith::GetInfluence()
+{
+	return (BLACKSMITH_INFLUENCE + (BLACKSMITH_INFLUENCE * m_BasicStatus.Age));
+}
+
+
+//描画関数
 void Blacksmith::Draw()
 {
 	m_pShaderAssist->Begin();
@@ -59,7 +78,7 @@ void Blacksmith::Draw()
 
 	for (unsigned int i = 0; i < m_Model.size(); i++)
 	{
-		m_Model[i]->Draw();
+		m_Model[i]->NonTextureDraw();
 	}
 
 	m_pShaderAssist->EndPass();

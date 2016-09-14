@@ -32,11 +32,18 @@ public:
 	void GetGameData();
 	void SetGameData();
 
+	/**
+	*@date 2016/09/04 追加 haga
+	*/
+	/**二点間の距離を求め、効果の強さを測定する関数*/
+	float GetInfluenceRange(D3DXVECTOR3* _centerHousePos, D3DXVECTOR3* _checkHousePos);
+
+
 	void Load(FileSaveLoad* _pFileSaveLoad);
 	void Save(FileSaveLoad* _pFileSaveLoad);
 
 private:
-	void HouseControl();
+	void HouseControl();			//建物関連のコントロール関数
 	void BuildControl();
 	void HouseBuild();
 
@@ -49,6 +56,9 @@ private:
 	Font font1;
 	Font font2;
 	Font font3;
+	Font font4;
+	Font font5;
+
 
 	BUILD_STATE					m_buildState;
 	StateManager*				m_pStateManager;

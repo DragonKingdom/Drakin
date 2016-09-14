@@ -18,19 +18,19 @@ BuildAreaChecker::~BuildAreaChecker()
 {
 }
 
-bool BuildAreaChecker::AreaCheck(D3DXVECTOR3* _checkPos)
+bool BuildAreaChecker::AreaCheck(D3DXVECTOR3* _checkPos,int _Type)
 {
-	return m_pBuildAreaManager->AreaCheck(_checkPos);
+	return m_pBuildAreaManager->AreaCheck(_checkPos,_Type);
 }
 
-bool BuildAreaChecker::SetBuilding(D3DXVECTOR3* _setPos)
+bool BuildAreaChecker::SetBuilding(D3DXVECTOR3* _setPos ,int _Type)
 {
-	return m_pBuildAreaManager->SetBuilding(_setPos);
+	return m_pBuildAreaManager->SetBuilding(_setPos,_Type);
 }
 
-bool BuildAreaChecker::GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle)
+bool BuildAreaChecker::GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle,int _Type)
 {
-	return m_pBuildAreaManager->GetAreaCenterPos(_checkPos, _centerPos, _pAngle);
+	return m_pBuildAreaManager->GetAreaCenterPos(_checkPos, _centerPos, _pAngle,_Type);
 }
 
 

@@ -11,7 +11,7 @@ class HouseBuilder
 public:
 	HouseBuilder();
 	~HouseBuilder();
-	void PreviewerDraw();
+	void PreviewerDraw(int _Type);
 	void SetBuildPos(D3DXVECTOR3* _BuildPos);
 	void SetBuildAngle(float _angle);
 	void SetDrawState(bool _isDraw);

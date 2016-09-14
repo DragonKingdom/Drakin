@@ -3,6 +3,7 @@
 #include "Map.h"
 #include "HouseManager.h"
 #include "HouseChecker.h"
+#include "CastleManager.h"
 #include "BuildAreaManager.h"
 #include "BuildAreaChecker.h"
 #include "RoadManager.h"
@@ -21,7 +22,8 @@ m_pHouseManager(new HouseManager(m_pBuildAreaChecker, _pStateManager, _pGameData
 m_pHouseChecker(new HouseChecker(m_pHouseManager)),
 m_pRoadManager(new RoadManager(m_pBuildAreaChecker, _pStateManager, _pGameData, _pClickPosConverter)),
 m_pRoadChecker(new RoadChecker(m_pRoadManager)),
-m_pCharacterManager(new CharacterManager(_pStateManager, _pGameData, m_pRoadChecker, m_pHouseChecker))
+m_pCharacterManager(new CharacterManager(_pStateManager, _pGameData, m_pRoadChecker, m_pHouseChecker)),
+m_pCastleManager(new CastleManager(m_pBuildAreaChecker,_pStateManager, _pGameData, _pClickPosConverter))
 {
 }
 
@@ -29,6 +31,7 @@ ObjectManager::~ObjectManager()
 {
 	delete m_pCharacterManager;
 	delete m_pRoadChecker;
+	delete m_pCastleManager;
 	delete m_pRoadManager;
 	delete m_pHouseChecker;
 	delete m_pHouseManager;
@@ -44,6 +47,7 @@ void ObjectManager::Control()
 		m_pMap->Control();
 		m_pCharacterManager->Control();
 		m_pHouseManager->Control();
+		m_pCastleManager->Control();
 
 		BuildControl();
 	}
@@ -57,6 +61,9 @@ void ObjectManager::BuildControl()
 		m_pRoadManager->BuildControl();
 		m_pBuildAreaManager->AreaBuildControl();
 		break;
+	case BUILD_CASTLE:
+		m_pCastleManager->BuildControl();
+		break;
 	}
 }
 
@@ -66,6 +73,7 @@ void ObjectManager::Draw()
 	m_pRoadManager->Draw();
 	m_pBuildAreaManager->Draw();
 	m_pCharacterManager->Draw();
+	m_pCastleManager->Draw();
 	m_pHouseManager->Draw();
 }
 
@@ -75,9 +83,11 @@ void ObjectManager::GetState()
 	m_BuildState = m_pStateManager->GetBuildState();
 
 	m_pCharacterManager->GetState();
+	m_pCastleManager->GetState();
 	m_pRoadManager->GetState();
 	m_pBuildAreaManager->GetState();
 	m_pHouseManager->GetState();
+	
 }
 
 void ObjectManager::SetState()
@@ -92,12 +102,14 @@ void ObjectManager::GetGameData()
 {
 	m_pCharacterManager->GetGameData();
 	m_pHouseManager->GetGameData();
+	m_pCastleManager->GetGameData();
 }
 
 void ObjectManager::SetGameData()
 {
 	m_pCharacterManager->SetGameData();
 	m_pHouseManager->SetGameData();
+	m_pCastleManager->SetGameData();
 }
 
 void ObjectManager::Load(FileSaveLoad* _pFileSaveLoad)

@@ -10,6 +10,8 @@ const Vertex::FRECT BuildWindow::UV[BuildWindow::TYPE_MAX] =
 	Vertex::FRECT(0,64,64,128), 
 	Vertex::FRECT(64,64,128,128),
 	Vertex::FRECT(0, 64, 64, 128),
+	Vertex::FRECT(0, 64, 64, 128), //教会ビルド試験用に追加
+	Vertex::FRECT(0, 64, 64, 128), //城ビルド試験用に追加
 };
 
 const D3DXVECTOR2 BuildWindow::ICON_POS = D3DXVECTOR2(800, CLIENT_HEIGHT - 120);
@@ -109,6 +111,12 @@ void BuildWindow::OnClick()
 		case ROAD:
 			m_buildState = BUILD_ROAD;
 			break;
+		case CHURCH:
+			m_buildState = BUILD_CHURCH;
+			break;
+		case CASTLE:
+			m_buildState = BUILD_CASTLE;
+			break;
 		default:
 			break;
 		}
@@ -125,12 +133,18 @@ void BuildWindow::OnClick()
 		case BUILD_BLACKSMITH:
 			m_buildState = BUILD_NONE;
 			break;
+		case BUILD_CHURCH:
+			m_buildState = BUILD_NONE;
+			break;
 		case BUILD_ROAD:
 			if (m_roadManagerState == ROADMANAGER_ENUM::START_POS_SET &&
 				m_buildAreaManagerState == BUILDAREAMANAGER_ENUM::START_POS_SET)
 			{
 				m_buildState = BUILD_NONE;
 			}
+			break;
+		case BUILD_CASTLE:
+			m_buildState = BUILD_NONE;
 			break;
 		default:
 			break;

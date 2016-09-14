@@ -185,47 +185,56 @@
     <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\HouseManager\House\PrivateHouse">
       <UniqueIdentifier>{5e2a0a4c-871f-4290-8207-d2b54483a5bd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager">
-      <UniqueIdentifier>{cbbf0621-1bb1-4958-bc12-28ed03075e67}</UniqueIdentifier>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\HouseManager\House\Church">
+      <UniqueIdentifier>{3ad5dd21-7caf-41fd-8d4d-df492a5be13a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\HumanManager">
-      <UniqueIdentifier>{5d2e34b3-9f06-4b94-8ba9-3b7228f93204}</UniqueIdentifier>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\CastleManager">
+      <UniqueIdentifier>{1a2dda61-94e5-4054-9806-317a57a8c489}</UniqueIdentifier>
     </Filter>
-    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\EnemyManager">
-      <UniqueIdentifier>{396c44ed-6388-45a9-b44f-9aaa59a4870d}</UniqueIdentifier>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\CastleManager\CastlePreviewer">
+      <UniqueIdentifier>{edcd7cde-0de8-41aa-ae59-1b6173b3d450}</UniqueIdentifier>
     </Filter>
-    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\EnemyManager\Enemy">
-      <UniqueIdentifier>{18cd3979-b137-40f6-b557-74a15e7c6766}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\HumanManager\Human">
-      <UniqueIdentifier>{24010290-785f-4730-a13f-42706bbdef5d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\RoadChecker">
-      <UniqueIdentifier>{b13eeacc-43f5-4a3e-9a44-9af5915a8bc8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\HouseChecker">
-      <UniqueIdentifier>{b886c65b-756f-43ed-b7cf-47a9dc4d2443}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\DungeonChecker">
-      <UniqueIdentifier>{cee65262-09c0-4cab-9eba-1b523d6555fa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\EnemyChecker">
-      <UniqueIdentifier>{20ac0b66-f69d-40a9-9916-87bd43411a4d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\HumanChecker">
-      <UniqueIdentifier>{217f56d0-51f8-4417-aba5-17e355c4bbcb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\Road\CurveRoad">
-      <UniqueIdentifier>{b637f857-9daa-4da8-97cf-766efbae2f29}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\Road\NormalRoad">
-      <UniqueIdentifier>{1becfb52-92e3-4050-8852-ab9e1041ae28}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildArea\NormalBuildArea">
-      <UniqueIdentifier>{98a1a679-043e-467a-9ff1-59ed9757eb25}</UniqueIdentifier>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\CastleManager\Castle">
+      <UniqueIdentifier>{d7a26309-5880-432f-b43e-ef3b7187650d}</UniqueIdentifier>
     </Filter>
     <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildArea\CurveBuildArea">
-      <UniqueIdentifier>{68ab0cd8-f27c-41dc-8fe9-4c34aa44cc7e}</UniqueIdentifier>
+      <UniqueIdentifier>{469eaa58-274c-4266-a122-d73088ee72c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildArea\NormalBuildArea">
+      <UniqueIdentifier>{262239b5-365e-4683-9c8d-bdca3e4272fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\Road\CurveRoadArea">
+      <UniqueIdentifier>{2c6b73a8-fe3a-4e56-a0ef-6c8fedbbf4b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\Road\NormalRoadArea">
+      <UniqueIdentifier>{78cdb501-7d7f-4a44-8956-5cbbc5e46adc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager">
+      <UniqueIdentifier>{e0314c69-1e31-4ee9-99e9-dc13718aed31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\HumanManager">
+      <UniqueIdentifier>{52eb1b21-9d9a-49b0-8182-f038c8d8e624}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\HumanManager\Human">
+      <UniqueIdentifier>{78e9e606-a139-4699-a0ad-3734dc258398}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\EnemyManager">
+      <UniqueIdentifier>{e2f30689-d7fb-49c8-a17e-f1be4fbdca2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\EnemyManager\Enemy">
+      <UniqueIdentifier>{dc66817c-2bb9-4c8d-855d-c320480e7e29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\HumanChecker">
+      <UniqueIdentifier>{b311d91d-ebe9-4564-a256-05a7c5166be6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\EnemyChecker">
+      <UniqueIdentifier>{927e0bad-f608-4c5c-9263-bd3c3771eb5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\HouseChecker">
+      <UniqueIdentifier>{ebaccc48-726e-4f3c-af64-d0c6313cc4de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\RoadChecker">
+      <UniqueIdentifier>{e809ccf1-1374-4b05-b4e4-a0b453374ed1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -403,11 +412,44 @@
     <ClCompile Include="PrivateHouse.cpp">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\HouseManager\House\PrivateHouse</Filter>
     </ClCompile>
+    <ClCompile Include="Church.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\HouseManager\House\Church</Filter>
+    </ClCompile>
+    <ClCompile Include="CastleManager.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CastleManager</Filter>
+    </ClCompile>
+    <ClCompile Include="CastlePreviewer.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CastleManager\CastlePreviewer</Filter>
+    </ClCompile>
+    <ClCompile Include="Castle.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CastleManager\Castle</Filter>
+    </ClCompile>
+    <ClCompile Include="CurveBuildArea.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildArea\CurveBuildArea</Filter>
+    </ClCompile>
+    <ClCompile Include="NormalBuildArea.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildArea\NormalBuildArea</Filter>
+    </ClCompile>
+    <ClCompile Include="CurveRoad.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\Road\CurveRoadArea</Filter>
+    </ClCompile>
+    <ClCompile Include="NormalRoad.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\Road\NormalRoadArea</Filter>
+    </ClCompile>
     <ClCompile Include="CharacterManager.cpp">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager</Filter>
     </ClCompile>
+    <ClCompile Include="HumanManager.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\HumanManager</Filter>
+    </ClCompile>
+    <ClCompile Include="HumanChecker.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\HumanChecker</Filter>
+    </ClCompile>
     <ClCompile Include="EnemyManager.cpp">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\EnemyManager</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyChecker.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\EnemyChecker</Filter>
     </ClCompile>
     <ClCompile Include="Human.cpp">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\HumanManager\Human</Filter>
@@ -415,35 +457,11 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\EnemyManager\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="HumanManager.cpp">
-      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\HumanManager</Filter>
-    </ClCompile>
-    <ClCompile Include="RoadChecker.cpp">
-      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadChecker</Filter>
-    </ClCompile>
     <ClCompile Include="HouseChecker.cpp">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\HouseChecker</Filter>
     </ClCompile>
-    <ClCompile Include="DungeonChecker.cpp">
-      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\DungeonChecker</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyChecker.cpp">
-      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\EnemyChecker</Filter>
-    </ClCompile>
-    <ClCompile Include="HumanChecker.cpp">
-      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\HumanChecker</Filter>
-    </ClCompile>
-    <ClCompile Include="CurveRoad.cpp">
-      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\Road\CurveRoad</Filter>
-    </ClCompile>
-    <ClCompile Include="NormalRoad.cpp">
-      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\Road\NormalRoad</Filter>
-    </ClCompile>
-    <ClCompile Include="CurveBuildArea.cpp">
-      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildArea\CurveBuildArea</Filter>
-    </ClCompile>
-    <ClCompile Include="NormalBuildArea.cpp">
-      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildArea\NormalBuildArea</Filter>
+    <ClCompile Include="RoadChecker.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadChecker</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -621,14 +639,44 @@
     <ClInclude Include="PrivateHouse.h">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\HouseManager\House\PrivateHouse</Filter>
     </ClInclude>
+    <ClInclude Include="Church.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\HouseManager\House\Church</Filter>
+    </ClInclude>
+    <ClInclude Include="CastleManager.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CastleManager</Filter>
+    </ClInclude>
+    <ClInclude Include="CastlePreviewer.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CastleManager\CastlePreviewer</Filter>
+    </ClInclude>
+    <ClInclude Include="Castle.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CastleManager\Castle</Filter>
+    </ClInclude>
+    <ClInclude Include="CurveBuildArea.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildArea\CurveBuildArea</Filter>
+    </ClInclude>
+    <ClInclude Include="NormalBuildArea.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildArea\NormalBuildArea</Filter>
+    </ClInclude>
+    <ClInclude Include="CurveRoad.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\Road\CurveRoadArea</Filter>
+    </ClInclude>
+    <ClInclude Include="NormalRoad.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\Road\NormalRoadArea</Filter>
+    </ClInclude>
     <ClInclude Include="CharacterManager.h">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager</Filter>
+    </ClInclude>
+    <ClInclude Include="HumanManager.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\HumanManager</Filter>
+    </ClInclude>
+    <ClInclude Include="HumanChecker.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\HumanChecker</Filter>
     </ClInclude>
     <ClInclude Include="EnemyManager.h">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\EnemyManager</Filter>
     </ClInclude>
-    <ClInclude Include="HumanManager.h">
-      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\HumanManager</Filter>
+    <ClInclude Include="EnemyChecker.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\EnemyChecker</Filter>
     </ClInclude>
     <ClInclude Include="Human.h">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\HumanManager\Human</Filter>
@@ -636,32 +684,11 @@
     <ClInclude Include="Enemy.h">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\EnemyManager\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="RoadChecker.h">
-      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadChecker</Filter>
-    </ClInclude>
     <ClInclude Include="HouseChecker.h">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\HouseChecker</Filter>
     </ClInclude>
-    <ClInclude Include="DungeonChecker.h">
-      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\DungeonChecker</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyChecker.h">
-      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\EnemyChecker</Filter>
-    </ClInclude>
-    <ClInclude Include="HumanChecker.h">
-      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\HumanChecker</Filter>
-    </ClInclude>
-    <ClInclude Include="CurveRoad.h">
-      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\Road\CurveRoad</Filter>
-    </ClInclude>
-    <ClInclude Include="NormalRoad.h">
-      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadManager\Road\NormalRoad</Filter>
-    </ClInclude>
-    <ClInclude Include="CurveBuildArea.h">
-      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildArea\CurveBuildArea</Filter>
-    </ClInclude>
-    <ClInclude Include="NormalBuildArea.h">
-      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\BuildAreaManager\BuildArea\NormalBuildArea</Filter>
+    <ClInclude Include="RoadChecker.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\RoadChecker</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -681,12 +708,6 @@
       <Filter>Effect</Filter>
     </FxCompile>
     <FxCompile Include="Effect\NormalHouseEffect.fx">
-      <Filter>Effect</Filter>
-    </FxCompile>
-    <FxCompile Include="Effect\EnemyEffect.fx">
-      <Filter>Effect</Filter>
-    </FxCompile>
-    <FxCompile Include="Effect\HumanEffect.fx">
       <Filter>Effect</Filter>
     </FxCompile>
   </ItemGroup>

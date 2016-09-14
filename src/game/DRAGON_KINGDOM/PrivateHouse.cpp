@@ -33,6 +33,7 @@ House(_housePos, _angle, _Type)
 
 
 	FbxFileManager::Get()->GetModelData(&m_Model);
+	m_BasicStatus = GetMainStatus();
 }
 
 PrivateHouse::~PrivateHouse()
@@ -41,6 +42,21 @@ PrivateHouse::~PrivateHouse()
 	{
 		delete m_Model[i];
 	}
+}
+
+//コントロール関数
+BUILD_STATE PrivateHouse::Control()
+{
+	CountAge();
+
+	return BUILD_PRIVATEHOUSE_RANDOM;
+}
+
+/**建物が周囲に与える影響値を取得する関数*/
+float PrivateHouse::GetInfluence()
+{
+
+	return 0.0f;
 }
 
 void PrivateHouse::Draw()

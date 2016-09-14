@@ -43,6 +43,8 @@ void CurveRoad::BezierLineCreate()
 		m_CenterLinePos.push_back(QuadraticConstantBezPoint(RoadNum,i));
 	}
 
+	m_CenterLinePos[RoadNum - 1] = m_EndPos;
+
 	for (int i = 0; i < RoadNum - 1; i++)
 	{
 		m_pAngle[i] =
@@ -74,7 +76,7 @@ void CurveRoad::BezierLineCreate()
 	{
 		m_pVertex[i * 2].pos = m_pLeftLinePos[i];
 		m_pVertex[i * 2].tu = 0.f;
-		m_pVertex[i * 2].tv = i * 1.f / (m_CenterLinePos.size() - 1);
+		m_pVertex[i * 2].tv = 1.f / (m_CenterLinePos.size() - 1);
 		m_pVertex[i * 2 + 1].pos = m_pRightLinePos[i];
 		m_pVertex[i * 2 + 1].tu = 1.f;
 		m_pVertex[i * 2 + 1].tv = i * 1.f / (m_CenterLinePos.size() - 1);

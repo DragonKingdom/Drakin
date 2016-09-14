@@ -3,10 +3,10 @@
 #include <string>
 
 
-NormalBuildArea::NormalBuildArea(bool _isLeft, D3DXVECTOR3 _roadStartPos, D3DXVECTOR3 _roadEndPos,
+NormalBuildArea::NormalBuildArea(bool _isLeft, D3DXVECTOR3 _roadStartPos, D3DXVECTOR3 _roadEndPos, D3DXVECTOR3 _EndPos,
 	float _angle, float _roadStartAngle, float _roadEndAngle, bool _roadLinkStart, bool _roadLinkEnd) :
 	m_angle(_angle),
-	BuildArea(_isLeft, _roadStartPos, _roadEndPos, _roadStartAngle, _roadEndAngle, _roadLinkStart, _roadLinkEnd)
+	BuildArea(_isLeft, _roadStartPos, _roadEndPos,_EndPos, _roadStartAngle, _roadEndAngle, _roadLinkStart, _roadLinkEnd)
 {
 	m_Texture.Load("Resource\\image\\BuildArea.png");
 
@@ -35,6 +35,7 @@ NormalBuildArea::NormalBuildArea(bool _isLeft, D3DXVECTOR3 _roadStartPos, D3DXVE
 
 NormalBuildArea::~NormalBuildArea()
 {
+	delete[] m_pAreaData;
 }
 
 void NormalBuildArea::Draw()
@@ -436,10 +437,12 @@ void NormalBuildArea::LeftRoadCreate()
 	ZeroMemory(m_pAreaData, AreaDataByte);
 }
 
-bool NormalBuildArea::AreaCheck(D3DXVECTOR3* _checkPos)
+bool NormalBuildArea::AreaCheck(D3DXVECTOR3* _checkPos, int _Type)
 {
+	//逆正接で角度を求めている
 	float Angle = atan2(m_RoadEndPos.z - m_RoadStartPos.z, m_RoadEndPos.x - m_RoadStartPos.x);
 
+	//チェックするポイントを求める
 	float CheckPosX = m_x +
 		(_checkPos->z - m_z) * cos(Angle) -
 		(_checkPos->x - m_x) * sin(Angle);
@@ -448,6 +451,7 @@ bool NormalBuildArea::AreaCheck(D3DXVECTOR3* _checkPos)
 		(_checkPos->z - m_z) * sin(Angle) +
 		(_checkPos->x - m_x) * cos(Angle);
 
+	//まずビルドエリアにチェックする座標があればエリアをもとめる
 	if (m_x + (m_w / 2.0f) > CheckPosX &&  m_x - (m_w / 2.0f) < CheckPosX)
 	{
 		if (m_z + (m_h / 2.0f) > CheckPosZ && m_z - (m_h / 2.0f) < CheckPosZ)
@@ -478,23 +482,88 @@ bool NormalBuildArea::AreaCheck(D3DXVECTOR3* _checkPos)
 					((_checkPos->x - m_RoadStartPos.x) * cos(m_angle)))) / ROAD_H_SIZE);
 			}
 
-
-			BYTE CheckArea = 1;
-			CheckArea = CheckArea << abs(AreaCountX);
-
-			if (AreaCountZ % 2 == 1)
+			//ビット演算用変数
+			BYTE CheckArea;
+			//建物ごとにチェックするエリアを変える
+			switch (_Type)
 			{
-				CheckArea = CheckArea << 4;
+			case BUILD_CHURCH:			// 教会
+				CheckArea = 1;
+				CheckArea = CheckArea << abs(AreaCountX);
+				if (AreaCountZ % 2 == 1)
+				{
+					CheckArea = CheckArea << 4;
+				}
+				//現在チェックしているエリアが大丈夫かつ、次エリアがビルドエリア内ならチェック
+				if (!(m_pAreaData[AreaCountZ / 2] & CheckArea) && (CheckPosZ + ROAD_H_SIZE) < m_z + (m_h / 2.0f))
+				{
+					if (AreaCountZ % 2 == 1)
+					{
+						CheckArea = CheckArea >> 4;
+						return m_pAreaData[(AreaCountZ / 2) + 1] & CheckArea;
+					}
+					else
+					{
+						CheckArea = CheckArea << 4;
+						return m_pAreaData[AreaCountZ / 2] & CheckArea;
+					}
+				}
+				else
+				{
+					return true;
+				}
+
+			case BUILD_BLACKSMITH:				// 鍛冶屋
+
+				if (abs(AreaCountX) >= 3)
+				{	//カウント3がxの最高値だが念の為以上を条件にして、その場合がtrueを返す
+					return true;
+				}
+				CheckArea = 3;
+				CheckArea = CheckArea << abs(AreaCountX);
+				if (AreaCountZ % 2 == 1)
+				{
+					CheckArea = CheckArea << 4;
+				}
+				if (!(m_pAreaData[AreaCountZ / 2] & CheckArea) && (CheckPosZ + ROAD_H_SIZE) < m_z + (m_h / 2.0f))
+				{
+					if (AreaCountZ % 2 == 1)
+					{
+						CheckArea = CheckArea >> 4;
+						return m_pAreaData[(AreaCountZ / 2) + 1] & CheckArea;
+					}
+					else
+					{
+						CheckArea = CheckArea << 4;
+						return m_pAreaData[AreaCountZ / 2] & CheckArea;
+					}
+				}
+				else
+				{
+					return true;
+				}
+
+			default:					//普通の家
+				CheckArea = 1;
+				CheckArea = CheckArea << abs(AreaCountX);
+
+				if (AreaCountZ % 2 == 1)
+				{
+					CheckArea = CheckArea << 4;
+				}
+				return m_pAreaData[AreaCountZ / 2] & CheckArea;
+
 			}
 
-			return m_pAreaData[AreaCountZ / 2] & CheckArea;
+
+			return true;
 		}
 	}
 
 	return true;
 }
 
-bool NormalBuildArea::SetBuilding(D3DXVECTOR3* _setPos)
+bool NormalBuildArea::SetBuilding(D3DXVECTOR3* _setPos,int _Type)
 {
 	float Angle = atan2(m_RoadEndPos.z - m_RoadStartPos.z, m_RoadEndPos.x - m_RoadStartPos.x);
 
@@ -535,15 +604,75 @@ bool NormalBuildArea::SetBuilding(D3DXVECTOR3* _setPos)
 					((_setPos->x - m_RoadStartPos.x) * cos(m_angle)))) / ROAD_H_SIZE);
 			}
 
-			BYTE SetArea = 1;
-			SetArea = SetArea << abs(AreaCountX);
 
-			if (AreaCountZ % 2 == 1)
+
+			BYTE SetArea;
+
+			// 教会のビット演算は見直してもいいかも
+			/**haga追加 建物ごとにセットするエリアを増やす*/
+			switch (_Type)
 			{
-				SetArea = SetArea << 4;
-			}
-			m_pAreaData[AreaCountZ / 2] = m_pAreaData[AreaCountZ / 2] | SetArea;
+			case BUILD_CHURCH:
 
+				SetArea = 1;
+				SetArea = SetArea << abs(AreaCountX);
+
+				if (AreaCountZ % 2 == 1)
+				{
+					SetArea = SetArea << 4;
+				}
+				m_pAreaData[AreaCountZ / 2] = m_pAreaData[AreaCountZ / 2] | SetArea;
+
+				//AreaCountZの１つ上のカウントをチェックする
+				if (AreaCountZ % 2 == 1)
+				{
+					SetArea = SetArea >> 4;
+					m_pAreaData[(AreaCountZ / 2) + 1] = m_pAreaData[(AreaCountZ / 2) + 1] | SetArea;
+				}
+				else
+				{
+					SetArea = SetArea << 4;
+					m_pAreaData[AreaCountZ / 2] = m_pAreaData[AreaCountZ / 2] | SetArea;
+				}
+				break;
+
+			case BUILD_BLACKSMITH:
+				// 横2マス分なので3でチェック
+				SetArea = 3;
+				SetArea = SetArea << abs(AreaCountX);
+
+				if (AreaCountZ % 2 == 1)
+				{
+					SetArea = SetArea << 4;
+				}
+				m_pAreaData[AreaCountZ / 2] = m_pAreaData[AreaCountZ / 2] | SetArea;
+				//１つ上のエリアをチェック
+				if (AreaCountZ % 2 == 1)
+				{
+					SetArea = SetArea >> 4;
+					m_pAreaData[(AreaCountZ / 2) + 1] = m_pAreaData[(AreaCountZ / 2) + 1] | SetArea;
+				}
+				else
+				{
+					SetArea = SetArea << 4;
+					m_pAreaData[AreaCountZ / 2] = m_pAreaData[AreaCountZ / 2] | SetArea;
+				}
+
+				break;
+
+				//普通の家はセットするエリアは増やさない
+			default:
+				SetArea = 1;
+				SetArea = SetArea << abs(AreaCountX);
+
+				if (AreaCountZ % 2 == 1)
+				{
+					SetArea = SetArea << 4;
+				}
+				m_pAreaData[AreaCountZ / 2] = m_pAreaData[AreaCountZ / 2] | SetArea;
+
+				break;
+			}
 			return true;
 		}
 	}
@@ -551,8 +680,9 @@ bool NormalBuildArea::SetBuilding(D3DXVECTOR3* _setPos)
 	return false;
 }
 
-bool NormalBuildArea::AreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle)
+bool NormalBuildArea::AreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle, int _Type)
 {
+	//逆正接で角度を求めている
 	float Angle = atan2(m_RoadEndPos.z - m_RoadStartPos.z, m_RoadEndPos.x - m_RoadStartPos.x);
 
 	float CheckPosX = m_x +
@@ -572,9 +702,45 @@ bool NormalBuildArea::AreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _center
 			float AreaPosZ = 0.f;
 			int AreaCountX = 0;
 			int AreaCountZ = 0;
+			/**2016/09/08haga追加*/
+			int CorrectionSizeW = 0;		//建物サイズ横補正
+			int CorrectionSizeH = 0;		//建物サイズ縦補正
+			int RevisedValueX = 0;			//Xに修正する値
+			int RevisedValueZ = 0;			//Zに修正する値
+
+			//建てる建物のサイズにあわせて補正値をかける
+			switch (_Type)
+			{
+			case BUILD_CHURCH:
+				CorrectionSizeW = 2;
+				CorrectionSizeH = 1;
+				RevisedValueZ = -1;
+				break;
+
+			case BUILD_BLACKSMITH:
+				CorrectionSizeW = 1;
+				CorrectionSizeH = 1;
+				RevisedValueZ = -1;
+				if (m_isLeft)
+				{
+					RevisedValueX = 1;
+				}
+				else
+				{
+					RevisedValueX = -1;
+				}
+				break;
+
+			default:
+				CorrectionSizeW = 2;
+				CorrectionSizeH = 2;
+				break;
+			}
+
 
 			if (m_isLeft)
 			{
+				//エリアをカウントしている
 				m_AreaCountX = AreaCountX = static_cast<int>((
 					((_checkPos->z - m_RoadStartPos.z) * cos(m_angle) -
 					((_checkPos->x - m_RoadStartPos.x) * sin(m_angle))) + ROAD_W_SIZE / 2) / ROAD_W_SIZE);
@@ -587,14 +753,14 @@ bool NormalBuildArea::AreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _center
 
 				// AreaCount番目のエリアの中心を渡す
 				AreaPosX = m_RoadStartPos.x + (-(ROAD_W_SIZE / 2 - ROAD_W_SIZE) * sin(m_angle)) +
-					((AreaCountZ * ROAD_W_SIZE + ROAD_W_SIZE / 2) * cos(m_angle)) -
-					((AreaCountX* ROAD_H_SIZE - ROAD_H_SIZE / 2) * sin(m_angle));
+					((AreaCountZ * ROAD_W_SIZE + ROAD_W_SIZE / CorrectionSizeH + RevisedValueZ) * cos(m_angle)) -
+					((AreaCountX* ROAD_H_SIZE - ROAD_H_SIZE / CorrectionSizeW + RevisedValueX) * sin(m_angle));
 
 
 				// AreaCount番目のエリアの中心を渡す
 				AreaPosZ = m_RoadStartPos.z + (-(ROAD_H_SIZE / 2 - ROAD_H_SIZE) * -cos(m_angle)) +
-					((AreaCountZ * ROAD_W_SIZE + ROAD_W_SIZE / 2) * sin(m_angle)) +
-					((AreaCountX* ROAD_H_SIZE - ROAD_H_SIZE / 2) * cos(m_angle));
+					((AreaCountZ * ROAD_W_SIZE + ROAD_W_SIZE / CorrectionSizeH + RevisedValueZ) * sin(m_angle)) +
+					((AreaCountX * ROAD_H_SIZE - ROAD_H_SIZE / CorrectionSizeW + RevisedValueX) * cos(m_angle));
 
 
 				_centerPos->x = AreaPosX;
@@ -617,14 +783,14 @@ bool NormalBuildArea::AreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _center
 
 				// AreaCount番目のエリアの中心を渡す
 				AreaPosX = m_RoadStartPos.x + (ROAD_W_SIZE / 2 - ROAD_W_SIZE) * sin(m_angle) +
-					((AreaCountZ * ROAD_W_SIZE + ROAD_W_SIZE / 2) * cos(m_angle)) -
-					((AreaCountX* ROAD_H_SIZE + ROAD_H_SIZE / 2) * sin(m_angle));
+					((AreaCountZ * ROAD_W_SIZE + ROAD_W_SIZE / CorrectionSizeH + RevisedValueZ) * cos(m_angle)) -
+					((AreaCountX* ROAD_H_SIZE + ROAD_H_SIZE / CorrectionSizeW + RevisedValueX) * sin(m_angle));
 
 
 				// AreaCount番目のエリアの中心を渡す
-				AreaPosZ = m_RoadStartPos.z + (ROAD_W_SIZE / 2 - ROAD_W_SIZE) * -cos(m_angle) +
-					((AreaCountZ * ROAD_W_SIZE + ROAD_W_SIZE / 2) * sin(m_angle)) +
-					((AreaCountX* ROAD_H_SIZE + ROAD_H_SIZE / 2) * cos(m_angle));
+				AreaPosZ = m_RoadStartPos.z + (ROAD_H_SIZE / 2 - ROAD_H_SIZE) * -cos(m_angle) +
+					((AreaCountZ * ROAD_W_SIZE + ROAD_W_SIZE / CorrectionSizeH + RevisedValueZ) * sin(m_angle)) +
+					((AreaCountX * ROAD_H_SIZE + ROAD_H_SIZE / CorrectionSizeW + RevisedValueX) * cos(m_angle));
 
 
 				_centerPos->x = AreaPosX;

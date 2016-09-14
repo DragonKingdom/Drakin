@@ -25,6 +25,8 @@ public:
 		HOUSE,
 		ROAD,
 		HOUSE_NORMAL,
+		CHURCH,
+		CASTLE,
 		TYPE_MAX,
 	};
 
