@@ -37,7 +37,6 @@ void ObjectManager::Control()
 	{
 		m_pMap->Control();
 		m_pHouseManager->Control();
-		m_pDungonManager->Control();
 
 		BuildControl();
 	}
@@ -50,6 +49,7 @@ void ObjectManager::BuildControl()
 	case BUILD_ROAD:
 		m_pRoadManager->BuildControl();
 		m_pBuildAreaManager->AreaBuildControl();
+		m_pDungonManager->BuildControl();
 		break;
 	}
 }
