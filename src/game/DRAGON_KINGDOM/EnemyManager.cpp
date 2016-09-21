@@ -1,5 +1,6 @@
 #include "EnemyManager.h"
 #include "Enemy.h"
+#include <time.h>
 
 EnemyManager::EnemyManager(StateManager* _pStateManager, GameData* _pGameData, RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker) :
 m_pStateManager(_pStateManager),
@@ -24,6 +25,14 @@ void EnemyManager::Init(HumanChecker* _pHumanChecker)
 
 void EnemyManager::Control()
 {
+	if (m_pEnemy.size() <= ENEMY_MAX && m_HouseNum.PrivateHouse >= 1)
+	{
+		srand(unsigned int(time(NULL)));
+		if (rand() % 100 < 10)
+		{
+			m_pEnemy.push_back(new Enemy(m_pRoadChecker, m_pHouseChecker));
+		}
+	}
 	for (unsigned int i = 0; i < m_pEnemy.size(); i++)
 	{
 		if (m_pEnemy[i]->Control())

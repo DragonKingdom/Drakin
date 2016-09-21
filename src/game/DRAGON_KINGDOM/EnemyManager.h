@@ -40,6 +40,7 @@ private:
 	HouseChecker*	m_pHouseChecker;
 	HumanChecker*	m_pHumanChecker;
 	std::vector<Enemy*> m_pEnemy;
+	HouseNum			m_HouseNum;
 
 };
 
