@@ -117,7 +117,7 @@ void RoadManager::BuildControl()
 		{
 			Road* pRoad = m_pRoadBuilder->RoadBuild(m_buildType);
 
-			int Index = m_pRoad.size()-1;
+			int Index = m_pRoad.size();
 
 			int NextIndex = pRoad->GetNextRoadIndex();
 			if (NextIndex != -1)
@@ -313,7 +313,7 @@ void RoadManager::NextRoadPos(std::vector<D3DXVECTOR3>* _pNextPos, D3DXVECTOR3 _
 
 
 	srand(unsigned int(time(NULL)));
-	int MoveNum = rand() % 20 + 3;
+	int MoveNum = rand() % 10 + 5;
 
 	int NextIndex = 0;
 	for (unsigned int i = 0; i < MoveNum; i++)
