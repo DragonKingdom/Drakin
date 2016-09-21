@@ -31,7 +31,8 @@ CurveBuildArea::CurveBuildArea(bool _isLeft, D3DXVECTOR3 _roadStartPos, D3DXVECT
 
 CurveBuildArea::~CurveBuildArea()
 {
-	for (int i = 0; i < m_CenterLinePos.size() - 1; i++)
+	delete[] m_pAreaData;
+	for (int i = 0; i < m_CenterLinePos.size(); i++)
 	{
 		delete[] m_AreaExcist[i];
 	}
@@ -41,7 +42,6 @@ CurveBuildArea::~CurveBuildArea()
 		delete[] m_ppCurveBuildArea[i];
 	}
 	delete[] m_ppCurveBuildArea;
-	delete[] m_pAreaData;
 }
 
 void CurveBuildArea::Draw()
