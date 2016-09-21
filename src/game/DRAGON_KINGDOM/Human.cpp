@@ -4,12 +4,30 @@
 #include "HouseChecker.h"
 #include "FbxFileManager.h"
 
+void CalcLookAtMatrix(D3DXMATRIX* pout, D3DXVECTOR3* pPos, D3DXVECTOR3* pLook, D3DXVECTOR3* pUp)
+{
+	D3DXVECTOR3 X, Y, Z;
+	Z = *pLook - *pPos;
+	D3DXVec3Normalize(&Z, &Z);
+	D3DXVec3Cross(&X, D3DXVec3Normalize(&Y, pUp), &Z);
+	D3DXVec3Normalize(&X, &X);
+	D3DXVec3Normalize(&Y, D3DXVec3Cross(&Y, &Z, &X));
+
+
+	pout->_11 = X.x; pout->_12 = X.y; pout->_13 = X.z; pout->_14 = 0;
+	pout->_21 = Y.x; pout->_22 = Y.y; pout->_23 = Y.z; pout->_24 = 0;
+	pout->_31 = Z.x; pout->_32 = Z.y; pout->_33 = Z.z; pout->_34 = 0;
+	pout->_41 = 0.0f; pout->_42 = 0.0f; pout->_43 = 0.0f; pout->_44 = 1.0f;
+}
+
 Human::Human(RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker) :
 m_pRoadChecker(_pRoadChecker),
 m_pHouseChecker(_pHouseChecker),
 m_pShaderAssist(new ShaderAssist()),
 m_isReturn(false),
-m_AnimationFrame(0)
+m_AnimationFrame(0),
+m_DisplacementX(0.f),
+m_DisplacementZ(0.f)
 {
 	m_Texture.Load("Resource\\image\\CLUTLight.jpg");
 	m_pShaderAssist->LoadTechnique("Effect\\HumanEffect.fx", "HumanEffect", "WVPP");
@@ -21,10 +39,13 @@ m_AnimationFrame(0)
 	m_Param2 = m_pShaderAssist->GetParameterHandle("Param2");
 
 
-	FbxFileManager::Get()->FileImport("fbx//house_red.fbx");
+	FbxFileManager::Get()->FileImport("fbx//animetion_maou_walk.fbx");
 	FbxFileManager::Get()->GetModelData(&m_pWalkAnimation);
 
-
+	for (unsigned int i = 0; i < m_pWalkAnimation.size(); i++)
+	{
+		m_pWalkAnimation[i]->InitAnimation();
+	}
 
 	m_HumanPos = m_pHouseChecker->GetRandomPrivateHousePos();
 	m_NextPos = m_HumanPos;
@@ -113,6 +134,19 @@ bool Human::NormalControl()
 
 	//m_Status.Time--;
 
+	if ((m_HumanPos.x + m_DisplacementX + 250) > m_NextPos.x &&
+		(m_HumanPos.x - m_DisplacementX - 250) < m_NextPos.x &&
+		(m_HumanPos.z + m_DisplacementZ + 250) > m_NextPos.z &&
+		(m_HumanPos.z - m_DisplacementZ - 250) < m_NextPos.z)
+	{
+		m_HumanPos = m_NextPos;
+	}
+	else
+	{
+		m_HumanPos.x += m_DisplacementX;
+		m_HumanPos.z += m_DisplacementZ;
+	}
+
 	if (m_HumanPos == m_NextPos)
 	{
 		if (m_isReturn == true)
@@ -144,29 +178,10 @@ bool Human::NormalControl()
 				}
 			}
 
-			float x1 = pow(m_NextPos.x - m_HumanPos.x, 2);
-			float z1 = pow(m_NextPos.z - m_HumanPos.z, 2);
-			float xz = x1 + z1;
-			m_Length = sqrt(xz);
 			m_Angle = atan2(m_NextPos.z - m_HumanPos.z, m_NextPos.x - m_HumanPos.x);
 
 			m_DisplacementX = HUMAN_MOVE_SPEED * cos(m_Angle);
 			m_DisplacementZ = HUMAN_MOVE_SPEED * sin(m_Angle);
-		}
-	}
-	else
-	{
-		if ((m_HumanPos.x + m_DisplacementX + 250) > m_NextPos.x &&
-			(m_HumanPos.x - m_DisplacementX - 250) < m_NextPos.x &&
-			(m_HumanPos.z + m_DisplacementZ + 250) > m_NextPos.z &&
-			(m_HumanPos.z - m_DisplacementZ - 250) < m_NextPos.z)
-		{
-			m_HumanPos = m_NextPos;
-		}
-		else
-		{
-			m_HumanPos.x += m_DisplacementX;
-			m_HumanPos.z += m_DisplacementZ;
 		}
 	}
 
@@ -238,13 +253,13 @@ void Human::WaitAnimationDraw()
 void Human::WalkAnimationDraw()
 {
 	// ŒvŽZ—p‚Ìs—ñ
-	D3DXMATRIX RotationMatrix;
 	D3DXMATRIX PositionMatrix;
 
 	D3DXMatrixIdentity(&m_World);
-	D3DXMatrixIdentity(&RotationMatrix);
-	D3DXMatrixRotationY(&RotationMatrix, m_Angle);
-	D3DXMatrixMultiply(&m_World, &m_World, &RotationMatrix);
+	D3DXMatrixScaling(&m_World, 20.f, 20.f, 20.f);
+	CalcLookAtMatrix(&m_Rotation, &m_HumanPos, &m_NextPos, &D3DXVECTOR3(0, 1, 0));
+	D3DXMatrixMultiply(&m_World, &m_World, &m_Rotation);
+
 
 	// ˆÚ“®
 	D3DXMatrixTranslation(&PositionMatrix, m_HumanPos.x, m_HumanPos.y, m_HumanPos.z);
@@ -281,7 +296,7 @@ void Human::WalkAnimationDraw()
 
 	for (unsigned int i = 0; i < m_pWalkAnimation.size(); i++)
 	{
-		m_pWalkAnimation[i]->NonTextureDraw();
+		m_pWalkAnimation[i]->NonTextureAnimationDraw();
 	}
 
 

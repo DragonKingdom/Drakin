@@ -1,7 +1,7 @@
 #ifndef HUMAN_H
 #define HUMAN_H
 
-#define HUMAN_MOVE_SPEED 100.0f
+#define HUMAN_MOVE_SPEED 70.0f
 #define DEFAULT_HUMAN_HITPOINT 30
 #define DEFAULT_HUMAN_MAGICPOINT 20
 #define DEFAULT_HUMAN_POWER 10
@@ -83,13 +83,12 @@ private:
 	D3DXVECTOR3				m_NextPos;
 	int						m_AnimationFrame;
 	bool					m_isReturn;
-	float					m_Length;
-	int						m_LengthNum;
 	int						m_DisplacementX;
 	int						m_DisplacementZ;
 	float					m_Angle;
 
 	D3DXMATRIX				m_World;
+	D3DXMATRIX				m_Rotation;
 	ShaderAssist*			m_pShaderAssist;
 	Texture					m_Texture;
 	D3DXHANDLE				m_LightDir, m_Ambient, m_CLUTTU, m_FogColor, m_Param1, m_Param2;
