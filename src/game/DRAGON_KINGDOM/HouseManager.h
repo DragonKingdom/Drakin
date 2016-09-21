@@ -38,7 +38,7 @@ public:
 	/**“ñ“_ŠÔ‚Ì‹——£‚ğ‹‚ßAŒø‰Ê‚Ì‹­‚³‚ğ‘ª’è‚·‚éŠÖ”*/
 	float GetInfluenceRange(D3DXVECTOR3* _centerHousePos, D3DXVECTOR3* _checkHousePos);
 
-
+	D3DXVECTOR3 GetHouseRandomPos();
 	void Load(FileSaveLoad* _pFileSaveLoad);
 	void Save(FileSaveLoad* _pFileSaveLoad);
 

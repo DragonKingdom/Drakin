@@ -3,7 +3,7 @@
 #include "ShaderAssist.h"
 
 
-House::House(D3DXVECTOR3 _housePos, float _angle, int _Type) :
+House::House(D3DXVECTOR3 _housePos, float _angle, BUILD_STATE _Type) :
 m_HousePos(_housePos),
 m_Angle(_angle),
 m_Type(_Type),

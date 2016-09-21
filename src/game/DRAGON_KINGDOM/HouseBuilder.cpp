@@ -25,7 +25,7 @@ HouseBuilder::~HouseBuilder()
 	delete m_pHousePreviewer;
 }
 
-void HouseBuilder::PreviewerDraw(int _Type)
+void HouseBuilder::PreviewerDraw(BUILD_STATE _Type)
 {
 	//trueならプレビューを描画
 	if (m_isDraw == true)
@@ -55,7 +55,7 @@ void HouseBuilder::SetDrawState(bool _isDraw)
 }
 
 //建物タイプにあわせて生成する
-House* HouseBuilder::HouseBuild(int _Type)
+House* HouseBuilder::HouseBuild(BUILD_STATE _Type)
 {
 	House* pHouse = NULL;
 
@@ -88,8 +88,8 @@ House* HouseBuilder::HouseBuild(int _Type)
 		{
 			Type = BUILD_PRIVATEHOUSE_RICH;
 		}
-
-		pHouse = new PrivateHouse(m_BuildPos, m_Angle, Type);
+		
+		pHouse = new PrivateHouse(m_BuildPos, m_Angle, static_cast<BUILD_STATE>(Type));
 	}
 	break;
 	case BUILD_PRIVATEHOUSE_RED:
@@ -132,7 +132,7 @@ House* HouseBuilder::HouseBuild(int _Type)
 }
 
 //建物にあわせてコストをかえす
-int HouseBuilder:: GetHouseCost(int _Type)
+int HouseBuilder::GetHouseCost(BUILD_STATE _Type)
 {
 	int BuildingCost = 0;
 

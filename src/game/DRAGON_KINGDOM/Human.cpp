@@ -25,7 +25,6 @@ m_AnimationFrame(0)
 	FbxFileManager::Get()->GetModelData(&m_pWalkAnimation);
 
 
-
 	m_HumanPos = m_pHouseChecker->GetRandomPrivateHousePos();
 	m_NextPos = m_HumanPos;
 	m_Angle = m_pHouseChecker->GetHouseAngle(m_HumanPos);

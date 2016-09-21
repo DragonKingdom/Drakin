@@ -2,8 +2,11 @@
 #include "ShaderAssist.h"
 #include "FbxFileManager.h"
 #include "FbxModel.h"
+#include "HouseChecker.h"
 
 Enemy::Enemy(RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker) :
+m_pRoadChecker(_pRoadChecker),
+m_pHouseChecker(_pHouseChecker),
 m_pShaderAssist(new ShaderAssist())
 {
 	m_Texture.Load("Resource\\image\\CLUTLight.jpg");
@@ -15,14 +18,16 @@ m_pShaderAssist(new ShaderAssist())
 	m_Param1 = m_pShaderAssist->GetParameterHandle("Param1");
 	m_Param2 = m_pShaderAssist->GetParameterHandle("Param2");
 
-	FbxFileManager::Get()->FileImport("fbx//maoiu_animetion_taiki.fbx");
-	FbxFileManager::Get()->GetModelData(&m_pWaitAnimation);
+	//FbxFileManager::Get()->FileImport("fbx//maoiu_animetion_taiki.fbx");
+	//FbxFileManager::Get()->GetModelData(&m_pWaitAnimation);
 
-	FbxFileManager::Get()->FileImport("fbx//maoiu_animetion_taiki.fbx");
+	//FbxFileManager::Get()->FileImport("fbx//maoiu_animetion_taiki.fbx");
+	//FbxFileManager::Get()->GetModelData(&m_pWalkAnimation);
+
+	//FbxFileManager::Get()->FileImport("fbx//maoiu_animetion_taiki.fbx");
+	//FbxFileManager::Get()->GetModelData(&m_pAttackAnimation);
+	FbxFileManager::Get()->FileImport("fbx//house_red.fbx");
 	FbxFileManager::Get()->GetModelData(&m_pWalkAnimation);
-
-	FbxFileManager::Get()->FileImport("fbx//maoiu_animetion_taiki.fbx");
-	FbxFileManager::Get()->GetModelData(&m_pAttackAnimation);
 
 
 	// ŒvŽZ—p‚Ìs—ñ
@@ -39,6 +44,7 @@ m_pShaderAssist(new ShaderAssist())
 	D3DXMatrixTranslation(&PositionMatrix, m_EnemyPos.x, m_EnemyPos.y, m_EnemyPos.z);
 	D3DXMatrixMultiply(&m_World, &m_World, &PositionMatrix);
 
+	m_TargetPos = m_pHouseChecker->GetRandomPrivateHousePos();
 
 	m_Status.HitPoint = DEFAULT_ENEMY_HITPOINT;
 	m_Status.MagicPoint = DEFAULT_ENEMY_MAGICPOINT;
@@ -114,6 +120,23 @@ Enemy::Status Enemy::GetStatus()
 bool Enemy::NormalControl()
 {
 	bool isDestroy = false;
+
+	m_Angle = atan2(m_TargetPos.z - m_EnemyPos.z, m_TargetPos.x - m_EnemyPos.x);
+	m_DisplacementX = ENEMY_MOVE_SPEED * cos(m_Angle);
+	m_DisplacementZ = ENEMY_MOVE_SPEED * sin(m_Angle);
+
+	if ((m_EnemyPos.x + m_DisplacementX + 250) > m_TargetPos.x &&
+		(m_EnemyPos.x - m_DisplacementX - 250) < m_TargetPos.x &&
+		(m_EnemyPos.z + m_DisplacementZ + 250) > m_TargetPos.z &&
+		(m_EnemyPos.z - m_DisplacementZ - 250) < m_TargetPos.z)
+	{
+		isDestroy = true;
+	}
+	else
+	{
+		m_EnemyPos.x += m_DisplacementX;
+		m_EnemyPos.z += m_DisplacementZ;
+	}
 
 	return isDestroy;
 }

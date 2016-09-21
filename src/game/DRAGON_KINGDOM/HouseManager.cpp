@@ -14,6 +14,7 @@
 #include "FileSaveLoad.h"
 #include "ClickPosConverter.h"
 #include "House.h"
+#include <time.h>
 
 
 /*コンストラクタ*/
@@ -349,7 +350,7 @@ void HouseManager::Load(FileSaveLoad* _pFileSaveLoad)
 		m_pHouseBuilder->SetBuildAngle(Angle[i]);
 
 		// 生成
-		House* pHouse = m_pHouseBuilder->HouseBuild(Status[i]);
+		House* pHouse = m_pHouseBuilder->HouseBuild(static_cast<BUILD_STATE>(Status[i]));
 		m_pHouse.push_back(pHouse);
 	}
 }
@@ -371,5 +372,12 @@ void HouseManager::Save(FileSaveLoad* _pFileSaveLoad)
 	_pFileSaveLoad->CreateGroup("HouseVertex", &HouseVertexData);
 	_pFileSaveLoad->CreateGroup("HouseVertexAngle", &HouseVertexAngleData);
 	_pFileSaveLoad->CreateGroup("HouseStatus", &HouseStatus);
+}
+
+D3DXVECTOR3 HouseManager::GetHouseRandomPos()
+{
+	srand(unsigned int(time(NULL)));
+	int houseArrayNum = rand() % m_pHouse.size();
+	return m_pHouse[houseArrayNum]->GetHousePos();
 }
 

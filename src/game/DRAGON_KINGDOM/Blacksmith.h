@@ -12,7 +12,7 @@
 class Blacksmith : public House
 {
 public:
-	Blacksmith(D3DXVECTOR3 _housePos, float _angle, int _Type);
+	Blacksmith(D3DXVECTOR3 _housePos, float _angle, BUILD_STATE _Type);
 	virtual ~Blacksmith();
 	virtual BUILD_STATE Control();
 	virtual void Draw();

@@ -11,12 +11,12 @@ class HouseBuilder
 public:
 	HouseBuilder();
 	~HouseBuilder();
-	void PreviewerDraw(int _Type);
+	void PreviewerDraw(BUILD_STATE _Type);
 	void SetBuildPos(D3DXVECTOR3* _BuildPos);
 	void SetBuildAngle(float _angle);
 	void SetDrawState(bool _isDraw);
-	House* HouseBuild(int _Type);
-	int GetHouseCost(int _Type);
+	House* HouseBuild(BUILD_STATE _Type);
+	int GetHouseCost(BUILD_STATE _Type);
 
 private:
 	HousePreviewer* m_pHousePreviewer;

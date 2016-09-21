@@ -1,9 +1,11 @@
 #include "HouseChecker.h"
+#include "HouseManager.h"
 
 
 HouseChecker::HouseChecker(HouseManager* _pHouseManager):
 m_pHouseManager(_pHouseManager)
 {
+
 }
 
 HouseChecker::~HouseChecker()
@@ -12,7 +14,7 @@ HouseChecker::~HouseChecker()
 
 D3DXVECTOR3 HouseChecker::GetRandomPrivateHousePos()
 {
-	return D3DXVECTOR3(0, 0, 0);
+	return m_pHouseManager->GetHouseRandomPos();
 }
 
 D3DXVECTOR3 HouseChecker::GetPrivateHousePos(D3DXVECTOR3 _CheckPos)

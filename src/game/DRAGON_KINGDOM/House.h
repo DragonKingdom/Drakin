@@ -32,12 +32,13 @@ public:
 		LVMAX
 	};
 
-	House(D3DXVECTOR3 _housePos, float _angle, int _Type);
+	House(D3DXVECTOR3 _housePos, float _angle, BUILD_STATE _Type);
 	virtual ~House();
 	/**2016/09/03k型を変更 haga*/
 	virtual BUILD_STATE Control();
 	virtual void Draw();
 	Status			GetHouseStatus(){ return m_Status; };
+	BUILD_STATE		GetBuildType(){ return m_Type; };
 	virtual Status	GetMainStatus(){ return Status{ 10.f, 10.f, 1000.f, 0, 0 }; };
 	D3DXVECTOR3		GetHousePos(){ return m_HousePos; };
 	void			GetHouseData(std::vector<float>* _pHouseVertexData, std::vector<float>* _pHouseAngleData, std::vector<int>* _pHouseStatus);
@@ -58,7 +59,7 @@ protected:
 	D3DXVECTOR3				m_HousePos;
 	float					m_Angle;
 	D3DXMATRIX				m_World;				// ワールド変換行列
-	int						m_Type;					// 建物の種類
+	BUILD_STATE				m_Type;					// 建物の種類
 	House::Status			m_Status;				// 建物のステータス(基本ステータス + 補正値)
 	House::Status			m_BasicStatus;			// 建物の基本ステータス
 	House::Status			m_CorrectionStatus;		// 他の建物からの補正値

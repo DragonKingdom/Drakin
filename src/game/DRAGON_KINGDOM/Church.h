@@ -19,7 +19,7 @@ class Church :public House
 {
 public:
 	//コンストラクタ
-	Church(D3DXVECTOR3 _housePos, float _angle, int _Type);
+	Church(D3DXVECTOR3 _housePos, float _angle, BUILD_STATE _Type);
 	//デストラクタ
 	virtual~Church();
 	//コントロール関数

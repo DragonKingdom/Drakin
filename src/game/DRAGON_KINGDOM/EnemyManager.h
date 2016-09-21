@@ -3,6 +3,8 @@
 
 #include "GameData.h"
 
+#define ENEMY_MAX 15
+
 class FileSaveLoad;
 class StateManager;
 class RoadChecker;
