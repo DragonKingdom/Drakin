@@ -61,6 +61,7 @@ void EnemyManager::SetState()
 
 void EnemyManager::GetGameData()
 {
+	m_HouseNum = m_pGameData->GetHouseNum();
 }
 
 void EnemyManager::SetGameData()
