@@ -26,9 +26,9 @@ m_pShaderAssist(new ShaderAssist())
 
 	//FbxFileManager::Get()->FileImport("fbx//maoiu_animetion_taiki.fbx");
 	//FbxFileManager::Get()->GetModelData(&m_pAttackAnimation);
+
 	FbxFileManager::Get()->FileImport("fbx//house_red.fbx");
 	FbxFileManager::Get()->GetModelData(&m_pWalkAnimation);
-
 
 	// ŒvŽZ—p‚Ìs—ñ
 	D3DXMATRIX RotationMatrix;
@@ -45,12 +45,12 @@ m_pShaderAssist(new ShaderAssist())
 	D3DXMatrixMultiply(&m_World, &m_World, &PositionMatrix);
 
 	m_TargetPos = m_pHouseChecker->GetRandomPrivateHousePos();
-
+	m_EnemyPos = D3DXVECTOR3(0.f,0.f,0.f);
 	m_Status.HitPoint = DEFAULT_ENEMY_HITPOINT;
 	m_Status.MagicPoint = DEFAULT_ENEMY_MAGICPOINT;
 	m_Status.Power = DEFAULT_ENEMY_POWER;
 	m_Status.ControlState = NORMAL_CONTROL;
-	m_Status.AnimationState = WAIT_ANIMATION;
+	m_Status.AnimationState = WALK_ANIMATION;
 }
 
 Enemy::~Enemy()
@@ -251,10 +251,15 @@ void Enemy::WalkAnimationDraw()
 	GraphicsDevice::getInstance().GetDevice()->SetTexture(2, m_Texture.Get());
 	m_pShaderAssist->BeginPass(0);
 
+	//for (unsigned int i = 0; i < m_pWalkAnimation.size(); i++)
+	//{
+	//	m_pWalkAnimation[i]->AnimationDraw();
+	//}
 	for (unsigned int i = 0; i < m_pWalkAnimation.size(); i++)
 	{
-		m_pWalkAnimation[i]->NonTextureAnimationDraw();
+		m_pWalkAnimation[i]->NonTextureDraw();
 	}
+
 
 	m_pShaderAssist->EndPass();
 	m_pShaderAssist->End();

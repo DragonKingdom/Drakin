@@ -45,7 +45,10 @@ void EnemyManager::Control()
 
 void EnemyManager::Draw()
 {
-
+	for (unsigned int i = 0; i < m_pEnemy.size(); i++)
+	{
+		m_pEnemy[i]->Draw();
+	}
 }
 
 void EnemyManager::GetState()
