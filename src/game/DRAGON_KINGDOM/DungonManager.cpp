@@ -1,6 +1,8 @@
 #include "DungonManager.h"
 #include "Dungon.h"
-DungonManager::DungonManager(StateManager* _pStateManager, GameData* _pGameData) :
+
+DungonManager::DungonManager(RoadChecker* _pRoadChecker,StateManager* _pStateManager, GameData* _pGameData) :
+m_pGameData(_pGameData),
 m_BuildPos(0,0.5,0)
 {
 }
@@ -36,4 +38,14 @@ void DungonManager::Draw()
 	{
 		m_pDungon[i]->Draw();
 	}
+}
+
+void DungonManager::GetGameDate()
+{
+
+}
+
+void DungonManager::SetGameData()
+{
+
 }

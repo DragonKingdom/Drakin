@@ -20,6 +20,7 @@ m_pShaderAssist(new ShaderAssist())
 	FbxFileManager::Get()->GetModelData(&m_Model);
 
 	m_DungonPos = D3DXVECTOR3(0,0.5,0);
+
 }
 
 Dungon::~Dungon()

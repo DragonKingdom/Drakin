@@ -14,9 +14,9 @@ public:
 	void Control();
 	void Draw();
 	D3DXVECTOR3		GetDungonPos();
-	void			GetDungonData(std::vector<float>* _pDungonVertexData, std::vector<float>* _pDungonAngleData);
 	void            SetBuildPos(D3DXVECTOR3* _BuildPos);
 	void            SetAngle(float* _angle);
+	void			GetDungonData(std::vector<float>* _pDungonVertexData, std::vector<float>* _pDungonAngleData);
 private:
 	D3DXVECTOR3				m_DungonPos;
 	float					m_Angle;
