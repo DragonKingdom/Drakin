@@ -359,6 +359,7 @@ void CurveBuildArea::RightRoadCreate()
 	for (int i = 0; i < RectNum - 1; i++)
 	{
 		int buildAreaNum = 0;
+
 		if (!m_AreaExcist[i][0])
 		{
 			buildAreaNum = 0;
@@ -437,7 +438,7 @@ bool CurveBuildArea::CurveAreaCheck(D3DXVECTOR3* _checkPos,int _array,int _Type)
 				m_AreaCountZ = AreaCountZ = static_cast<int>((
 					((_checkPos->z - m_CenterLinePos[_array].z) * sin(m_Angle[_array]) +
 					((_checkPos->x - m_CenterLinePos[_array].x) * cos(m_Angle[_array])))) / ROAD_H_SIZE);
-				AreaCountX -= 1;
+				
 			}
 			else
 			{
@@ -448,10 +449,11 @@ bool CurveBuildArea::CurveAreaCheck(D3DXVECTOR3* _checkPos,int _array,int _Type)
 				m_AreaCountZ = AreaCountZ = static_cast<int>((
 					((_checkPos->z - m_CenterLinePos[_array].z) * sin(m_Angle[_array]) +
 					((_checkPos->x - m_CenterLinePos[_array].x) * cos(m_Angle[_array])))) / ROAD_H_SIZE);
-				AreaCountX += 1;
+				
 			}
 
 			
+
 			// チェック用変数
 			BYTE CheckArea;
 
@@ -493,8 +495,6 @@ bool CurveBuildArea::CurveAreaCheck(D3DXVECTOR3* _checkPos,int _array,int _Type)
 				break;
 			}
 
-
-
 			if (m_isLeft)
 			{
 
@@ -518,27 +518,47 @@ bool CurveBuildArea::CurveAreaCheck(D3DXVECTOR3* _checkPos,int _array,int _Type)
 				// _arrayの次のエリアのAreaCount番目のエリアの中心を渡す
 				NextAreaPosX = m_CenterLinePos[_array + 1].x + (-(ROAD_W_SIZE / 2 - ROAD_W_SIZE) * sin(m_Angle[_array + 1])) +
 					((AreaCountZ * ROAD_W_SIZE + ROAD_W_SIZE / CorrectionSizeH + RevisedValueZ) * cos(m_Angle[_array + 1])) -
-					((AreaCountX* ROAD_H_SIZE - ROAD_H_SIZE / CorrectionSizeW + RevisedValueX) * sin(m_Angle[_array + 1]));
+					((AreaCountX * ROAD_H_SIZE - ROAD_H_SIZE / CorrectionSizeW + RevisedValueX) * sin(m_Angle[_array + 1]));
 
+			}
+
+			if (m_isLeft)
+			{
+				AreaCountX -= 1;
+			}
+			else
+			{
+				AreaCountX += 1;
 			}
 
 
 			switch (_Type)
 			{
 			case BUILD_CHURCH:			// 教会
+
 				CheckArea = 1;
 				CheckArea = CheckArea << abs(AreaCountX);
 				
+				// 端っこの判定式。現状はこのままで動くのでいいが、いつか変更したい
+				if ((_array + 1) == m_CenterLinePos.size() || (_array + 2) == m_CenterLinePos.size() || _array  == m_CenterLinePos.size())
+				{
+					return true;
+				}
 				if (_array % 2 == 1)
 				{
 					CheckArea = CheckArea << 4;
 				}
-				
+			
 				//現在チェックしているエリアが大丈夫かつ、次エリアがビルドエリア内ならチェック
 				if (!(m_pAreaData[_array / 2] & CheckArea))
 				{
-					if (abs(NextAreaPosX - AreaPosX) <= (ROAD_H_SIZE + 20.f))
+					if (abs(NextAreaPosX - AreaPosX) <= (ROAD_H_SIZE + (ROAD_H_SIZE / 2) - 50.f))
 					{
+						// 上のエリアが描かれていなかったらtrueを返す
+						if (!m_AreaExcist[_array + 1][abs(AreaCountX)])
+						{
+							return true;
+						}
 
 						if (_array % 2 == 1)
 						{
@@ -563,10 +583,22 @@ bool CurveBuildArea::CurveAreaCheck(D3DXVECTOR3* _checkPos,int _array,int _Type)
 
 			case BUILD_BLACKSMITH:				// 鍛冶屋
 
-				if (abs(AreaCountX) >= 5)
-				{	//カウント3がxの最高値だが念の為以上を条件にして、その場合がtrueを返す
+				if (abs(AreaCountX) >= 4)
+				{	// カウント3がxの最高値だが念の為以上を条件にして、その場合がtrueを返す
 					return true;
 				}
+
+				// 端っこの判定式。現状はこのままで動くので良い、いつか変更したい
+				if ((_array + 1) == m_CenterLinePos.size() || (_array + 2) == m_CenterLinePos.size() || _array == m_CenterLinePos.size())
+				{
+					return true;
+				}
+
+				if (abs(AreaCountX) < 3 && !m_AreaExcist[_array][abs(AreaCountX + (m_isLeft) ? 1 : -1)])
+				{
+					return true;
+				}
+
 				CheckArea = 3;
 				CheckArea = CheckArea << abs(AreaCountX);
 				
@@ -575,19 +607,55 @@ bool CurveBuildArea::CurveAreaCheck(D3DXVECTOR3* _checkPos,int _array,int _Type)
 					CheckArea = CheckArea << 4;
 				}
 				
-				if (!(m_pAreaData[_array / 2] & CheckArea) && abs(NextAreaPosX - AreaPosX) <= (ROAD_H_SIZE + 20.f))
+				if (!(m_pAreaData[_array / 2] & CheckArea) && abs(NextAreaPosX - AreaPosX) <= (ROAD_H_SIZE + (ROAD_H_SIZE / 2) - 50.f))
 				{
-
-					if (_array % 2 == 1)
+					if ((NextAreaPosX - AreaPosX) > 0)
 					{
-						CheckArea = CheckArea >> 4;
-						return m_pAreaData[(_array / 2) + 1] & CheckArea;
+						// 上のエリアが描かれていなかったらtrueを返す
+						if (!m_AreaExcist[_array + 1][abs(AreaCountX)])
+						{
+							return true;
+						}
+						if (abs(AreaCountX) < 3 && !m_AreaExcist[_array + 1][abs(AreaCountX + (m_isLeft) ? 1 : -1)])
+						{
+							return true;
+						}
+
+						if (_array % 2 == 1)
+						{
+							CheckArea = CheckArea >> 4;
+							return m_pAreaData[(_array / 2) + 1] & CheckArea;
+						}
+						else
+						{
+							CheckArea = CheckArea << 4;
+							return m_pAreaData[_array / 2] & CheckArea;
+						}
 					}
 					else
 					{
-						CheckArea = CheckArea << 4;
-						return m_pAreaData[_array / 2] & CheckArea;
+						// 上のエリアが描かれていなかったらtrueを返す
+						if (!m_AreaExcist[_array - 1][abs(AreaCountX)])
+						{
+							return true;
+						}
+						if (abs(AreaCountX) < 3 && !m_AreaExcist[_array - 1][abs(AreaCountX + (m_isLeft) ? 1 : -1)])
+						{
+							return true;
+						}
+
+						if (_array % 2 == 1)
+						{
+							CheckArea = CheckArea >> 4;
+							return m_pAreaData[(_array / 2)] & CheckArea;
+						}
+						else
+						{
+							CheckArea = CheckArea << 4;
+							return m_pAreaData[(_array / 2) - 1] & CheckArea;
+						}
 					}
+
 				}
 				else
 				{
