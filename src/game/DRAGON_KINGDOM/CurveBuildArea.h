@@ -1,5 +1,8 @@
 #ifndef CURVEBUILDAREA_H
 #define CURVEBUILDAREA_H
+
+#include "Font.h"
+
 #include "BuildArea.h"
 class CurveBuildArea : public BuildArea
 {
@@ -23,11 +26,19 @@ public:
 	* @param[in] 建築された場所
 	* @return 成功したらtrue
 	*/
-	bool SetBuilding(D3DXVECTOR3* _setPos, int _Type){ return false; };
+	bool SetBuilding(D3DXVECTOR3* _setPos, int _Type);
+
+	/**
+	* 建物が建築されたことを伝える関数
+	* @author haga
+	* @data 2016/09/14
+	*/
+	bool CurveSetBuilding(D3DXVECTOR3* _setPos, int _Type, int _array);
 
 	bool GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos, float* _outputAngleDegree, bool* _startPos);
 	//float GetAngleDegree(){ return D3DXToDegree(m_angle); };
 	//void GetBuildAreaData(std::vector<float>* _pBuildAreaVertexData, std::vector<float>* _pBuildAreaAngleData, std::vector<int>* _pBuildAreaFlag){};
+
 
 private:
 	D3DXVECTOR3 m_ControlPos;
@@ -44,6 +55,7 @@ private:
 	BYTE*		m_pAreaData;
 	int m_AreaCountX;
 	int m_AreaCountZ;
+	int m_array;
 
 	/*高さは固定なのでいらない*/
 	float CalculateBezierLength();
@@ -51,7 +63,12 @@ private:
 	D3DXVECTOR3 QuadraticConstantBezPoint(int _divideNum, int _nowCnt);
 	void LeftRoadCreate();
 	void RightRoadCreate();
-	bool CurveAreaCheck(D3DXVECTOR3* _checkPos, int _array);
+	bool CurveAreaCheck(D3DXVECTOR3* _checkPos, int _array, int _Type);
+
+
+	/**デバック用*/
+	Font		m_Font;
+
 
 };
 #endif

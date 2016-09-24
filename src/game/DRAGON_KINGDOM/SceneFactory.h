@@ -24,7 +24,8 @@ public:
 	 * newせず、本メソッドでインスタンスを取得すること
 	 * @return ファクトリーのインスタンス
 	 */
-	static SceneFactory& Instance() {
+	static SceneFactory& Instance() 
+	{
 		static SceneFactory instance;
 		return instance;
 	}

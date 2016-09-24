@@ -60,8 +60,10 @@ void SceneManager::Control()
 	switch( m_step ) // ステップ分け
 	{ 
 	case STEP_CREATE:
+
 		// シーンIDを参照して生成するシーンを変える
 		m_pScene = SceneFactory::Instance().CreateScene(currentSceneID);
+
 		// 次のステップへ
 		m_step = STEP_PROC;
 		break;
