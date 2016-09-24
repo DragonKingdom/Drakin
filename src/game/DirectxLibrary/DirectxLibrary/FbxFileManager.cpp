@@ -98,7 +98,6 @@ bool FbxFileManager::GetModelData(std::vector<FbxModel*>* _pFbxModel)
 	fbxsdk::FbxNode* pRootNode = m_pFbxScene->GetRootNode();
 	RecursiveNode(pRootNode);
 
-
 	return true;
 }
 
@@ -511,12 +510,13 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 
 	// スキンの数を取得
 	int skinCount = pFbxMesh->GetDeformerCount(FbxDeformer::eSkin);
-	AnimationData animationData;
-	animationData.SkinNum = skinCount;
+	AnimationData* animationData = NULL;
 
 	if (skinCount != 0)
 	{
-		animationData.pSkinData = new SkinData[skinCount];
+		animationData = new AnimationData;
+		animationData->SkinNum = skinCount;
+		animationData->pSkinData = new SkinData[skinCount];
 
 		for (int i = 0; i < skinCount; i++)
 		{
@@ -524,9 +524,9 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 			FbxSkin* skin = (FbxSkin*)pFbxMesh->GetDeformer(i, FbxDeformer::eSkin);
 
 			// クラスターの数を取得
-			animationData.pSkinData[i].ClusterNum = skin->GetClusterCount();
+			animationData->pSkinData[i].ClusterNum = skin->GetClusterCount();
 
-			animationData.pSkinData[i].pCluster = new Cluster[animationData.pSkinData[i].ClusterNum];
+			animationData->pSkinData[i].pCluster = new Cluster[animationData->pSkinData[i].ClusterNum];
 
 			fbxsdk::FbxArray<FbxString*> animation_names;
 			m_pFbxScene->FillAnimStackNameArray(animation_names);
@@ -536,18 +536,25 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 			FbxTime start_time = take_info->mLocalTimeSpan.GetStart();
 			FbxTime end_time = take_info->mLocalTimeSpan.GetStop();
 
-			animationData.pSkinData[i].StartFrame = (int)(start_time.Get() / FbxTime::GetOneFrameValue(FbxTime::eFrames60));
-			animationData.pSkinData[i].EndFrame = (int)(end_time.Get() / FbxTime::GetOneFrameValue(FbxTime::eFrames60));
+			animationData->pSkinData[i].StartFrame = (int)(start_time.Get() / FbxTime::GetOneFrameValue(FbxTime::eFrames60));
+			animationData->pSkinData[i].EndFrame = (int)(end_time.Get() / FbxTime::GetOneFrameValue(FbxTime::eFrames60));
 
 
-			for (int j = 0; j < animationData.pSkinData[i].ClusterNum; j++)
+			for (int j = 0; j < animationData->pSkinData[i].ClusterNum; j++)
 			{
 				// j番目のクラスタを取得
 				FbxCluster* cluster = skin->GetCluster(j);
 
-				animationData.pSkinData[i].pCluster[j].PointNum = cluster->GetControlPointIndicesCount();
-				animationData.pSkinData[i].pCluster[j].PointAry = cluster->GetControlPointIndices();
-				animationData.pSkinData[i].pCluster[j].WeightAry = cluster->GetControlPointWeights();
+				animationData->pSkinData[i].pCluster[j].PointNum = cluster->GetControlPointIndicesCount();
+				animationData->pSkinData[i].pCluster[j].PointAry = new int[animationData->pSkinData[i].pCluster[j].PointNum];
+				animationData->pSkinData[i].pCluster[j].WeightAry = new double[animationData->pSkinData[i].pCluster[j].PointNum];
+				int* PointAry = cluster->GetControlPointIndices();
+				double* PointWeights = cluster->GetControlPointWeights();
+				for (int x = 0; x < animationData->pSkinData[i].pCluster[j].PointNum; x++)
+				{
+					animationData->pSkinData[i].pCluster[j].PointAry[x] = PointAry[x];
+					animationData->pSkinData[i].pCluster[j].WeightAry[x] = PointWeights[x];
+				}
 
 				FbxAMatrix initMat;
 				initMat = cluster->GetTransformLinkMatrix(initMat);
@@ -560,15 +567,15 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 				{
 					for (int y = 0; y < 4; y++) 
 					{
-						animationData.pSkinData[i].pCluster[j].InitMatrix.m[x][y] = static_cast<float>(initMat.mData[x][y]);
+						animationData->pSkinData[i].pCluster[j].InitMatrix.m[x][y] = static_cast<float>(initMat.mData[x][y]);
 					}
 				}
 
 
-				animationData.pSkinData[i].pCluster[j].pMat = new D3DXMATRIX[animationData.pSkinData[i].EndFrame];
+				animationData->pSkinData[i].pCluster[j].pMat = new D3DXMATRIX[animationData->pSkinData[i].EndFrame];
 
 
-				for (int n = 0; n < animationData.pSkinData[i].EndFrame; n++)
+				for (int n = 0; n < animationData->pSkinData[i].EndFrame; n++)
 				{
 					FbxTime time;
 					time.Set(FbxTime::GetOneFrameValue(FbxTime::eFrames60) * n);
@@ -579,7 +586,7 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 					{
 						for (int y = 0; y < 4; y++)
 						{
-							animationData.pSkinData[i].pCluster[j].pMat[n].m[x][y] = static_cast<float>(mat.mData[x][y]);
+							animationData->pSkinData[i].pCluster[j].pMat[n].m[x][y] = static_cast<float>(mat.mData[x][y]);
 						}
 					}
 				}
@@ -696,13 +703,9 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 	}
 
 
-	pModelData->Animation.SkinNum = animationData.SkinNum;
 
 
-	if (skinCount != 0)
-	{
-		pModelData->Animation.pSkinData = animationData.pSkinData;
-	}
+	pModelData->Animation = animationData;
 
 
 

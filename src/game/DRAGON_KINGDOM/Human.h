@@ -1,7 +1,10 @@
 #ifndef HUMAN_H
 #define HUMAN_H
 
-#define HUMAN_MOVE_SPEED 70.0f
+#include "ResourceManager.h"
+#include "HumanManager.h"
+
+#define HUMAN_MOVE_SPEED (10.f)
 #define DEFAULT_HUMAN_HITPOINT 30
 #define DEFAULT_HUMAN_MAGICPOINT 20
 #define DEFAULT_HUMAN_POWER 10
@@ -38,7 +41,10 @@ public:
 		AnimationMode	AnimationState;
 	};
 
-	Human(RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker);
+	Human(
+		RoadChecker* _pRoadChecker, 
+		HouseChecker* _pHouseChecker, 
+		ResourceManager<CHARACTERMODEL_ID, std::vector<FbxModel*>>* _pResourceManager);
 	~Human();
 
 	/**
@@ -74,17 +80,18 @@ private:
 	Status					m_Status;
 	RoadChecker*			m_pRoadChecker;
 	HouseChecker*			m_pHouseChecker;
-	std::vector<FbxModel*>	m_pWaitAnimation;
-	std::vector<FbxModel*>	m_pWalkAnimation;
-	std::vector<FbxModel*>	m_pAttackAnimation;
+	std::vector<FbxModel*>*	m_pWaitAnimation;
+	std::vector<FbxModel*>*	m_pWalkAnimation;
+	std::vector<FbxModel*>*	m_pAttackAnimation;
 	std::vector<D3DXVECTOR3>m_pWalkLineBuffer;
 	int						m_BufferIndex;
 	D3DXVECTOR3				m_HumanPos;
 	D3DXVECTOR3				m_NextPos;
 	int						m_AnimationFrame;
+	int						m_AnimationFrameMax;
 	bool					m_isReturn;
-	int						m_DisplacementX;
-	int						m_DisplacementZ;
+	float					m_DisplacementX;
+	float					m_DisplacementZ;
 	float					m_Angle;
 
 	D3DXMATRIX				m_World;

@@ -19,9 +19,10 @@ HumanManager::~HumanManager()
 	}
 }
 
-void HumanManager::Init(EnemyChecker* _pEnemyChecker)
+void HumanManager::Init(EnemyChecker* _pEnemyChecker, ResourceManager<CHARACTERMODEL_ID, std::vector<FbxModel*>>* _pResourceManager)
 {
 	m_pEnemyChecker = _pEnemyChecker;
+	m_pResourceManager = _pResourceManager;
 }
 
 void HumanManager::Control()
@@ -31,7 +32,7 @@ void HumanManager::Control()
 		srand(unsigned int(time(NULL)));
 		if (rand() % 100 < 10)
 		{
-			m_pHuman.push_back(new Human(m_pRoadChecker, m_pHouseChecker));
+			m_pHuman.push_back(new Human(m_pRoadChecker, m_pHouseChecker, m_pResourceManager));
 		}
 	}
 

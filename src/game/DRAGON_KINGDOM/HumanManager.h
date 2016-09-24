@@ -2,6 +2,7 @@
 #define HUMANMANAGER_H
 
 #include "GameData.h"
+#include "CharacterManager.h"
 
 #define HUMAN_MAX 15
 
@@ -17,7 +18,7 @@ class HumanManager
 public:
 	HumanManager(StateManager* _pStateManager, GameData* _pGameData, RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker);
 	~HumanManager();
-	void Init(EnemyChecker* _pEnemyChecker);
+	void Init(EnemyChecker* _pEnemyChecker, ResourceManager<CHARACTERMODEL_ID, std::vector<FbxModel*>>* _pResourceManager);
 	void Control();
 	void Draw();
 	void GetState();
@@ -43,6 +44,7 @@ private:
 	EnemyChecker*		m_pEnemyChecker;
 	std::vector<Human*> m_pHuman;
 	HouseNum			m_HouseNum;
+	ResourceManager<CHARACTERMODEL_ID, std::vector<FbxModel*>>* m_pResourceManager;
 
 };
 

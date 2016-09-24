@@ -150,6 +150,7 @@
     <ClCompile Include="ObjectManager.cpp" />
     <ClCompile Include="OptionWindow.cpp" />
     <ClCompile Include="PrivateHouse.cpp" />
+    <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Road.cpp" />
     <ClCompile Include="RoadBuilder.cpp" />
     <ClCompile Include="RoadChecker.cpp" />
@@ -230,6 +231,7 @@
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="OptionWindow.h" />
     <ClInclude Include="PrivateHouse.h" />
+    <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Road.h" />
     <ClInclude Include="RoadBuilder.h" />
     <ClInclude Include="RoadChecker.h" />

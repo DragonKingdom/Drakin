@@ -1,6 +1,9 @@
 #ifndef CHARACTERMANAGER_H
 #define CHARACTERMANAGER_H
 
+#include "ResourceManager.h"
+#include "FbxModel.h"
+
 class StateManager;
 class GameData;
 class RoadChecker;
@@ -10,6 +13,13 @@ class HumanChecker;
 class EnemyManager;
 class EnemyChecker;
 class FileSaveLoad;
+
+enum CHARACTERMODEL_ID
+{
+	MAOU_WALK,
+	MAOU_ATTACK,
+	MAOU_TAIKI,
+};
 
 class CharacterManager
 {
@@ -27,6 +37,7 @@ public:
 	void Save(FileSaveLoad* _pFileSaveLoad);
 
 private:
+	ResourceManager<CHARACTERMODEL_ID, std::vector<FbxModel*>>	m_ResourceManager;
 	StateManager*	m_pStateManager;
 	GameData*		m_pGameData;
 	RoadChecker*	m_pRoadChecker;
@@ -35,6 +46,8 @@ private:
 	EnemyManager*	m_pEnemyManager;
 	HumanChecker*	m_pHumanChecker;
 	EnemyChecker*	m_pEnemyChecker;
+
+	std::vector<FbxModel*> m_pMaouWalkModel;
 
 };
 

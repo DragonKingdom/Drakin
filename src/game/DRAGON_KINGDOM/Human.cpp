@@ -20,7 +20,7 @@ void CalcLookAtMatrix(D3DXMATRIX* pout, D3DXVECTOR3* pPos, D3DXVECTOR3* pLook, D
 	pout->_41 = 0.0f; pout->_42 = 0.0f; pout->_43 = 0.0f; pout->_44 = 1.0f;
 }
 
-Human::Human(RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker) :
+Human::Human(RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker, ResourceManager<CHARACTERMODEL_ID, std::vector<FbxModel*>>* _pResourceManager) :
 m_pRoadChecker(_pRoadChecker),
 m_pHouseChecker(_pHouseChecker),
 m_pShaderAssist(new ShaderAssist()),
@@ -38,14 +38,8 @@ m_DisplacementZ(0.f)
 	m_Param1 = m_pShaderAssist->GetParameterHandle("Param1");
 	m_Param2 = m_pShaderAssist->GetParameterHandle("Param2");
 
-
-	FbxFileManager::Get()->FileImport("fbx//animetion_maou_walk.fbx");
-	FbxFileManager::Get()->GetModelData(&m_pWalkAnimation);
-
-	for (unsigned int i = 0; i < m_pWalkAnimation.size(); i++)
-	{
-		m_pWalkAnimation[i]->InitAnimation();
-	}
+	m_pWalkAnimation = _pResourceManager->GetResource(MAOU_WALK);
+	m_AnimationFrameMax = (*m_pWalkAnimation)[0]->GetAnimationFrameMax();
 
 	m_HumanPos = m_pHouseChecker->GetRandomPrivateHousePos();
 	m_NextPos = m_HumanPos;
@@ -65,21 +59,6 @@ m_DisplacementZ(0.f)
 
 Human::~Human()
 {
-	for (unsigned int i = 0; i < m_pAttackAnimation.size(); i++)
-	{
-		delete m_pAttackAnimation[i];
-	}
-
-	for (unsigned int i = 0; i < m_pWalkAnimation.size(); i++)
-	{
-		delete m_pWalkAnimation[i];
-	}
-	
-	for (unsigned int i = 0; i < m_pWaitAnimation.size(); i++)
-	{
-		delete m_pWaitAnimation[i];
-	}
-
 	m_Texture.Release();
 	delete m_pShaderAssist;
 }
@@ -134,10 +113,19 @@ bool Human::NormalControl()
 
 	//m_Status.Time--;
 
-	if ((m_HumanPos.x + m_DisplacementX + 250) > m_NextPos.x &&
-		(m_HumanPos.x - m_DisplacementX - 250) < m_NextPos.x &&
-		(m_HumanPos.z + m_DisplacementZ + 250) > m_NextPos.z &&
-		(m_HumanPos.z - m_DisplacementZ - 250) < m_NextPos.z)
+	if (m_AnimationFrame < m_AnimationFrameMax)
+	{
+		m_AnimationFrame++;
+	}
+	else
+	{
+		m_AnimationFrame = 0;
+	}
+
+	if ((m_HumanPos.x + m_DisplacementX + 75) > m_NextPos.x &&
+		(m_HumanPos.x - m_DisplacementX - 75) < m_NextPos.x &&
+		(m_HumanPos.z + m_DisplacementZ + 75) > m_NextPos.z &&
+		(m_HumanPos.z - m_DisplacementZ - 75) < m_NextPos.z)
 	{
 		m_HumanPos = m_NextPos;
 	}
@@ -240,9 +228,9 @@ void Human::WaitAnimationDraw()
 	m_pShaderAssist->BeginPass(0);
 
 
-	for (unsigned int i = 0; i < m_pWaitAnimation.size(); i++)
+	for (unsigned int i = 0; i < m_pWaitAnimation->size(); i++)
 	{
-		m_pWaitAnimation[i]->NonTextureAnimationDraw();
+		(*m_pWaitAnimation)[i]->NonTextureAnimationDraw();
 	}
 
 
@@ -256,7 +244,6 @@ void Human::WalkAnimationDraw()
 	D3DXMATRIX PositionMatrix;
 
 	D3DXMatrixIdentity(&m_World);
-	D3DXMatrixScaling(&m_World, 20.f, 20.f, 20.f);
 	CalcLookAtMatrix(&m_Rotation, &m_HumanPos, &m_NextPos, &D3DXVECTOR3(0, 1, 0));
 	D3DXMatrixMultiply(&m_World, &m_World, &m_Rotation);
 
@@ -294,9 +281,10 @@ void Human::WalkAnimationDraw()
 	GraphicsDevice::getInstance().GetDevice()->SetTexture(2, m_Texture.Get());
 	m_pShaderAssist->BeginPass(0);
 
-	for (unsigned int i = 0; i < m_pWalkAnimation.size(); i++)
+	for (unsigned int i = 0; i < m_pWalkAnimation->size(); i++)
 	{
-		m_pWalkAnimation[i]->NonTextureAnimationDraw();
+		(*m_pWalkAnimation)[i]->SetAnimationFrame(m_AnimationFrame);
+		(*m_pWalkAnimation)[i]->NonTextureAnimationDraw();
 	}
 
 
@@ -348,9 +336,9 @@ void Human::AttackAnimationDraw()
 	GraphicsDevice::getInstance().GetDevice()->SetTexture(2, m_Texture.Get());
 	m_pShaderAssist->BeginPass(0);
 
-	for (unsigned int i = 0; i < m_pAttackAnimation.size(); i++)
+	for (unsigned int i = 0; i < m_pAttackAnimation->size(); i++)
 	{
-		m_pAttackAnimation[i]->NonTextureAnimationDraw();
+		(*m_pAttackAnimation)[i]->NonTextureAnimationDraw();
 	}
 
 

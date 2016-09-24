@@ -25,6 +25,8 @@ m_pRoadChecker(new RoadChecker(m_pRoadManager)),
 m_pCharacterManager(new CharacterManager(_pStateManager, _pGameData, m_pRoadChecker, m_pHouseChecker)),
 m_pCastleManager(new CastleManager(m_pBuildAreaChecker,_pStateManager, _pGameData, _pClickPosConverter))
 {
+
+
 }
 
 ObjectManager::~ObjectManager()

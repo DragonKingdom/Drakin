@@ -63,7 +63,7 @@ struct FbxModelData
 	UserIndex					pIndex;				// インデックス系データ
 	std::vector<UserTexture*>	pTextureData;		// テクスチャ情報
 	std::vector<D3DMATERIAL9>	Material;			// マテリアル情報
-	AnimationData				Animation;			// アニメーションのデータ
+	AnimationData*				Animation;			// アニメーションのデータ
 };
 
 /**
@@ -88,12 +88,15 @@ public:
 	void	InitAnimation();
 	void	ReleaseAnimation();
 	void	SetAnimationFrame(int _setFrame);
+	int		GetAnimationFrameMax();
 	void	AnimationDraw();
 	void	NonTextureAnimationDraw();
 
 	FbxModelData*	m_pFbxModelData;
 
 private:
+	void Vec3Transform(D3DVECTOR *pOut, D3DVECTOR *pVec, D3DXMATRIX *pMat);
+
 	LPDIRECT3DDEVICE9	m_pDevice;
 	MODELMODE			m_Mode;
 	int					m_FrameCount;

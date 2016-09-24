@@ -5,6 +5,7 @@
 #include "EnemyChecker.h"
 #include "HumanManager.h"
 #include "EnemyManager.h"
+#include "FbxFileManager.h"
 
 CharacterManager::CharacterManager(StateManager* _pStateManager, GameData* _pGameData, RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker) :
 m_pStateManager(_pStateManager),
@@ -16,7 +17,18 @@ m_pHumanChecker(new HumanChecker(m_pHumanManager)),
 m_pEnemyManager(new EnemyManager(m_pStateManager, m_pGameData, m_pRoadChecker, m_pHouseChecker)),
 m_pEnemyChecker(new EnemyChecker(m_pEnemyManager))
 {
-	m_pHumanManager->Init(m_pEnemyChecker);
+	FbxFileManager::Get()->FileImport("fbx//maou_animetion_walk.fbx");
+	FbxFileManager::Get()->GetModelData(&m_pMaouWalkModel);
+
+	for (unsigned int i = 0; i < m_pMaouWalkModel.size(); i++)
+	{
+		m_pMaouWalkModel[i]->InitAnimation();
+	}
+
+	/// @todo ‚Æ‚è‚ ‚¦‚¸’†‚É“ü‚Á‚Ä‚éƒ‚ƒfƒ‹“n‚·
+	m_ResourceManager.SetResource(MAOU_WALK, &m_pMaouWalkModel);
+
+	m_pHumanManager->Init(m_pEnemyChecker, &m_ResourceManager);
 	m_pEnemyManager->Init(m_pHumanChecker);
 }
 
@@ -26,6 +38,11 @@ CharacterManager::~CharacterManager()
 	delete m_pEnemyChecker;
 	delete m_pHumanManager;
 	delete m_pHumanChecker;
+
+	for (unsigned int i = 0; i < m_pMaouWalkModel.size(); i++)
+	{
+		delete m_pMaouWalkModel[i];
+	}
 }
 
 void CharacterManager::Control()
