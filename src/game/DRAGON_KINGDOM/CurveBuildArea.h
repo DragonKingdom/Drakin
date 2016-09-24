@@ -55,6 +55,7 @@ private:
 	BYTE*		m_pAreaData;
 	int m_AreaCountX;
 	int m_AreaCountZ;
+	int m_array;
 
 	/*高さは固定なのでいらない*/
 	float CalculateBezierLength();
@@ -66,15 +67,8 @@ private:
 
 
 	/**デバック用*/
-	/**配列*/
-	Font font1;
 	Font		m_Font;
 
-	/**デバック用*/
-	int m_arraytep;
-
-	/**配列格納用*/
-	int m_array;
 
 };
 #endif
