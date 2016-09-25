@@ -179,9 +179,28 @@ void FbxModel::InitAnimation()
 
 		for (int i = 0; i < m_pFbxModelData->ControlPointCount; i++)
 		{
-			m_pVertex[i].Vec = m_pFbxModelData->pIndex.pVertex[i];
-			m_pTmpVertex[i].Vec = m_pFbxModelData->pIndex.pVertex[i];
-			m_pDrawVertex[i].Vec = m_pFbxModelData->pIndex.pVertex[i]; 
+			switch(m_pFbxModelData->CustomUser.m_Type)
+			{
+			case USERVERTEX_1:
+				m_pVertex[i].Vec = m_pFbxModelData->pIndex.pVertex[i];
+				m_pTmpVertex[i].Vec = m_pFbxModelData->pIndex.pVertex[i];
+				m_pDrawVertex[i].Vec = m_pFbxModelData->pIndex.pVertex[i];
+
+				break;
+			case USERVERTEX_2:
+				m_pVertex2[i].Vec = m_pFbxModelData->pIndex.pVertex[i];
+				m_pTmpVertex2[i].Vec = m_pFbxModelData->pIndex.pVertex[i];
+				m_pDrawVertex2[i].Vec = m_pFbxModelData->pIndex.pVertex[i];
+
+				break;
+			case USERVERTEX_3:
+				m_pVertex3[i].Vec = m_pFbxModelData->pIndex.pVertex[i];
+				m_pTmpVertex3[i].Vec = m_pFbxModelData->pIndex.pVertex[i];
+				m_pDrawVertex3[i].Vec = m_pFbxModelData->pIndex.pVertex[i];
+
+
+				break;
+			}
 		}
 	}
 }
