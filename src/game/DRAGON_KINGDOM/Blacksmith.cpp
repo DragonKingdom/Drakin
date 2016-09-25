@@ -4,7 +4,7 @@
 #include "ShaderAssist.h"
 
 //コンストラクタ
-Blacksmith::Blacksmith(D3DXVECTOR3 _housePos, float _angle, int _Type) :
+Blacksmith::Blacksmith(D3DXVECTOR3 _housePos, float _angle, BUILD_STATE _Type) :
 House(_housePos, _angle, _Type)
 {
 	FbxFileManager::Get()->FileImport("fbx//kaziya.fbx");

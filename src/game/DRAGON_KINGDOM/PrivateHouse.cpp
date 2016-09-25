@@ -4,7 +4,7 @@
 #include "ShaderAssist.h"
 
 
-PrivateHouse::PrivateHouse(D3DXVECTOR3 _housePos, float _angle, int _Type):
+PrivateHouse::PrivateHouse(D3DXVECTOR3 _housePos, float _angle, BUILD_STATE _Type):
 House(_housePos, _angle, _Type)
 {
 	switch (m_Type)

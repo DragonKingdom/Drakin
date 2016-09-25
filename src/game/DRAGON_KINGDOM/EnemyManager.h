@@ -3,6 +3,8 @@
 
 #include "GameData.h"
 
+#define ENEMY_MAX 15
+
 class FileSaveLoad;
 class StateManager;
 class RoadChecker;
@@ -40,6 +42,7 @@ private:
 	HouseChecker*	m_pHouseChecker;
 	HumanChecker*	m_pHumanChecker;
 	std::vector<Enemy*> m_pEnemy;
+	HouseNum			m_HouseNum;
 
 };
 

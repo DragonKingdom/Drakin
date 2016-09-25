@@ -9,7 +9,7 @@
 #include "Church.h"
 
 
-Church::Church(D3DXVECTOR3 _housePos, float _angle, int _Type) :
+Church::Church(D3DXVECTOR3 _housePos, float _angle, BUILD_STATE _Type) :
 House(_housePos, _angle, _Type)
 {
 	FbxFileManager::Get()->FileImport("fbx//kyoukai_LV1.fbx");

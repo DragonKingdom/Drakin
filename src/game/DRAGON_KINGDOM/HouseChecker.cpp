@@ -1,9 +1,11 @@
 #include "HouseChecker.h"
+#include "HouseManager.h"
 
 
 HouseChecker::HouseChecker(HouseManager* _pHouseManager):
 m_pHouseManager(_pHouseManager)
 {
+
 }
 
 HouseChecker::~HouseChecker()
@@ -12,7 +14,7 @@ HouseChecker::~HouseChecker()
 
 D3DXVECTOR3 HouseChecker::GetRandomPrivateHousePos()
 {
-	return D3DXVECTOR3(0, 0, 0);
+	return m_pHouseManager->GetHouseRandomPos();
 }
 
 D3DXVECTOR3 HouseChecker::GetPrivateHousePos(D3DXVECTOR3 _CheckPos)
@@ -29,4 +31,14 @@ float HouseChecker::GetHouseAngle(D3DXVECTOR3 _CheckPos)
 void HouseChecker::GetHouseStatus(D3DXVECTOR3 _CheckPos)
 {
 	///@todo ¡‚Ì‚Æ‚±‚ë‚Í•Ô‚è’l‚È‚µ
+}
+
+void HouseChecker::CheckCollison(int* _array, bool* _hitFlag, D3DXVECTOR3 _checkPos)
+{
+	m_pHouseManager->CheckCollision(_array, _hitFlag, _checkPos);
+}
+
+bool HouseChecker::Damage(int _array, int _damage)
+{
+	return m_pHouseManager->Damage(_array,_damage);
 }

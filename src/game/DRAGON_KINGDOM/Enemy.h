@@ -1,10 +1,12 @@
 #ifndef ENEMY_H
 #define ENEMY_H
 
+#define ENEMY_MOVE_SPEED 70.f
 #define DEFAULT_ENEMY_HITPOINT 30
 #define DEFAULT_ENEMY_MAGICPOINT 20
 #define DEFAULT_ENEMY_POWER 10
 #define DEFAULT_ENEMY_TIME 7200
+#define ENEMY_ATTACK 5
 
 class FbxModel;
 class ShaderAssist;
@@ -76,12 +78,16 @@ private:
 	std::vector<FbxModel*>	m_pWalkAnimation;
 	std::vector<FbxModel*>	m_pAttackAnimation;
 	D3DXVECTOR3				m_EnemyPos;
+	D3DXVECTOR3				m_TargetPos;
+	int						m_DisplacementX;
+	int						m_DisplacementZ;
 	float					m_Angle;
 	D3DXMATRIX				m_World;
+	int						m_AttackTime;
+	int						m_AttackHouseArray;
 	ShaderAssist*			m_pShaderAssist;
 	Texture					m_Texture;
 	D3DXHANDLE				m_LightDir, m_Ambient, m_CLUTTU, m_FogColor, m_Param1, m_Param2;
-
 };
 
 #endif

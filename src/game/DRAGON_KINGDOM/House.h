@@ -22,6 +22,7 @@ public:
 		float Influence;		// 影響度
 		int Age;				// 年齢
 		int Hp;					// 耐久度
+		int DamagePoint;		//ダメージをどれくらい受けたか
 	};
 
 	// 建物レベル
@@ -32,13 +33,14 @@ public:
 		LVMAX
 	};
 
-	House(D3DXVECTOR3 _housePos, float _angle, int _Type);
+	House(D3DXVECTOR3 _housePos, float _angle, BUILD_STATE _Type);
 	virtual ~House();
 	/**2016/09/03k型を変更 haga*/
 	virtual BUILD_STATE Control();
 	virtual void Draw();
 	Status			GetHouseStatus(){ return m_Status; };
-	virtual Status	GetMainStatus(){ return Status{ 10.f, 10.f, 1000.f, 0, 0 }; };
+	BUILD_STATE		GetBuildType(){ return m_Type; };
+	virtual Status	GetMainStatus(){ return Status{ 10.f, 10.f, 1000.f, 0, 20, 0 }; };
 	D3DXVECTOR3		GetHousePos(){ return m_HousePos; };
 	void			GetHouseData(std::vector<float>* _pHouseVertexData, std::vector<float>* _pHouseAngleData, std::vector<int>* _pHouseStatus);
 	void			SetHouseStatus(House::Status _Status){ m_Status = _Status; };
@@ -50,7 +52,9 @@ public:
 	virtual float GetInfluence();
 	/**最終ステータスを決定する*/
 	void			DecisionHouseStatus();
-	
+
+	/*建物をチェックして、HPが一定以下ならtrueを返す*/
+	bool			UpDateHouseData();
 	
 
 protected:
@@ -58,7 +62,7 @@ protected:
 	D3DXVECTOR3				m_HousePos;
 	float					m_Angle;
 	D3DXMATRIX				m_World;				// ワールド変換行列
-	int						m_Type;					// 建物の種類
+	BUILD_STATE				m_Type;					// 建物の種類
 	House::Status			m_Status;				// 建物のステータス(基本ステータス + 補正値)
 	House::Status			m_BasicStatus;			// 建物の基本ステータス
 	House::Status			m_CorrectionStatus;		// 他の建物からの補正値

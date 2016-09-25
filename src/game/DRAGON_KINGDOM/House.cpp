@@ -3,7 +3,7 @@
 #include "ShaderAssist.h"
 
 
-House::House(D3DXVECTOR3 _housePos, float _angle, int _Type) :
+House::House(D3DXVECTOR3 _housePos, float _angle, BUILD_STATE _Type) :
 m_HousePos(_housePos),
 m_Angle(_angle),
 m_Type(_Type),
@@ -40,7 +40,8 @@ m_pShaderAssist(new ShaderAssist())
 	m_Status.Landscape = 10.f;
 	m_Status.Influence = 1000.f;
 	m_Status.Age = 0;
-	m_Status.Hp = 0;
+	m_Status.Hp = 20;
+	m_Status.DamagePoint = 0;
 
 	// ï‚ê≥ílÇèâä˙âª
 	m_CorrectionStatus.Comfort = 0.f;
@@ -130,7 +131,7 @@ void House::DecisionHouseStatus()
 	m_Status.Comfort   = (m_BasicStatus.Comfort + m_CorrectionStatus.Comfort);
 	m_Status.Influence = (m_BasicStatus.Influence + m_CorrectionStatus.Influence);
 	m_Status.Landscape = (m_BasicStatus.Landscape + m_CorrectionStatus.Landscape);
-	m_Status.Hp		   = (m_BasicStatus.Hp + m_CorrectionStatus.Hp);
+	m_Status.Hp		   = (m_BasicStatus.Hp + m_CorrectionStatus.Hp) - m_Status.DamagePoint;
 	
 	//ï‚ê≥ílÇèâä˙âª
 	m_CorrectionStatus.Comfort = 0.f;
@@ -138,4 +139,14 @@ void House::DecisionHouseStatus()
 	m_CorrectionStatus.Landscape = 0.f;
 	m_CorrectionStatus.Hp = 0;
 	
+}
+
+bool House::UpDateHouseData()
+{
+	m_Status.Hp = (m_BasicStatus.Hp + m_CorrectionStatus.Hp) - m_Status.DamagePoint;
+	if (m_Status.Hp <= 0)
+	{
+		return true;
+	}
+	return false;
 }

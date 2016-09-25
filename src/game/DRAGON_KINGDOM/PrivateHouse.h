@@ -8,7 +8,7 @@
 class PrivateHouse :public House
 {
 public:
-	PrivateHouse(D3DXVECTOR3 _housePos, float _angle, int _Type);
+	PrivateHouse(D3DXVECTOR3 _housePos, float _angle, BUILD_STATE _Type);
 	virtual ~PrivateHouse();
 	virtual BUILD_STATE Control();
 	virtual void Draw();

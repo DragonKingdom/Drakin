@@ -36,7 +36,9 @@ public:
 	 */
 	void GetHouseStatus(D3DXVECTOR3 _CheckPos);
 
+	void CheckCollison(int* _array, bool* _hitFlag, D3DXVECTOR3 _checkPos);
 
+	bool Damage(int _array,int _damage);
 private:
 	HouseManager* m_pHouseManager;
 

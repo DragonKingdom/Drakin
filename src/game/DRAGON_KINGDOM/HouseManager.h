@@ -38,10 +38,11 @@ public:
 	/**二点間の距離を求め、効果の強さを測定する関数*/
 	float GetInfluenceRange(D3DXVECTOR3* _centerHousePos, D3DXVECTOR3* _checkHousePos);
 
-
+	D3DXVECTOR3 GetHouseRandomPos();
 	void Load(FileSaveLoad* _pFileSaveLoad);
 	void Save(FileSaveLoad* _pFileSaveLoad);
-
+	void CheckCollision(int* _array, bool* _hitFlag, D3DXVECTOR3 _checkPos);
+	bool Damage(int _array,int _damage);
 private:
 	void HouseControl();			//建物関連のコントロール関数
 	void BuildControl();
