@@ -30,7 +30,7 @@ m_DisplacementX(0.f),
 m_DisplacementZ(0.f)
 {
 	m_Texture.Load("Resource\\image\\CLUTLight.jpg");
-	m_pShaderAssist->LoadTechnique("Effect\\HumanEffect.fx", "HumanEffect", "WVPP");
+	m_pShaderAssist->LoadTechnique("Effect\\MaouEffect.fx", "MaouEffect", "WVPP");
 	m_LightDir = m_pShaderAssist->GetParameterHandle("LightDir");
 	m_Ambient = m_pShaderAssist->GetParameterHandle("Ambient");
 	m_CLUTTU = m_pShaderAssist->GetParameterHandle("CLUTTU");
@@ -284,7 +284,7 @@ void Human::WalkAnimationDraw()
 	for (unsigned int i = 0; i < m_pWalkAnimation->size(); i++)
 	{
 		(*m_pWalkAnimation)[i]->SetAnimationFrame(m_AnimationFrame);
-		(*m_pWalkAnimation)[i]->NonTextureAnimationDraw();
+		(*m_pWalkAnimation)[i]->AnimationDraw();
 	}
 
 

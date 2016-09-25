@@ -615,6 +615,30 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 	pModelData->PrimitiveCount = PrimitiveCount;
 	pModelData->pVertex = new UserVertex[VertexCount];		// 現在はすべての頂点ぶん確保
 
+
+	if (animationData != NULL)
+	{
+		switch (TextureUv.size())
+		{
+		case 1:
+			pModelData->CustomUser.m_pUserVertex = new UserVertex[VertexCount];
+			pModelData->CustomUser.m_Type = USERVERTEX_1;
+
+			break;
+		case 2:
+			pModelData->CustomUser.m_pUserVertex2 = new UserVertex2[VertexCount];
+			pModelData->CustomUser.m_Type = USERVERTEX_2;
+
+			break;
+		case 3:
+			pModelData->CustomUser.m_pUserVertex3 = new UserVertex3[VertexCount];
+			pModelData->CustomUser.m_Type = USERVERTEX_3;
+
+			break;
+		}
+	}
+	
+
 	pModelData->pIndex.IndexAry = IndexAry;
 	pModelData->pIndex.IndexCount = VertexCount;
 	pModelData->pIndex.pVertex = new D3DXVECTOR3[ControlPointCount];
@@ -632,6 +656,28 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 		pModelData->pVertex[i].Vec.x = pVertex[IndexAry[i]].x;	// x座標
 		pModelData->pVertex[i].Vec.y = pVertex[IndexAry[i]].y;	// y座標
 		pModelData->pVertex[i].Vec.z = pVertex[IndexAry[i]].z;	// z座標
+
+		if (animationData != NULL)
+		{
+			switch (TextureUv.size())
+			{
+			case 1:
+				pModelData->CustomUser.m_pUserVertex[i].Vec.x = pVertex[IndexAry[i]].x;
+				pModelData->CustomUser.m_pUserVertex[i].Vec.y = pVertex[IndexAry[i]].y;
+				pModelData->CustomUser.m_pUserVertex[i].Vec.z = pVertex[IndexAry[i]].z;
+				break;
+			case 2:
+				pModelData->CustomUser.m_pUserVertex2[i].Vec.x = pVertex[IndexAry[i]].x;
+				pModelData->CustomUser.m_pUserVertex2[i].Vec.y = pVertex[IndexAry[i]].y;
+				pModelData->CustomUser.m_pUserVertex2[i].Vec.z = pVertex[IndexAry[i]].z;
+				break;
+			case 3:
+				pModelData->CustomUser.m_pUserVertex3[i].Vec.x = pVertex[IndexAry[i]].x;
+				pModelData->CustomUser.m_pUserVertex3[i].Vec.y = pVertex[IndexAry[i]].y;
+				pModelData->CustomUser.m_pUserVertex3[i].Vec.z = pVertex[IndexAry[i]].z;
+				break;
+			}
+		}
 	}
 
 	// 法線あるならつめる
@@ -642,6 +688,28 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 			pModelData->pVertex[i].Normal.x = pNormalVec[i].x;	// 法線のxベクトル
 			pModelData->pVertex[i].Normal.y = pNormalVec[i].y;	// 法線のyベクトル
 			pModelData->pVertex[i].Normal.z = pNormalVec[i].z;	// 法線のzベクトル
+
+			if (animationData != NULL)
+			{
+				switch (TextureUv.size())
+				{
+				case 1:
+					pModelData->CustomUser.m_pUserVertex[i].Normal.x = pNormalVec[i].x;
+					pModelData->CustomUser.m_pUserVertex[i].Normal.y = pNormalVec[i].y;
+					pModelData->CustomUser.m_pUserVertex[i].Normal.z = pNormalVec[i].z;
+					break;
+				case 2:
+					pModelData->CustomUser.m_pUserVertex2[i].Normal.x = pNormalVec[i].x;
+					pModelData->CustomUser.m_pUserVertex2[i].Normal.y = pNormalVec[i].y;
+					pModelData->CustomUser.m_pUserVertex2[i].Normal.z = pNormalVec[i].z;
+					break;
+				case 3:
+					pModelData->CustomUser.m_pUserVertex3[i].Normal.x = pNormalVec[i].x;
+					pModelData->CustomUser.m_pUserVertex3[i].Normal.y = pNormalVec[i].y;
+					pModelData->CustomUser.m_pUserVertex3[i].Normal.z = pNormalVec[i].z;
+					break;
+				}
+			}
 		}
 	}
 	else
@@ -651,12 +719,78 @@ void FbxFileManager::GetMesh(fbxsdk::FbxNodeAttribute* _pAttribute)
 			pModelData->pVertex[i].Normal.x = 0;		// 法線のxベクトル
 			pModelData->pVertex[i].Normal.y = 0;		// 法線のyベクトル
 			pModelData->pVertex[i].Normal.z = 0;		// 法線のzベクトル
+
+			if (animationData != NULL)
+			{
+				switch (TextureUv.size())
+				{
+				case 1:
+					pModelData->CustomUser.m_pUserVertex[i].Normal.x = 0;
+					pModelData->CustomUser.m_pUserVertex[i].Normal.y = 0;
+					pModelData->CustomUser.m_pUserVertex[i].Normal.z = 0;
+					break;
+				case 2:
+					pModelData->CustomUser.m_pUserVertex2[i].Normal.x = 0;
+					pModelData->CustomUser.m_pUserVertex2[i].Normal.y = 0;
+					pModelData->CustomUser.m_pUserVertex2[i].Normal.z = 0;
+					break;
+				case 3:
+					pModelData->CustomUser.m_pUserVertex3[i].Normal.x = 0;
+					pModelData->CustomUser.m_pUserVertex3[i].Normal.y = 0;
+					pModelData->CustomUser.m_pUserVertex3[i].Normal.z = 0;
+					break;
+				}
+			}
 		}
 	}
 
 	// Uvあるなら詰める
 	if (TextureUv[0] != NULL)
 	{
+		if (animationData != NULL)
+		{
+			switch (TextureUv.size())
+			{
+			case 1:
+				for (int i = 0; i < VertexCount; i++)
+				{
+					pModelData->CustomUser.m_pUserVertex[i].tu = TextureUv[0][i].x;	// テクスチャのx座標
+					pModelData->CustomUser.m_pUserVertex[i].tv = TextureUv[0][i].y;	// テクスチャのy座標
+				}
+				break;
+			case 2:
+				for (int i = 0; i < VertexCount; i++)
+				{
+					pModelData->CustomUser.m_pUserVertex2[i].tu = TextureUv[0][i].x;	// テクスチャのx座標
+					pModelData->CustomUser.m_pUserVertex2[i].tv = TextureUv[0][i].y;	// テクスチャのy座標
+				}
+
+				for (int i = 0; i < VertexCount; i++)
+				{
+					pModelData->CustomUser.m_pUserVertex2[i].tu2 = TextureUv[1][i].x;	// テクスチャのx座標
+					pModelData->CustomUser.m_pUserVertex2[i].tv2 = TextureUv[1][i].y;	// テクスチャのy座標
+				}
+				break;
+			case 3:
+				for (int i = 0; i < VertexCount; i++)
+				{
+					pModelData->CustomUser.m_pUserVertex3[i].tu = TextureUv[0][i].x;	// テクスチャのx座標
+					pModelData->CustomUser.m_pUserVertex3[i].tv = TextureUv[0][i].y;	// テクスチャのy座標
+				}
+				for (int i = 0; i < VertexCount; i++)
+				{
+					pModelData->CustomUser.m_pUserVertex3[i].tu2 = TextureUv[1][i].x;	// テクスチャのx座標
+					pModelData->CustomUser.m_pUserVertex3[i].tv2 = TextureUv[1][i].y;	// テクスチャのy座標
+				}
+				for (int i = 0; i < VertexCount; i++)
+				{
+					pModelData->CustomUser.m_pUserVertex3[i].tu3 = TextureUv[2][i].x;	// テクスチャのx座標
+					pModelData->CustomUser.m_pUserVertex3[i].tv3 = TextureUv[2][i].y;	// テクスチャのy座標
+				}
+				break;
+			}
+		}
+
 		for (int i = 0; i < VertexCount; i++)
 		{
 			pModelData->pVertex[i].tu = TextureUv[0][i].x;	// テクスチャのx座標

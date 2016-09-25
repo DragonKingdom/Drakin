@@ -41,6 +41,11 @@ CharacterManager::~CharacterManager()
 
 	for (unsigned int i = 0; i < m_pMaouWalkModel.size(); i++)
 	{
+		m_pMaouWalkModel[i]->ReleaseAnimation();
+	}
+
+	for (unsigned int i = 0; i < m_pMaouWalkModel.size(); i++)
+	{
 		delete m_pMaouWalkModel[i];
 	}
 }

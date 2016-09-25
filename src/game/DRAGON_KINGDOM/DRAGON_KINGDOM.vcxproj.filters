@@ -719,5 +719,11 @@
     <FxCompile Include="Effect\NormalHouseEffect.fx">
       <Filter>Effect</Filter>
     </FxCompile>
+    <FxCompile Include="Effect\MaouEffect.fx">
+      <Filter>Effect</Filter>
+    </FxCompile>
+    <FxCompile Include="Effect\HumanEffect.fx">
+      <Filter>Effect</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

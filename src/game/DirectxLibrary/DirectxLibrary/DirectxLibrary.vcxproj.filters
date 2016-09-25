@@ -72,6 +72,9 @@
     <Filter Include="DSoundManager">
       <UniqueIdentifier>{6a9feca6-04ca-4c18-9a1d-d06740cf0a2e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FbxFileManager\FbxModel\UsetVertex">
+      <UniqueIdentifier>{b7d6252e-969f-45d0-9fe2-2e58c63b3915}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -143,6 +146,9 @@
     <ClCompile Include="DSoundManager.cpp">
       <Filter>DSoundManager</Filter>
     </ClCompile>
+    <ClCompile Include="CustomUserVertex.cpp">
+      <Filter>FbxFileManager\FbxModel\UsetVertex</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="3DModel.h">
@@ -207,6 +213,9 @@
     </ClInclude>
     <ClInclude Include="DSoundManager.h">
       <Filter>DSoundManager</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomUserVertex.h">
+      <Filter>FbxFileManager\FbxModel\UsetVertex</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
