@@ -409,9 +409,6 @@ bool HouseManager::Damage(int _array,int Damage)
 	House::Status tmp = m_pHouse[_array]->GetHouseStatus();
 	tmp.DamagePoint += Damage;
 	m_pHouse[_array]->SetHouseStatus(tmp);
-	if (tmp.Hp <= 0)
-	{
-		return true;
-	}
-	return false;
+	
+	return m_pHouse[_array]->UpDateHouseData();;
 }

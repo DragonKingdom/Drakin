@@ -162,6 +162,8 @@ bool Enemy::BattleControl()
 	{
 		if (m_pHouseChecker->Damage(m_AttackHouseArray, ENEMY_ATTACK))
 		{
+			float length = pow((m_TargetPos.x - m_EnemyPos.x)*(m_TargetPos.x - m_EnemyPos.x) + 
+				(m_TargetPos.z - m_EnemyPos.z)*(m_TargetPos.z - m_EnemyPos.z),0.5);
 			if ((m_EnemyPos.x + 250) > m_TargetPos.x &&
 				(m_EnemyPos.x - 250) < m_TargetPos.x &&
 				(m_EnemyPos.z + 250) > m_TargetPos.z &&

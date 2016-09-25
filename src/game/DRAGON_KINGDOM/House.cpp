@@ -143,6 +143,7 @@ void House::DecisionHouseStatus()
 
 bool House::UpDateHouseData()
 {
+	m_Status.Hp = (m_BasicStatus.Hp + m_CorrectionStatus.Hp) - m_Status.DamagePoint;
 	if (m_Status.Hp <= 0)
 	{
 		return true;
