@@ -7,7 +7,9 @@
 Enemy::Enemy(RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker) :
 m_pRoadChecker(_pRoadChecker),
 m_pHouseChecker(_pHouseChecker),
-m_pShaderAssist(new ShaderAssist())
+m_pShaderAssist(new ShaderAssist()),
+m_AttackTime(0),
+m_AttackHouseArray(0)
 {
 	m_Texture.Load("Resource\\image\\CLUTLight.jpg");
 	m_pShaderAssist->LoadTechnique("Effect\\EnemyEffect.fx", "EnemyEffect", "WVPP");
@@ -130,12 +132,21 @@ bool Enemy::NormalControl()
 		(m_EnemyPos.z + m_DisplacementZ + 250) > m_TargetPos.z &&
 		(m_EnemyPos.z - m_DisplacementZ - 250) < m_TargetPos.z)
 	{
-		isDestroy = true;
+		m_Status.ControlState = BATTLE_CONTROL;
 	}
 	else
 	{
 		m_EnemyPos.x += m_DisplacementX;
 		m_EnemyPos.z += m_DisplacementZ;
+	}
+
+	bool hitFlag;
+	m_pHouseChecker->CheckCollison(&m_AttackHouseArray, &hitFlag, m_EnemyPos);
+
+	//‰Æ‚É“–‚½‚Á‚½‚çUŒ‚ƒ‚[ƒh‚É‚È‚éB
+	if (hitFlag)
+	{
+		m_Status.ControlState = BATTLE_CONTROL;
 	}
 
 	return isDestroy;
@@ -144,7 +155,28 @@ bool Enemy::NormalControl()
 bool Enemy::BattleControl()
 {
 	bool isDestroy = false;
+	bool hitFlag;
+	m_pHouseChecker->CheckCollison(&m_AttackHouseArray, &hitFlag, m_EnemyPos);
 
+	if (m_AttackTime / 120)
+	{
+		if (m_pHouseChecker->Damage(m_AttackHouseArray, ENEMY_ATTACK))
+		{
+			if ((m_EnemyPos.x + 250) > m_TargetPos.x &&
+				(m_EnemyPos.x - 250) < m_TargetPos.x &&
+				(m_EnemyPos.z + 250) > m_TargetPos.z &&
+				(m_EnemyPos.z - 250) < m_TargetPos.z)
+			{
+				isDestroy = true;
+			}
+			else
+			{
+				m_Status.ControlState = NORMAL_CONTROL;
+			}
+		}
+		m_AttackTime = 0;
+	}
+	m_AttackTime++;
 	return isDestroy;
 }
 
