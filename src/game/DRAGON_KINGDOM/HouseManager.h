@@ -41,7 +41,8 @@ public:
 	D3DXVECTOR3 GetHouseRandomPos();
 	void Load(FileSaveLoad* _pFileSaveLoad);
 	void Save(FileSaveLoad* _pFileSaveLoad);
-
+	void CheckCollision(int* _array, bool* _hitFlag, D3DXVECTOR3 _checkPos);
+	bool Damage(int _array,int _damage);
 private:
 	void HouseControl();			//建物関連のコントロール関数
 	void BuildControl();

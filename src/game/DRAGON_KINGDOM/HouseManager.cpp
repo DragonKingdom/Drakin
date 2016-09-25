@@ -138,12 +138,17 @@ void HouseManager::HouseControl()
 			}
 		}
 	}
-		//ステータスを決定する
 	for (unsigned int i = 0; i < m_pHouse.size(); i++)
 	{
+		//ステータスを決定する
 		m_pHouse[i]->DecisionHouseStatus();
+		//家が壊れていないかの確認
+		if (m_pHouse[i]->UpDateHouseData())
+		{
+			delete m_pHouse[i];
+			m_pHouse.erase(m_pHouse.begin() + i);
+		}
 	}
-
 }
 
 //建物をつくるかを判断し、建物をつくる関数を呼ぶ関数)
@@ -381,3 +386,32 @@ D3DXVECTOR3 HouseManager::GetHouseRandomPos()
 	return m_pHouse[houseArrayNum]->GetHousePos();
 }
 
+void HouseManager::CheckCollision(int* _array, bool* _hitFlag, D3DXVECTOR3 _checkPos)
+{
+	for (int i = 0; i < m_pHouse.size(); i++)
+	{
+		D3DXVECTOR3 pos = m_pHouse[i]->GetHousePos();
+		if ((_checkPos.x + 250) > pos.x &&
+			(_checkPos.x - 250) < pos.x &&
+			(_checkPos.z + 250) > pos.z &&
+			(_checkPos.z - 250) < pos.z)
+		{
+			*_hitFlag = true;
+			*_array = i;
+			return;
+		}
+	}
+	*_hitFlag = false;
+}
+
+bool HouseManager::Damage(int _array,int Damage)
+{
+	House::Status tmp = m_pHouse[_array]->GetHouseStatus();
+	tmp.DamagePoint += Damage;
+	m_pHouse[_array]->SetHouseStatus(tmp);
+	if (tmp.Hp <= 0)
+	{
+		return true;
+	}
+	return false;
+}

@@ -22,6 +22,7 @@ public:
 		float Influence;		// 影響度
 		int Age;				// 年齢
 		int Hp;					// 耐久度
+		int DamagePoint;		//ダメージをどれくらい受けたか
 	};
 
 	// 建物レベル
@@ -39,7 +40,7 @@ public:
 	virtual void Draw();
 	Status			GetHouseStatus(){ return m_Status; };
 	BUILD_STATE		GetBuildType(){ return m_Type; };
-	virtual Status	GetMainStatus(){ return Status{ 10.f, 10.f, 1000.f, 0, 0 }; };
+	virtual Status	GetMainStatus(){ return Status{ 10.f, 10.f, 1000.f, 0, 20, 0 }; };
 	D3DXVECTOR3		GetHousePos(){ return m_HousePos; };
 	void			GetHouseData(std::vector<float>* _pHouseVertexData, std::vector<float>* _pHouseAngleData, std::vector<int>* _pHouseStatus);
 	void			SetHouseStatus(House::Status _Status){ m_Status = _Status; };
@@ -51,7 +52,9 @@ public:
 	virtual float GetInfluence();
 	/**最終ステータスを決定する*/
 	void			DecisionHouseStatus();
-	
+
+	/*建物をチェックして、HPが一定以下ならtrueを返す*/
+	bool			UpDateHouseData();
 	
 
 protected:

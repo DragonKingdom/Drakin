@@ -32,3 +32,13 @@ void HouseChecker::GetHouseStatus(D3DXVECTOR3 _CheckPos)
 {
 	///@todo ¡‚Ì‚Æ‚±‚ë‚Í•Ô‚è’l‚È‚µ
 }
+
+void HouseChecker::CheckCollison(int* _array, bool* _hitFlag, D3DXVECTOR3 _checkPos)
+{
+	m_pHouseManager->CheckCollision(_array, _hitFlag, _checkPos);
+}
+
+bool HouseChecker::Damage(int _array, int _damage)
+{
+	return m_pHouseManager->Damage(_array,_damage);
+}
