@@ -29,6 +29,7 @@ void* CustomUserVertex::GetVertex()
 		return m_pUserVertex3;
 		break;
 	}
+	return NULL;
 }
 
 int CustomUserVertex::GetVertexSize()

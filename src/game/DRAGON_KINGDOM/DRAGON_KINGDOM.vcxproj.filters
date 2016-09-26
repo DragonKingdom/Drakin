@@ -684,9 +684,6 @@
     <ClInclude Include="EnemyChecker.h">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\EnemyChecker</Filter>
     </ClInclude>
-    <ClInclude Include="Human.h">
-      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\HumanManager\Human</Filter>
-    </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\EnemyManager\Enemy</Filter>
     </ClInclude>
@@ -698,6 +695,9 @@
     </ClInclude>
     <ClInclude Include="ResourceManager.h">
       <Filter>main\ResourceManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Human.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\HumanManager\Human</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -717,12 +717,6 @@
       <Filter>Effect</Filter>
     </FxCompile>
     <FxCompile Include="Effect\NormalHouseEffect.fx">
-      <Filter>Effect</Filter>
-    </FxCompile>
-    <FxCompile Include="Effect\MaouEffect.fx">
-      <Filter>Effect</Filter>
-    </FxCompile>
-    <FxCompile Include="Effect\HumanEffect.fx">
       <Filter>Effect</Filter>
     </FxCompile>
   </ItemGroup>

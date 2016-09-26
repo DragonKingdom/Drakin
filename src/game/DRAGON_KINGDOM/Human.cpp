@@ -2,6 +2,7 @@
 #include "ShaderAssist.h"
 #include "RoadChecker.h"
 #include "HouseChecker.h"
+#include "EnemyChecker.h"
 #include "FbxFileManager.h"
 
 void CalcLookAtMatrix(D3DXMATRIX* pout, D3DXVECTOR3* pPos, D3DXVECTOR3* pLook, D3DXVECTOR3* pUp)
@@ -20,17 +21,19 @@ void CalcLookAtMatrix(D3DXMATRIX* pout, D3DXVECTOR3* pPos, D3DXVECTOR3* pLook, D
 	pout->_41 = 0.0f; pout->_42 = 0.0f; pout->_43 = 0.0f; pout->_44 = 1.0f;
 }
 
-Human::Human(RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker, ResourceManager<CHARACTERMODEL_ID, std::vector<FbxModel*>>* _pResourceManager) :
+Human::Human(RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker, EnemyChecker* _pEnemyChecker, ResourceManager<CHARACTERMODEL_ID, std::vector<FbxModel*>>* _pResourceManager) :
 m_pRoadChecker(_pRoadChecker),
 m_pHouseChecker(_pHouseChecker),
+m_pEnemyChecker(_pEnemyChecker),
 m_pShaderAssist(new ShaderAssist()),
 m_isReturn(false),
-m_AnimationFrame(0),
+m_WalkAnimationFrame(0),
+m_AttackAnimationFrame(0),
 m_DisplacementX(0.f),
 m_DisplacementZ(0.f)
 {
 	m_Texture.Load("Resource\\image\\CLUTLight.jpg");
-	m_pShaderAssist->LoadTechnique("Effect\\MaouEffect.fx", "MaouEffect", "WVPP");
+	m_pShaderAssist->LoadTechnique("Effect\\HumanEffect.fx", "HumanEffect", "WVPP");
 	m_LightDir = m_pShaderAssist->GetParameterHandle("LightDir");
 	m_Ambient = m_pShaderAssist->GetParameterHandle("Ambient");
 	m_CLUTTU = m_pShaderAssist->GetParameterHandle("CLUTTU");
@@ -39,7 +42,10 @@ m_DisplacementZ(0.f)
 	m_Param2 = m_pShaderAssist->GetParameterHandle("Param2");
 
 	m_pWalkAnimation = _pResourceManager->GetResource(MAOU_WALK);
-	m_AnimationFrameMax = (*m_pWalkAnimation)[0]->GetAnimationFrameMax();
+	m_WalkAnimationFrameMax = (*m_pWalkAnimation)[0]->GetAnimationFrameMax();
+
+	m_pAttackAnimation = _pResourceManager->GetResource(MAOU_ATTACK);
+	m_AttackAnimationFrameMax = (*m_pAttackAnimation)[0]->GetAnimationFrameMax();
 
 	m_HumanPos = m_pHouseChecker->GetRandomPrivateHousePos();
 	m_NextPos = m_HumanPos;
@@ -113,19 +119,19 @@ bool Human::NormalControl()
 
 	//m_Status.Time--;
 
-	if (m_AnimationFrame < m_AnimationFrameMax)
+	if (m_WalkAnimationFrame < m_WalkAnimationFrameMax)
 	{
-		m_AnimationFrame++;
+		m_WalkAnimationFrame++;
 	}
 	else
 	{
-		m_AnimationFrame = 0;
+		m_WalkAnimationFrame = 0;
 	}
 
-	if ((m_HumanPos.x + m_DisplacementX + 75) > m_NextPos.x &&
-		(m_HumanPos.x - m_DisplacementX - 75) < m_NextPos.x &&
-		(m_HumanPos.z + m_DisplacementZ + 75) > m_NextPos.z &&
-		(m_HumanPos.z - m_DisplacementZ - 75) < m_NextPos.z)
+	if ((m_HumanPos.x + m_DisplacementX + 100) > m_NextPos.x &&
+		(m_HumanPos.x - m_DisplacementX - 100) < m_NextPos.x &&
+		(m_HumanPos.z + m_DisplacementZ + 100) > m_NextPos.z &&
+		(m_HumanPos.z - m_DisplacementZ - 100) < m_NextPos.z)
 	{
 		m_HumanPos = m_NextPos;
 	}
@@ -173,6 +179,20 @@ bool Human::NormalControl()
 		}
 	}
 
+
+	bool isEnemy = false;
+	m_EnemyPos = m_pEnemyChecker->GetShortDistanceEnemyPos(m_HumanPos, &isEnemy);
+	if (isEnemy)
+	{
+		float X = pow(m_EnemyPos.x - m_HumanPos.x, 2);
+		float Z = pow(m_EnemyPos.z - m_HumanPos.z, 2);
+		if (sqrt(X + Z) < DEFAULT_SEARCH)
+		{
+			m_Status.ControlState = BATTLE_CONTROL;
+		}
+	}
+
+
 	return isDestroy;
 }
 
@@ -180,6 +200,65 @@ bool Human::BattleControl()
 {
 	bool isDestroy = false;
 
+	bool isEnemy = false;
+	m_EnemyPos = m_pEnemyChecker->GetShortDistanceEnemyPos(m_HumanPos, &isEnemy);
+	if (isEnemy)
+	{
+		float X = pow(m_EnemyPos.x - m_HumanPos.x, 2);
+		float Z = pow(m_EnemyPos.z - m_HumanPos.z, 2);
+		float Length = sqrt(X + Z);
+		if (Length < DEFAULT_SEARCH)
+		{
+			if (Length < DEFAULT_RANGE)
+			{
+				if (m_AttackAnimationFrame < m_AttackAnimationFrameMax)
+				{
+					m_AttackAnimationFrame++;
+				}
+				else
+				{
+					m_AttackAnimationFrame = 0;
+				}
+				
+			}
+			else
+			{
+				if (m_WalkAnimationFrame < m_WalkAnimationFrameMax)
+				{
+					m_WalkAnimationFrame++;
+				}
+				else
+				{
+					m_WalkAnimationFrame = 0;
+				}
+
+				m_Angle = atan2(m_EnemyPos.z - m_HumanPos.z, m_EnemyPos.x - m_HumanPos.x);
+
+				m_DisplacementX = HUMAN_MOVE_SPEED * cos(m_Angle);
+				m_DisplacementZ = HUMAN_MOVE_SPEED * sin(m_Angle);
+
+				m_HumanPos.x += m_DisplacementX;
+				m_HumanPos.z += m_DisplacementZ;
+			}
+		}
+		else
+		{
+			m_Angle = atan2(m_NextPos.z - m_HumanPos.z, m_NextPos.x - m_HumanPos.x);
+
+			m_DisplacementX = HUMAN_MOVE_SPEED * cos(m_Angle);
+			m_DisplacementZ = HUMAN_MOVE_SPEED * sin(m_Angle);
+			m_Status.ControlState = NORMAL_CONTROL;
+		}
+	}
+	else
+	{
+		m_Angle = atan2(m_NextPos.z - m_HumanPos.z, m_NextPos.x - m_HumanPos.x);
+
+		m_DisplacementX = HUMAN_MOVE_SPEED * cos(m_Angle);
+		m_DisplacementZ = HUMAN_MOVE_SPEED * sin(m_Angle);
+		m_Status.ControlState = NORMAL_CONTROL;
+	}
+	
 	return isDestroy;
 }
 
@@ -244,7 +323,17 @@ void Human::WalkAnimationDraw()
 	D3DXMATRIX PositionMatrix;
 
 	D3DXMatrixIdentity(&m_World);
-	CalcLookAtMatrix(&m_Rotation, &m_HumanPos, &m_NextPos, &D3DXVECTOR3(0, 1, 0));
+	D3DXMatrixScaling(&m_World, 4, 4, 4);
+
+	if (m_Status.ControlState == BATTLE_CONTROL)
+	{
+		CalcLookAtMatrix(&m_Rotation, &m_HumanPos, &m_EnemyPos, &D3DXVECTOR3(0, 1, 0));
+	}
+	else
+	{
+		CalcLookAtMatrix(&m_Rotation, &m_HumanPos, &m_NextPos, &D3DXVECTOR3(0, 1, 0));
+	}
+	
 	D3DXMatrixMultiply(&m_World, &m_World, &m_Rotation);
 
 
@@ -283,7 +372,7 @@ void Human::WalkAnimationDraw()
 
 	for (unsigned int i = 0; i < m_pWalkAnimation->size(); i++)
 	{
-		(*m_pWalkAnimation)[i]->SetAnimationFrame(m_AnimationFrame);
+		(*m_pWalkAnimation)[i]->SetAnimationFrame(m_WalkAnimationFrame);
 		(*m_pWalkAnimation)[i]->AnimationDraw();
 	}
 
@@ -295,13 +384,21 @@ void Human::WalkAnimationDraw()
 void Human::AttackAnimationDraw()
 {
 	// åvéZópÇÃçsóÒ
-	D3DXMATRIX RotationMatrix;
 	D3DXMATRIX PositionMatrix;
 
 	D3DXMatrixIdentity(&m_World);
-	D3DXMatrixIdentity(&RotationMatrix);
-	D3DXMatrixRotationY(&RotationMatrix, m_Angle);
-	D3DXMatrixMultiply(&m_World, &m_World, &RotationMatrix);
+	D3DXMatrixScaling(&m_World, 4, 4, 4);
+
+	if (m_Status.ControlState == BATTLE_CONTROL)
+	{
+		CalcLookAtMatrix(&m_Rotation, &m_HumanPos, &m_EnemyPos, &D3DXVECTOR3(0, 1, 0));
+	}
+	else
+	{
+		CalcLookAtMatrix(&m_Rotation, &m_HumanPos, &m_NextPos, &D3DXVECTOR3(0, 1, 0));
+	}
+
+	D3DXMatrixMultiply(&m_World, &m_World, &m_Rotation);
 
 	// à⁄ìÆ
 	D3DXMatrixTranslation(&PositionMatrix, m_HumanPos.x, m_HumanPos.y, m_HumanPos.z);
@@ -338,7 +435,8 @@ void Human::AttackAnimationDraw()
 
 	for (unsigned int i = 0; i < m_pAttackAnimation->size(); i++)
 	{
-		(*m_pAttackAnimation)[i]->NonTextureAnimationDraw();
+		(*m_pAttackAnimation)[i]->SetAnimationFrame(m_AttackAnimationFrame);
+		(*m_pAttackAnimation)[i]->AnimationDraw();
 	}
 
 

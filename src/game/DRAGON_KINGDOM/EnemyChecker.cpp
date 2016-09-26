@@ -11,7 +11,7 @@ EnemyChecker::~EnemyChecker()
 {
 }
 
-D3DXVECTOR3 EnemyChecker::GetShortDistanceEnemyPos(D3DXVECTOR3 _CheckPos)
+D3DXVECTOR3 EnemyChecker::GetShortDistanceEnemyPos(D3DXVECTOR3 _CheckPos, bool* _isEnemy)
 {
-	return m_pEnemyManager->GetShortDistanceEnemyPos(_CheckPos);
+	return m_pEnemyManager->GetShortDistanceEnemyPos(_CheckPos, _isEnemy);
 }

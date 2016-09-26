@@ -76,14 +76,16 @@ void EnemyManager::Save(FileSaveLoad* _pFileSaveLoad)
 {
 }
 
-D3DXVECTOR3 EnemyManager::GetShortDistanceEnemyPos(D3DXVECTOR3 _CheckPos)
+D3DXVECTOR3 EnemyManager::GetShortDistanceEnemyPos(D3DXVECTOR3 _CheckPos, bool* _isEnemy)
 {
 	D3DXVECTOR3 EnemyPos = D3DXVECTOR3(0, 0, 0);
 	float Length = 0.0;
 	float PreviousLength = 0.0f;
+	*_isEnemy = false;
 
 	for (unsigned int i = 0; i < m_pEnemy.size(); i++)
 	{
+		*_isEnemy = true;
 		D3DXVECTOR3 EnemyVec = m_pEnemy[i]->GetPos();
 		Length = sqrt(abs(pow(EnemyVec.x - _CheckPos.x, 2) + pow(EnemyVec.y - _CheckPos.y, 2)));
 

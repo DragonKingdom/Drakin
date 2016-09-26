@@ -32,7 +32,7 @@ void HumanManager::Control()
 		srand(unsigned int(time(NULL)));
 		if (rand() % 100 < 10)
 		{
-			m_pHuman.push_back(new Human(m_pRoadChecker, m_pHouseChecker, m_pResourceManager));
+			m_pHuman.push_back(new Human(m_pRoadChecker, m_pHouseChecker, m_pEnemyChecker, m_pResourceManager));
 		}
 	}
 

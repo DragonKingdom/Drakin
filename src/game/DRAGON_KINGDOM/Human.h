@@ -4,16 +4,19 @@
 #include "ResourceManager.h"
 #include "HumanManager.h"
 
-#define HUMAN_MOVE_SPEED (10.f)
+#define HUMAN_MOVE_SPEED (45.f)
 #define DEFAULT_HUMAN_HITPOINT 30
 #define DEFAULT_HUMAN_MAGICPOINT 20
 #define DEFAULT_HUMAN_POWER 10
 #define DEFAULT_HUMAN_TIME 7200
+#define DEFAULT_SEARCH 7000
+#define DEFAULT_RANGE 100
 
 class FbxModel;
 class ShaderAssist;
 class RoadChecker;
 class HouseChecker;
+class EnemyChecker;
 
 class Human
 {
@@ -43,8 +46,10 @@ public:
 
 	Human(
 		RoadChecker* _pRoadChecker, 
-		HouseChecker* _pHouseChecker, 
-		ResourceManager<CHARACTERMODEL_ID, std::vector<FbxModel*>>* _pResourceManager);
+		HouseChecker* _pHouseChecker,
+		EnemyChecker* _pEnemyChecker,
+		ResourceManager<CHARACTERMODEL_ID, 
+		std::vector<FbxModel*>>* _pResourceManager);
 	~Human();
 
 	/**
@@ -80,6 +85,7 @@ private:
 	Status					m_Status;
 	RoadChecker*			m_pRoadChecker;
 	HouseChecker*			m_pHouseChecker;
+	EnemyChecker*			m_pEnemyChecker;
 	std::vector<FbxModel*>*	m_pWaitAnimation;
 	std::vector<FbxModel*>*	m_pWalkAnimation;
 	std::vector<FbxModel*>*	m_pAttackAnimation;
@@ -87,8 +93,11 @@ private:
 	int						m_BufferIndex;
 	D3DXVECTOR3				m_HumanPos;
 	D3DXVECTOR3				m_NextPos;
-	int						m_AnimationFrame;
-	int						m_AnimationFrameMax;
+	D3DXVECTOR3				m_EnemyPos;
+	int						m_WalkAnimationFrame;
+	int						m_WalkAnimationFrameMax;
+	int						m_AttackAnimationFrame;
+	int						m_AttackAnimationFrameMax;
 	bool					m_isReturn;
 	float					m_DisplacementX;
 	float					m_DisplacementZ;

@@ -48,6 +48,7 @@ private:
 	EnemyChecker*	m_pEnemyChecker;
 
 	std::vector<FbxModel*> m_pMaouWalkModel;
+	std::vector<FbxModel*> m_pMaouAttackModel;
 
 };
 
