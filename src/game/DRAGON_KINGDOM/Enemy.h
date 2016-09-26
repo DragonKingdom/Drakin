@@ -34,6 +34,7 @@ public:
 		int HitPoint;
 		int MagicPoint;
 		int Power;
+		int DamagePoint;
 		ControlMode		ControlState;
 		AnimationMode	AnimationState;
 	};
@@ -63,6 +64,14 @@ public:
 	 * @return Enemyのステータス
 	 */
 	Enemy::Status GetStatus();
+
+	/**
+	 * Enemyのステータスを取得する関数
+	 * @param[in] セットEnemyのステータス
+	 */
+	void SetStatus(Enemy::Status _Status);
+
+	bool UpDateHouseData();
 
 private:
 	bool NormalControl();

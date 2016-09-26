@@ -404,11 +404,11 @@ void HouseManager::CheckCollision(int* _array, bool* _hitFlag, D3DXVECTOR3 _chec
 	*_hitFlag = false;
 }
 
-bool HouseManager::Damage(int _array,int Damage)
+bool HouseManager::Damage(int _array, int Damage)
 {
 	House::Status tmp = m_pHouse[_array]->GetHouseStatus();
 	tmp.DamagePoint += Damage;
 	m_pHouse[_array]->SetHouseStatus(tmp);
 	
-	return m_pHouse[_array]->UpDateHouseData();;
+	return m_pHouse[_array]->UpDateHouseData();
 }

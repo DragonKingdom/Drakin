@@ -29,6 +29,7 @@ m_pShaderAssist(new ShaderAssist()),
 m_isReturn(false),
 m_WalkAnimationFrame(0),
 m_AttackAnimationFrame(0),
+m_AttackTime(0),
 m_DisplacementX(0.f),
 m_DisplacementZ(0.f)
 {
@@ -181,7 +182,7 @@ bool Human::NormalControl()
 
 
 	bool isEnemy = false;
-	m_EnemyPos = m_pEnemyChecker->GetShortDistanceEnemyPos(m_HumanPos, &isEnemy);
+	m_EnemyPos = m_pEnemyChecker->GetShortDistanceEnemyPos(m_HumanPos, &isEnemy, &m_TargetEnemyArray);
 	if (isEnemy)
 	{
 		float X = pow(m_EnemyPos.x - m_HumanPos.x, 2);
@@ -201,7 +202,7 @@ bool Human::BattleControl()
 	bool isDestroy = false;
 
 	bool isEnemy = false;
-	m_EnemyPos = m_pEnemyChecker->GetShortDistanceEnemyPos(m_HumanPos, &isEnemy);
+	m_EnemyPos = m_pEnemyChecker->GetShortDistanceEnemyPos(m_HumanPos, &isEnemy, &m_TargetEnemyArray);
 	if (isEnemy)
 	{
 		float X = pow(m_EnemyPos.x - m_HumanPos.x, 2);
@@ -220,6 +221,17 @@ bool Human::BattleControl()
 					m_AttackAnimationFrame = 0;
 				}
 				
+				if (m_AttackTime >= 100)
+				{
+					if (m_pEnemyChecker->Damage(m_TargetEnemyArray, m_Status.Power))
+					{
+						m_Status.ControlState = NORMAL_CONTROL;
+					}
+				}
+				else
+				{
+					m_AttackTime++;
+				}
 			}
 			else
 			{

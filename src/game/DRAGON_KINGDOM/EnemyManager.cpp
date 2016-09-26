@@ -76,12 +76,13 @@ void EnemyManager::Save(FileSaveLoad* _pFileSaveLoad)
 {
 }
 
-D3DXVECTOR3 EnemyManager::GetShortDistanceEnemyPos(D3DXVECTOR3 _CheckPos, bool* _isEnemy)
+D3DXVECTOR3 EnemyManager::GetShortDistanceEnemyPos(D3DXVECTOR3 _CheckPos, bool* _isEnemy, int* _pEnemyArray)
 {
 	D3DXVECTOR3 EnemyPos = D3DXVECTOR3(0, 0, 0);
 	float Length = 0.0;
 	float PreviousLength = 0.0f;
 	*_isEnemy = false;
+	*_pEnemyArray = 0;
 
 	for (unsigned int i = 0; i < m_pEnemy.size(); i++)
 	{
@@ -98,9 +99,20 @@ D3DXVECTOR3 EnemyManager::GetShortDistanceEnemyPos(D3DXVECTOR3 _CheckPos, bool* 
 		if (PreviousLength >= Length)
 		{
 			EnemyPos = EnemyVec;
+			*_pEnemyArray = i;
 			PreviousLength = Length;
 		}
 	}
 
 	return EnemyPos;
 }
+
+bool EnemyManager::Damage(int _EnemyArray, int _Damage)
+{
+	Enemy::Status tmp = m_pEnemy[_EnemyArray]->GetStatus();
+	tmp.DamagePoint += _Damage;
+	m_pEnemy[_EnemyArray]->SetStatus(tmp);
+
+	return m_pEnemy[_EnemyArray]->UpDateHouseData();
+}
+

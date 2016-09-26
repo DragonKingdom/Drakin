@@ -119,6 +119,21 @@ Enemy::Status Enemy::GetStatus()
 	return m_Status;
 }
 
+void Enemy::SetStatus(Enemy::Status _Status)
+{
+	m_Status = _Status;
+}
+
+bool Enemy::UpDateHouseData()
+{
+	m_Status.HitPoint = m_Status.HitPoint - m_Status.DamagePoint;
+	if (m_Status.HitPoint <= 0)
+	{
+		return true;
+	}
+	return false;
+}
+
 bool Enemy::NormalControl()
 {
 	bool isDestroy = false;

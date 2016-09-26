@@ -98,6 +98,8 @@ private:
 	int						m_WalkAnimationFrameMax;
 	int						m_AttackAnimationFrame;
 	int						m_AttackAnimationFrameMax;
+	int						m_TargetEnemyArray;
+	int						m_AttackTime;
 	bool					m_isReturn;
 	float					m_DisplacementX;
 	float					m_DisplacementZ;

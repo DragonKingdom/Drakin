@@ -20,7 +20,7 @@ const int kFadeInTime = 1;
 TitleBackground::TitleBackground()
 	: m_fadeIn(0x00)
 {
-	m_Texture.Load("Resource\\image\\Title_BG.png");
+	m_Texture.Load("Resource\\image\\Title.jpg");
 }
 
 TitleBackground::~TitleBackground()

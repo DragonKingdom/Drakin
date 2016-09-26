@@ -15,7 +15,9 @@ public:
 	 * @param[out] _isEnemy “G‚ª‚¢‚½‚©
 	 * @return Šî€‚Éˆê”Ô‹ß‚¢“G‚ÌÀ•W
 	 */
-	D3DXVECTOR3 GetShortDistanceEnemyPos(D3DXVECTOR3 _CheckPos, bool* _isEnemy);
+	D3DXVECTOR3 GetShortDistanceEnemyPos(D3DXVECTOR3 _CheckPos, bool* _isEnemy, int* _pEnemyArray);
+
+	bool Damage(int _EnemyArray, int _Damage);
 
 private:
 	EnemyManager* m_pEnemyManager;
