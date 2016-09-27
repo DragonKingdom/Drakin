@@ -32,6 +32,16 @@ public:
 		LVMAX
 	};
 
+	//	マップ補正倍率	//	追加
+	struct CorrectPer
+	{
+		float Landscape;		// 景観
+		float Comfort;			// 快適
+		float Influence;		// 影響度
+		float Hp;					// 耐久度
+	};
+	//
+
 	House(D3DXVECTOR3 _housePos, float _angle, int _Type);
 	virtual ~House();
 	/**2016/09/03k型を変更 haga*/
@@ -65,9 +75,13 @@ protected:
 	int						m_AgeCount;				// 年齢をカウントするための変数 (修正予定)
 	House::Level			m_houseLevel;			// 家のレベル
 
+	House::CorrectPer		m_CorrectPer;			//	マップ補正倍率
+
 	ShaderAssist*			m_pShaderAssist;
 	Texture					m_Texture;
 	D3DXHANDLE m_LightDir, m_Ambient, m_CLUTTU, m_FogColor, m_Param1, m_Param2;
+
+	void House::HouseState();	//	追加
 
 private:
 

@@ -52,6 +52,14 @@ m_pShaderAssist(new ShaderAssist())
 	// レベルをいれる
 	m_houseLevel = LV1;
 
+	//	マップ補正倍率を初期化	//	追加
+	m_CorrectPer.Comfort = 1.f;
+	m_CorrectPer.Hp = 1.f;
+	m_CorrectPer.Influence = 1.f;
+	m_CorrectPer.Landscape = 1.f;
+
+	HouseState();
+	//
 }
 
 House::~House()
@@ -127,10 +135,10 @@ void House::DecisionHouseStatus()
 {
 	//建物のステータスを最終決定する
 	m_Status.Age = m_BasicStatus.Age;
-	m_Status.Comfort   = (m_BasicStatus.Comfort + m_CorrectionStatus.Comfort);
-	m_Status.Influence = (m_BasicStatus.Influence + m_CorrectionStatus.Influence);
-	m_Status.Landscape = (m_BasicStatus.Landscape + m_CorrectionStatus.Landscape);
-	m_Status.Hp		   = (m_BasicStatus.Hp + m_CorrectionStatus.Hp);
+	m_Status.Comfort   = (m_BasicStatus.Comfort + m_CorrectionStatus.Comfort) * m_CorrectPer.Comfort;
+	m_Status.Influence = (m_BasicStatus.Influence + m_CorrectionStatus.Influence) * m_CorrectPer.Influence;
+	m_Status.Landscape = (m_BasicStatus.Landscape + m_CorrectionStatus.Landscape) * m_CorrectPer.Landscape;
+	m_Status.Hp = (m_BasicStatus.Hp + m_CorrectionStatus.Hp) * m_CorrectPer.Hp;
 	
 	//補正値を初期化
 	m_CorrectionStatus.Comfort = 0.f;
@@ -139,3 +147,26 @@ void House::DecisionHouseStatus()
 	m_CorrectionStatus.Hp = 0;
 	
 }
+
+
+//	追加
+void House::HouseState()
+{
+	if (m_HousePos.x >= 0 && m_HousePos.z >= 0)
+	{
+		m_CorrectPer.Comfort = 1.1f;
+	}
+	else if (m_HousePos.x >= 0 && m_HousePos.z < 0)
+	{
+		m_CorrectPer.Hp = 1.1f;
+	}
+	else if (m_HousePos.x < 0 && m_HousePos.z >= 0)
+	{
+		m_CorrectPer.Influence = 1.1f;
+	}
+	else if (m_HousePos.x < 0 && m_HousePos.z < 0)
+	{
+		m_CorrectPer.Landscape = 1.1f;
+	}
+}
+//
