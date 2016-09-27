@@ -170,7 +170,7 @@ void GameScene::Draw()
 	m_pUI->Draw();
 	m_pCameraController->Draw();
 	m_pDebugMode->DebugDisplay();
-	DrawGameOver();
+	// DrawGameOver();
 }
 
 
