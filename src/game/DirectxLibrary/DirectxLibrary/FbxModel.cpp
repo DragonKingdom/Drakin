@@ -456,6 +456,24 @@ void FbxModel::NonTextureAnimationDraw()
 	}
 }
 
+void FbxModel::EffectDraw()
+{
+	m_pDevice->SetFVF(USERVERTEX_FVF);
+
+	if (m_Mode == FbxModel::NORMAL_MODE)
+	{
+		m_pDevice->DrawPrimitiveUP(
+			D3DPT_TRIANGLELIST,
+			m_pFbxModelData->PrimitiveCount,
+			m_pFbxModelData->pVertex,
+			sizeof(UserVertex));
+	}
+	else if (m_Mode == FbxModel::INDEX_MODE)
+	{
+
+	}
+}
+
 void FbxModel::Vec3Transform(D3DVECTOR *pOut, D3DVECTOR *pVec, D3DXMATRIX *pMat)
 {
 	float vx, vy, vz;

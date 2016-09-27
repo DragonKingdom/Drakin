@@ -18,6 +18,9 @@
 class Church :public House
 {
 public:
+	int m_Array;
+	int m_Time;
+	Texture					m_testTexture[10];
 	//コンストラクタ
 	Church(D3DXVECTOR3 _housePos, float _angle, BUILD_STATE _Type);
 	//デストラクタ
