@@ -6,6 +6,9 @@
 #ifndef GAMESCENE_H
 #define GAMESCENE_H
 
+
+#include "texture.h"
+#include "vertex.h"
 #include "Scene.h"
 
 #include "Map.h"
@@ -71,6 +74,15 @@ private:
 	// ゲーム内の音声データ
 	LPDIRECTSOUNDBUFFER8 m_SoundBuffer;
 
+	// ゲームオーバー画面のテクスチャーを格納する変数
+	Texture	m_texture;
+
+	// 
+	Vertex	m_vertex;
+
+	// ゲームオーバー表示時間
+	int m_GameOverTime;
+
 	/**
 	 * セーブファイルを読み込む関数
 	 */
@@ -80,6 +92,11 @@ private:
 	 * セーブファイルを作成する関数
 	 */
 	void FileSave();
+
+	/**
+	* ゲームオーバー画面を描画する関数
+	*/
+	void DrawGameOver();
 
 public:
 

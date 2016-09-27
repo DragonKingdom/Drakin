@@ -39,7 +39,9 @@ GameScene::GameScene(FileSaveLoad* _pFileSaveLoad, bool _isContinue) :
 
 	m_pDebugMode = new DebugMode(m_pClickPosConverter);
 
+	m_texture.Load("Resource\\image\\Title_Logo.png");
 
+	m_GameOverTime = 0;
 
 	// 続きからを選択されたらセーブデータを読む
 	if (_isContinue == true)
@@ -63,6 +65,8 @@ GameScene::~GameScene()
 {
 	DSoundManager::getInstance()->SoundOperation(GAME_BACK_BGM, SOUND_STOP);
 	DSoundManager::getInstance()->ReleaseSound(GAME_BACK_BGM);
+
+	m_texture.Release();
 
 	delete m_pDebugMode;
 
@@ -120,6 +124,23 @@ SceneID GameScene::Control()
 	m_pObjectManager->GetState();
 	m_pObjectManager->GetGameData();
 
+	// お金が0になったら5秒たってからタイトルシーンへ移行
+	if (m_pGameData->GetMoney() == 0)
+	{
+		if (m_GameOverTime < 300)
+		{
+			m_GameOverTime++;
+
+			return nextScene;
+		}
+		else
+		{
+			nextScene = SceneID::SCENE_TITLE;
+
+			return nextScene;
+		}
+	}
+
 	
 	// ゲーム内オブジェクトの制御
 	m_pKingdom->Control();
@@ -149,6 +170,7 @@ void GameScene::Draw()
 	m_pUI->Draw();
 	m_pCameraController->Draw();
 	m_pDebugMode->DebugDisplay();
+	DrawGameOver();
 }
 
 
@@ -179,4 +201,26 @@ void GameScene::FileSave()
 
 	// ファイルを閉じる
 	m_pFileSaveLoad->FileSaveEnd();
+}
+
+// ゲームオーバー画面の描画
+void GameScene::DrawGameOver()
+{
+	// お金が0じゃないなら即戻す
+	if (m_pGameData->GetMoney() != 0)
+	{
+		return;
+	}
+	else
+	{
+		// ゲームオーバー画面を表示
+		m_vertex.DrawTextureLT(m_texture,
+			300.f,
+			300.f,
+			0.0f,
+			0.0f,
+			1020.f,
+			143.f);
+	}
+
 }
