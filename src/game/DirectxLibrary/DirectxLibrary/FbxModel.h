@@ -86,6 +86,7 @@ public:
 	int		GetAnimationFrameMax();
 	void	AnimationDraw();
 	void	NonTextureAnimationDraw();
+	void	EffectDraw();
 
 	FbxModelData*	m_pFbxModelData;
 

@@ -12,9 +12,21 @@
 Church::Church(D3DXVECTOR3 _housePos, float _angle, BUILD_STATE _Type) :
 House(_housePos, _angle, _Type)
 {
-	FbxFileManager::Get()->FileImport("fbx//kyoukai_LV1.fbx");
+	FbxFileManager::Get()->FileImport("fbx//eff1.fbx");
 	FbxFileManager::Get()->GetModelData(&m_Model);
 	m_BasicStatus = GetMainStatus();
+	m_Array = 0;
+	m_Time = 0;
+	m_testTexture[0].Load("..//sourceimages//redeffect.0000.png");
+	m_testTexture[1].Load("..//sourceimages//redeffect.0001.png");
+	m_testTexture[2].Load("..//sourceimages//redeffect.0002.png");
+	m_testTexture[3].Load("..//sourceimages//redeffect.0003.png");
+	m_testTexture[4].Load("..//sourceimages//redeffect.0004.png");
+	m_testTexture[5].Load("..//sourceimages//redeffect.0005.png");
+	m_testTexture[6].Load("..//sourceimages//redeffect.0006.png");
+	m_testTexture[7].Load("..//sourceimages//redeffect.0007.png");
+	m_testTexture[8].Load("..//sourceimages//redeffect.0008.png");
+	m_testTexture[9].Load("..//sourceimages//redeffect.0009.png");
 }
 
 
@@ -32,8 +44,52 @@ BUILD_STATE Church::Control()
 {
 	CountAge();
 
+	m_Time++;
+	if (m_Time == 60)
+	{
+		m_Time = 0;
+	}
 
-
+	if (m_Time < 6)
+	{
+		m_Array = 1;
+	}
+	else if (m_Time < 12)
+	{
+		m_Array = 1;
+	}
+	else if (m_Time < 18)
+	{
+		m_Array = 2;
+	}
+	else if (m_Time < 24)
+	{
+		m_Array = 3;
+	}
+	else if (m_Time < 30)
+	{
+		m_Array = 4;
+	}
+	else if (m_Time < 36)
+	{
+		m_Array = 5;
+	}
+	else if (m_Time < 42)
+	{
+		m_Array = 6;
+	}
+	else if (m_Time < 48)
+	{
+		m_Array = 7;
+	}
+	else if (m_Time < 54)
+	{
+		m_Array = 8;
+	}
+	else if (m_Time < 60)
+	{
+		m_Array = 9;
+	}
 	return BUILD_CHURCH;
 
 }
@@ -96,6 +152,7 @@ void Church::Draw()
 	// フォグの色を設定
 	ambient = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	m_pShaderAssist->SetParameter(m_FogColor, ambient);
+	GraphicsDevice::getInstance().GetDevice()->SetTexture(0, m_testTexture[m_Array].Get());
 	GraphicsDevice::getInstance().GetDevice()->SetTexture(2, m_Texture.Get());
 	m_pShaderAssist->BeginPass(0);
 
