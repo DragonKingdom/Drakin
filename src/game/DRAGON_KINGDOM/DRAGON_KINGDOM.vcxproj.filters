@@ -734,5 +734,8 @@
     <FxCompile Include="Effect\Demon.fx">
       <Filter>Effect</Filter>
     </FxCompile>
+    <FxCompile Include="HumanEffect.fx">
+      <Filter>Effect</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

@@ -31,7 +31,7 @@ m_AttackTime(0),
 m_AttackHouseArray(0)
 {
 	m_Texture.Load("Resource\\image\\CLUTLight.jpg");
-	m_pShaderAssist->LoadTechnique("Effect\\EnemyEffect.fx", "EnemyEffect", "WVPP");
+	m_pShaderAssist->LoadTechnique("Effect\\HouseEffect.fx", "TShader", "WVPP");
 	m_LightDir = m_pShaderAssist->GetParameterHandle("LightDir");
 	m_Ambient = m_pShaderAssist->GetParameterHandle("Ambient");
 	m_CLUTTU = m_pShaderAssist->GetParameterHandle("CLUTTU");
@@ -39,7 +39,7 @@ m_AttackHouseArray(0)
 	m_Param1 = m_pShaderAssist->GetParameterHandle("Param1");
 	m_Param2 = m_pShaderAssist->GetParameterHandle("Param2");
 
-	m_Type = LIZARD_TYPE;
+	m_Type = GERU_TYPE;
 	switch (m_Type)
 	{
 	case Enemy::LIZARD_TYPE:
@@ -64,7 +64,7 @@ m_AttackHouseArray(0)
 		break;
 	}
 
-
+	(*m_pWalkAnimation)[0]->InitAnimation();
 
 	// ŒvŽZ—p‚Ìs—ñ
 	D3DXMATRIX RotationMatrix;
@@ -252,6 +252,14 @@ void Enemy::WaitAnimationDraw()
 		D3DXMatrixScaling(&m_World, 4, 4, 4);
 
 		break;
+	case Enemy::GERU_TYPE:
+		D3DXMatrixScaling(&m_World, 8, 8, 8);
+
+		break;
+	case Enemy::DRAGON_TYPE:
+		D3DXMatrixScaling(&m_World, 30, 30, 30);
+
+		break;
 	}
 
 	if (m_Status.ControlState == BATTLE_CONTROL)
@@ -298,17 +306,14 @@ void Enemy::WaitAnimationDraw()
 
 	ambient = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	m_pShaderAssist->SetParameter(m_FogColor, ambient);
-	for (unsigned int i = 0; i < m_pModelTexture->size(); i++)
-	{
-		GraphicsDevice::getInstance().GetDevice()->SetTexture(i, (*m_pModelTexture)[i]->Get());
-	}
-	GraphicsDevice::getInstance().GetDevice()->SetTexture(m_pModelTexture->size(), m_Texture.Get());
+	
 	m_pShaderAssist->BeginPass(0);
+	GraphicsDevice::getInstance().GetDevice()->SetTexture(2, m_Texture.Get());
+	GraphicsDevice::getInstance().GetDevice()->SetTexture(0, (*m_pModelTexture)[0]->Get());
+	(*m_pWaitAnimation)[0]->NonTextureAnimationDraw();
+	GraphicsDevice::getInstance().GetDevice()->SetTexture(0, (*m_pModelTexture)[1]->Get());
+	(*m_pWaitAnimation)[1]->NonTextureAnimationDraw();
 
-	for (unsigned int i = 0; i < m_pWaitAnimation->size(); i++)
-	{
-		(*m_pWaitAnimation)[i]->NonTextureAnimationDraw();
-	}
 
 	m_pShaderAssist->EndPass();
 	m_pShaderAssist->End();
@@ -331,6 +336,15 @@ void Enemy::WalkAnimationDraw()
 		D3DXMatrixScaling(&m_World, 4, 4, 4);
 
 		break;
+	case Enemy::GERU_TYPE:
+		D3DXMatrixScaling(&m_World, 30, 30, 30);
+
+		break;
+	case Enemy::DRAGON_TYPE:
+		D3DXMatrixScaling(&m_World, 30, 30, 30);
+
+		break;
+
 	}
 
 	if (m_Status.ControlState == BATTLE_CONTROL)
@@ -377,20 +391,26 @@ void Enemy::WalkAnimationDraw()
 
 	ambient = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	m_pShaderAssist->SetParameter(m_FogColor, ambient);
-	for (unsigned int i = 0; i < m_pModelTexture->size(); i++)
-	{
-		GraphicsDevice::getInstance().GetDevice()->SetTexture(i, (*m_pModelTexture)[i]->Get());
-	}
-	GraphicsDevice::getInstance().GetDevice()->SetTexture(m_pModelTexture->size(), m_Texture.Get());
 	m_pShaderAssist->BeginPass(0);
-
-	
-	for (unsigned int i = 0; i < m_pWalkAnimation->size(); i++)
+	GraphicsDevice::getInstance().GetDevice()->SetTexture(2, m_Texture.Get());
+	switch (m_Type)
 	{
-		(*m_pWalkAnimation)[i]->SetAnimationFrame(m_WalkAnimationFrame);
-		(*m_pWalkAnimation)[i]->NonTextureAnimationDraw();
+	case Enemy::LIZARD_TYPE:
+		GraphicsDevice::getInstance().GetDevice()->SetTexture(0, (*m_pModelTexture)[0]->Get());
+		GraphicsDevice::getInstance().GetDevice()->SetTexture(1, (*m_pModelTexture)[1]->Get());
+		break;
+	case Enemy::MAOU_TYPE:
+		break;
+	case Enemy::GERU_TYPE:
+		GraphicsDevice::getInstance().GetDevice()->SetTexture(0, (*m_pModelTexture)[0]->Get());
+		break;
+	case Enemy::DRAGON_TYPE:
+		GraphicsDevice::getInstance().GetDevice()->SetTexture(0, (*m_pModelTexture)[0]->Get());
+		break;
 	}
 
+	(*m_pWalkAnimation)[0]->SetAnimationFrame(m_WalkAnimationFrame);
+	(*m_pWalkAnimation)[0]->NonTextureAnimationDraw();
 
 	m_pShaderAssist->EndPass();
 	m_pShaderAssist->End();
@@ -440,18 +460,15 @@ void Enemy::AttackAnimationDraw()
 
 	ambient = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	m_pShaderAssist->SetParameter(m_FogColor, ambient);
-	for (unsigned int i = 0; i < m_pModelTexture->size(); i++)
-	{
-		GraphicsDevice::getInstance().GetDevice()->SetTexture(i, (*m_pModelTexture)[i]->Get());
-	}
-	GraphicsDevice::getInstance().GetDevice()->SetTexture(m_pModelTexture->size(), m_Texture.Get());
 	m_pShaderAssist->BeginPass(0);
+	GraphicsDevice::getInstance().GetDevice()->SetTexture(2, m_Texture.Get());
+	GraphicsDevice::getInstance().GetDevice()->SetTexture(0, (*m_pModelTexture)[0]->Get());
+	(*m_pAttackAnimation)[0]->SetAnimationFrame(m_AttackAnimationFrame);
+	(*m_pAttackAnimation)[0]->NonTextureAnimationDraw();
+	GraphicsDevice::getInstance().GetDevice()->SetTexture(0, (*m_pModelTexture)[1]->Get());
+	(*m_pAttackAnimation)[1]->SetAnimationFrame(m_AttackAnimationFrame);
+	(*m_pAttackAnimation)[1]->NonTextureAnimationDraw();
 
-	for (unsigned int i = 0; i < m_pAttackAnimation->size(); i++)
-	{
-		(*m_pAttackAnimation)[i]->SetAnimationFrame(m_AttackAnimationFrame);
-		(*m_pAttackAnimation)[i]->AnimationDraw();
-	}
 
 	m_pShaderAssist->EndPass();
 	m_pShaderAssist->End();

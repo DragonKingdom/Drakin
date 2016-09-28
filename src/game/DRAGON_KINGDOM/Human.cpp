@@ -34,7 +34,7 @@ m_DisplacementX(0.f),
 m_DisplacementZ(0.f)
 {
 	m_Texture.Load("Resource\\image\\CLUTLight.jpg");
-	m_pShaderAssist->LoadTechnique("Effect\\HumanEffect.fx", "HumanEffect", "WVPP");
+	m_pShaderAssist->LoadTechnique("Effect\\HumanEffect.fx", "TShader", "WVPP");
 	m_LightDir = m_pShaderAssist->GetParameterHandle("LightDir");
 	m_Ambient = m_pShaderAssist->GetParameterHandle("Ambient");
 	m_CLUTTU = m_pShaderAssist->GetParameterHandle("CLUTTU");
@@ -382,6 +382,8 @@ void Human::WalkAnimationDraw()
 	ambient = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	m_pShaderAssist->SetParameter(m_FogColor, ambient);
 	GraphicsDevice::getInstance().GetDevice()->SetTexture(2, m_Texture.Get());
+	GraphicsDevice::getInstance().GetDevice()->SetTexture(0, (*m_pModelTexture)[0]->Get());
+
 	m_pShaderAssist->BeginPass(0);
 
 	for (unsigned int i = 0; i < m_pWalkAnimation->size(); i++)

@@ -28,7 +28,7 @@ m_AgeCount(0)
 	m_Param2 = m_pShaderAssist->GetParameterHandle("Param2");
 
 	//モデル読み込み
-	FbxFileManager::Get()->FileImport("fbx//house_yellow.fbx");
+	FbxFileManager::Get()->FileImport("fbx//siro_FBX.fbx");
 	FbxFileManager::Get()->GetModelData(&m_Model);
 
 	// 計算用の行列
@@ -40,6 +40,8 @@ m_AgeCount(0)
 	D3DXMatrixIdentity(&RotationMatrix);
 	D3DXMatrixRotationY(&RotationMatrix, m_Angle);
 	D3DXMatrixMultiply(&m_World, &m_World, &RotationMatrix);
+
+	D3DXMatrixScaling(&m_World,15,15,15);
 
 	// 移動
 	D3DXMatrixTranslation(&PositionMatrix, m_CastlePos.x, m_CastlePos.y, m_CastlePos.z);
