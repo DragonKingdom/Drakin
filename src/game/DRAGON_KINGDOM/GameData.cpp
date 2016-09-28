@@ -14,9 +14,9 @@ GameData::GameData()
 	m_gameTime.minute = 0;
 
 	/// @todo ‚Æ‚è‚ ‚¦‚¸‚Å‚»‚ê‚Á‚Û‚¢”’l‚ğ“ü‚ê‚Ä‚é‚¾‚¯
-	m_KingdomData.Money = 20000;
+	m_KingdomData.Money = 80000;
 	m_KingdomData.Popularity = 50;
-	m_KingdomData.Population = 10;
+	m_KingdomData.Population = 50;
 	m_KingdomData.Satisfaction = 50;
 	m_KingdomData.Security = 100;
 

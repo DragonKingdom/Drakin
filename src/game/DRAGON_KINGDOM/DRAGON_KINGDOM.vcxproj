@@ -120,6 +120,7 @@
     <ClCompile Include="CurveBuildArea.cpp" />
     <ClCompile Include="CurveRoad.cpp" />
     <ClCompile Include="DebugMode.cpp" />
+    <ClCompile Include="DemonCastle.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyChecker.cpp" />
     <ClCompile Include="EnemyManager.cpp" />
@@ -202,6 +203,7 @@
     <ClInclude Include="CurveBuildArea.h" />
     <ClInclude Include="CurveRoad.h" />
     <ClInclude Include="DebugMode.h" />
+    <ClInclude Include="DemonCastle.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyChecker.h" />
     <ClInclude Include="EnemyManager.h" />

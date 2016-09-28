@@ -28,12 +28,18 @@ public:
 	*/
 	bool SetBuilding(D3DXVECTOR3* _setPos, int _Type);
 
+	virtual bool UnSetBuilding(D3DXVECTOR3* _setPos);
+
+
 	/**
 	* Œš•¨‚ªŒš’z‚³‚ê‚½‚±‚Æ‚ğ“`‚¦‚éŠÖ”
 	* @author haga
 	* @data 2016/09/14
 	*/
 	bool CurveSetBuilding(D3DXVECTOR3* _setPos, int _Type, int _array);
+
+	bool CurveUnSetBuilding(D3DXVECTOR3* _setPos, int _array);
+
 
 	bool GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos, float* _outputAngleDegree, bool* _startPos);
 	//float GetAngleDegree(){ return D3DXToDegree(m_angle); };

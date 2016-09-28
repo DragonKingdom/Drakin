@@ -20,25 +20,27 @@ m_pEnemyChecker(new EnemyChecker(m_pEnemyManager))
 	FbxFileManager::Get()->FileImport("fbx//maou_animetion_walk.fbx");
 	FbxFileManager::Get()->GetModelData(&m_pMaouWalkModel);
 
-	FbxFileManager::Get()->FileImport("fbx//maou_animetion_attack.fbx");
-	FbxFileManager::Get()->GetModelData(&m_pMaouAttackModel);
+	FbxFileManager::Get()->FileImport("fbx//lizard_wark_s48.fbx");
+	FbxFileManager::Get()->GetModelData(&m_pLizardWalkModel);
 	
 	for (unsigned int i = 0; i < m_pMaouWalkModel.size(); i++)
 	{
 		m_pMaouWalkModel[i]->InitAnimation();
 	}
 
-	for (unsigned int i = 0; i < m_pMaouAttackModel.size(); i++)
+	for (unsigned int i = 0; i < m_pLizardWalkModel.size(); i++)
 	{
-		m_pMaouAttackModel[i]->InitAnimation();
+		m_pLizardWalkModel[i]->InitAnimation();
 	}
 
 	/// @todo ‚Æ‚è‚ ‚¦‚¸’†‚É“ü‚Á‚Ä‚éƒ‚ƒfƒ‹“n‚·
 	m_ResourceManager.SetResource(MAOU_WALK, &m_pMaouWalkModel);
-	m_ResourceManager.SetResource(MAOU_ATTACK, &m_pMaouAttackModel);
+	m_ResourceManager.SetResource(LIZARD_WALK, &m_pLizardWalkModel);
 
-	m_pHumanManager->Init(m_pEnemyChecker, &m_ResourceManager);
-	m_pEnemyManager->Init(m_pHumanChecker, &m_ResourceManager);
+	
+
+	m_pHumanManager->Init(m_pEnemyChecker, &m_ResourceManager, &m_TextureResourceManager);
+	m_pEnemyManager->Init(m_pHumanChecker, &m_ResourceManager, &m_TextureResourceManager);
 }
 
 CharacterManager::~CharacterManager()

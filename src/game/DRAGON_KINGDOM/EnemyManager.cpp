@@ -19,10 +19,11 @@ EnemyManager::~EnemyManager()
 	}
 }
 
-void EnemyManager::Init(HumanChecker* _pHumanChecker, ResourceManager<CHARACTERMODEL_ID, std::vector<FbxModel*>>* _pResourceManager)
+void EnemyManager::Init(HumanChecker* _pHumanChecker, ResourceManager<CHARACTERMODEL_ID, std::vector<FbxModel*>>* _pResourceManager, ResourceManager<CHARACTERMODEL_ID, std::vector<Texture*>>*	_pTextureResourceManager)
 {
 	m_pHumanChecker = _pHumanChecker;
 	m_pResourceManager = _pResourceManager;
+	m_pTextureResourceManager = _pTextureResourceManager;
 }
 
 void EnemyManager::Control()
@@ -35,7 +36,7 @@ void EnemyManager::Control()
 			srand(unsigned int(time(NULL)));
 			if (rand() % 100 < 40)
 			{
-				m_pEnemy.push_back(new Enemy(m_pRoadChecker, m_pHouseChecker, m_pResourceManager));
+				m_pEnemy.push_back(new Enemy(m_pRoadChecker, m_pHouseChecker, m_pResourceManager, m_pTextureResourceManager));
 			}
 			m_SpawnTime = 0;
 		}

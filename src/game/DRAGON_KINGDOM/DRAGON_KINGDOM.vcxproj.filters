@@ -239,6 +239,9 @@
     <Filter Include="main\ResourceManager">
       <UniqueIdentifier>{d3aba016-f359-46fc-a300-9cea4a7702a9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="main\SceneManager\Scene\GameScene\ObjectManager\DemonCastle">
+      <UniqueIdentifier>{ce5fde02-7671-4d51-a72b-6637d8a7261f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scene.cpp">
@@ -469,6 +472,9 @@
     <ClCompile Include="ResourceManager.cpp">
       <Filter>main\ResourceManager</Filter>
     </ClCompile>
+    <ClCompile Include="DemonCastle.cpp">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\DemonCastle</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scene.h">
@@ -698,6 +704,9 @@
     </ClInclude>
     <ClInclude Include="Human.h">
       <Filter>main\SceneManager\Scene\GameScene\ObjectManager\CharacterManager\HumanManager\Human</Filter>
+    </ClInclude>
+    <ClInclude Include="DemonCastle.h">
+      <Filter>main\SceneManager\Scene\GameScene\ObjectManager\DemonCastle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

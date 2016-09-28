@@ -4,7 +4,7 @@
 #include "GameData.h"
 #include "CharacterManager.h"
 
-#define HUMAN_MAX 15
+#define HUMAN_MAX 13
 
 class FileSaveLoad;
 class StateManager;
@@ -18,7 +18,10 @@ class HumanManager
 public:
 	HumanManager(StateManager* _pStateManager, GameData* _pGameData, RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker);
 	~HumanManager();
-	void Init(EnemyChecker* _pEnemyChecker, ResourceManager<CHARACTERMODEL_ID, std::vector<FbxModel*>>* _pResourceManager);
+	void Init(
+		EnemyChecker* _pEnemyChecker, 
+		ResourceManager<CHARACTERMODEL_ID, std::vector<FbxModel*>>* _pResourceManager,
+		ResourceManager<CHARACTERMODEL_ID, std::vector<Texture*>>* _pTextureResourceManager);
 	void Control();
 	void Draw();
 	void GetState();
@@ -45,6 +48,7 @@ private:
 	std::vector<Human*> m_pHuman;
 	HouseNum			m_HouseNum;
 	ResourceManager<CHARACTERMODEL_ID, std::vector<FbxModel*>>* m_pResourceManager;
+	ResourceManager<CHARACTERMODEL_ID, std::vector<Texture*>>* m_pTextureResourceManager;
 	int					m_SpawnTime;
 
 };

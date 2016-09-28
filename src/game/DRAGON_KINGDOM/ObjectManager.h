@@ -16,6 +16,7 @@ class BuildAreaChecker;
 class ClickPosConverter;
 class FileSaveLoad;
 class CastleManager;
+class DemonCastle;
 
 class ObjectManager
 {
@@ -49,6 +50,7 @@ private:
 	RoadChecker*						m_pRoadChecker;
 	CharacterManager*					m_pCharacterManager;
 	CastleManager*						m_pCastleManager;
+	DemonCastle*						m_pDemonCastle;
 	GAMESCENE_STATE						m_GameSceneState;
 	BUILD_STATE							m_BuildState;
 

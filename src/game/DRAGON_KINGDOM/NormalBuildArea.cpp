@@ -731,7 +731,7 @@ bool NormalBuildArea::UnSetBuilding(D3DXVECTOR3* _setPos)
 			{
 				SetArea = SetArea << 4;
 			}
-			m_pAreaData[AreaCountZ / 2] = m_pAreaData[AreaCountZ / 2] | SetArea;
+			m_pAreaData[AreaCountZ / 2] = m_pAreaData[AreaCountZ / 2] & (~SetArea);
 		}
 	}
 

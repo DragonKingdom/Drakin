@@ -2,7 +2,7 @@
 #define ENEMY_H
 
 #define ENEMY_MOVE_SPEED 70.f
-#define DEFAULT_ENEMY_HITPOINT 150
+#define DEFAULT_ENEMY_HITPOINT 180
 #define DEFAULT_ENEMY_MAGICPOINT 20
 #define DEFAULT_ENEMY_POWER 30
 #define DEFAULT_ENEMY_TIME 7200
@@ -31,6 +31,12 @@ public:
 		ATTACK_ANIMATION
 	};
 
+	enum MONSTERTYPE
+	{
+		LIZARD_TYPE,
+		MAOU_TYPE
+	};
+
 	struct Status
 	{
 		int HitPoint;
@@ -44,7 +50,8 @@ public:
 	Enemy(
 		RoadChecker* _pRoadChecker, 
 		HouseChecker* _pHouseChecker,
-		ResourceManager<CHARACTERMODEL_ID, std::vector<FbxModel*>>* _pResourceManager);
+		ResourceManager<CHARACTERMODEL_ID, std::vector<FbxModel*>>* _pResourceManager,
+		ResourceManager<CHARACTERMODEL_ID, std::vector<Texture*>>* _pTextureResourceManager);
 	~Enemy();
 
 	void CalcLookAtMatrix(D3DXMATRIX* pout, D3DXVECTOR3* pPos, D3DXVECTOR3* pLook, D3DXVECTOR3* pUp);
@@ -98,6 +105,8 @@ private:
 	int						m_WalkAnimationFrameMax;
 	int						m_AttackAnimationFrame;
 	int						m_AttackAnimationFrameMax;
+	MONSTERTYPE				m_Type;
+
 	D3DXVECTOR3				m_EnemyPos;
 	D3DXVECTOR3				m_TargetPos;
 	int						m_DisplacementX;

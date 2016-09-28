@@ -21,7 +21,7 @@ void Enemy::CalcLookAtMatrix(D3DXMATRIX* pout, D3DXVECTOR3* pPos, D3DXVECTOR3* p
 	pout->_41 = 0.0f; pout->_42 = 0.0f; pout->_43 = 0.0f; pout->_44 = 1.0f;
 }
 
-Enemy::Enemy(RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker, ResourceManager<CHARACTERMODEL_ID, std::vector<FbxModel*>>* _pResourceManager) :
+Enemy::Enemy(RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker, ResourceManager<CHARACTERMODEL_ID, std::vector<FbxModel*>>* _pResourceManager, ResourceManager<CHARACTERMODEL_ID, std::vector<Texture*>>* _pTextureResourceManager) :
 m_pRoadChecker(_pRoadChecker),
 m_pHouseChecker(_pHouseChecker),
 m_pShaderAssist(new ShaderAssist()),
@@ -39,10 +39,20 @@ m_AttackHouseArray(0)
 	m_Param1 = m_pShaderAssist->GetParameterHandle("Param1");
 	m_Param2 = m_pShaderAssist->GetParameterHandle("Param2");
 
+	m_Type = LIZARD_TYPE;
+	switch (m_Type)
+	{
+	case Enemy::LIZARD_TYPE:
+		m_pWalkAnimation = _pResourceManager->GetResource(LIZARD_WALK);
+		m_WalkAnimationFrameMax = (*m_pWalkAnimation)[0]->GetAnimationFrameMax();
+		break;
+	case Enemy::MAOU_TYPE:
+		m_pWalkAnimation = _pResourceManager->GetResource(MAOU_WALK);
+		m_WalkAnimationFrameMax = (*m_pWalkAnimation)[0]->GetAnimationFrameMax();
+		break;
+	}
 
 
-	m_pWalkAnimation = _pResourceManager->GetResource(MAOU_WALK);
-	m_WalkAnimationFrameMax = (*m_pWalkAnimation)[0]->GetAnimationFrameMax();
 
 	// 計算用の行列
 	D3DXMATRIX RotationMatrix;
@@ -146,12 +156,12 @@ bool Enemy::NormalControl()
 		m_WalkAnimationFrame = 0;
 	}
 
-	if ((m_EnemyPos.x + 250) > m_TargetPos.x &&
-		(m_EnemyPos.x - 250) < m_TargetPos.x &&
-		(m_EnemyPos.z + 250) > m_TargetPos.z &&
-		(m_EnemyPos.z - 250) < m_TargetPos.z)
+	if ((m_EnemyPos.x + 150) > m_TargetPos.x &&
+		(m_EnemyPos.x - 150) < m_TargetPos.x &&
+		(m_EnemyPos.z + 150) > m_TargetPos.z &&
+		(m_EnemyPos.z - 150) < m_TargetPos.z)
 	{
-		m_Status.ControlState = BATTLE_CONTROL;
+		m_TargetPos = m_pHouseChecker->GetRandomPrivateHousePos();
 	}
 	else
 	{
@@ -164,8 +174,8 @@ bool Enemy::NormalControl()
 		m_EnemyPos.z += m_DisplacementZ;
 
 		D3DXVECTOR3 NextPos = m_EnemyPos;
-		NextPos.x += 250 * cos(m_Angle);
-		NextPos.z += 250 * sin(m_Angle);
+		NextPos.x += 300 * cos(m_Angle);
+		NextPos.z += 300 * sin(m_Angle);
 		m_pHouseChecker->CheckCollison(&m_AttackHouseArray, &hitFlag, NextPos);
 	}
 
@@ -191,25 +201,15 @@ bool Enemy::BattleControl()
 
 	if (m_AttackTime / 120)
 	{
-		m_pHouseChecker->CheckCollison(&m_AttackHouseArray, &hitFlag, m_EnemyPos);
+		D3DXVECTOR3 NextPos = m_EnemyPos;
+		NextPos.x += 300 * cos(m_Angle);
+		NextPos.z += 300 * sin(m_Angle);
+		m_pHouseChecker->CheckCollison(&m_AttackHouseArray, &hitFlag, NextPos);
 		if (m_pHouseChecker->Damage(m_AttackHouseArray, ENEMY_ATTACK))
 		{
 			m_pHouseChecker->UnSetBuilding(m_AttackHouseArray);
 
-			float length = pow((m_TargetPos.x - m_EnemyPos.x)*(m_TargetPos.x - m_EnemyPos.x) + 
-				(m_TargetPos.z - m_EnemyPos.z)*(m_TargetPos.z - m_EnemyPos.z),0.5);
-			if ((m_EnemyPos.x + 250) > m_TargetPos.x &&
-				(m_EnemyPos.x - 250) < m_TargetPos.x &&
-				(m_EnemyPos.z + 250) > m_TargetPos.z &&
-				(m_EnemyPos.z - 250) < m_TargetPos.z)
-			{
-				m_TargetPos = m_pHouseChecker->GetRandomPrivateHousePos();
-				m_Status.ControlState = NORMAL_CONTROL;
-			}
-			else
-			{
-				m_Status.ControlState = NORMAL_CONTROL;
-			}
+			m_Status.ControlState = NORMAL_CONTROL;
 		}
 		m_AttackTime = 0;
 	}
@@ -226,13 +226,32 @@ bool Enemy::BattleControl()
 void Enemy::WaitAnimationDraw()
 {
 	// 計算用の行列
-	D3DXMATRIX RotationMatrix;
 	D3DXMATRIX PositionMatrix;
 
 	D3DXMatrixIdentity(&m_World);
-	D3DXMatrixIdentity(&RotationMatrix);
-	D3DXMatrixRotationY(&RotationMatrix, m_Angle);
-	D3DXMatrixMultiply(&m_World, &m_World, &RotationMatrix);
+
+	switch (m_Type)
+	{
+	case Enemy::LIZARD_TYPE:
+		D3DXMatrixScaling(&m_World, 9, 9, 9);
+
+		break;
+	case Enemy::MAOU_TYPE:
+		D3DXMatrixScaling(&m_World, 4, 4, 4);
+
+		break;
+	}
+
+	if (m_Status.ControlState == BATTLE_CONTROL)
+	{
+		CalcLookAtMatrix(&m_Rotation, &m_EnemyPos, &m_TargetPos, &D3DXVECTOR3(0, 1, 0));
+	}
+	else
+	{
+		CalcLookAtMatrix(&m_Rotation, &m_EnemyPos, &m_TargetPos, &D3DXVECTOR3(0, 1, 0));
+	}
+
+	D3DXMatrixMultiply(&m_World, &m_World, &m_Rotation);
 
 	// 移動
 	D3DXMatrixTranslation(&PositionMatrix, m_EnemyPos.x, m_EnemyPos.y, m_EnemyPos.z);
@@ -285,7 +304,18 @@ void Enemy::WalkAnimationDraw()
 	D3DXMATRIX PositionMatrix;
 
 	D3DXMatrixIdentity(&m_World);
-	D3DXMatrixScaling(&m_World, 4, 4, 4);
+
+	switch (m_Type)
+	{
+	case Enemy::LIZARD_TYPE:
+		D3DXMatrixScaling(&m_World, 9, 9, 9);
+
+		break;
+	case Enemy::MAOU_TYPE:
+		D3DXMatrixScaling(&m_World, 4, 4, 4);
+
+		break;
+	}
 
 	if (m_Status.ControlState == BATTLE_CONTROL)
 	{
@@ -337,7 +367,7 @@ void Enemy::WalkAnimationDraw()
 	for (unsigned int i = 0; i < m_pWalkAnimation->size(); i++)
 	{
 		(*m_pWalkAnimation)[i]->SetAnimationFrame(m_WalkAnimationFrame);
-		(*m_pWalkAnimation)[i]->NonTextureAnimationDraw();
+		(*m_pWalkAnimation)[i]->AnimationDraw();
 	}
 
 

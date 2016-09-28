@@ -9,6 +9,7 @@
 #include "RoadManager.h"
 #include "RoadChecker.h"
 #include "StateManager.h"
+#include "DemonCastle.h"
 #include "FileSaveLoad.h"
 
 ObjectManager::ObjectManager(StateManager* _pStateManager, GameData* _pGameData, ClickPosConverter* _pClickPosConverter) :
@@ -23,7 +24,8 @@ m_pHouseChecker(new HouseChecker(m_pHouseManager)),
 m_pRoadManager(new RoadManager(m_pBuildAreaChecker, _pStateManager, _pGameData, _pClickPosConverter)),
 m_pRoadChecker(new RoadChecker(m_pRoadManager)),
 m_pCharacterManager(new CharacterManager(_pStateManager, _pGameData, m_pRoadChecker, m_pHouseChecker)),
-m_pCastleManager(new CastleManager(m_pBuildAreaChecker,_pStateManager, _pGameData, _pClickPosConverter))
+m_pCastleManager(new CastleManager(m_pBuildAreaChecker,_pStateManager, _pGameData, _pClickPosConverter)),
+m_pDemonCastle(new DemonCastle())
 {
 
 
@@ -50,6 +52,7 @@ void ObjectManager::Control()
 		m_pCharacterManager->Control();
 		m_pHouseManager->Control();
 		m_pCastleManager->Control();
+		m_pDemonCastle->Control();
 
 		BuildControl();
 	}
@@ -77,6 +80,7 @@ void ObjectManager::Draw()
 	m_pCharacterManager->Draw();
 	m_pCastleManager->Draw();
 	m_pHouseManager->Draw();
+	m_pDemonCastle->Draw();
 }
 
 void ObjectManager::GetState()

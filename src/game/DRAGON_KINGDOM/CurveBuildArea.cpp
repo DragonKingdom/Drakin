@@ -688,6 +688,15 @@ bool CurveBuildArea::SetBuilding(D3DXVECTOR3* _setPos, int _Type)
 	return false;
 }
 
+bool CurveBuildArea::UnSetBuilding(D3DXVECTOR3* _setPos)
+{
+	for (int i = 0; i < m_CenterLinePos.size() - 1; i++)
+	{
+		if (CurveUnSetBuilding(_setPos, i)) return true;
+	}
+	return false;
+}
+
 // カーブしている道のエリアに建物が立ったことを通知する関数
 bool CurveBuildArea::CurveSetBuilding(D3DXVECTOR3* _setPos, int _Type, int _array)
 {
@@ -800,7 +809,53 @@ bool CurveBuildArea::CurveSetBuilding(D3DXVECTOR3* _setPos, int _Type, int _arra
 	return false;
 }
 
+bool CurveBuildArea::CurveUnSetBuilding(D3DXVECTOR3* _setPos, int _array)
+{
+	float CheckPosX = m_x[_array] +
+		(_setPos->z - m_z[_array]) * cos(m_Angle[_array]) -
+		(_setPos->x - m_x[_array]) * sin(m_Angle[_array]);
 
+	float CheckPosZ = m_z[_array] +
+		(_setPos->z - m_z[_array]) * sin(m_Angle[_array]) +
+		(_setPos->x - m_x[_array]) * cos(m_Angle[_array]);
+
+	if (m_x[_array] + (m_w[_array] / 2.0f) > CheckPosX &&  m_x[_array] - (m_w[_array] / 2.0f) < CheckPosX)
+	{
+		if (m_z[_array] + (ROAD_H_SIZE / 2.0f) > CheckPosZ && m_z[_array] - (ROAD_H_SIZE / 2.0f) < CheckPosZ)
+		{
+			int AreaCountX = 0;
+			int AreaCountZ = 0;
+
+			// すでにカウントしたものを使用する
+			AreaCountX = m_AreaCountX;
+
+			// カウント数を調整する
+			if (m_isLeft)
+			{
+				AreaCountX -= 1;
+			}
+			else
+			{
+				AreaCountX += 1;
+			}
+
+			BYTE SetArea;
+			SetArea = 1;
+			SetArea = SetArea << abs(AreaCountX);
+
+			if (_array % 2 == 1)
+			{
+				SetArea = SetArea << 4;
+			}
+
+			m_pAreaData[_array / 2] = m_pAreaData[_array / 2] & (~SetArea);
+
+			return true;
+
+		}
+	}
+	return false;
+}
 
 bool CurveBuildArea::AreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle, int _Type)
 {
