@@ -147,17 +147,14 @@ void FbxModel::InitAnimation()
 		{
 		case USERVERTEX_1:
 			m_pVertex = new UserVertex[m_pFbxModelData->ControlPointCount];
-			m_pTmpVertex = new UserVertex[m_pFbxModelData->ControlPointCount];
 			m_pDrawVertex = new UserVertex[m_pFbxModelData->ControlPointCount];
 			break;
 		case USERVERTEX_2:
 			m_pVertex2 = new UserVertex2[m_pFbxModelData->ControlPointCount];
-			m_pTmpVertex2 = new UserVertex2[m_pFbxModelData->ControlPointCount];
 			m_pDrawVertex2 = new UserVertex2[m_pFbxModelData->ControlPointCount];
 			break;
 		case USERVERTEX_3:
 			m_pVertex3 = new UserVertex3[m_pFbxModelData->ControlPointCount];
-			m_pTmpVertex3 = new UserVertex3[m_pFbxModelData->ControlPointCount];
 			m_pDrawVertex3 = new UserVertex3[m_pFbxModelData->ControlPointCount];
 			break;
 		}
@@ -169,19 +166,16 @@ void FbxModel::InitAnimation()
 			{
 			case USERVERTEX_1:
 				m_pVertex[m_pFbxModelData->pIndex.IndexAry[i]] = m_pFbxModelData->CustomUser.m_pUserVertex[i];
-				m_pTmpVertex[m_pFbxModelData->pIndex.IndexAry[i]] = m_pFbxModelData->CustomUser.m_pUserVertex[i];
 				m_pDrawVertex[m_pFbxModelData->pIndex.IndexAry[i]] = m_pFbxModelData->CustomUser.m_pUserVertex[i];
 
 				break;
 			case USERVERTEX_2:
 				m_pVertex2[m_pFbxModelData->pIndex.IndexAry[i]] = m_pFbxModelData->CustomUser.m_pUserVertex2[i];
-				m_pTmpVertex2[m_pFbxModelData->pIndex.IndexAry[i]] = m_pFbxModelData->CustomUser.m_pUserVertex2[i];
 				m_pDrawVertex2[m_pFbxModelData->pIndex.IndexAry[i]] = m_pFbxModelData->CustomUser.m_pUserVertex2[i];
 
 				break;
 			case USERVERTEX_3:
 				m_pVertex3[m_pFbxModelData->pIndex.IndexAry[i]] = m_pFbxModelData->CustomUser.m_pUserVertex3[i];
-				m_pTmpVertex3[m_pFbxModelData->pIndex.IndexAry[i]] = m_pFbxModelData->CustomUser.m_pUserVertex3[i];
 				m_pDrawVertex3[m_pFbxModelData->pIndex.IndexAry[i]] = m_pFbxModelData->CustomUser.m_pUserVertex3[i];
 
 				break;
@@ -194,19 +188,16 @@ void FbxModel::InitAnimation()
 			{
 			case USERVERTEX_1:
 				m_pVertex[i].Vec = m_pFbxModelData->pIndex.pVertex[i];
-				m_pTmpVertex[i].Vec = m_pFbxModelData->pIndex.pVertex[i];
 				m_pDrawVertex[i].Vec = m_pFbxModelData->pIndex.pVertex[i];
 
 				break;
 			case USERVERTEX_2:
 				m_pVertex2[i].Vec = m_pFbxModelData->pIndex.pVertex[i];
-				m_pTmpVertex2[i].Vec = m_pFbxModelData->pIndex.pVertex[i];
 				m_pDrawVertex2[i].Vec = m_pFbxModelData->pIndex.pVertex[i];
 
 				break;
 			case USERVERTEX_3:
 				m_pVertex3[i].Vec = m_pFbxModelData->pIndex.pVertex[i];
-				m_pTmpVertex3[i].Vec = m_pFbxModelData->pIndex.pVertex[i];
 				m_pDrawVertex3[i].Vec = m_pFbxModelData->pIndex.pVertex[i];
 
 
@@ -219,7 +210,6 @@ void FbxModel::InitAnimation()
 void FbxModel::ReleaseAnimation()
 {
 	delete[] m_pDrawVertex;
-	delete[] m_pTmpVertex;
 	delete[] m_pVertex;
 }
 
@@ -264,6 +254,7 @@ void FbxModel::AnimationDraw()
 
 				for (int j = 0; j < m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointNum; j++)
 				{
+					D3DVECTOR Vertex;
 					D3DVECTOR TmpVertex;
 					Vec3Transform(
 						&TmpVertex,
@@ -272,15 +263,15 @@ void FbxModel::AnimationDraw()
 						);
 
 					Vec3Transform(
-						&m_pTmpVertex[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec,
+						&Vertex,
 						&TmpVertex,
 						&(m_pFbxModelData->Animation->pSkinData[0].pCluster[i].pMat[m_FrameCount] * m_pFbxModelData->Animation->pSkinData[0].pCluster[i].WeightAry[j])
 						);
 
 
-					m_pDrawVertex[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.x += m_pTmpVertex[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.x;
-					m_pDrawVertex[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.y += m_pTmpVertex[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.y;
-					m_pDrawVertex[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.z += m_pTmpVertex[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.z;
+					m_pDrawVertex[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.x += Vertex.x;
+					m_pDrawVertex[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.y += Vertex.y;
+					m_pDrawVertex[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.z += Vertex.z;
 				}
 			}
 
@@ -309,6 +300,7 @@ void FbxModel::AnimationDraw()
 
 			for (int i = 0; i < m_pFbxModelData->Animation->pSkinData[0].ClusterNum; i++)
 			{
+				D3DVECTOR Vertex;
 				D3DXMATRIX InvMat;
 				D3DXMatrixInverse(&InvMat, NULL, &m_pFbxModelData->Animation->pSkinData[0].pCluster[i].InitMatrix);
 
@@ -322,15 +314,15 @@ void FbxModel::AnimationDraw()
 						);
 
 					Vec3Transform(
-						&m_pTmpVertex2[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec,
+						&Vertex,
 						&TmpVertex,
 						&(m_pFbxModelData->Animation->pSkinData[0].pCluster[i].pMat[m_FrameCount] * m_pFbxModelData->Animation->pSkinData[0].pCluster[i].WeightAry[j])
 						);
 
 
-					m_pDrawVertex2[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.x += m_pTmpVertex2[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.x;
-					m_pDrawVertex2[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.y += m_pTmpVertex2[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.y;
-					m_pDrawVertex2[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.z += m_pTmpVertex2[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.z;
+					m_pDrawVertex2[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.x += Vertex.x;
+					m_pDrawVertex2[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.y += Vertex.y;
+					m_pDrawVertex2[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.z += Vertex.z;
 				}
 			}
 
@@ -364,6 +356,7 @@ void FbxModel::AnimationDraw()
 
 				for (int j = 0; j < m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointNum; j++)
 				{
+					D3DVECTOR Vertex;
 					D3DVECTOR TmpVertex;
 					Vec3Transform(
 						&TmpVertex,
@@ -372,15 +365,15 @@ void FbxModel::AnimationDraw()
 						);
 
 					Vec3Transform(
-						&m_pTmpVertex3[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec,
+						&Vertex,
 						&TmpVertex,
 						&(m_pFbxModelData->Animation->pSkinData[0].pCluster[i].pMat[m_FrameCount] * m_pFbxModelData->Animation->pSkinData[0].pCluster[i].WeightAry[j])
 						);
 
 
-					m_pDrawVertex3[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.x += m_pTmpVertex3[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.x;
-					m_pDrawVertex3[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.y += m_pTmpVertex3[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.y;
-					m_pDrawVertex3[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.z += m_pTmpVertex3[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.z;
+					m_pDrawVertex3[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.x += Vertex.x;
+					m_pDrawVertex3[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.y += Vertex.y;
+					m_pDrawVertex3[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.z += Vertex.z;
 				}
 			}
 
@@ -422,6 +415,7 @@ void FbxModel::NonTextureAnimationDraw()
 
 				for (int j = 0; j < m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointNum; j++)
 				{
+					D3DVECTOR Vertex;
 					D3DVECTOR TmpVertex;
 					Vec3Transform(
 						&TmpVertex,
@@ -430,15 +424,15 @@ void FbxModel::NonTextureAnimationDraw()
 						);
 
 					Vec3Transform(
-						&m_pTmpVertex[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec,
+						&Vertex,
 						&TmpVertex,
 						&(m_pFbxModelData->Animation->pSkinData[0].pCluster[i].pMat[m_FrameCount] * m_pFbxModelData->Animation->pSkinData[0].pCluster[i].WeightAry[j])
 						);
 
 
-					m_pDrawVertex[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.x += m_pTmpVertex[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.x;
-					m_pDrawVertex[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.y += m_pTmpVertex[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.y;
-					m_pDrawVertex[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.z += m_pTmpVertex[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.z;
+					m_pDrawVertex[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.x += Vertex.x;
+					m_pDrawVertex[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.y += Vertex.y;
+					m_pDrawVertex[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.z += Vertex.z;
 				}
 			}
 
@@ -472,6 +466,7 @@ void FbxModel::NonTextureAnimationDraw()
 
 				for (int j = 0; j < m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointNum; j++)
 				{
+					D3DVECTOR Vertex;
 					D3DVECTOR TmpVertex;
 					Vec3Transform(
 						&TmpVertex,
@@ -480,15 +475,15 @@ void FbxModel::NonTextureAnimationDraw()
 						);
 
 					Vec3Transform(
-						&m_pTmpVertex2[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec,
+						&Vertex,
 						&TmpVertex,
 						&(m_pFbxModelData->Animation->pSkinData[0].pCluster[i].pMat[m_FrameCount] * m_pFbxModelData->Animation->pSkinData[0].pCluster[i].WeightAry[j])
 						);
 
 
-					m_pDrawVertex2[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.x += m_pTmpVertex2[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.x;
-					m_pDrawVertex2[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.y += m_pTmpVertex2[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.y;
-					m_pDrawVertex2[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.z += m_pTmpVertex2[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.z;
+					m_pDrawVertex2[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.x += Vertex.x;
+					m_pDrawVertex2[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.y += Vertex.y;
+					m_pDrawVertex2[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.z += Vertex.z;
 				}
 			}
 
@@ -522,6 +517,7 @@ void FbxModel::NonTextureAnimationDraw()
 
 				for (int j = 0; j < m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointNum; j++)
 				{
+					D3DVECTOR Vertex;
 					D3DVECTOR TmpVertex;
 					Vec3Transform(
 						&TmpVertex,
@@ -530,15 +526,15 @@ void FbxModel::NonTextureAnimationDraw()
 						);
 
 					Vec3Transform(
-						&m_pTmpVertex3[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec,
+						&Vertex,
 						&TmpVertex,
 						&(m_pFbxModelData->Animation->pSkinData[0].pCluster[i].pMat[m_FrameCount] * m_pFbxModelData->Animation->pSkinData[0].pCluster[i].WeightAry[j])
 						);
 
 
-					m_pDrawVertex3[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.x += m_pTmpVertex3[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.x;
-					m_pDrawVertex3[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.y += m_pTmpVertex3[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.y;
-					m_pDrawVertex3[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.z += m_pTmpVertex3[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.z;
+					m_pDrawVertex3[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.x += Vertex.x;
+					m_pDrawVertex3[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.y += Vertex.y;
+					m_pDrawVertex3[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.z += Vertex.z;
 				}
 			}
 

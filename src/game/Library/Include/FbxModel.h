@@ -98,13 +98,10 @@ private:
 	MODELMODE			m_Mode;
 	int					m_FrameCount;
 	UserVertex*			m_pVertex;
-	UserVertex*			m_pTmpVertex;
 	UserVertex*			m_pDrawVertex;
 	UserVertex2*		m_pVertex2;
-	UserVertex2*		m_pTmpVertex2;
 	UserVertex2*		m_pDrawVertex2;
 	UserVertex3*		m_pVertex3;
-	UserVertex3*		m_pTmpVertex3;
 	UserVertex3*		m_pDrawVertex3;
 };
 

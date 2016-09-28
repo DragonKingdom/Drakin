@@ -81,7 +81,7 @@ m_AttackHouseArray(0)
 	D3DXMatrixMultiply(&m_World, &m_World, &PositionMatrix);
 
 	m_TargetPos = m_pHouseChecker->GetRandomPrivateHousePos();
-	m_EnemyPos = D3DXVECTOR3(0.f,0.f,0.f);
+	m_EnemyPos = D3DXVECTOR3(29000.f, 0.f, -29000.f);
 	m_Status.HitPoint = DEFAULT_ENEMY_HITPOINT;
 	m_Status.MagicPoint = DEFAULT_ENEMY_MAGICPOINT;
 	m_Status.Power = DEFAULT_ENEMY_POWER;

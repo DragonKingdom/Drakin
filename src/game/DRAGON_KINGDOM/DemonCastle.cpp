@@ -4,7 +4,7 @@
 #include "FbxModel.h"
 
 DemonCastle::DemonCastle():
-m_DemonCastlePos(D3DXVECTOR3(30000, 0, -30000)),
+m_DemonCastlePos(D3DXVECTOR3(29000, 0, -29000)),
 m_pShaderAssist(new ShaderAssist())
 {
 	m_Texture.Load("Resource\\image\\CLUTLight.jpg");

@@ -4,7 +4,7 @@
 #include "GameData.h"
 #include "CharacterManager.h"
 
-#define HUMAN_MAX 13
+#define HUMAN_MAX 10
 
 class FileSaveLoad;
 class StateManager;
