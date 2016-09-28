@@ -54,6 +54,11 @@ m_pEnemyChecker(new EnemyChecker(m_pEnemyManager))
 		m_pLizardWalkModel[i]->InitAnimation();
 	}
 
+	for (unsigned int i = 0; i < m_pGeruWalkModel.size(); i++)
+	{
+		m_pGeruWalkModel[i]->InitAnimation();
+	}
+
 	/// @todo ‚Æ‚è‚ ‚¦‚¸’†‚É“ü‚Á‚Ä‚éƒ‚ƒfƒ‹“n‚·
 	m_ResourceManager.SetResource(RU_WALK, &m_pRuWalkModel);
 	m_ResourceManager.SetResource(LIZARD_WALK, &m_pLizardWalkModel);

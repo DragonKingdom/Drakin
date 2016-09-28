@@ -119,6 +119,7 @@ private:
 	D3DXMATRIX				m_Rotation;
 	int						m_AttackTime;
 	int						m_AttackHouseArray;
+	float					m_Speed;
 	ShaderAssist*			m_pShaderAssist;
 	Texture					m_Texture;
 	D3DXHANDLE				m_LightDir, m_Ambient, m_CLUTTU, m_FogColor, m_Param1, m_Param2;
