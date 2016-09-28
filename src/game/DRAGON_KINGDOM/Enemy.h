@@ -34,7 +34,9 @@ public:
 	enum MONSTERTYPE
 	{
 		LIZARD_TYPE,
-		MAOU_TYPE
+		MAOU_TYPE,
+		DRAGON_TYPE,
+		GERU_TYPE
 	};
 
 	struct Status

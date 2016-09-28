@@ -69,6 +69,14 @@ private:
 	std::vector<FbxModel*> m_pMaouAttackModel;
 	std::vector<FbxModel*> m_pLizardWalkModel;
 	std::vector<FbxModel*> m_pLizardAttackModel;
+	std::vector<FbxModel*> m_pDragonWalkModel;
+	std::vector<FbxModel*> m_pDragonAttackModel;
+	std::vector<FbxModel*> m_pGeruWalkModel;
+	std::vector<FbxModel*> m_pGeruAttackModel;
+	std::vector<FbxModel*> m_pRuWalkModel;
+	std::vector<FbxModel*> m_pRuAttackModel;
+	std::vector<FbxModel*> m_pHumanWalkModel;
+	std::vector<FbxModel*> m_pHumanAttackModel;
 
 };
 
