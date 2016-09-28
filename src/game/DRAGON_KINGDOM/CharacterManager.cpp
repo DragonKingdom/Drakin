@@ -20,8 +20,15 @@ m_pEnemyChecker(new EnemyChecker(m_pEnemyManager))
 	FbxFileManager::Get()->FileImport("fbx//maou_animetion_walk.fbx");
 	FbxFileManager::Get()->GetModelData(&m_pMaouWalkModel);
 
+	FbxFileManager::Get()->FileImport("fbx//blue_geru_walk.fbx");
+	FbxFileManager::Get()->GetModelData(&m_pGeruWalkModel);
+
 	FbxFileManager::Get()->FileImport("fbx//lizard_wark_s48.fbx");
 	FbxFileManager::Get()->GetModelData(&m_pLizardWalkModel);
+	
+	FbxFileManager::Get()->FileImport("fbx//animetion_tirudora_taiki.fbx");
+	FbxFileManager::Get()->GetModelData(&m_pDragonWalkModel);
+	
 	
 	m_pMaouTexture.push_back(new Texture);
 	m_pMaouTexture[0]->Load("..//sourceimages//Demon//maou2UV.png");
@@ -32,10 +39,10 @@ m_pEnemyChecker(new EnemyChecker(m_pEnemyManager))
 	m_pLizardTexture[1]->Load("..//sourceimages//Lizard//dragon2-2UV.png");
 	
 	m_pDragonTexture.push_back(new Texture);
-	m_pDragonTexture[0]->Load("..//sourceimages//tirutiru5.png");
+	m_pDragonTexture[0]->Load("..//sourceimages//Dragon//tirutiru5.png");
 	
 	m_pGeruTexture.push_back(new Texture);
-	m_pGeruTexture[0]->Load("..//sourceimages//geru_ purpleUV.png");
+	m_pGeruTexture[0]->Load("..//sourceimages//Geru//geru_blueUV.png");
 
 	for (unsigned int i = 0; i < m_pMaouWalkModel.size(); i++)
 	{
@@ -50,6 +57,8 @@ m_pEnemyChecker(new EnemyChecker(m_pEnemyManager))
 	/// @todo ‚Æ‚è‚ ‚¦‚¸’†‚É“ü‚Á‚Ä‚éƒ‚ƒfƒ‹“n‚·
 	m_ResourceManager.SetResource(MAOU_WALK, &m_pMaouWalkModel);
 	m_ResourceManager.SetResource(LIZARD_WALK, &m_pLizardWalkModel);
+	m_ResourceManager.SetResource(GERU_WALK, &m_pGeruWalkModel);
+	m_ResourceManager.SetResource(DRAGON_WALK, &m_pDragonWalkModel);
 
 	m_TextureResourceManager.SetResource(MAOU, &m_pMaouTexture);
 	m_TextureResourceManager.SetResource(LIZARD, &m_pLizardTexture);

@@ -731,5 +731,8 @@
     <FxCompile Include="EnemyEffect.fx">
       <Filter>Effect</Filter>
     </FxCompile>
+    <FxCompile Include="HumanEffect.fx">
+      <Filter>Effect</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
