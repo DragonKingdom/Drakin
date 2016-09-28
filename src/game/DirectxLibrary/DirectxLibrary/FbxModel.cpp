@@ -404,66 +404,157 @@ void FbxModel::NonTextureAnimationDraw()
 {
 	if (m_pFbxModelData->Animation->SkinNum != 0)
 	{
-		m_pDevice->SetTexture(0, NULL);
-		m_pDevice->SetTexture(1, NULL);
-		m_pDevice->SetTexture(2, NULL);
-
-
 		//-------- アニメーション処理 --------//
-
-		for (int i = 0; i < m_pFbxModelData->ControlPointCount; i++)
+		switch (m_pFbxModelData->CustomUser.m_Type)
 		{
-			m_pDrawVertex[i].Vec.x = 0.f;
-			m_pDrawVertex[i].Vec.y = 0.f;
-			m_pDrawVertex[i].Vec.z = 0.f;
-		}
-
-		for (int i = 0; i < m_pFbxModelData->Animation->pSkinData[0].ClusterNum; i++)
-		{
-			D3DXMATRIX InvMat;
-			D3DXMatrixInverse(&InvMat, NULL, &m_pFbxModelData->Animation->pSkinData[0].pCluster[i].InitMatrix);
-
-			for (int j = 0; j < m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointNum; j++)
+		case USERVERTEX_1:
+			for (int i = 0; i < m_pFbxModelData->ControlPointCount; i++)
 			{
-				D3DVECTOR TmpVertex;
-				Vec3Transform(
-					&TmpVertex,
-					&m_pVertex[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec,
-					&InvMat
-					);
-
-				Vec3Transform(
-					&m_pTmpVertex[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec,
-					&TmpVertex,
-					&(m_pFbxModelData->Animation->pSkinData[0].pCluster[i].pMat[m_FrameCount] * m_pFbxModelData->Animation->pSkinData[0].pCluster[i].WeightAry[j])
-					);
-
-
-				m_pDrawVertex[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.x += m_pTmpVertex[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.x;
-				m_pDrawVertex[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.y += m_pTmpVertex[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.y;
-				m_pDrawVertex[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.z += m_pTmpVertex[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.z;
+				m_pDrawVertex[i].Vec.x = 0.f;
+				m_pDrawVertex[i].Vec.y = 0.f;
+				m_pDrawVertex[i].Vec.z = 0.f;
 			}
+
+			for (int i = 0; i < m_pFbxModelData->Animation->pSkinData[0].ClusterNum; i++)
+			{
+				D3DXMATRIX InvMat;
+				D3DXMatrixInverse(&InvMat, NULL, &m_pFbxModelData->Animation->pSkinData[0].pCluster[i].InitMatrix);
+
+				for (int j = 0; j < m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointNum; j++)
+				{
+					D3DVECTOR TmpVertex;
+					Vec3Transform(
+						&TmpVertex,
+						&m_pVertex[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec,
+						&InvMat
+						);
+
+					Vec3Transform(
+						&m_pTmpVertex[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec,
+						&TmpVertex,
+						&(m_pFbxModelData->Animation->pSkinData[0].pCluster[i].pMat[m_FrameCount] * m_pFbxModelData->Animation->pSkinData[0].pCluster[i].WeightAry[j])
+						);
+
+
+					m_pDrawVertex[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.x += m_pTmpVertex[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.x;
+					m_pDrawVertex[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.y += m_pTmpVertex[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.y;
+					m_pDrawVertex[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.z += m_pTmpVertex[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.z;
+				}
+			}
+
+			m_pDevice->DrawIndexedPrimitiveUP(
+				D3DPT_TRIANGLELIST,
+				0,
+				m_pFbxModelData->pIndex.IndexCount,
+				m_pFbxModelData->pIndex.IndexCount / 3,
+				m_pFbxModelData->pIndex.IndexAry,
+				D3DFMT_INDEX16,
+				m_pDrawVertex,
+				sizeof(UserVertex));
+
+
+			break;
+		case USERVERTEX_2:
+
+
+
+			for (int i = 0; i < m_pFbxModelData->ControlPointCount; i++)
+			{
+				m_pDrawVertex2[i].Vec.x = 0.f;
+				m_pDrawVertex2[i].Vec.y = 0.f;
+				m_pDrawVertex2[i].Vec.z = 0.f;
+			}
+
+			for (int i = 0; i < m_pFbxModelData->Animation->pSkinData[0].ClusterNum; i++)
+			{
+				D3DXMATRIX InvMat;
+				D3DXMatrixInverse(&InvMat, NULL, &m_pFbxModelData->Animation->pSkinData[0].pCluster[i].InitMatrix);
+
+				for (int j = 0; j < m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointNum; j++)
+				{
+					D3DVECTOR TmpVertex;
+					Vec3Transform(
+						&TmpVertex,
+						&m_pVertex2[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec,
+						&InvMat
+						);
+
+					Vec3Transform(
+						&m_pTmpVertex2[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec,
+						&TmpVertex,
+						&(m_pFbxModelData->Animation->pSkinData[0].pCluster[i].pMat[m_FrameCount] * m_pFbxModelData->Animation->pSkinData[0].pCluster[i].WeightAry[j])
+						);
+
+
+					m_pDrawVertex2[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.x += m_pTmpVertex2[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.x;
+					m_pDrawVertex2[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.y += m_pTmpVertex2[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.y;
+					m_pDrawVertex2[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.z += m_pTmpVertex2[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.z;
+				}
+			}
+
+			m_pDevice->DrawIndexedPrimitiveUP(
+				D3DPT_TRIANGLELIST,
+				0,
+				m_pFbxModelData->pIndex.IndexCount,
+				m_pFbxModelData->pIndex.IndexCount / 3,
+				m_pFbxModelData->pIndex.IndexAry,
+				D3DFMT_INDEX16,
+				m_pDrawVertex2,
+				sizeof(UserVertex2));
+
+
+			break;
+		case USERVERTEX_3:
+
+
+
+			for (int i = 0; i < m_pFbxModelData->ControlPointCount; i++)
+			{
+				m_pDrawVertex3[i].Vec.x = 0.f;
+				m_pDrawVertex3[i].Vec.y = 0.f;
+				m_pDrawVertex3[i].Vec.z = 0.f;
+			}
+
+			for (int i = 0; i < m_pFbxModelData->Animation->pSkinData[0].ClusterNum; i++)
+			{
+				D3DXMATRIX InvMat;
+				D3DXMatrixInverse(&InvMat, NULL, &m_pFbxModelData->Animation->pSkinData[0].pCluster[i].InitMatrix);
+
+				for (int j = 0; j < m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointNum; j++)
+				{
+					D3DVECTOR TmpVertex;
+					Vec3Transform(
+						&TmpVertex,
+						&m_pVertex3[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec,
+						&InvMat
+						);
+
+					Vec3Transform(
+						&m_pTmpVertex3[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec,
+						&TmpVertex,
+						&(m_pFbxModelData->Animation->pSkinData[0].pCluster[i].pMat[m_FrameCount] * m_pFbxModelData->Animation->pSkinData[0].pCluster[i].WeightAry[j])
+						);
+
+
+					m_pDrawVertex3[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.x += m_pTmpVertex3[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.x;
+					m_pDrawVertex3[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.y += m_pTmpVertex3[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.y;
+					m_pDrawVertex3[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.z += m_pTmpVertex3[m_pFbxModelData->Animation->pSkinData[0].pCluster[i].PointAry[j]].Vec.z;
+				}
+			}
+
+			m_pDevice->DrawIndexedPrimitiveUP(
+				D3DPT_TRIANGLELIST,
+				0,
+				m_pFbxModelData->pIndex.IndexCount,
+				m_pFbxModelData->pIndex.IndexCount / 3,
+				m_pFbxModelData->pIndex.IndexAry,
+				D3DFMT_INDEX16,
+				m_pDrawVertex3,
+				sizeof(UserVertex3));
+			break;
 		}
 
 
-		if (m_FrameCount == m_pFbxModelData->Animation->pSkinData[0].EndFrame - 1)
-		{
-			m_FrameCount = 0;
-		}
-		else
-		{
-			m_FrameCount++;
-		}
-
-		m_pDevice->DrawIndexedPrimitiveUP(
-			D3DPT_TRIANGLELIST,
-			0,
-			m_pFbxModelData->pIndex.IndexCount,
-			m_pFbxModelData->pIndex.IndexCount / 3,
-			m_pFbxModelData->pIndex.IndexAry,
-			D3DFMT_INDEX16,
-			m_pDrawVertex,
-			sizeof(UserVertex));
 	}
 }
 

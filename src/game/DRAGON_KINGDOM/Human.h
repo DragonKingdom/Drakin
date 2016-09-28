@@ -49,7 +49,7 @@ public:
 		HouseChecker* _pHouseChecker,
 		EnemyChecker* _pEnemyChecker,
 		ResourceManager<CHARACTERMODEL_ID, std::vector<FbxModel*>>* _pResourceManager,
-		ResourceManager<CHARACTERMODEL_ID, std::vector<Texture*>>* _pTextureResourceManager);
+		ResourceManager<CHARTEXTURE, std::vector<Texture*>>* _pTextureResourceManager);
 	~Human();
 
 	void CalcLookAtMatrix(D3DXMATRIX* pout, D3DXVECTOR3* pPos, D3DXVECTOR3* pLook, D3DXVECTOR3* pUp);
@@ -92,6 +92,7 @@ private:
 	std::vector<FbxModel*>*	m_pWaitAnimation;
 	std::vector<FbxModel*>*	m_pWalkAnimation;
 	std::vector<FbxModel*>*	m_pAttackAnimation;
+	std::vector<Texture*>*	m_pModelTexture;
 	std::vector<D3DXVECTOR3>m_pWalkLineBuffer;
 	int						m_BufferIndex;
 	D3DXVECTOR3				m_HumanPos;

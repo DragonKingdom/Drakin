@@ -233,8 +233,5 @@ void Church::Draw()
 			m_pShaderAssist->End();
 		}
 	}
-
-	
-
 }
 

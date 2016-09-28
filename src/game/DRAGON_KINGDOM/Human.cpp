@@ -21,7 +21,7 @@ void Human::CalcLookAtMatrix(D3DXMATRIX* pout, D3DXVECTOR3* pPos, D3DXVECTOR3* p
 	pout->_41 = 0.0f; pout->_42 = 0.0f; pout->_43 = 0.0f; pout->_44 = 1.0f;
 }
 
-Human::Human(RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker, EnemyChecker* _pEnemyChecker, ResourceManager<CHARACTERMODEL_ID, std::vector<FbxModel*>>* _pResourceManager, ResourceManager<CHARACTERMODEL_ID, std::vector<Texture*>>* _pTextureResourceManager) :
+Human::Human(RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker, EnemyChecker* _pEnemyChecker, ResourceManager<CHARACTERMODEL_ID, std::vector<FbxModel*>>* _pResourceManager, ResourceManager<CHARTEXTURE, std::vector<Texture*>>* _pTextureResourceManager) :
 m_pRoadChecker(_pRoadChecker),
 m_pHouseChecker(_pHouseChecker),
 m_pEnemyChecker(_pEnemyChecker),
@@ -47,6 +47,8 @@ m_DisplacementZ(0.f)
 
 	m_pAttackAnimation = _pResourceManager->GetResource(RU_WALK);
 	m_AttackAnimationFrameMax = (*m_pAttackAnimation)[0]->GetAnimationFrameMax();
+
+	m_pModelTexture = _pTextureResourceManager->GetResource(MAOU);
 
 	m_HumanPos = m_pHouseChecker->GetRandomPrivateHousePos();
 	m_NextPos = m_HumanPos;
@@ -385,7 +387,7 @@ void Human::WalkAnimationDraw()
 	for (unsigned int i = 0; i < m_pWalkAnimation->size(); i++)
 	{
 		(*m_pWalkAnimation)[i]->SetAnimationFrame(m_WalkAnimationFrame);
-		(*m_pWalkAnimation)[i]->AnimationDraw();
+		(*m_pWalkAnimation)[i]->NonTextureAnimationDraw();
 	}
 
 
@@ -449,7 +451,7 @@ void Human::AttackAnimationDraw()
 	for (unsigned int i = 0; i < m_pAttackAnimation->size(); i++)
 	{
 		(*m_pAttackAnimation)[i]->SetAnimationFrame(m_AttackAnimationFrame);
-		(*m_pAttackAnimation)[i]->AnimationDraw();
+		(*m_pAttackAnimation)[i]->NonTextureAnimationDraw();
 	}
 
 
