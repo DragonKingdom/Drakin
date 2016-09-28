@@ -21,7 +21,7 @@ void Human::CalcLookAtMatrix(D3DXMATRIX* pout, D3DXVECTOR3* pPos, D3DXVECTOR3* p
 	pout->_41 = 0.0f; pout->_42 = 0.0f; pout->_43 = 0.0f; pout->_44 = 1.0f;
 }
 
-Human::Human(RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker, EnemyChecker* _pEnemyChecker, ResourceManager<CHARACTERMODEL_ID, std::vector<FbxModel*>>* _pResourceManager, ResourceManager<CHARACTERMODEL_ID, std::vector<Texture*>>* _pTextureResourceManager) :
+Human::Human(RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker, EnemyChecker* _pEnemyChecker, ResourceManager<CHARACTERMODEL_ID, std::vector<FbxModel*>>* _pResourceManager, ResourceManager<CHARTEXTURE, std::vector<Texture*>>* _pTextureResourceManager) :
 m_pRoadChecker(_pRoadChecker),
 m_pHouseChecker(_pHouseChecker),
 m_pEnemyChecker(_pEnemyChecker),

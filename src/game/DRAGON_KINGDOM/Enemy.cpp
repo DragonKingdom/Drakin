@@ -21,7 +21,7 @@ void Enemy::CalcLookAtMatrix(D3DXMATRIX* pout, D3DXVECTOR3* pPos, D3DXVECTOR3* p
 	pout->_41 = 0.0f; pout->_42 = 0.0f; pout->_43 = 0.0f; pout->_44 = 1.0f;
 }
 
-Enemy::Enemy(RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker, ResourceManager<CHARACTERMODEL_ID, std::vector<FbxModel*>>* _pResourceManager, ResourceManager<CHARACTERMODEL_ID, std::vector<Texture*>>* _pTextureResourceManager) :
+Enemy::Enemy(RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker, ResourceManager<CHARACTERMODEL_ID, std::vector<FbxModel*>>* _pResourceManager, ResourceManager<CHARTEXTURE, std::vector<Texture*>>* _pTextureResourceManager) :
 m_pRoadChecker(_pRoadChecker),
 m_pHouseChecker(_pHouseChecker),
 m_pShaderAssist(new ShaderAssist()),
@@ -50,6 +50,15 @@ m_AttackHouseArray(0)
 		m_pWalkAnimation = _pResourceManager->GetResource(MAOU_WALK);
 		m_WalkAnimationFrameMax = (*m_pWalkAnimation)[0]->GetAnimationFrameMax();
 		break;
+	case Enemy::GERU_TYPE:
+		m_pWalkAnimation = _pResourceManager->GetResource(GERU_WALK);
+		m_WalkAnimationFrameMax = (*m_pWalkAnimation)[0]->GetAnimationFrameMax();
+		break;
+	case Enemy::DRAGON_TYPE:
+		m_pWalkAnimation = _pResourceManager->GetResource(DRAGON_WALK);
+		m_WalkAnimationFrameMax = (*m_pWalkAnimation)[0]->GetAnimationFrameMax();
+		break;
+
 	}
 
 

@@ -23,6 +23,20 @@ m_pEnemyChecker(new EnemyChecker(m_pEnemyManager))
 	FbxFileManager::Get()->FileImport("fbx//lizard_wark_s48.fbx");
 	FbxFileManager::Get()->GetModelData(&m_pLizardWalkModel);
 	
+	m_pMaouTexture.push_back(new Texture);
+	m_pMaouTexture[0]->Load("..//sourceimages//Demon//maou2UV.png");
+	
+	m_pLizardTexture.push_back(new Texture);
+	m_pLizardTexture.push_back(new Texture);
+	m_pLizardTexture[0]->Load("..//sourceimages//Lizard//dragon2-1UV.png");
+	m_pLizardTexture[1]->Load("..//sourceimages//Lizard//dragon2-2UV.png");
+	
+	m_pDragonTexture.push_back(new Texture);
+	m_pDragonTexture[0]->Load("..//sourceimages//tirutiru5.png");
+	
+	m_pGeruTexture.push_back(new Texture);
+	m_pGeruTexture[0]->Load("..//sourceimages//geru_ purpleUV.png");
+
 	for (unsigned int i = 0; i < m_pMaouWalkModel.size(); i++)
 	{
 		m_pMaouWalkModel[i]->InitAnimation();
@@ -37,7 +51,10 @@ m_pEnemyChecker(new EnemyChecker(m_pEnemyManager))
 	m_ResourceManager.SetResource(MAOU_WALK, &m_pMaouWalkModel);
 	m_ResourceManager.SetResource(LIZARD_WALK, &m_pLizardWalkModel);
 
-	
+	m_TextureResourceManager.SetResource(MAOU, &m_pMaouTexture);
+	m_TextureResourceManager.SetResource(LIZARD, &m_pLizardTexture);
+	m_TextureResourceManager.SetResource(DRAGON, &m_pDragonTexture);
+	m_TextureResourceManager.SetResource(GERU, &m_pGeruTexture);
 
 	m_pHumanManager->Init(m_pEnemyChecker, &m_ResourceManager, &m_TextureResourceManager);
 	m_pEnemyManager->Init(m_pHumanChecker, &m_ResourceManager, &m_TextureResourceManager);
@@ -49,6 +66,23 @@ CharacterManager::~CharacterManager()
 	delete m_pEnemyChecker;
 	delete m_pHumanManager;
 	delete m_pHumanChecker;
+
+	for (unsigned int i = 0; i < m_pMaouTexture.size();i++)
+	{
+		m_pMaouTexture[i]->Release();
+	}
+	for (unsigned int i = 0; i < m_pLizardTexture.size(); i++)
+	{
+		m_pLizardTexture[i]->Release();
+	}
+	for (unsigned int i = 0; i < m_pDragonTexture.size(); i++)
+	{
+		m_pDragonTexture[i]->Release();
+	}
+	for (unsigned int i = 0; i < m_pGeruTexture.size(); i++)
+	{
+		m_pGeruTexture[i]->Release();
+	}
 
 	for (unsigned int i = 0; i < m_pMaouWalkModel.size(); i++)
 	{

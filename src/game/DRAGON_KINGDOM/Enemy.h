@@ -53,7 +53,7 @@ public:
 		RoadChecker* _pRoadChecker, 
 		HouseChecker* _pHouseChecker,
 		ResourceManager<CHARACTERMODEL_ID, std::vector<FbxModel*>>* _pResourceManager,
-		ResourceManager<CHARACTERMODEL_ID, std::vector<Texture*>>* _pTextureResourceManager);
+		ResourceManager<CHARTEXTURE, std::vector<Texture*>>* _pTextureResourceManager);
 	~Enemy();
 
 	void CalcLookAtMatrix(D3DXMATRIX* pout, D3DXVECTOR3* pPos, D3DXVECTOR3* pLook, D3DXVECTOR3* pUp);

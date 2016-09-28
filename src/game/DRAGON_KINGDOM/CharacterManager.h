@@ -35,7 +35,7 @@ enum CHARTEXTURE
 	MAOU,
 	LIZARD,
 	DRAGON,
-	GERU
+	GERU,
 };
 
 class CharacterManager
@@ -55,7 +55,7 @@ public:
 
 private:
 	ResourceManager<CHARACTERMODEL_ID, std::vector<FbxModel*>>	m_ResourceManager;
-	ResourceManager<CHARACTERMODEL_ID, std::vector<Texture*>>	m_TextureResourceManager;
+	ResourceManager<CHARTEXTURE, std::vector<Texture*>>	m_TextureResourceManager;
 	StateManager*	m_pStateManager;
 	GameData*		m_pGameData;
 	RoadChecker*	m_pRoadChecker;
@@ -77,6 +77,14 @@ private:
 	std::vector<FbxModel*> m_pRuAttackModel;
 	std::vector<FbxModel*> m_pHumanWalkModel;
 	std::vector<FbxModel*> m_pHumanAttackModel;
+
+	std::vector<Texture*>  m_pMaouTexture;
+	std::vector<Texture*>  m_pLizardTexture;
+	std::vector<Texture*>  m_pDragonTexture;
+	std::vector<Texture*>  m_pGeruTexture;
+
+	std::vector<Texture*>  m_pRuTexture;
+	std::vector<Texture*>  m_pHumanTexture;
 
 };
 

@@ -20,7 +20,7 @@ HumanManager::~HumanManager()
 	}
 }
 
-void HumanManager::Init(EnemyChecker* _pEnemyChecker, ResourceManager<CHARACTERMODEL_ID, std::vector<FbxModel*>>* _pResourceManager, ResourceManager<CHARACTERMODEL_ID, std::vector<Texture*>>* _pTextureResourceManager)
+void HumanManager::Init(EnemyChecker* _pEnemyChecker, ResourceManager<CHARACTERMODEL_ID, std::vector<FbxModel*>>* _pResourceManager, ResourceManager<CHARTEXTURE, std::vector<Texture*>>* _pTextureResourceManager)
 {
 	m_pEnemyChecker = _pEnemyChecker;
 	m_pResourceManager = _pResourceManager;
