@@ -2,9 +2,9 @@
 #define ENEMY_H
 
 #define ENEMY_MOVE_SPEED 70.f
-#define DEFAULT_ENEMY_HITPOINT 180
+#define DEFAULT_ENEMY_HITPOINT 150
 #define DEFAULT_ENEMY_MAGICPOINT 20
-#define DEFAULT_ENEMY_POWER 30
+#define DEFAULT_ENEMY_POWER 20
 #define DEFAULT_ENEMY_TIME 7200
 #define ENEMY_ATTACK 5
 
@@ -108,6 +108,7 @@ private:
 	int						m_WalkAnimationFrameMax;
 	int						m_AttackAnimationFrame;
 	int						m_AttackAnimationFrameMax;
+	int						m_TextureNum;
 	MONSTERTYPE				m_Type;
 
 	D3DXVECTOR3				m_EnemyPos;

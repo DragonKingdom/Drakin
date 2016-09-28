@@ -44,7 +44,13 @@ m_pEnemyChecker(new EnemyChecker(m_pEnemyManager))
 	m_pDragonTexture[0]->Load("..//sourceimages//Dragon//tirutiru5.png");
 	
 	m_pGeruTexture.push_back(new Texture);
-	m_pGeruTexture[0]->Load("..//sourceimages//Geru//geru_blueUV.png");
+	m_pGeruTexture[0]->Load("..//sourceimages//Geru//geru_silversilveryUV.png");
+	m_pGeruTexture.push_back(new Texture);
+	m_pGeruTexture[1]->Load("..//sourceimages//Geru//geru_ purpleUV.png");
+	m_pGeruTexture.push_back(new Texture);
+	m_pGeruTexture[2]->Load("..//sourceimages//Geru//geru_blueUV.png");
+	m_pGeruTexture.push_back(new Texture);
+	m_pGeruTexture[3]->Load("..//sourceimages//Geru//geru_yellowUV.png");
 
 	m_pRuTexture.push_back(new Texture);
 	m_pRuTexture[0]->Load("..//sourceimages//Ru//ru_UV.png");

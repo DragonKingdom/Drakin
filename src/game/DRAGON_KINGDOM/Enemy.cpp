@@ -40,6 +40,7 @@ m_AttackHouseArray(0)
 	m_Param2 = m_pShaderAssist->GetParameterHandle("Param2");
 
 	m_Speed = ENEMY_MOVE_SPEED;
+	m_TextureNum = 0;
 
 	m_Type = GERU_TYPE;
 	switch (m_Type)
@@ -64,6 +65,10 @@ m_AttackHouseArray(0)
 		m_pWalkAnimation = _pResourceManager->GetResource(DRAGON_WALK);
 		m_pModelTexture = _pTextureResourceManager->GetResource(DRAGON);
 		m_WalkAnimationFrameMax = (*m_pWalkAnimation)[0]->GetAnimationFrameMax();
+
+		srand(unsigned int(time));
+		m_TextureNum = rand() % 4;
+
 		break;
 	}
 
@@ -384,11 +389,24 @@ void Enemy::WalkAnimationDraw()
 
 	ambient = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	m_pShaderAssist->SetParameter(m_FogColor, ambient);
-	for (unsigned int i = 0; i < m_pModelTexture->size(); i++)
+
+	switch (m_Type)
 	{
-		GraphicsDevice::getInstance().GetDevice()->SetTexture(i, (*m_pModelTexture)[i]->Get());
+	case Enemy::LIZARD_TYPE:
+		break;
+	case Enemy::MAOU_TYPE:
+		break;
+	case Enemy::DRAGON_TYPE:
+		break;
+	case Enemy::GERU_TYPE:
+		GraphicsDevice::getInstance().GetDevice()->SetTexture(0, (*m_pModelTexture)[m_TextureNum]->Get());
+
+		break;
+	default:
+		break;
 	}
-	GraphicsDevice::getInstance().GetDevice()->SetTexture(m_pModelTexture->size(), m_Texture.Get());
+	
+	GraphicsDevice::getInstance().GetDevice()->SetTexture(2, m_Texture.Get());
 	m_pShaderAssist->BeginPass(0);
 
 	
