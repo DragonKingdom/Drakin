@@ -36,7 +36,8 @@ public:
 		LIZARD_TYPE,
 		MAOU_TYPE,
 		DRAGON_TYPE,
-		GERU_TYPE
+		GERU_TYPE,
+		EVIL_EAY
 	};
 
 	struct Status

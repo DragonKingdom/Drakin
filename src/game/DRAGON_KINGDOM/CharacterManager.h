@@ -28,6 +28,8 @@ enum CHARACTERMODEL_ID
 	GERU_WALK,
 	GERU_ATTACK,
 	GERU_TAIKI,
+	EVILEAY_WALK,
+	EVILEAY_ATTACK,
 	RU_WALK,
 	RU_ATTACK,
 	RU_TAIKI
@@ -40,7 +42,8 @@ enum CHARTEXTURE
 	LIZARD,
 	DRAGON,
 	GERU,
-	RU
+	RU,
+	EVILEAY
 };
 
 class CharacterManager
@@ -78,6 +81,8 @@ private:
 	std::vector<FbxModel*> m_pDragonAttackModel;
 	std::vector<FbxModel*> m_pGeruWalkModel;
 	std::vector<FbxModel*> m_pGeruAttackModel;
+	std::vector<FbxModel*> m_pEvileayWalkModel;
+	std::vector<FbxModel*> m_pEvileayAttackModel;
 	std::vector<FbxModel*> m_pRuWalkModel;
 	std::vector<FbxModel*> m_pRuAttackModel;
 	std::vector<FbxModel*> m_pHumanWalkModel;
@@ -87,6 +92,7 @@ private:
 	std::vector<Texture*>  m_pLizardTexture;
 	std::vector<Texture*>  m_pDragonTexture;
 	std::vector<Texture*>  m_pGeruTexture;
+	std::vector<Texture*>  m_pEvileayTexture;
 
 	std::vector<Texture*>  m_pRuTexture;
 	std::vector<Texture*>  m_pHumanTexture;

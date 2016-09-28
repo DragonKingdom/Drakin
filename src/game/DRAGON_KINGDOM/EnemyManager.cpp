@@ -34,7 +34,7 @@ void EnemyManager::Control()
 		if (m_SpawnTime == 60)
 		{
 			srand(unsigned int(time(NULL)));
-			if (rand() % 100 < 40)
+			if (rand() % 100 < 50)
 			{
 				m_pEnemy.push_back(new Enemy(m_pRoadChecker, m_pHouseChecker, m_pResourceManager, m_pTextureResourceManager));
 			}

@@ -42,7 +42,15 @@ m_AttackHouseArray(0)
 	m_Speed = ENEMY_MOVE_SPEED;
 	m_TextureNum = 0;
 
-	m_Type = GERU_TYPE;
+	srand(unsigned(time(NULL) + 5));
+	if ((rand()-1) % 2 == 0)
+	{
+		m_Type = GERU_TYPE;
+	}
+	else
+	{
+		m_Type = EVIL_EAY;
+	}
 	switch (m_Type)
 	{
 	case Enemy::LIZARD_TYPE:
@@ -59,15 +67,23 @@ m_AttackHouseArray(0)
 		m_pWalkAnimation = _pResourceManager->GetResource(GERU_WALK);
 		m_pModelTexture = _pTextureResourceManager->GetResource(GERU);
 		m_WalkAnimationFrameMax = (*m_pWalkAnimation)[0]->GetAnimationFrameMax();
-		m_Speed -= 30;
+		m_Speed -= 40;
+		srand(unsigned int(time));
+		m_TextureNum = rand() % 4;
 		break;
 	case Enemy::DRAGON_TYPE:
 		m_pWalkAnimation = _pResourceManager->GetResource(DRAGON_WALK);
 		m_pModelTexture = _pTextureResourceManager->GetResource(DRAGON);
 		m_WalkAnimationFrameMax = (*m_pWalkAnimation)[0]->GetAnimationFrameMax();
 
-		srand(unsigned int(time));
-		m_TextureNum = rand() % 4;
+
+
+		break;
+	case Enemy::EVIL_EAY:
+		m_pWalkAnimation = _pResourceManager->GetResource(EVILEAY_WALK);
+		m_pModelTexture = _pTextureResourceManager->GetResource(EVILEAY);
+		m_WalkAnimationFrameMax = (*m_pWalkAnimation)[0]->GetAnimationFrameMax();
+		m_Speed -= 20;
 
 		break;
 	}
@@ -340,7 +356,11 @@ void Enemy::WalkAnimationDraw()
 
 		break;
 	case Enemy::GERU_TYPE:
-		D3DXMatrixScaling(&m_World, 13, 13, 13);
+		D3DXMatrixScaling(&m_World, 20, 20, 20);
+
+		break;
+	case Enemy::EVIL_EAY:
+		D3DXMatrixScaling(&m_World, 30, 30, 30);
 
 		break;
 	}
@@ -400,6 +420,10 @@ void Enemy::WalkAnimationDraw()
 		break;
 	case Enemy::GERU_TYPE:
 		GraphicsDevice::getInstance().GetDevice()->SetTexture(0, (*m_pModelTexture)[m_TextureNum]->Get());
+
+		break;
+	case Enemy::EVIL_EAY:
+		GraphicsDevice::getInstance().GetDevice()->SetTexture(0, (*m_pModelTexture)[0]->Get());
 
 		break;
 	default:

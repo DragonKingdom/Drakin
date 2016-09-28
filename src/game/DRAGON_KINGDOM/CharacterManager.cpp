@@ -29,8 +29,8 @@ m_pEnemyChecker(new EnemyChecker(m_pEnemyManager))
 	FbxFileManager::Get()->FileImport("fbx//animetion_tirudora_taiki.fbx");
 	FbxFileManager::Get()->GetModelData(&m_pDragonWalkModel);
 	
-	FbxFileManager::Get()->FileImport("fbx//ru_walk_FBX.fbx");
-	FbxFileManager::Get()->GetModelData(&m_pRuWalkModel);
+	FbxFileManager::Get()->FileImport("fbx//evileay_stay_s48.fbx");
+	FbxFileManager::Get()->GetModelData(&m_pEvileayWalkModel);
 	
 	m_pMaouTexture.push_back(new Texture);
 	m_pMaouTexture[0]->Load("..//sourceimages//Demon//maou2UV.png");
@@ -52,16 +52,24 @@ m_pEnemyChecker(new EnemyChecker(m_pEnemyManager))
 	m_pGeruTexture.push_back(new Texture);
 	m_pGeruTexture[3]->Load("..//sourceimages//Geru//geru_yellowUV.png");
 
+	m_pEvileayTexture.push_back(new Texture);
+	m_pEvileayTexture[0]->Load("..//sourceimages//evileay1.png");
+
 	m_pRuTexture.push_back(new Texture);
 	m_pRuTexture[0]->Load("..//sourceimages//Ru//ru_UV.png");
 	for (unsigned int i = 0; i < m_pMaouWalkModel.size(); i++)
 	{
 		m_pRuWalkModel[i]->InitAnimation();
 	}
-
+	
 	for (unsigned int i = 0; i < m_pRuWalkModel.size(); i++)
 	{
 		m_pRuWalkModel[i]->InitAnimation();
+	}
+
+	for (unsigned int i = 0; i < m_pEvileayWalkModel.size(); i++)
+	{
+		m_pEvileayWalkModel[i]->InitAnimation();
 	}
 
 	for (unsigned int i = 0; i < m_pLizardWalkModel.size(); i++)
@@ -79,13 +87,14 @@ m_pEnemyChecker(new EnemyChecker(m_pEnemyManager))
 	m_ResourceManager.SetResource(LIZARD_WALK, &m_pLizardWalkModel);
 	m_ResourceManager.SetResource(GERU_WALK, &m_pGeruWalkModel);
 	m_ResourceManager.SetResource(DRAGON_WALK, &m_pDragonWalkModel);
-	m_ResourceManager.SetResource(RU_WALK, &m_pRuWalkModel);
+	m_ResourceManager.SetResource(EVILEAY_WALK, &m_pEvileayWalkModel);
 
 	m_TextureResourceManager.SetResource(MAOU, &m_pMaouTexture);
 	m_TextureResourceManager.SetResource(LIZARD, &m_pLizardTexture);
 	m_TextureResourceManager.SetResource(DRAGON, &m_pDragonTexture);
 	m_TextureResourceManager.SetResource(GERU, &m_pGeruTexture);
 	m_TextureResourceManager.SetResource(RU, &m_pRuTexture);
+	m_TextureResourceManager.SetResource(EVILEAY, &m_pEvileayTexture);
 
 	m_pHumanManager->Init(m_pEnemyChecker, &m_ResourceManager, &m_TextureResourceManager);
 	m_pEnemyManager->Init(m_pHumanChecker, &m_ResourceManager, &m_TextureResourceManager);

@@ -4,7 +4,7 @@
 #include "GameData.h"
 #include "CharacterManager.h"
 
-#define ENEMY_MAX 5
+#define ENEMY_MAX 9
 
 class FileSaveLoad;
 class StateManager;
