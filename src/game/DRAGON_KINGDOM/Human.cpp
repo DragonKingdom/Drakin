@@ -48,6 +48,8 @@ m_DisplacementZ(0.f)
 	m_pAttackAnimation = _pResourceManager->GetResource(MAOU_WALK);
 	m_AttackAnimationFrameMax = (*m_pAttackAnimation)[0]->GetAnimationFrameMax();
 
+	m_pModelTexture = _pTextureResourceManager->GetResource(MAOU);
+
 	m_HumanPos = m_pHouseChecker->GetRandomPrivateHousePos();
 	m_NextPos = m_HumanPos;
 	m_Angle = m_pHouseChecker->GetHouseAngle(m_HumanPos);
@@ -385,7 +387,7 @@ void Human::WalkAnimationDraw()
 	for (unsigned int i = 0; i < m_pWalkAnimation->size(); i++)
 	{
 		(*m_pWalkAnimation)[i]->SetAnimationFrame(m_WalkAnimationFrame);
-		(*m_pWalkAnimation)[i]->AnimationDraw();
+		(*m_pWalkAnimation)[i]->NonTextureAnimationDraw();
 	}
 
 
@@ -449,7 +451,7 @@ void Human::AttackAnimationDraw()
 	for (unsigned int i = 0; i < m_pAttackAnimation->size(); i++)
 	{
 		(*m_pAttackAnimation)[i]->SetAnimationFrame(m_AttackAnimationFrame);
-		(*m_pAttackAnimation)[i]->AnimationDraw();
+		(*m_pAttackAnimation)[i]->NonTextureAnimationDraw();
 	}
 
 

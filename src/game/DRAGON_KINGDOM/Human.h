@@ -92,6 +92,7 @@ private:
 	std::vector<FbxModel*>*	m_pWaitAnimation;
 	std::vector<FbxModel*>*	m_pWalkAnimation;
 	std::vector<FbxModel*>*	m_pAttackAnimation;
+	std::vector<Texture*>*	m_pModelTexture;
 	std::vector<D3DXVECTOR3>m_pWalkLineBuffer;
 	int						m_BufferIndex;
 	D3DXVECTOR3				m_HumanPos;
