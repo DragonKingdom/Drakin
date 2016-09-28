@@ -6,6 +6,7 @@
 RoadBuilder::RoadBuilder() :
 m_pRoadPreviewer(new RoadPreviewer()),
 m_StartPos(D3DXVECTOR3(0, 0, 0)),
+m_ControlPos(D3DXVECTOR3(0, 0, 0)),
 m_EndPos(D3DXVECTOR3(0, 0, 0)),
 m_isStartPointSet(false),
 m_isEndPointSet(false)

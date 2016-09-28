@@ -24,7 +24,8 @@ m_pRoadBuilder(new RoadBuilder()),
 m_pInputDevice(InputDeviceFacade::GetInstance()),
 m_state(STATE::START_POS_SET),
 m_buildState(BUILD_ROAD),
-m_buildType(BUILD_TYPE::NORMAL)
+m_buildType(BUILD_TYPE::NORMAL),
+m_isBuildOk(true)
 {
 }
 
@@ -39,8 +40,10 @@ RoadManager::~RoadManager()
 
 void RoadManager::BuildControl()
 {
-	D3DXVECTOR3 StartPos;
-	D3DXVECTOR3 EndPos;
+	D3DXVECTOR3 StartPos = m_pRoadBuilder->GetStartPos();
+	D3DXVECTOR3 ControlPos = m_pRoadBuilder->GetControlPos();
+	D3DXVECTOR3 EndPos = m_pRoadBuilder->GetControlPos();
+	m_isBuildOk = true;
 	D3DXVECTOR2 MousePos;
 	float roadStartAngle = 0.f;
 	float roadEndAngle = 0.f;
@@ -79,21 +82,48 @@ void RoadManager::BuildControl()
 		m_pRoadBuilder->EndPosLinkSet(RoadCheck(&EndPos, &EndPos, &roadEndAngle, &m_roadLinkEnd_StartPos, &NextIndex));
 
 		m_pRoadBuilder->SetNextIndex(NextIndex);
-
 		//道を繋げられるかの判断をする繋げる道の角度をセットする
 		m_pRoadBuilder->SetRoadEndAngle(roadEndAngle);
 		m_pRoadBuilder->EndPosSet(EndPos);
 
-		//曲線を引く時の制御点を指定する。
-		if (Scene::m_keyStateOn & Scene::KEY_E)
+		float length = 0;
+		switch (m_buildType)
+		{
+		case BUILD_TYPE::NORMAL:
+			length = pow((EndPos.x - StartPos.x)*(EndPos.x - StartPos.x) +
+				(EndPos.z - StartPos.z)*(EndPos.z - StartPos.z), 0.5);
+				if (length < 1500.f) m_isBuildOk = false;
+			break;
+		case BUILD_TYPE::CURVE:
+			length = pow((EndPos.x - ControlPos.x)*(EndPos.x - ControlPos.x) +
+				(EndPos.z - ControlPos.z)*(EndPos.z - ControlPos.z), 0.5);
+			if (length < 1500.f) m_isBuildOk = false;
+
+			length = pow((EndPos.x - StartPos.x)*(EndPos.x - StartPos.x) +
+				(EndPos.z - StartPos.z)*(EndPos.z - StartPos.z), 0.5);
+			if (length < 3000.f) m_isBuildOk = false;
+			break;
+		}
+
+			//曲線を引く時の制御点を指定する。
+		if (Scene::m_keyStateOn & Scene::KEY_E && m_isBuildOk)
 		{
 			m_buildType = BUILD_TYPE::CURVE;
 			m_pRoadBuilder->ControlPosSet(EndPos);
+
 		}
 
-		if (m_pInputDevice->MouseLeftPush())
+		if (m_pInputDevice->MouseLeftPush() && m_isBuildOk)
 		{
 			m_state = STATE::CREATE;
+		}
+		else if (m_pInputDevice->MouseLeftPush() && !m_isBuildOk)
+		{
+			m_pRoadBuilder->InitStartPos();
+			m_pRoadBuilder->InitControlPos();
+			m_pRoadBuilder->InitEndPos();
+			m_state = STATE::START_POS_SET;
+			m_buildType = BUILD_TYPE::NORMAL;
 		}
 
 		if (m_pInputDevice->MouseRightPush())
@@ -169,7 +199,7 @@ void RoadManager::Draw()
 		m_pRoad[i]->Draw();
 	}
 
-	if (m_buildState == BUILD_ROAD)
+	if (m_buildState == BUILD_ROAD && m_isBuildOk)
 	{
 		m_pRoadBuilder->PreviewerDraw();
 	}

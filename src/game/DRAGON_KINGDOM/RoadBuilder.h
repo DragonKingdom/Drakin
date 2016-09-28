@@ -27,6 +27,9 @@ public:
 	void SetRoadEndAngle(float _roadEndAngle){ m_roadEndAngle = _roadEndAngle; }
 	int GetPreviousIndex(){ return m_PreviousIndex; }
 	int GetNextIndex(){ return m_NextIndex; }
+	D3DXVECTOR3 GetStartPos(){ return m_StartPos; };
+	D3DXVECTOR3 GetControlPos(){ return m_ControlPos; };
+	D3DXVECTOR3 GetEndPos(){ return m_EndPos; };
 	void SetPreviousIndex(int _SetPreviousIndex){ m_PreviousIndex = _SetPreviousIndex; }
 	void SetNextIndex(int _SetNextIndex){m_NextIndex = _SetNextIndex;}
 

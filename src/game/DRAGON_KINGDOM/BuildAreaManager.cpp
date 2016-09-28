@@ -41,11 +41,14 @@ BuildAreaManager::~BuildAreaManager()
 
 void BuildAreaManager::AreaBuildControl()
 {
-	D3DXVECTOR3 StartPos;
-	D3DXVECTOR3 EndPos;
+	D3DXVECTOR3 StartPos = m_pBuildAreaBuilder->GetStartPos();
+	D3DXVECTOR3 ControlPos = m_pBuildAreaBuilder->GetControlPos();
+	D3DXVECTOR3 EndPos = m_pBuildAreaBuilder->GetControlPos();
+	bool isOk = true;
 	D3DXVECTOR2 MousePos;
 	float roadStartAngle = 0.f;
 	float roadEndAngle = 0.f;
+	float length = 0;
 
 	switch (m_state)
 	{
@@ -74,17 +77,41 @@ void BuildAreaManager::AreaBuildControl()
 		m_pBuildAreaBuilder->SetRoadEndAngle(roadEndAngle);
 		m_pBuildAreaBuilder->EndPosSet(EndPos);
 
+		switch (m_buildType)
+		{
+		case BUILD_TYPE::NORMAL:
+			length = pow((EndPos.x - StartPos.x)*(EndPos.x - StartPos.x) +
+				(EndPos.z - StartPos.z)*(EndPos.z - StartPos.z), 0.5);
+			break;
+		case BUILD_TYPE::CURVE:
+			length = pow((EndPos.x - ControlPos.x)*(EndPos.x - ControlPos.x) +
+				(EndPos.z - ControlPos.z)*(EndPos.z - ControlPos.z), 0.5);
+				if (length < 1500.f) isOk = false;
+				
+				length = pow((EndPos.x - StartPos.x)*(EndPos.x - StartPos.x) +
+					(EndPos.z - StartPos.z)*(EndPos.z - StartPos.z), 0.5);
+				if (length < 3000.f) isOk = false;
+			break;
+		}
+
 		//‹Èü‚ðˆø‚­Žž‚Ì§Œä“_‚ðŽw’è‚·‚éB
-		if (Scene::m_keyStateOn & Scene::KEY_E)
+		if (Scene::m_keyStateOn & Scene::KEY_E && isOk)
 		{
 			m_buildType = BUILD_TYPE::CURVE;
 			m_pBuildAreaBuilder->ControlPosSet(EndPos);
 		}
 
-		if (m_pInputDevice->MouseLeftPush())
+		if (m_pInputDevice->MouseLeftPush() && isOk)
 		{
 			m_state = STATE::CREATE;
-
+		}
+		else if (m_pInputDevice->MouseLeftPush() && !isOk)
+		{
+			m_pBuildAreaBuilder->InitStartPos();
+			m_pBuildAreaBuilder->InitControlPos();
+			m_pBuildAreaBuilder->InitEndPos();
+			m_state = STATE::START_POS_SET;
+			m_buildType = BUILD_TYPE::NORMAL;
 		}
 
 		if (m_pInputDevice->MouseRightPush())

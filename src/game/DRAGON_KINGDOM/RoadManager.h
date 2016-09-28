@@ -45,7 +45,7 @@ private:
 	InputDeviceFacade*		m_pInputDevice;
 	bool					m_roadLinkStart_StartPos;//StartPosで繋げられた道が始点か？
 	bool					m_roadLinkEnd_StartPos;//EndPosで繋げられた道が始点か？
-
+	bool					m_isBuildOk;
 	/**
 	* 道を繋げるために使う敷かれている道をチェックして近くに道があれば、そこのstartposまたはendposとangleを渡す
 	* @param[in] _checkPos チェックしたい座標

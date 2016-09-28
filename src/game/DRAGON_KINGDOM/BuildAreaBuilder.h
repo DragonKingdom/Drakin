@@ -25,6 +25,9 @@ public:
 	void InitControlPos();
 	void InitEndPos();
 	bool BuildCheck(bool roadLinkStart_StartPos, bool roadLinkEnd_StartPos);
+	D3DXVECTOR3 GetStartPos(){ return m_StartPos; };
+	D3DXVECTOR3 GetControlPos(){ return m_ControlPos; };
+	D3DXVECTOR3 GetEndPos(){ return m_EndPos; };
 
 private:
 	bool BuildAngleCheck(float _roadAngle);

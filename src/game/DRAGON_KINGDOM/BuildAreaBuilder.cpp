@@ -6,6 +6,9 @@
 
 BuildAreaBuilder::BuildAreaBuilder():
 m_pBuildAreaPreviewer(new BuildAreaPreviewer()),
+m_StartPos(D3DXVECTOR3(0, 0, 0)),
+m_ControlPos(D3DXVECTOR3(0, 0, 0)),
+m_EndPos(D3DXVECTOR3(0, 0, 0)),
 m_isStartPosSet(false),
 m_isEndPosSet(false)
 {
