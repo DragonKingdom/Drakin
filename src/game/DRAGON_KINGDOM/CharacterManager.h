@@ -40,6 +40,7 @@ enum CHARTEXTURE
 	LIZARD,
 	DRAGON,
 	GERU,
+	RU
 };
 
 class CharacterManager

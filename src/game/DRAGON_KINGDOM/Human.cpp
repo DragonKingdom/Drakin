@@ -48,7 +48,7 @@ m_DisplacementZ(0.f)
 	m_pAttackAnimation = _pResourceManager->GetResource(RU_WALK);
 	m_AttackAnimationFrameMax = (*m_pAttackAnimation)[0]->GetAnimationFrameMax();
 
-	m_pModelTexture = _pTextureResourceManager->GetResource(MAOU);
+	m_pModelTexture = _pTextureResourceManager->GetResource(RU);
 
 	m_HumanPos = m_pHouseChecker->GetRandomPrivateHousePos();
 	m_NextPos = m_HumanPos;
@@ -337,7 +337,8 @@ void Human::WalkAnimationDraw()
 	D3DXMATRIX PositionMatrix;
 
 	D3DXMatrixIdentity(&m_World);
-	D3DXMatrixScaling(&m_World, 12, 12, 12);
+
+	D3DXMatrixScaling(&m_World, 15, 15, 15);
 
 	if (m_Status.ControlState == BATTLE_CONTROL)
 	{
