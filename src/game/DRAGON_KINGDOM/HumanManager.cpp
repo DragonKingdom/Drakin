@@ -6,7 +6,8 @@ HumanManager::HumanManager(StateManager* _pStateManager, GameData* _pGameData, R
 m_pStateManager(_pStateManager),
 m_pGameData(_pGameData),
 m_pRoadChecker(_pRoadChecker),
-m_pHouseChecker(_pHouseChecker)
+m_pHouseChecker(_pHouseChecker),
+m_SpawnTime(0)
 {
 
 }
@@ -29,10 +30,15 @@ void HumanManager::Control()
 {
 	if (m_pHuman.size() <= HUMAN_MAX && m_HouseNum.PrivateHouse >= 1)
 	{
-		srand(unsigned int(time(NULL)));
-		if (rand() % 100 < 10)
+		m_SpawnTime++;
+		if (m_SpawnTime == 60)
 		{
-			m_pHuman.push_back(new Human(m_pRoadChecker, m_pHouseChecker, m_pEnemyChecker, m_pResourceManager));
+			srand(unsigned int(time(NULL)));
+			if (rand() % 100 < 60)
+			{
+				m_pHuman.push_back(new Human(m_pRoadChecker, m_pHouseChecker, m_pEnemyChecker, m_pResourceManager));
+			}
+			m_SpawnTime = 0;
 		}
 	}
 

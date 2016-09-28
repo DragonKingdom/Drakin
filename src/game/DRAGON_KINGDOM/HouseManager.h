@@ -9,6 +9,7 @@
 #define HOUSEMANAGER_H
 
 #include "Font.h"
+#include "GameData.h"
 
 class HouseBuilder;
 class BuildAreaChecker;
@@ -43,6 +44,9 @@ public:
 	void Save(FileSaveLoad* _pFileSaveLoad);
 	void CheckCollision(int* _array, bool* _hitFlag, D3DXVECTOR3 _checkPos);
 	bool Damage(int _array,int _damage);
+	void UnSetBuilding(int _array);
+
+
 private:
 	void HouseControl();			//建物関連のコントロール関数
 	void BuildControl();
@@ -53,6 +57,7 @@ private:
 	std::vector<House*>			m_pHouse;
 	std::vector<D3DXVECTOR3>	m_HousePos;			// 家のステータス計算用に置いてる
 	std::vector<int>			m_HouseAge;			// 家のステータス計算用に置いてる
+	HouseNum					m_HouseNum;
 
 	Font font1;
 	Font font2;

@@ -5,7 +5,7 @@
 #include "EnemyChecker.h"
 #include "FbxFileManager.h"
 
-void CalcLookAtMatrix(D3DXMATRIX* pout, D3DXVECTOR3* pPos, D3DXVECTOR3* pLook, D3DXVECTOR3* pUp)
+void Human::CalcLookAtMatrix(D3DXMATRIX* pout, D3DXVECTOR3* pPos, D3DXVECTOR3* pLook, D3DXVECTOR3* pUp)
 {
 	D3DXVECTOR3 X, Y, Z;
 	Z = *pLook - *pPos;
@@ -138,6 +138,11 @@ bool Human::NormalControl()
 	}
 	else
 	{
+		m_Angle = atan2(m_NextPos.z - m_HumanPos.z, m_NextPos.x - m_HumanPos.x);
+
+		m_DisplacementX = HUMAN_MOVE_SPEED * cos(m_Angle);
+		m_DisplacementZ = HUMAN_MOVE_SPEED * sin(m_Angle);
+
 		m_HumanPos.x += m_DisplacementX;
 		m_HumanPos.z += m_DisplacementZ;
 	}
@@ -172,11 +177,6 @@ bool Human::NormalControl()
 					m_BufferIndex++;
 				}
 			}
-
-			m_Angle = atan2(m_NextPos.z - m_HumanPos.z, m_NextPos.x - m_HumanPos.x);
-
-			m_DisplacementX = HUMAN_MOVE_SPEED * cos(m_Angle);
-			m_DisplacementZ = HUMAN_MOVE_SPEED * sin(m_Angle);
 		}
 	}
 
@@ -193,6 +193,10 @@ bool Human::NormalControl()
 		}
 	}
 
+	if (m_Status.HitPoint <= 0)
+	{
+		isDestroy = true;
+	}
 
 	return isDestroy;
 }
@@ -223,10 +227,9 @@ bool Human::BattleControl()
 				
 				if (m_AttackTime >= 100)
 				{
-					if (m_pEnemyChecker->Damage(m_TargetEnemyArray, m_Status.Power))
-					{
-						m_Status.ControlState = NORMAL_CONTROL;
-					}
+					int ReflectionDamage = 0;
+					m_pEnemyChecker->Damage(m_TargetEnemyArray, m_Status.Power, &ReflectionDamage);
+					m_Status.HitPoint -= ReflectionDamage;
 				}
 				else
 				{
@@ -255,22 +258,19 @@ bool Human::BattleControl()
 		}
 		else
 		{
-			m_Angle = atan2(m_NextPos.z - m_HumanPos.z, m_NextPos.x - m_HumanPos.x);
-
-			m_DisplacementX = HUMAN_MOVE_SPEED * cos(m_Angle);
-			m_DisplacementZ = HUMAN_MOVE_SPEED * sin(m_Angle);
 			m_Status.ControlState = NORMAL_CONTROL;
 		}
 	}
 	else
 	{
-		m_Angle = atan2(m_NextPos.z - m_HumanPos.z, m_NextPos.x - m_HumanPos.x);
-
-		m_DisplacementX = HUMAN_MOVE_SPEED * cos(m_Angle);
-		m_DisplacementZ = HUMAN_MOVE_SPEED * sin(m_Angle);
 		m_Status.ControlState = NORMAL_CONTROL;
 	}
 	
+	if (m_Status.HitPoint <= 0)
+	{
+		isDestroy = true;
+	}
+
 	return isDestroy;
 }
 
@@ -411,6 +411,7 @@ void Human::AttackAnimationDraw()
 	}
 
 	D3DXMatrixMultiply(&m_World, &m_World, &m_Rotation);
+
 
 	// ˆÚ“®
 	D3DXMatrixTranslation(&PositionMatrix, m_HumanPos.x, m_HumanPos.y, m_HumanPos.z);

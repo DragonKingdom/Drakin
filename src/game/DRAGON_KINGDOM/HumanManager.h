@@ -45,6 +45,7 @@ private:
 	std::vector<Human*> m_pHuman;
 	HouseNum			m_HouseNum;
 	ResourceManager<CHARACTERMODEL_ID, std::vector<FbxModel*>>* m_pResourceManager;
+	int					m_SpawnTime;
 
 };
 

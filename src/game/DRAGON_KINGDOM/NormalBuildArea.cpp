@@ -680,6 +680,64 @@ bool NormalBuildArea::SetBuilding(D3DXVECTOR3* _setPos,int _Type)
 	return false;
 }
 
+bool NormalBuildArea::UnSetBuilding(D3DXVECTOR3* _setPos)
+{
+	float Angle = atan2(m_RoadEndPos.z - m_RoadStartPos.z, m_RoadEndPos.x - m_RoadStartPos.x);
+
+	float CheckPosX = m_x +
+		(_setPos->z - m_z) * cos(Angle) -
+		(_setPos->x - m_x) * sin(Angle);
+
+	float CheckPosZ = m_z +
+		(_setPos->z - m_z) * sin(Angle) +
+		(_setPos->x - m_x) * cos(Angle);
+
+	if (m_x + (m_w / 2.0f) > CheckPosX &&  m_x - (m_w / 2.0f) < CheckPosX)
+	{
+		if (m_z + (m_h / 2.0f) > CheckPosZ && m_z - (m_h / 2.0f) < CheckPosZ)
+		{
+			int AreaCountX = 0;
+			int AreaCountZ = 0;
+			if (m_isLeft)
+			{
+				m_AreaCountX = AreaCountX = static_cast<int>((
+					((_setPos->z - m_RoadStartPos.z) * cos(m_angle) -
+					((_setPos->x - m_RoadStartPos.x) * sin(m_angle))) + ROAD_W_SIZE / 2) / ROAD_W_SIZE);
+
+
+				m_AreaCountZ = AreaCountZ = static_cast<int>((
+					((_setPos->z - m_RoadStartPos.z) * sin(m_angle) +
+					((_setPos->x - m_RoadStartPos.x) * cos(m_angle)))) / ROAD_H_SIZE);
+			}
+			else
+			{
+				m_AreaCountX = AreaCountX = static_cast<int>((
+					((_setPos->z - m_RoadStartPos.z) * cos(m_angle) -
+					((_setPos->x - m_RoadStartPos.x) * sin(m_angle))) - ROAD_W_SIZE / 2) / ROAD_W_SIZE);
+
+
+				m_AreaCountZ = AreaCountZ = static_cast<int>((
+					((_setPos->z - m_RoadStartPos.z) * sin(m_angle) +
+					((_setPos->x - m_RoadStartPos.x) * cos(m_angle)))) / ROAD_H_SIZE);
+			}
+
+
+
+			BYTE SetArea;
+			SetArea = 1;
+			SetArea = SetArea << abs(AreaCountX);
+
+			if (AreaCountZ % 2 == 1)
+			{
+				SetArea = SetArea << 4;
+			}
+			m_pAreaData[AreaCountZ / 2] = m_pAreaData[AreaCountZ / 2] | SetArea;
+		}
+	}
+
+	return false;
+}
+
 bool NormalBuildArea::AreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle, int _Type)
 {
 	//‹t³Ú‚ÅŠp“x‚ð‹‚ß‚Ä‚¢‚é
