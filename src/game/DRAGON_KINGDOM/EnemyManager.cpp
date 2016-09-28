@@ -6,7 +6,8 @@ EnemyManager::EnemyManager(StateManager* _pStateManager, GameData* _pGameData, R
 m_pStateManager(_pStateManager),
 m_pGameData(_pGameData),
 m_pRoadChecker(_pRoadChecker),
-m_pHouseChecker(_pHouseChecker)
+m_pHouseChecker(_pHouseChecker),
+m_SpawnTime(0)
 {
 }
 
@@ -18,21 +19,28 @@ EnemyManager::~EnemyManager()
 	}
 }
 
-void EnemyManager::Init(HumanChecker* _pHumanChecker)
+void EnemyManager::Init(HumanChecker* _pHumanChecker, ResourceManager<CHARACTERMODEL_ID, std::vector<FbxModel*>>* _pResourceManager)
 {
 	m_pHumanChecker = _pHumanChecker;
+	m_pResourceManager = _pResourceManager;
 }
 
 void EnemyManager::Control()
 {
-	if (m_pEnemy.size() <= ENEMY_MAX && m_HouseNum.PrivateHouse >= 1)
+	if (m_pEnemy.size() <= ENEMY_MAX && m_HouseNum.PrivateHouse >= 3)
 	{
-		srand(unsigned int(time(NULL)));
-		if (rand() % 100 < 10)
+		m_SpawnTime++;
+		if (m_SpawnTime == 60)
 		{
-			m_pEnemy.push_back(new Enemy(m_pRoadChecker, m_pHouseChecker));
+			srand(unsigned int(time(NULL)));
+			if (rand() % 100 < 40)
+			{
+				m_pEnemy.push_back(new Enemy(m_pRoadChecker, m_pHouseChecker, m_pResourceManager));
+			}
+			m_SpawnTime = 0;
 		}
 	}
+
 	for (unsigned int i = 0; i < m_pEnemy.size(); i++)
 	{
 		if (m_pEnemy[i]->Control())
@@ -107,12 +115,12 @@ D3DXVECTOR3 EnemyManager::GetShortDistanceEnemyPos(D3DXVECTOR3 _CheckPos, bool* 
 	return EnemyPos;
 }
 
-bool EnemyManager::Damage(int _EnemyArray, int _Damage)
+bool EnemyManager::Damage(int _EnemyArray, int _Damage, int* _ReflectionDamage)
 {
 	Enemy::Status tmp = m_pEnemy[_EnemyArray]->GetStatus();
 	tmp.DamagePoint += _Damage;
 	m_pEnemy[_EnemyArray]->SetStatus(tmp);
-
-	return m_pEnemy[_EnemyArray]->UpDateHouseData();
+	*_ReflectionDamage = tmp.Power;
+	return m_pEnemy[_EnemyArray]->UpDateEnemyData();
 }
 

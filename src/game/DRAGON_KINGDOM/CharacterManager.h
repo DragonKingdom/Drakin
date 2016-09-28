@@ -19,6 +19,9 @@ enum CHARACTERMODEL_ID
 	MAOU_WALK,
 	MAOU_ATTACK,
 	MAOU_TAIKI,
+	LIZARD_WALK,
+	LIZARD_ATTACK,
+	LIZARD_TAIKI
 };
 
 class CharacterManager
@@ -49,6 +52,8 @@ private:
 
 	std::vector<FbxModel*> m_pMaouWalkModel;
 	std::vector<FbxModel*> m_pMaouAttackModel;
+	std::vector<FbxModel*> m_pLizardWalkModel;
+	std::vector<FbxModel*> m_pLizardAttackModel;
 
 };
 

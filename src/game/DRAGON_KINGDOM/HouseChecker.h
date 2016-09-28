@@ -39,6 +39,9 @@ public:
 	void CheckCollison(int* _array, bool* _hitFlag, D3DXVECTOR3 _checkPos);
 
 	bool Damage(int _array,int _damage);
+
+	void UnSetBuilding(int _array);
+
 private:
 	HouseManager* m_pHouseManager;
 

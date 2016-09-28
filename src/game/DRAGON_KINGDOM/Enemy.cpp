@@ -4,10 +4,29 @@
 #include "FbxModel.h"
 #include "HouseChecker.h"
 
-Enemy::Enemy(RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker) :
+
+void Enemy::CalcLookAtMatrix(D3DXMATRIX* pout, D3DXVECTOR3* pPos, D3DXVECTOR3* pLook, D3DXVECTOR3* pUp)
+{
+	D3DXVECTOR3 X, Y, Z;
+	Z = *pLook - *pPos;
+	D3DXVec3Normalize(&Z, &Z);
+	D3DXVec3Cross(&X, D3DXVec3Normalize(&Y, pUp), &Z);
+	D3DXVec3Normalize(&X, &X);
+	D3DXVec3Normalize(&Y, D3DXVec3Cross(&Y, &Z, &X));
+
+
+	pout->_11 = X.x; pout->_12 = X.y; pout->_13 = X.z; pout->_14 = 0;
+	pout->_21 = Y.x; pout->_22 = Y.y; pout->_23 = Y.z; pout->_24 = 0;
+	pout->_31 = Z.x; pout->_32 = Z.y; pout->_33 = Z.z; pout->_34 = 0;
+	pout->_41 = 0.0f; pout->_42 = 0.0f; pout->_43 = 0.0f; pout->_44 = 1.0f;
+}
+
+Enemy::Enemy(RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker, ResourceManager<CHARACTERMODEL_ID, std::vector<FbxModel*>>* _pResourceManager) :
 m_pRoadChecker(_pRoadChecker),
 m_pHouseChecker(_pHouseChecker),
 m_pShaderAssist(new ShaderAssist()),
+m_WalkAnimationFrame(0),
+m_AttackAnimationFrame(0),
 m_AttackTime(0),
 m_AttackHouseArray(0)
 {
@@ -20,17 +39,10 @@ m_AttackHouseArray(0)
 	m_Param1 = m_pShaderAssist->GetParameterHandle("Param1");
 	m_Param2 = m_pShaderAssist->GetParameterHandle("Param2");
 
-	//FbxFileManager::Get()->FileImport("fbx//maoiu_animetion_taiki.fbx");
-	//FbxFileManager::Get()->GetModelData(&m_pWaitAnimation);
 
-	//FbxFileManager::Get()->FileImport("fbx//maoiu_animetion_taiki.fbx");
-	//FbxFileManager::Get()->GetModelData(&m_pWalkAnimation);
 
-	//FbxFileManager::Get()->FileImport("fbx//maoiu_animetion_taiki.fbx");
-	//FbxFileManager::Get()->GetModelData(&m_pAttackAnimation);
-
-	FbxFileManager::Get()->FileImport("fbx//house_red.fbx");
-	FbxFileManager::Get()->GetModelData(&m_pWalkAnimation);
+	m_pWalkAnimation = _pResourceManager->GetResource(MAOU_WALK);
+	m_WalkAnimationFrameMax = (*m_pWalkAnimation)[0]->GetAnimationFrameMax();
 
 	// 計算用の行列
 	D3DXMATRIX RotationMatrix;
@@ -57,21 +69,6 @@ m_AttackHouseArray(0)
 
 Enemy::~Enemy()
 {
-	for (unsigned int i = 0; i < m_pAttackAnimation.size(); i++)
-	{
-		delete m_pAttackAnimation[i];
-	}
-
-	for (unsigned int i = 0; i < m_pWalkAnimation.size(); i++)
-	{
-		delete m_pWalkAnimation[i];
-	}
-
-	for (unsigned int i = 0; i < m_pWaitAnimation.size(); i++)
-	{
-		delete m_pWaitAnimation[i];
-	}
-
 	m_Texture.Release();
 	delete m_pShaderAssist;
 }
@@ -124,7 +121,7 @@ void Enemy::SetStatus(Enemy::Status _Status)
 	m_Status = _Status;
 }
 
-bool Enemy::UpDateHouseData()
+bool Enemy::UpDateEnemyData()
 {
 	m_Status.HitPoint = m_Status.HitPoint - m_Status.DamagePoint;
 	if (m_Status.HitPoint <= 0)
@@ -137,31 +134,51 @@ bool Enemy::UpDateHouseData()
 bool Enemy::NormalControl()
 {
 	bool isDestroy = false;
+	bool hitFlag = false;
 
-	m_Angle = atan2(m_TargetPos.z - m_EnemyPos.z, m_TargetPos.x - m_EnemyPos.x);
-	m_DisplacementX = ENEMY_MOVE_SPEED * cos(m_Angle);
-	m_DisplacementZ = ENEMY_MOVE_SPEED * sin(m_Angle);
 
-	if ((m_EnemyPos.x + m_DisplacementX + 250) > m_TargetPos.x &&
-		(m_EnemyPos.x - m_DisplacementX - 250) < m_TargetPos.x &&
-		(m_EnemyPos.z + m_DisplacementZ + 250) > m_TargetPos.z &&
-		(m_EnemyPos.z - m_DisplacementZ - 250) < m_TargetPos.z)
+	if (m_WalkAnimationFrame < m_WalkAnimationFrameMax)
+	{
+		m_WalkAnimationFrame++;
+	}
+	else
+	{
+		m_WalkAnimationFrame = 0;
+	}
+
+	if ((m_EnemyPos.x + 250) > m_TargetPos.x &&
+		(m_EnemyPos.x - 250) < m_TargetPos.x &&
+		(m_EnemyPos.z + 250) > m_TargetPos.z &&
+		(m_EnemyPos.z - 250) < m_TargetPos.z)
 	{
 		m_Status.ControlState = BATTLE_CONTROL;
 	}
 	else
 	{
+		m_Angle = atan2(m_TargetPos.z - m_EnemyPos.z, m_TargetPos.x - m_EnemyPos.x);
+
+		m_DisplacementX = ENEMY_MOVE_SPEED * cos(m_Angle);
+		m_DisplacementZ = ENEMY_MOVE_SPEED * sin(m_Angle);
+
 		m_EnemyPos.x += m_DisplacementX;
 		m_EnemyPos.z += m_DisplacementZ;
+
+		D3DXVECTOR3 NextPos = m_EnemyPos;
+		NextPos.x += 250 * cos(m_Angle);
+		NextPos.z += 250 * sin(m_Angle);
+		m_pHouseChecker->CheckCollison(&m_AttackHouseArray, &hitFlag, NextPos);
 	}
 
-	bool hitFlag;
-	m_pHouseChecker->CheckCollison(&m_AttackHouseArray, &hitFlag, m_EnemyPos);
 
 	//家に当たったら攻撃モードになる。
 	if (hitFlag)
 	{
 		m_Status.ControlState = BATTLE_CONTROL;
+	}
+
+	if (m_Status.HitPoint <= 0)
+	{
+		isDestroy = true;
 	}
 
 	return isDestroy;
@@ -170,13 +187,15 @@ bool Enemy::NormalControl()
 bool Enemy::BattleControl()
 {
 	bool isDestroy = false;
-	bool hitFlag;
-	m_pHouseChecker->CheckCollison(&m_AttackHouseArray, &hitFlag, m_EnemyPos);
+	bool hitFlag = false;
 
 	if (m_AttackTime / 120)
 	{
+		m_pHouseChecker->CheckCollison(&m_AttackHouseArray, &hitFlag, m_EnemyPos);
 		if (m_pHouseChecker->Damage(m_AttackHouseArray, ENEMY_ATTACK))
 		{
+			m_pHouseChecker->UnSetBuilding(m_AttackHouseArray);
+
 			float length = pow((m_TargetPos.x - m_EnemyPos.x)*(m_TargetPos.x - m_EnemyPos.x) + 
 				(m_TargetPos.z - m_EnemyPos.z)*(m_TargetPos.z - m_EnemyPos.z),0.5);
 			if ((m_EnemyPos.x + 250) > m_TargetPos.x &&
@@ -184,7 +203,8 @@ bool Enemy::BattleControl()
 				(m_EnemyPos.z + 250) > m_TargetPos.z &&
 				(m_EnemyPos.z - 250) < m_TargetPos.z)
 			{
-				isDestroy = true;
+				m_TargetPos = m_pHouseChecker->GetRandomPrivateHousePos();
+				m_Status.ControlState = NORMAL_CONTROL;
 			}
 			else
 			{
@@ -194,6 +214,12 @@ bool Enemy::BattleControl()
 		m_AttackTime = 0;
 	}
 	m_AttackTime++;
+
+	if (m_Status.HitPoint <= 0)
+	{
+		isDestroy = true;
+	}
+
 	return isDestroy;
 }
 
@@ -244,9 +270,9 @@ void Enemy::WaitAnimationDraw()
 	GraphicsDevice::getInstance().GetDevice()->SetTexture(2, m_Texture.Get());
 	m_pShaderAssist->BeginPass(0);
 
-	for (unsigned int i = 0; i < m_pWaitAnimation.size(); i++)
+	for (unsigned int i = 0; i < m_pWaitAnimation->size(); i++)
 	{
-		m_pWaitAnimation[i]->NonTextureAnimationDraw();
+		(*m_pWaitAnimation)[i]->NonTextureAnimationDraw();
 	}
 
 	m_pShaderAssist->EndPass();
@@ -256,13 +282,21 @@ void Enemy::WaitAnimationDraw()
 void Enemy::WalkAnimationDraw()
 {
 	// 計算用の行列
-	D3DXMATRIX RotationMatrix;
 	D3DXMATRIX PositionMatrix;
 
 	D3DXMatrixIdentity(&m_World);
-	D3DXMatrixIdentity(&RotationMatrix);
-	D3DXMatrixRotationY(&RotationMatrix, m_Angle);
-	D3DXMatrixMultiply(&m_World, &m_World, &RotationMatrix);
+	D3DXMatrixScaling(&m_World, 4, 4, 4);
+
+	if (m_Status.ControlState == BATTLE_CONTROL)
+	{
+		CalcLookAtMatrix(&m_Rotation, &m_EnemyPos, &m_TargetPos, &D3DXVECTOR3(0, 1, 0));
+	}
+	else
+	{
+		CalcLookAtMatrix(&m_Rotation, &m_EnemyPos, &m_TargetPos, &D3DXVECTOR3(0, 1, 0));
+	}
+
+	D3DXMatrixMultiply(&m_World, &m_World, &m_Rotation);
 
 	// 移動
 	D3DXMatrixTranslation(&PositionMatrix, m_EnemyPos.x, m_EnemyPos.y, m_EnemyPos.z);
@@ -300,13 +334,10 @@ void Enemy::WalkAnimationDraw()
 	GraphicsDevice::getInstance().GetDevice()->SetTexture(2, m_Texture.Get());
 	m_pShaderAssist->BeginPass(0);
 
-	//for (unsigned int i = 0; i < m_pWalkAnimation.size(); i++)
-	//{
-	//	m_pWalkAnimation[i]->AnimationDraw();
-	//}
-	for (unsigned int i = 0; i < m_pWalkAnimation.size(); i++)
+	for (unsigned int i = 0; i < m_pWalkAnimation->size(); i++)
 	{
-		m_pWalkAnimation[i]->NonTextureDraw();
+		(*m_pWalkAnimation)[i]->SetAnimationFrame(m_WalkAnimationFrame);
+		(*m_pWalkAnimation)[i]->NonTextureAnimationDraw();
 	}
 
 
@@ -361,9 +392,10 @@ void Enemy::AttackAnimationDraw()
 	GraphicsDevice::getInstance().GetDevice()->SetTexture(2, m_Texture.Get());
 	m_pShaderAssist->BeginPass(0);
 
-	for (unsigned int i = 0; i < m_pAttackAnimation.size(); i++)
+	for (unsigned int i = 0; i < m_pAttackAnimation->size(); i++)
 	{
-		m_pAttackAnimation[i]->NonTextureAnimationDraw();
+		(*m_pAttackAnimation)[i]->SetAnimationFrame(m_AttackAnimationFrame);
+		(*m_pAttackAnimation)[i]->AnimationDraw();
 	}
 
 	m_pShaderAssist->EndPass();

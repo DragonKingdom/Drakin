@@ -17,7 +17,7 @@ public:
 	 */
 	D3DXVECTOR3 GetShortDistanceEnemyPos(D3DXVECTOR3 _CheckPos, bool* _isEnemy, int* _pEnemyArray);
 
-	bool Damage(int _EnemyArray, int _Damage);
+	bool Damage(int _EnemyArray, int _Damage, int* _ReflectionDamage);
 
 private:
 	EnemyManager* m_pEnemyManager;

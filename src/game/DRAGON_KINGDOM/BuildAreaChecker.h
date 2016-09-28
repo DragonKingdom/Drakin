@@ -32,6 +32,9 @@ public:
 	 */
 	bool SetBuilding(D3DXVECTOR3* _setPos, int _Type);
 
+	bool UnSetBuilding(D3DXVECTOR3* _setPos);
+
+
 	/**2016/09/08haga追加*/
 	/**
 	 * ビルドエリアの中心座標を取得する関数

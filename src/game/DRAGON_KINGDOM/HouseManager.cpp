@@ -28,6 +28,10 @@ m_pInputDevice(InputDeviceFacade::GetInstance()),
 m_buildState(BUILD_NONE),
 m_HouseCost(0)
 {
+	m_HouseNum.House = 0;
+	m_HouseNum.PrivateHouse = 0;
+	m_HouseNum.Blacksmith = 0;
+	m_HouseNum.Church = 0;
 }
 
 //デストラクタ
@@ -177,6 +181,7 @@ void HouseManager::BuildControl()
 			{
 				//コストを取得して変数に格納しておく(後にGameDataに渡す→関数 HouseManager::SetGameData())
 				m_HouseCost = m_pHouseBuilder->GetHouseCost(m_buildState);
+
 				//建物をつくる
 				HouseBuild();
 			}
@@ -198,6 +203,40 @@ void HouseManager::HouseBuild()
 
 	// 建設された場所をビルドエリアに通知しておく
 	m_pBuildAreaChecker->SetBuilding(&m_BuildPos, m_buildState);
+
+	m_HouseNum.House++;
+	switch (pHouse->GetType())
+	{
+		case BUILD_PRIVATEHOUSE_RED:
+			m_HouseNum.PrivateHouse++;
+
+			break;
+		case BUILD_PRIVATEHOUSE_BLUE:
+			m_HouseNum.PrivateHouse++;
+
+			break;
+		case BUILD_PRIVATEHOUSE_YELLOW:
+			m_HouseNum.PrivateHouse++;
+
+			break;
+		case BUILD_PRIVATEHOUSE_POOR:
+			m_HouseNum.PrivateHouse++;
+			
+			break;
+		case BUILD_PRIVATEHOUSE_RICH:
+			m_HouseNum.PrivateHouse++;
+			
+			break;
+		case BUILD_BLACKSMITH:
+			m_HouseNum.Blacksmith++;
+
+			break;
+		case BUILD_CHURCH:
+			m_HouseNum.Church++;
+
+			break;
+	}
+
 }
 
 void HouseManager::Draw()
@@ -292,6 +331,7 @@ void HouseManager::GetGameData()
 //ゲームデータに家を建てた分のコストを知らせる
 void HouseManager::SetGameData()
 {
+	m_pGameData->SetHouseNum(m_HouseNum);
 	m_pGameData->DecreaseMoney(m_HouseCost);
 
 	// コストを初期化
@@ -381,8 +421,40 @@ void HouseManager::Save(FileSaveLoad* _pFileSaveLoad)
 
 D3DXVECTOR3 HouseManager::GetHouseRandomPos()
 {
-	srand(unsigned int(time(NULL)));
-	int houseArrayNum = rand() % m_pHouse.size();
+	bool isPrivateHouse = false;
+	int houseArrayNum = 0;
+	int i = 0;
+	while (isPrivateHouse == false)
+	{
+		srand(unsigned int(time(NULL) + i));
+		houseArrayNum = rand() % m_pHouse.size();
+
+		switch (m_pHouse[houseArrayNum]->GetType())
+		{
+		case BUILD_PRIVATEHOUSE_RED:
+			isPrivateHouse = true;
+
+			break;
+		case BUILD_PRIVATEHOUSE_BLUE:
+			isPrivateHouse = true;
+
+			break;
+		case BUILD_PRIVATEHOUSE_YELLOW:
+			isPrivateHouse = true;
+
+			break;
+		case BUILD_PRIVATEHOUSE_POOR:
+			isPrivateHouse = true;
+
+			break;
+		case BUILD_PRIVATEHOUSE_RICH:
+			isPrivateHouse = true;
+
+			break;
+		}
+		i++;
+	}
+
 	return m_pHouse[houseArrayNum]->GetHousePos();
 }
 
@@ -390,18 +462,74 @@ void HouseManager::CheckCollision(int* _array, bool* _hitFlag, D3DXVECTOR3 _chec
 {
 	for (int i = 0; i < m_pHouse.size(); i++)
 	{
-		D3DXVECTOR3 pos = m_pHouse[i]->GetHousePos();
-		if ((_checkPos.x + 250) > pos.x &&
-			(_checkPos.x - 250) < pos.x &&
-			(_checkPos.z + 250) > pos.z &&
-			(_checkPos.z - 250) < pos.z)
+		D3DXVECTOR3 pos;
+		switch (m_pHouse[i]->GetType())
 		{
-			*_hitFlag = true;
-			*_array = i;
-			return;
+		case BUILD_PRIVATEHOUSE_RED:
+			pos = m_pHouse[i]->GetHousePos();
+			if ((_checkPos.x + 250) > pos.x &&
+				(_checkPos.x - 250) < pos.x &&
+				(_checkPos.z + 250) > pos.z &&
+				(_checkPos.z - 250) < pos.z)
+			{
+				*_hitFlag = true;
+				*_array = i;
+				return;
+			}
+			break;
+		case BUILD_PRIVATEHOUSE_BLUE:
+			pos = m_pHouse[i]->GetHousePos();
+			if ((_checkPos.x + 250) > pos.x &&
+				(_checkPos.x - 250) < pos.x &&
+				(_checkPos.z + 250) > pos.z &&
+				(_checkPos.z - 250) < pos.z)
+			{
+				*_hitFlag = true;
+				*_array = i;
+				return;
+			}
+			break;
+		case BUILD_PRIVATEHOUSE_YELLOW:
+			pos = m_pHouse[i]->GetHousePos();
+			if ((_checkPos.x + 250) > pos.x &&
+				(_checkPos.x - 250) < pos.x &&
+				(_checkPos.z + 250) > pos.z &&
+				(_checkPos.z - 250) < pos.z)
+			{
+				*_hitFlag = true;
+				*_array = i;
+				return;
+			}
+			break;
+		case BUILD_PRIVATEHOUSE_POOR:
+			pos = m_pHouse[i]->GetHousePos();
+			if ((_checkPos.x + 250) > pos.x &&
+				(_checkPos.x - 250) < pos.x &&
+				(_checkPos.z + 250) > pos.z &&
+				(_checkPos.z - 250) < pos.z)
+			{
+				*_hitFlag = true;
+				*_array = i;
+				return;
+			}
+			break;
+		case BUILD_PRIVATEHOUSE_RICH:
+			pos = m_pHouse[i]->GetHousePos();
+			if ((_checkPos.x + 250) > pos.x &&
+				(_checkPos.x - 250) < pos.x &&
+				(_checkPos.z + 250) > pos.z &&
+				(_checkPos.z - 250) < pos.z)
+			{
+				*_hitFlag = true;
+				*_array = i;
+				return;
+			}
+			break;
 		}
 	}
+
 	*_hitFlag = false;
+	return;
 }
 
 bool HouseManager::Damage(int _array, int Damage)
@@ -411,4 +539,9 @@ bool HouseManager::Damage(int _array, int Damage)
 	m_pHouse[_array]->SetHouseStatus(tmp);
 	
 	return m_pHouse[_array]->UpDateHouseData();
+}
+
+void HouseManager::UnSetBuilding(int _array)
+{
+	m_pBuildAreaChecker->UnSetBuilding(&m_pHouse[_array]->GetHousePos());
 }

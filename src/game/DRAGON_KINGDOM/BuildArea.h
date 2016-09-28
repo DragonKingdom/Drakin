@@ -26,6 +26,8 @@ public:
 	 */
 	virtual bool SetBuilding(D3DXVECTOR3* _setPos, int _Type);
 
+	virtual bool UnSetBuilding(D3DXVECTOR3* _setPos);
+
 	virtual bool GetStartOrEndPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _outputPos, float* _outputAngleDegree, bool* _startPos);
 	float GetAngleDegree(){ return D3DXToDegree(m_angle); };
 	virtual void GetBuildAreaData(std::vector<float>* _pBuildAreaVertexData, std::vector<float>* _pBuildAreaAngleData, std::vector<int>* _pBuildAreaFlag);

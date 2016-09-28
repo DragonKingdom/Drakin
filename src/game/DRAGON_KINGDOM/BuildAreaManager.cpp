@@ -184,6 +184,27 @@ bool BuildAreaManager::SetBuilding(D3DXVECTOR3* _setPos,int _Type)
 	return false;
 }
 
+bool BuildAreaManager::UnSetBuilding(D3DXVECTOR3* _setPos)
+{
+	if (_setPos == NULL)
+	{
+		//	NULL‚ª“ü‚Á‚Ä‚½ê‡‚Ìˆ—
+	}
+	else
+	{
+		///@todo ”ÍˆÍw’è‚È‚Ç‚ğ‚·‚é
+		for (unsigned int i = 0; i < m_pBuildArea.size(); i++)
+		{
+			if (m_pBuildArea[i]->UnSetBuilding(_setPos))
+			{
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
 bool BuildAreaManager::GetAreaCenterPos(D3DXVECTOR3* _checkPos, D3DXVECTOR3* _centerPos, float* _pAngle,int _Type)
 {
 	if (_checkPos == NULL)

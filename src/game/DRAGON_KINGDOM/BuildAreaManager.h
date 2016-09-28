@@ -48,6 +48,8 @@ public:
 	*/
 	bool SetBuilding(D3DXVECTOR3* _setPos,int _Type);
 
+	bool UnSetBuilding(D3DXVECTOR3* _setPos);
+
 	/**
 	* ビルドエリアの存在と中心座標を取得する関数
 	* @param[in] _checkPos チェックしたいエリアの座標

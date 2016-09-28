@@ -34,6 +34,7 @@ struct HouseNum
 	int House;			// Œš•¨‚Ì‘”
 	int PrivateHouse;	// –¯‰Æ‚Ì‘”
 	int Blacksmith;		// ’b–è‰®‚Ì‘”
+	int Church;			// ‹³‰ï‚Ì‘”
 };
 
 /**

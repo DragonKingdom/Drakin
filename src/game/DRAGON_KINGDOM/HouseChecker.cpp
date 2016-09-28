@@ -42,3 +42,8 @@ bool HouseChecker::Damage(int _array, int _damage)
 {
 	return m_pHouseManager->Damage(_array,_damage);
 }
+
+void HouseChecker::UnSetBuilding(int _array)
+{
+
+}

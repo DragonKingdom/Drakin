@@ -56,6 +56,7 @@ public:
 	/*建物をチェックして、HPが一定以下ならtrueを返す*/
 	bool			UpDateHouseData();
 	
+	BUILD_STATE		GetType(){ return m_Type; }
 
 protected:
 	std::vector<FbxModel*>	m_Model;

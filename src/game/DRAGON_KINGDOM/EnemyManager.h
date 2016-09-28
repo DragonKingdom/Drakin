@@ -2,6 +2,7 @@
 #define ENEMYMANAGER_H
 
 #include "GameData.h"
+#include "CharacterManager.h"
 
 #define ENEMY_MAX 15
 
@@ -17,7 +18,7 @@ class EnemyManager
 public:
 	EnemyManager(StateManager* _pStateManager, GameData* _pGameData, RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker);
 	~EnemyManager();
-	void Init(HumanChecker* _pHumanChecker);
+	void Init(HumanChecker* _pHumanChecker, ResourceManager<CHARACTERMODEL_ID, std::vector<FbxModel*>>* _pResourceManager);
 	void Control();
 	void Draw();
 	void GetState();
@@ -36,7 +37,7 @@ public:
 	 */
 	D3DXVECTOR3 GetShortDistanceEnemyPos(D3DXVECTOR3 _CheckPos, bool* _isEnemy, int* _pEnemyArray);
 
-	bool Damage(int _EnemyArray, int _Damage);
+	bool Damage(int _EnemyArray, int _Damage, int* _ReflectionDamage);
 
 private:
 	StateManager*	m_pStateManager;
@@ -46,6 +47,8 @@ private:
 	HumanChecker*	m_pHumanChecker;
 	std::vector<Enemy*> m_pEnemy;
 	HouseNum			m_HouseNum;
+	int					m_SpawnTime;
+	ResourceManager<CHARACTERMODEL_ID, std::vector<FbxModel*>>* m_pResourceManager;
 
 };
 

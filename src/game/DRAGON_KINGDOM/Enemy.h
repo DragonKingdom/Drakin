@@ -2,11 +2,13 @@
 #define ENEMY_H
 
 #define ENEMY_MOVE_SPEED 70.f
-#define DEFAULT_ENEMY_HITPOINT 30
+#define DEFAULT_ENEMY_HITPOINT 150
 #define DEFAULT_ENEMY_MAGICPOINT 20
-#define DEFAULT_ENEMY_POWER 10
+#define DEFAULT_ENEMY_POWER 30
 #define DEFAULT_ENEMY_TIME 7200
 #define ENEMY_ATTACK 5
+
+#include "CharacterManager.h"
 
 class FbxModel;
 class ShaderAssist;
@@ -39,8 +41,14 @@ public:
 		AnimationMode	AnimationState;
 	};
 
-	Enemy(RoadChecker* _pRoadChecker, HouseChecker* _pHouseChecker);
+	Enemy(
+		RoadChecker* _pRoadChecker, 
+		HouseChecker* _pHouseChecker,
+		ResourceManager<CHARACTERMODEL_ID, std::vector<FbxModel*>>* _pResourceManager);
 	~Enemy();
+
+	void CalcLookAtMatrix(D3DXMATRIX* pout, D3DXVECTOR3* pPos, D3DXVECTOR3* pLook, D3DXVECTOR3* pUp);
+
 
 	/**
 	 * EnemyÇÃêßå‰ä÷êî
@@ -71,7 +79,7 @@ public:
 	 */
 	void SetStatus(Enemy::Status _Status);
 
-	bool UpDateHouseData();
+	bool UpDateEnemyData();
 
 private:
 	bool NormalControl();
@@ -83,15 +91,20 @@ private:
 	Status					m_Status;
 	RoadChecker*			m_pRoadChecker;
 	HouseChecker*			m_pHouseChecker;
-	std::vector<FbxModel*>	m_pWaitAnimation;
-	std::vector<FbxModel*>	m_pWalkAnimation;
-	std::vector<FbxModel*>	m_pAttackAnimation;
+	std::vector<FbxModel*>*	m_pWaitAnimation;
+	std::vector<FbxModel*>*	m_pWalkAnimation;
+	std::vector<FbxModel*>*	m_pAttackAnimation;
+	int						m_WalkAnimationFrame;
+	int						m_WalkAnimationFrameMax;
+	int						m_AttackAnimationFrame;
+	int						m_AttackAnimationFrameMax;
 	D3DXVECTOR3				m_EnemyPos;
 	D3DXVECTOR3				m_TargetPos;
 	int						m_DisplacementX;
 	int						m_DisplacementZ;
 	float					m_Angle;
 	D3DXMATRIX				m_World;
+	D3DXMATRIX				m_Rotation;
 	int						m_AttackTime;
 	int						m_AttackHouseArray;
 	ShaderAssist*			m_pShaderAssist;

@@ -5,12 +5,12 @@
 #include "HumanManager.h"
 
 #define HUMAN_MOVE_SPEED (45.f)
-#define DEFAULT_HUMAN_HITPOINT 30
+#define DEFAULT_HUMAN_HITPOINT 35
 #define DEFAULT_HUMAN_MAGICPOINT 20
-#define DEFAULT_HUMAN_POWER 10
+#define DEFAULT_HUMAN_POWER 5
 #define DEFAULT_HUMAN_TIME 7200
 #define DEFAULT_SEARCH 7000
-#define DEFAULT_RANGE 100
+#define DEFAULT_RANGE 900
 
 class FbxModel;
 class ShaderAssist;
@@ -48,9 +48,11 @@ public:
 		RoadChecker* _pRoadChecker, 
 		HouseChecker* _pHouseChecker,
 		EnemyChecker* _pEnemyChecker,
-		ResourceManager<CHARACTERMODEL_ID, 
-		std::vector<FbxModel*>>* _pResourceManager);
+		ResourceManager<CHARACTERMODEL_ID, std::vector<FbxModel*>>* _pResourceManager);
 	~Human();
+
+	void CalcLookAtMatrix(D3DXMATRIX* pout, D3DXVECTOR3* pPos, D3DXVECTOR3* pLook, D3DXVECTOR3* pUp);
+
 
 	/**
 	 * HumanÇÃêßå‰ä÷êî

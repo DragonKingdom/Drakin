@@ -16,7 +16,7 @@ D3DXVECTOR3 EnemyChecker::GetShortDistanceEnemyPos(D3DXVECTOR3 _CheckPos, bool* 
 	return m_pEnemyManager->GetShortDistanceEnemyPos(_CheckPos, _isEnemy, _pEnemyArray);
 }
 
-bool EnemyChecker::Damage(int _EnemyArray, int _Damage)
+bool EnemyChecker::Damage(int _EnemyArray, int _Damage, int* _ReflectionDamage)
 {
-	return m_pEnemyManager->Damage(_EnemyArray, _Damage);
+	return m_pEnemyManager->Damage(_EnemyArray, _Damage, _ReflectionDamage);
 }

@@ -20,7 +20,7 @@ m_pEnemyChecker(new EnemyChecker(m_pEnemyManager))
 	FbxFileManager::Get()->FileImport("fbx//maou_animetion_walk.fbx");
 	FbxFileManager::Get()->GetModelData(&m_pMaouWalkModel);
 
-	FbxFileManager::Get()->FileImport("fbx//maoiu_animetion_taiki.fbx");
+	FbxFileManager::Get()->FileImport("fbx//maou_animetion_attack.fbx");
 	FbxFileManager::Get()->GetModelData(&m_pMaouAttackModel);
 	
 	for (unsigned int i = 0; i < m_pMaouWalkModel.size(); i++)
@@ -38,7 +38,7 @@ m_pEnemyChecker(new EnemyChecker(m_pEnemyManager))
 	m_ResourceManager.SetResource(MAOU_ATTACK, &m_pMaouAttackModel);
 
 	m_pHumanManager->Init(m_pEnemyChecker, &m_ResourceManager);
-	m_pEnemyManager->Init(m_pHumanChecker);
+	m_pEnemyManager->Init(m_pHumanChecker, &m_ResourceManager);
 }
 
 CharacterManager::~CharacterManager()
