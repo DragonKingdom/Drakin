@@ -13,6 +13,7 @@ public:
 
 private:
 	std::vector<FbxModel*>	m_Model;
+	Texture					m_ModelTexture[3];
 	D3DXVECTOR3				m_DemonCastlePos;
 	float					m_Angle;
 	D3DXMATRIX				m_World;

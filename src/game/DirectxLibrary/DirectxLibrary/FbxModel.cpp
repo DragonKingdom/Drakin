@@ -125,6 +125,17 @@ void FbxModel::NonTextureDraw()
 	}
 }
 
+void FbxModel::NonDraw()
+{
+	m_pDevice->SetFVF(USERVERTEX_FVF);
+
+	m_pDevice->DrawPrimitiveUP(
+		D3DPT_TRIANGLELIST,
+		m_pFbxModelData->PrimitiveCount,
+		m_pFbxModelData->pVertex,
+		sizeof(UserVertex));
+}
+
 void FbxModel::InitAnimation()
 {
 	if (m_pFbxModelData->Animation->SkinNum != 0)

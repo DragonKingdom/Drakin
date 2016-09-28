@@ -20,7 +20,9 @@ class Church :public House
 public:
 	int m_Array;
 	int m_Time;
-	Texture					m_testTexture[10];
+	std::vector<FbxModel*>	m_Model2;
+	Texture					m_ModelTexture;
+	Texture					m_ModelTexture2[2];
 	//コンストラクタ
 	Church(D3DXVECTOR3 _housePos, float _angle, BUILD_STATE _Type);
 	//デストラクタ

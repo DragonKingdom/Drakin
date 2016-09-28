@@ -80,6 +80,7 @@ public:
 	void	GetMaterial(std::vector<D3DMATERIAL9>* pMaterial);
 	void	Draw();
 	void	NonTextureDraw();
+	void	NonDraw();
 	void	InitAnimation();
 	void	ReleaseAnimation();
 	void	SetAnimationFrame(int _setFrame);

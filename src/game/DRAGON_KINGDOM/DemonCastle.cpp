@@ -19,6 +19,10 @@ m_pShaderAssist(new ShaderAssist())
 	FbxFileManager::Get()->FileImport("fbx//akumajyo3.fbx");
 	FbxFileManager::Get()->GetModelData(&m_Model);
 
+	m_ModelTexture[0].Load("..//sourceimages//1001_basecolor.png");
+	m_ModelTexture[1].Load("..//sourceimages//10011_basecolor.png");
+	m_ModelTexture[2].Load("..//sourceimages//10012_basecolor.png");
+
 	// ŒvZ—p‚Ìs—ñ
 	D3DXMATRIX RotationMatrix;
 	D3DXMATRIX PositionMatrix;
@@ -84,10 +88,13 @@ void DemonCastle::Draw()
 	GraphicsDevice::getInstance().GetDevice()->SetTexture(2, m_Texture.Get());
 	m_pShaderAssist->BeginPass(0);
 
-	for (unsigned int i = 0; i < m_Model.size(); i++)
-	{
-		m_Model[i]->Draw();
-	}
+	GraphicsDevice::getInstance().GetDevice()->SetTexture(0, m_ModelTexture[0].Get());
+	m_Model[0]->NonDraw();
+	GraphicsDevice::getInstance().GetDevice()->SetTexture(0, m_ModelTexture[1].Get());
+	m_Model[1]->NonDraw();
+	GraphicsDevice::getInstance().GetDevice()->SetTexture(0, m_ModelTexture[2].Get());
+	m_Model[2]->NonDraw();
+
 
 	m_pShaderAssist->EndPass();
 	m_pShaderAssist->End();

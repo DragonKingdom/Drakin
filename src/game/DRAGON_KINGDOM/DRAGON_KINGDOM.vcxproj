@@ -265,6 +265,8 @@
     <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="Effect\Church.fx" />
+    <FxCompile Include="Effect\Demon.fx" />
     <FxCompile Include="Effect\GroundEffect.fx">
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
     </FxCompile>

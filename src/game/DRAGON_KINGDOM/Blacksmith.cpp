@@ -9,12 +9,15 @@ House(_housePos, _angle, _Type)
 {
 	FbxFileManager::Get()->FileImport("fbx//kaziya.fbx");
 	FbxFileManager::Get()->GetModelData(&m_Model);
+	m_ModelTexture.Load("..//sourceimages//kaziya.png");
 	m_BasicStatus = GetMainStatus();
 }
 
 //デストラクタ
 Blacksmith::~Blacksmith()
 {
+	m_Texture.Release();
+
 	for (unsigned int i = 0; i < m_Model.size(); i++)
 	{
 		delete m_Model[i];
@@ -49,7 +52,9 @@ void Blacksmith::Draw()
 			delete m_Model[i];
 		}
 		m_Model.clear();
-		FbxFileManager::Get()->FileImport("fbx//kaziya.fbx");
+		m_ModelTexture.Release();
+		m_ModelTexture.Load("..//sourceimages//kaziyalv2map.png");
+		FbxFileManager::Get()->FileImport("fbx//kaziyalv2.fbx");
 		FbxFileManager::Get()->GetModelData(&m_Model);
 
 		// ここでレベル２にする
@@ -88,12 +93,13 @@ void Blacksmith::Draw()
 	// フォグの色を設定
 	ambient = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	m_pShaderAssist->SetParameter(m_FogColor, ambient);
+	GraphicsDevice::getInstance().GetDevice()->SetTexture(0, m_ModelTexture.Get());
 	GraphicsDevice::getInstance().GetDevice()->SetTexture(2, m_Texture.Get());
 	m_pShaderAssist->BeginPass(0);
 
 	for (unsigned int i = 0; i < m_Model.size(); i++)
 	{
-		m_Model[i]->NonTextureDraw();
+		m_Model[i]->NonDraw();
 	}
 
 	m_pShaderAssist->EndPass();

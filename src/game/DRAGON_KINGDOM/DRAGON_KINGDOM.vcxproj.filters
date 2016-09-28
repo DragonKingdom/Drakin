@@ -728,5 +728,11 @@
     <FxCompile Include="Effect\NormalHouseEffect.fx">
       <Filter>Effect</Filter>
     </FxCompile>
+    <FxCompile Include="Effect\Church.fx">
+      <Filter>Effect</Filter>
+    </FxCompile>
+    <FxCompile Include="Effect\Demon.fx">
+      <Filter>Effect</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

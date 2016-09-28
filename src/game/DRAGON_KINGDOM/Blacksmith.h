@@ -20,6 +20,8 @@ public:
 	/**Œš•¨‚ªüˆÍ‚É—^‚¦‚é‰e‹¿’l‚ğæ“¾‚·‚éŠÖ”*/
 	virtual float GetInfluence();
 
+	Texture					m_ModelTexture;
+
 private:
 
 };
