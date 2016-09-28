@@ -40,6 +40,21 @@ float Blacksmith::GetInfluence()
 //描画関数
 void Blacksmith::Draw()
 {
+	// 条件は現在２年たったら変わるように設定している
+	// 条件に達していたらレベル２へ移行する
+	if (m_houseLevel == LV1 && m_BasicStatus.Age == 2)
+	{
+		for (unsigned int i = 0; i < m_Model.size(); i++)
+		{
+			delete m_Model[i];
+		}
+		m_Model.clear();
+		FbxFileManager::Get()->FileImport("fbx//kaziya.fbx");
+		FbxFileManager::Get()->GetModelData(&m_Model);
+
+		// ここでレベル２にする
+		m_houseLevel = LV2;
+	}
 	m_pShaderAssist->Begin();
 
 	//太陽の位置を取得
