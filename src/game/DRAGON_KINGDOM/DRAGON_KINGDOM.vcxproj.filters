@@ -728,5 +728,8 @@
     <FxCompile Include="Effect\NormalHouseEffect.fx">
       <Filter>Effect</Filter>
     </FxCompile>
+    <FxCompile Include="EnemyEffect.fx">
+      <Filter>Effect</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

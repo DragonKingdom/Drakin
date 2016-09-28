@@ -44,21 +44,24 @@ m_AttackHouseArray(0)
 	{
 	case Enemy::LIZARD_TYPE:
 		m_pWalkAnimation = _pResourceManager->GetResource(LIZARD_WALK);
+		m_pModelTexture = _pTextureResourceManager->GetResource(LIZARD);
 		m_WalkAnimationFrameMax = (*m_pWalkAnimation)[0]->GetAnimationFrameMax();
 		break;
 	case Enemy::MAOU_TYPE:
 		m_pWalkAnimation = _pResourceManager->GetResource(MAOU_WALK);
+		m_pModelTexture = _pTextureResourceManager->GetResource(MAOU);
 		m_WalkAnimationFrameMax = (*m_pWalkAnimation)[0]->GetAnimationFrameMax();
 		break;
 	case Enemy::GERU_TYPE:
 		m_pWalkAnimation = _pResourceManager->GetResource(GERU_WALK);
+		m_pModelTexture = _pTextureResourceManager->GetResource(GERU);
 		m_WalkAnimationFrameMax = (*m_pWalkAnimation)[0]->GetAnimationFrameMax();
 		break;
 	case Enemy::DRAGON_TYPE:
 		m_pWalkAnimation = _pResourceManager->GetResource(DRAGON_WALK);
+		m_pModelTexture = _pTextureResourceManager->GetResource(DRAGON);
 		m_WalkAnimationFrameMax = (*m_pWalkAnimation)[0]->GetAnimationFrameMax();
 		break;
-
 	}
 
 
@@ -295,7 +298,11 @@ void Enemy::WaitAnimationDraw()
 
 	ambient = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	m_pShaderAssist->SetParameter(m_FogColor, ambient);
-	GraphicsDevice::getInstance().GetDevice()->SetTexture(2, m_Texture.Get());
+	for (unsigned int i = 0; i < m_pModelTexture->size(); i++)
+	{
+		GraphicsDevice::getInstance().GetDevice()->SetTexture(i, (*m_pModelTexture)[i]->Get());
+	}
+	GraphicsDevice::getInstance().GetDevice()->SetTexture(m_pModelTexture->size(), m_Texture.Get());
 	m_pShaderAssist->BeginPass(0);
 
 	for (unsigned int i = 0; i < m_pWaitAnimation->size(); i++)
@@ -370,13 +377,18 @@ void Enemy::WalkAnimationDraw()
 
 	ambient = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	m_pShaderAssist->SetParameter(m_FogColor, ambient);
-	GraphicsDevice::getInstance().GetDevice()->SetTexture(2, m_Texture.Get());
+	for (unsigned int i = 0; i < m_pModelTexture->size(); i++)
+	{
+		GraphicsDevice::getInstance().GetDevice()->SetTexture(i, (*m_pModelTexture)[i]->Get());
+	}
+	GraphicsDevice::getInstance().GetDevice()->SetTexture(m_pModelTexture->size(), m_Texture.Get());
 	m_pShaderAssist->BeginPass(0);
 
+	
 	for (unsigned int i = 0; i < m_pWalkAnimation->size(); i++)
 	{
 		(*m_pWalkAnimation)[i]->SetAnimationFrame(m_WalkAnimationFrame);
-		(*m_pWalkAnimation)[i]->AnimationDraw();
+		(*m_pWalkAnimation)[i]->NonTextureAnimationDraw();
 	}
 
 
@@ -428,7 +440,11 @@ void Enemy::AttackAnimationDraw()
 
 	ambient = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	m_pShaderAssist->SetParameter(m_FogColor, ambient);
-	GraphicsDevice::getInstance().GetDevice()->SetTexture(2, m_Texture.Get());
+	for (unsigned int i = 0; i < m_pModelTexture->size(); i++)
+	{
+		GraphicsDevice::getInstance().GetDevice()->SetTexture(i, (*m_pModelTexture)[i]->Get());
+	}
+	GraphicsDevice::getInstance().GetDevice()->SetTexture(m_pModelTexture->size(), m_Texture.Get());
 	m_pShaderAssist->BeginPass(0);
 
 	for (unsigned int i = 0; i < m_pAttackAnimation->size(); i++)

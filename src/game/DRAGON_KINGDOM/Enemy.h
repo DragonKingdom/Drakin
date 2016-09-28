@@ -103,6 +103,7 @@ private:
 	std::vector<FbxModel*>*	m_pWaitAnimation;
 	std::vector<FbxModel*>*	m_pWalkAnimation;
 	std::vector<FbxModel*>*	m_pAttackAnimation;
+	std::vector<Texture*>*	m_pModelTexture;
 	int						m_WalkAnimationFrame;
 	int						m_WalkAnimationFrameMax;
 	int						m_AttackAnimationFrame;

@@ -393,11 +393,6 @@ void FbxModel::NonTextureAnimationDraw()
 {
 	if (m_pFbxModelData->Animation->SkinNum != 0)
 	{
-		m_pDevice->SetTexture(0, NULL);
-		m_pDevice->SetTexture(1, NULL);
-		m_pDevice->SetTexture(2, NULL);
-
-
 		//-------- アニメーション処理 --------//
 
 		for (int i = 0; i < m_pFbxModelData->ControlPointCount; i++)
