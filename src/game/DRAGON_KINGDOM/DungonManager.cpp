@@ -1,9 +1,16 @@
 #include "DungonManager.h"
 #include "Dungon.h"
+#include "GameData.h"
+#include "RoadManager.h"
+#include "StateManager.h"
 
-DungonManager::DungonManager(RoadChecker* _pRoadChecker,StateManager* _pStateManager, GameData* _pGameData) :
+using ROADMANAGER_ENUM::STATE;
+
+DungonManager::DungonManager(RoadManager* _pRoadManager, StateManager* _pStateManager, GameData* _pGameData, ClickPosConverter* _pClickPosConverter) :
+m_pRoadManager(_pRoadManager),
+m_pStateManager(_pStateManager),
 m_pGameData(_pGameData),
-m_BuildPos(0,0.5,0)
+m_BuildPos(0,0.20,0)
 {
 }
 
@@ -19,17 +26,19 @@ void DungonManager::BuildControl()
 {
 	static int dungontime = 0;
 	dungontime++;
-		if (dungontime == 180)
-		{
-			BuildDungon();
-		}
+
+	if (dungontime == 180)
+	{
+		BuildDungon();
+	}
 }
 
 void DungonManager::BuildDungon()
 {
-	Dungon*pDungon = new Dungon(m_BuildPos,m_Angle,BUILD_DUNGON);
+	Dungon*pDungon = new Dungon(m_BuildPos,m_Angle,BUILD_ROAD);
 	m_pDungon.push_back(pDungon);
 	m_DungonPos.push_back(pDungon->GetDungonPos());
+
 }
 
 void DungonManager::Draw()
@@ -42,7 +51,7 @@ void DungonManager::Draw()
 
 void DungonManager::GetGameDate()
 {
-
+	m_Money = m_pGameData->GetMoney();
 }
 
 void DungonManager::SetGameData()

@@ -3,6 +3,7 @@
 #include "FbxModel.h"
 #include "ShaderAssist.h"
 #include "RoadManager.h"
+#include "Road.h"
 
 Dungon::Dungon(D3DXVECTOR3 _dungonPos, float _angle, int _Type) :
 m_pShaderAssist(new ShaderAssist())
@@ -19,7 +20,7 @@ m_pShaderAssist(new ShaderAssist())
 	FbxFileManager::Get()->FileImport("fbx//house_red.fbx");
 	FbxFileManager::Get()->GetModelData(&m_Model);
 
-	m_DungonPos = D3DXVECTOR3(0,0.5,0);
+	m_DungonPos = _dungonPos;
 
 }
 

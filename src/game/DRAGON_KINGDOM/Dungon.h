@@ -4,6 +4,7 @@
 class FbxModel;
 class ShaderAssist;
 class RoadManager;
+class Road;
 
 class Dungon
 {
@@ -25,7 +26,6 @@ private:
 	Texture					m_Texture;
 	D3DXHANDLE m_LightDir, m_Ambient, m_CLUTTU, m_FogColor, m_Param1, m_Param2;
 	std::vector<FbxModel*>   m_Model;
-
 };
 
 #endif
