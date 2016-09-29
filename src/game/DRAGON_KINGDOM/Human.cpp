@@ -383,7 +383,7 @@ void Human::WalkAnimationDraw()
 	ambient = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	m_pShaderAssist->SetParameter(m_FogColor, ambient);
 	GraphicsDevice::getInstance().GetDevice()->SetTexture(2, m_Texture.Get());
-	GraphicsDevice::getInstance().GetDevice()->SetTexture(0, (*m_pModelTexture)[0]->Get());
+	GraphicsDevice::getInstance().GetDevice()->SetTexture(0, NULL);
 
 	m_pShaderAssist->BeginPass(0);
 

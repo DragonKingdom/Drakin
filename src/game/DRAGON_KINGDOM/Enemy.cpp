@@ -31,7 +31,7 @@ m_AttackTime(0),
 m_AttackHouseArray(0)
 {
 	m_Texture.Load("Resource\\image\\CLUTLight.jpg");
-	m_pShaderAssist->LoadTechnique("Effect\\EnemyEffect.fx", "EnemyEffect", "WVPP");
+	m_pShaderAssist->LoadTechnique("Effect\\HouseEffect.fx", "EnemyEffect", "WVPP");
 	m_LightDir = m_pShaderAssist->GetParameterHandle("LightDir");
 	m_Ambient = m_pShaderAssist->GetParameterHandle("Ambient");
 	m_CLUTTU = m_pShaderAssist->GetParameterHandle("CLUTTU");
@@ -419,11 +419,11 @@ void Enemy::WalkAnimationDraw()
 	case Enemy::DRAGON_TYPE:
 		break;
 	case Enemy::GERU_TYPE:
-		GraphicsDevice::getInstance().GetDevice()->SetTexture(0, (*m_pModelTexture)[m_TextureNum]->Get());
+		GraphicsDevice::getInstance().GetDevice()->SetTexture(0, NULL);
 
 		break;
 	case Enemy::EVIL_EAY:
-		GraphicsDevice::getInstance().GetDevice()->SetTexture(0, (*m_pModelTexture)[0]->Get());
+		GraphicsDevice::getInstance().GetDevice()->SetTexture(0, NULL);
 
 		break;
 	default:
